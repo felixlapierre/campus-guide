@@ -36,8 +36,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker on Hall Building and move the camera
-        val hall = LatLng(45.5,-73.5)
+        val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(hall))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
     }
 }
