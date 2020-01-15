@@ -20,4 +20,11 @@ Create a campus guide application to help students locate their classrooms.
 | Jacob Guirguis          | 40062827 |
 
 ## Installation Instructions
-TBD
+1. Download and install [Android Studio](https://developer.android.com/studio)
+2. [Get an API key for Google Maps](https://developers.google.com/maps/documentation/android-sdk/get-api-key)
+2. Clone the repository onto your computer
+3. Create a copy of the file `app\src\debug\res\values\google_maps_api.example.xml` in the same folder.
+4. Rename that file `google_maps_api.xml`
+5. The file contains a single `<string>` tag. Change the `name` property from `google_maps_key_ex` to `google_maps_key`. Change the contents of the tag from `google_maps_key` to the value of your API key (it starts with `AIza`)
+6. Open the project in Android Studio
+7. Run the project using an emulator or using a connected android device.
