@@ -6,4 +6,13 @@
     android:layout_height="match_parent"
     android:id="@+id/map"
     tools:context=".MapsActivity"
-    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right|top"
+        android:id="@+id/currentLocationButton"
+        android:src="@drawable/ic_crosshairs"/>
+
+</fragment>
