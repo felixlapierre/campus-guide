@@ -273,6 +273,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(45.496818, -73.577087)
             )
 
+        val gaAnnex = PolygonOptions()
+            .add(
+                LatLng(45.4943430, -73.5777361),
+                LatLng(45.4942826, -73.5776241),
+                LatLng(45.494053, -73.577868),
+                LatLng(45.4940739, -73.5779064),
+                LatLng(45.4937893, -73.5782534),
+                LatLng(45.4938474, -73.5783523),
+                LatLng(45.4941332, -73.5780087),
+                LatLng(45.4941191, -73.5779832)
+            )
+        
         googleMap.addPolygon(hall)
         googleMap.addPolygon(websterLibrary)
         googleMap.addPolygon(bAnnex)
@@ -291,5 +303,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.addPolygon(fbBuilding)
         googleMap.addPolygon(gsBuilding)
         googleMap.addPolygon(kAnnex)
+        googleMap.addPolygon(ldBuilding)
+        googleMap.addPolygon(gaAnnex)
     }
 }
