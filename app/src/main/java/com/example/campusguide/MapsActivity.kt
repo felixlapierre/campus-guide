@@ -31,6 +31,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         val currentLocationButton: ImageButton = findViewById(R.id.currentLocationButton)
+        currentLocationButton.setOnClickListener {
+            if(checkLocationPermission()) {
+                goToCurrentLocation()
+            } else {
+                requestLocationPermission()
+            }
+        }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
