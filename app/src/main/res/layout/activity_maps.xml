@@ -13,6 +13,6 @@
         android:layout_height="40dp"
         android:layout_gravity="right|top"
         android:id="@+id/currentLocationButton"
-        android:src="@drawable/ic_crosshairs"/>
+        android:src="@drawable/ic_my_location"/>
 
 </fragment>
