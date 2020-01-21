@@ -373,7 +373,115 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(45.4941332, -73.5780087),
                 LatLng(45.4941191, -73.5779832)
             )
-        
+
+        val fgBuilding = PolygonOptions()
+            .add(
+                LatLng(45.4946949, -73.5780358),
+                LatLng(45.4944521, -73.5776147),
+                LatLng(45.4943853, -73.5776892),
+                LatLng(45.4944260, -73.5777592),
+                LatLng(45.4943914, -73.5778018),
+                LatLng(45.4943696, -73.5777666),
+                LatLng(45.4941849, -73.5779842),
+                LatLng(45.4942018, -73.5780144),
+                LatLng(45.4941108, -73.5781247),
+                LatLng(45.4941043, -73.5781119),
+                LatLng(45.4939087, -73.5783403),
+                LatLng(45.4939207, -73.5783614),
+                LatLng(45.4938918, -73.5783969),
+                LatLng(45.4938817, -73.5783835),
+                LatLng(45.4938337, -73.5784372),
+                LatLng(45.4938481, -73.5784600),
+                LatLng(45.4936253, -73.5787272),
+                LatLng(45.4938213, -73.5790655),
+                LatLng(45.4942932, -73.5785096),
+                LatLng(45.4943007, -73.5785200),
+                LatLng(45.4943677, -73.5784388),
+                LatLng(45.4943611, -73.5784264)
+            )
+
+        val faAnnex = PolygonOptions()
+            .add(
+                LatLng(45.4967752, -73.5795838),
+                LatLng(45.4968697, -73.5794846),
+                LatLng(45.4968302, -73.5794031),
+                LatLng(45.4967329, -73.5794996)
+            )
+
+        val clAnnex = PolygonOptions()
+            .add(
+                LatLng(45.494471,-73.579282),
+                LatLng(45.4941639, -73.5796579),
+                LatLng(45.4939839, -73.5793525),
+                LatLng(45.4939785, -73.5793243),
+                LatLng(45.4939900, -73.5792874),
+                LatLng(45.4940112, -73.5792472),
+                LatLng(45.4940328, -73.5792106),
+                LatLng(45.494260, -73.578942)
+            )
+
+        val lsBuilding = PolygonOptions()
+            .add(
+                LatLng(45.4961889, -73.5797400),
+                LatLng(45.4961574, -73.5796646),
+                LatLng(45.4961825, -73.5796395),
+                LatLng(45.4961137, -73.5794799),
+                LatLng(45.4959508, -73.5796230),
+                LatLng(45.4960528, -73.5798567)
+            )
+
+        val pAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496723, -73.579171),
+                LatLng(45.496677, -73.579081),
+                LatLng(45.496582, -73.579177),
+                LatLng(45.496629, -73.579267)
+            )
+
+        val prAnnex = PolygonOptions()
+            .add(
+                LatLng(45.497018, -73.579829),
+                LatLng(45.496979, -73.579749),
+                LatLng(45.496895, -73.579833),
+                LatLng(45.496933, -73.579914)
+            )
+
+        val qAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496676, -73.579082),
+                LatLng(45.496646, -73.579023),
+                LatLng(45.496553, -73.579120),
+                LatLng(45.496582, -73.579177)
+            )
+
+        val rAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496838, -73.579400),
+                LatLng(45.496803, -73.579329),
+                LatLng(45.496711, -73.579421),
+                LatLng(45.496746, -73.579492)
+            )
+
+        val rrAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496799, -73.579333),
+                LatLng(45.496760, -73.579254),
+                LatLng(45.496613, -73.579400),
+                LatLng(45.496652, -73.579480)
+            )
+        val sbBuilding = PolygonOptions()
+            .add(
+                LatLng(45.496438, -73.586207),
+                LatLng(45.496468, -73.585738),
+                LatLng(45.496493, -73.585739),
+                LatLng(45.496511, -73.585779),
+                LatLng(45.496510, -73.585792),
+                LatLng(45.496554, -73.585792),
+                LatLng(45.496574, -73.585836),
+                LatLng(45.496582, -73.585830),
+                LatLng(45.496659, -73.586008),
+                LatLng(45.496659, -73.586008)
+            )
         googleMap.addPolygon(hall)
         googleMap.addPolygon(websterLibrary)
         googleMap.addPolygon(bAnnex)
@@ -394,5 +502,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.addPolygon(kAnnex)
         googleMap.addPolygon(ldBuilding)
         googleMap.addPolygon(gaAnnex)
+        googleMap.addPolygon(fgBuilding)
+        googleMap.addPolygon(faAnnex)
+        googleMap.addPolygon(clAnnex)
+        googleMap.addPolygon(lsBuilding)
+        googleMap.addPolygon(pAnnex)
+        googleMap.addPolygon(prAnnex)
+        googleMap.addPolygon(qAnnex)
+        googleMap.addPolygon(rAnnex)
+        googleMap.addPolygon(rrAnnex)
+        googleMap.addPolygon(sbBuilding)
     }
 }
