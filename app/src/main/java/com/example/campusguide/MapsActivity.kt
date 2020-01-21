@@ -480,7 +480,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(45.496574, -73.585836),
                 LatLng(45.496582, -73.585830),
                 LatLng(45.496659, -73.586008),
-                LatLng(45.496659, -73.586008)
+                LatLng(45.496652, -73.586014),
+                LatLng(45.496684, -73.586088),
+                LatLng(45.496538, -73.586212),
+                LatLng(45.496519, -73.586168),
+                LatLng(45.496521, -73.586136),
+                LatLng(45.496506, -73.586136),
+                LatLng(45.496501, -73.586208)
             )
         googleMap.addPolygon(hall)
         googleMap.addPolygon(websterLibrary)
