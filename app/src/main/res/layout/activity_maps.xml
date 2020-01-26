@@ -6,4 +6,18 @@
     android:layout_height="match_parent"
     android:id="@+id/map"
     tools:context=".MapsActivity"
-    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+
+    <Button
+        android:id="@+id/switchCampusButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/ic_switch_campus_button"
+        android:text="@string/other_campus_name"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+</fragment>
