@@ -49,13 +49,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             switchCampus(isChecked)
         }
     }
-
-    /**
-     * Switch campus method.
-     * Check what campus to switch to, recenter.
-     * Toggle button changes the toggle status (isChecked) on its own,
-     * as well as the text on the button.
-     */
+    
     private fun switchCampus(isChecked: Boolean) {
         if(isChecked){
             // isChecked = true = on then we are at sgw campus, switch to loyola campus
