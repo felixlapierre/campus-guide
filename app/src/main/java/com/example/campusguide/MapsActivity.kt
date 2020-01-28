@@ -32,10 +32,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
-            if(checkLocationPermission()) {
+            //Check if location permission has been granted
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 goToCurrentLocation()
             } else {
-                requestLocationPermission()
+                //Request location permission
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
             }
         }
 
@@ -64,17 +66,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
     }
 
-    private fun checkLocationPermission(): Boolean {
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            return true
-        }
-        return false
-    }
-
-    private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
-    }
-
+    /**
+     * Centers the map on the user's current location and places a marker.
+     */
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             if(location != null) {
