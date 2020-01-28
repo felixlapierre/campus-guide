@@ -3,6 +3,7 @@ package com.example.campusguide
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ToggleButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.gms.maps.*
 
@@ -23,8 +24,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -44,11 +43,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
 
-        // Update switch campus button text value now that map loads
-        val switchCampusButton = findViewById<Button>(R.id.switchCampusButton)
-        switchCampusButton.text = "loy"
-        val switchCampusFAB: FloatingActionButton = findViewById(R.id.switchCampusButton)
-        switchCampusFAB.setOnClickListener(switchCampus())
+        // Update switch campus button listener
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        switchCampusToggle.setOnCheckedChangeListener{ _, isChecked ->
+            switchCampus(isChecked)
+        }
     }
 
     /**
@@ -56,25 +55,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * Check what campus to switch to, recenter, and change the value of the campus name string
      * in values/strings.
      */
-    fun switchCampus() {
+    private fun switchCampus(isChecked: Boolean) {
         // get button so we can see it's current text
-        val switchCampusButton = findViewById<Button>(R.id.switchCampusButton)
+//        val switchCampusButton: ToggleButton = findViewById(R.id.switchCampusButton)
 
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) {location ->
-            if(switchCampusButton.text.equals("loy")){
-                switchCampusButton.text = "sgw"
-                val loyCoord = LatLng(45.458153, -73.640490)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loyCoord, 17.0f))
+        if(isChecked){
+            // isChecked = true = on then we are at sgw campus, switch to loyola campus
+            val loyCoord = LatLng(45.458153, -73.640490)
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loyCoord, 17.0f))
 
-            } else if(switchCampusButton.text.equals("sgw")){
-                switchCampusButton.text = "loy"
-                val sgwCoord = LatLng(45.495792, -73.578096)
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sgwCoord, 17.0f))
-            }
-            // don't do anything if values are off
+        } else {
+            val sgwCoord = LatLng(45.495792, -73.578096)
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sgwCoord, 17.0f))
         }
-
-
-
     }
 }
