@@ -469,7 +469,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(45.496613, -73.579400),
                 LatLng(45.496652, -73.579480)
             )
-        val sbBuilding = PolygonOptions()
+        val sbBuilding = PolygonOptions() //Needs a hole
             .add(
                 LatLng(45.496438, -73.586207),
                 LatLng(45.496468, -73.585738),
@@ -488,6 +488,63 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 LatLng(45.496506, -73.586136),
                 LatLng(45.496501, -73.586208)
             )
+
+        val tAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496752, -73.579261),
+                LatLng(45.496712, -73.579184),
+                LatLng(45.496626, -73.579262),
+                LatLng(45.496668, -73.579345)
+            )
+
+        val tdBuilding = PolygonOptions()
+            .add(
+                LatLng(45.495128, -73.578501),
+                LatLng(45.495190, -73.578428),
+                LatLng(45.495038, -73.578074),
+                LatLng(45.494944, -73.578178),
+                LatLng(45.495025, -73.578324),
+                LatLng(45.495043, -73.578300),
+                LatLng(45.495066, -73.578342),
+                LatLng(45.495048, -73.578365)
+            )
+
+        val vAnnex = PolygonOptions()
+            .add(
+                LatLng(45.497089, -73.579918),
+                LatLng(45.497049, -73.579834),
+                LatLng(45.496946, -73.579938),
+                LatLng(45.496985, -73.580019)
+            )
+
+        val vaBuilding = PolygonOptions()
+            .add(
+                LatLng(45.495403, -73.573766),
+                LatLng(45.495668, -73.573509),
+                LatLng(45.495817, -73.573811),
+                LatLng(45.496070, -73.573559),
+                LatLng(45.496187, -73.573796),
+                LatLng(45.495670, -73.574310)
+            )
+
+        val xAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496949, -73.579666),
+                LatLng(45.496907, -73.579579),
+                LatLng(45.496815, -73.579671),
+                LatLng(45.496857, -73.579758)
+            )
+
+        val zAnnex = PolygonOptions()
+            .add(
+                LatLng(45.496986, -73.579742),
+                LatLng(45.496949, -73.579666),
+                LatLng(45.496851, -73.579764),
+                LatLng(45.496875, -73.579813),
+                LatLng(45.496898, -73.579790),
+                LatLng(45.496910, -73.579817)
+            )
+
         googleMap.addPolygon(hall)
         googleMap.addPolygon(websterLibrary)
         googleMap.addPolygon(bAnnex)
@@ -518,5 +575,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googleMap.addPolygon(rAnnex)
         googleMap.addPolygon(rrAnnex)
         googleMap.addPolygon(sbBuilding)
+        googleMap.addPolygon(tAnnex)
+        googleMap.addPolygon(tdBuilding)
+        googleMap.addPolygon(vaBuilding)
+        googleMap.addPolygon(xAnnex)
+        googleMap.addPolygon(zAnnex)
     }
 }
