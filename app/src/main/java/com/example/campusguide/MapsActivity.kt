@@ -52,13 +52,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     /**
      * Switch campus method.
-     * Check what campus to switch to, recenter, and change the value of the campus name string
-     * in values/strings.
+     * Check what campus to switch to, recenter.
+     * Toggle button changes the toggle status (isChecked) on its own,
+     * as well as the text on the button.
      */
     private fun switchCampus(isChecked: Boolean) {
-        // get button so we can see it's current text
-//        val switchCampusButton: ToggleButton = findViewById(R.id.switchCampusButton)
-
         if(isChecked){
             // isChecked = true = on then we are at sgw campus, switch to loyola campus
             val loyCoord = LatLng(45.458153, -73.640490)
