@@ -1,12 +1,11 @@
-package database
+package database.entity
 
-import Point
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Hole(
+data class Outline (
     @PrimaryKey val uid: Int,
-    @ColumnInfo val points: List<Point>
+    @ColumnInfo(name="highlight_id") val highlightId: Int
 )
