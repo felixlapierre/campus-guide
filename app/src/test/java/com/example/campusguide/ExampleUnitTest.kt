@@ -1,5 +1,7 @@
 package com.example.campusguide
 
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.internal.IGoogleMapDelegate
 import org.junit.Test
 
 import org.junit.Assert.*
