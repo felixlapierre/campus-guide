@@ -1,15 +1,12 @@
 package database.entity
 
-import io.objectbox.annotation.Entity
-import io.objectbox.annotation.Id
-import io.objectbox.relation.ToOne
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 data class Building(
-    @Id var id: Long = 0,
-    var fullName: String = "",
-    var abbreviationName: String = ""
-){
-    lateinit var highlight: ToOne<Highlight>
-    constructor(fullName: String, abbreviationName: String): this (0, fullName, abbreviationName)
-}
+    @PrimaryKey val uid: Int,
+    @ColumnInfo(name = "full_name") val fullName: String,
+    @ColumnInfo(name = "abbreviation_name") val abbreviationName: String
+)
