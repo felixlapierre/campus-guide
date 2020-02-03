@@ -7,8 +7,8 @@ import androidx.room.RoomDatabase
 import database.dao.BuildingDao
 import database.entity.*
 
-@Database(entities = arrayOf(Point::class, Hole::class, Outline::class, Highlight::class, Building::class), version = 1)
-abstract class AppDatabase private constructor() : RoomDatabase() {
+@Database(entities = [Point::class, Hole::class, Outline::class, Highlight::class, Building::class], version = 1, exportSchema = true)
+abstract class AppDatabase : RoomDatabase() {
     abstract fun BuildingDao(): BuildingDao
     companion object {
 
