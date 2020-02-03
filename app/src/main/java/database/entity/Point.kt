@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity
+@Entity(tableName = "point")
 data class Point(
     @PrimaryKey val uid: Int,
     @ColumnInfo(name="polygon_id") val polygonId: Int,
