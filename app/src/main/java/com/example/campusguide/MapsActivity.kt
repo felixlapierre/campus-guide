@@ -1,18 +1,26 @@
 package com.example.campusguide
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +29,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
+        currentLocationButton.setOnClickListener {
+            //Check if location permission has been granted
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                goToCurrentLocation()
+            } else {
+                //Request location permission
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
+            }
+        }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -39,5 +60,44 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
+    }
+
+    companion object {
+        private const val LOCATION_PERMISSION_ACCESS_CODE = 1
+    }
+
+    /**
+     * Centers the map on the user's current location and places a marker.
+     */
+    private fun goToCurrentLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
+            if(location != null) {
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+                mMap.addMarker(MarkerOptions()
+                    .position(currentLatLng)
+                    .title("You are here.")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.0f))
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode) {
+            LOCATION_PERMISSION_ACCESS_CODE -> {
+                if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    goToCurrentLocation()
+                }
+                return
+            }
+            // Add switch case statements for other permissions (e.g. contacts or calendar) here
+            else -> {
+                // Ignore all other requests
+            }
+        }
     }
 }
