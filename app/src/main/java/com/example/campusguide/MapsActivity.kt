@@ -65,21 +65,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        switchCampusToggle.setOnCheckedChangeListener{ _, isAtDowntownCampus ->
-            switchCampus(isAtDowntownCampus)
-        }
+        SwitchCampus(switchCampusToggle, mMap)
     }
     
-    private fun switchCampus(isAtDowntownCampus: Boolean) {
-        if(isAtDowntownCampus){
-            val loyCoord = LatLng(45.458153, -73.640490)
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loyCoord, 17.0f))
 
-        } else {
-            val sgwCoord = LatLng(45.495792, -73.578096)
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sgwCoord, 17.0f))
-        }
-    }
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
