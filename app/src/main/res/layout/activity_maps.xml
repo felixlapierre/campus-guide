@@ -9,6 +9,21 @@
     tools:context=".MapsActivity"
     android:name="com.google.android.gms.maps.SupportMapFragment">
 
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/switchCampusButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_switch_campus_button"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textOff="@string/loy_campus"
+        android:textOn="@string/sgw_campus"
+        android:textStyle="bold" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/currentLocationButton"
         android:layout_width="wrap_content"

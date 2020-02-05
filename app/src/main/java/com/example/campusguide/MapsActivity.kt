@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -59,8 +60,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
+
+        // Update switch campus button listener
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        SwitchCampus(switchCampusToggle, mMap)
     }
+    
+
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
@@ -77,7 +84,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                     .position(currentLatLng)
                     .title("You are here.")
                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 17.0f))
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
             }
         }
     }
