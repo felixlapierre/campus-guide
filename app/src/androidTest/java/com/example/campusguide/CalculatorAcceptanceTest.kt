@@ -1,12 +1,11 @@
 package com.example.campusguide
 
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import androidx.test.rule.ActivityTestRule
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiSelector
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -25,10 +24,18 @@ class CalculatorAcceptanceTest {
 
     @Test
     fun addTwoNumbers() {
-        onView(withId(R.id.firstNumber)).perform(typeText("3"), closeSoftKeyboard())
-        onView(withId(R.id.secondNumber)).perform(typeText("5"), closeSoftKeyboard())
-        onView(withId(R.id.calculateButton)).perform(click())
+        val device = UiDevice.getInstance(getInstrumentation())
 
-        onView(withId(R.id.resultTextView)).check(matches(withText("8")))
+        val text1 = device.findObject(UiSelector().className("android.widget.EditText").instance(0))
+        text1.setText("3")
+
+        val text2 = device.findObject(UiSelector().className("android.widget.EditText").instance(1))
+        text2.setText("5")
+        val button = device.findObject(By.text("CALCULATE"))
+        button.click()
+
+        val result = device.findObject(UiSelector().className("android.widget.TextView"))
+
+        assert(result.text.equals("8"))
     }
 }
