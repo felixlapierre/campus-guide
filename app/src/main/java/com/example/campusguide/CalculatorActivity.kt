@@ -16,15 +16,17 @@ class CalculatorActivity : AppCompatActivity() {
         setContentView(R.layout.activity_calculator)
         setSupportActionBar(toolbar)
 
-        calculateButton.setOnClickListener {
-            var first = firstNumber.text.toString()
-            var second = secondNumber.text.toString()
-            if(first.isEmpty()|| second.isEmpty()) {
-                resultTextView.text = "Please enter two numbers."
-            } else {
-                var result = Calculator().add(first.toInt(), second.toInt())
-                resultTextView.text = result.toString()
-            }
+        calculateButton.setOnClickListener(::onCalculate)
+    }
+
+    fun onCalculate(view: View) {
+        var first = firstNumber.text.toString()
+        var second = secondNumber.text.toString()
+        if (first.isEmpty() || second.isEmpty()) {
+            resultTextView.text = "Please enter two numbers."
+        } else {
+            var result = Calculator().add(first.toInt(), second.toInt())
+            resultTextView.text = result.toString()
         }
     }
 
