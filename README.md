@@ -1,6 +1,7 @@
 # campus-guide
 Concordia Campus Guide application - SOEN390
 
+
 ## Objective:
 Create a campus guide application to help students locate their classrooms.
 
