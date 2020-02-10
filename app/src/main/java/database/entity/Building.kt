@@ -1,12 +1,11 @@
 package database.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
 
-@Entity(tableName = "building")
+@Entity
 data class Building(
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name = "full_name") val fullName: String,
-    @ColumnInfo(name = "abbreviation_name") val abbreviationName: String
+    @Id var id: Long = 0,
+    var fullName: String? = null,
+    var abbreviationName: String? = null
 )
