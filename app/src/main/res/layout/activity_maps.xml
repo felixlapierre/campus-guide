@@ -1,17 +1,15 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/map"
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="example.javatpoint.com.kotlingooglesearchlocation.MapsActivity"
-    tools:layout="@layout/activity_maps">
+    tools:layout="@layout/activity_maps"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
         <EditText
             android:layout_width="248dp"
             android:layout_height="wrap_content"
@@ -19,13 +17,35 @@
             android:layout_weight="0.5"
             android:inputType="textPersonName"
             android:hint="Search Location" />
-
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:onClick="searchLocation"
             android:text="Search" />
-
     </LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/currentLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="5dp"
+        app:srcCompat="@drawable/ic_my_location"
+        app:fabSize="normal"
+        app:backgroundTint="@android:color/white"/>
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/switchCampusButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_switch_campus_button"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textOff="@string/loy_campus"
+        android:textOn="@string/sgw_campus"
+        android:textStyle="bold" />
 </fragment>
