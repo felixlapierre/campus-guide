@@ -1,30 +1,24 @@
 package com.example.campusguide
 
-import android.Manifest
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ToggleButton
-import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import android.util.Log
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolygonOptions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import database.AppDatabase
+import database.ObjectBox
+import database.entity.Building
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +27,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        var db = AppDatabase.getInstance(this.applicationContext)
-
-        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener {
-            //Check if location permission has been granted
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                goToCurrentLocation()
-            } else {
-                //Request location permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
-            }
-        }
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        ObjectBox.init(this.applicationContext)
+        testDatabase()
     }
 
     /**
@@ -66,52 +48,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
         addBuildingHighlights(googleMap)
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
-
-        // Update switch campus button listener
-        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        SwitchCampus(switchCampusToggle, mMap)
     }
 
-
-
-    companion object {
-        private const val LOCATION_PERMISSION_ACCESS_CODE = 1
-    }
-
-    /**
-     * Centers the map on the user's current location and places a marker.
-     */
-    private fun goToCurrentLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if(location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(MarkerOptions()
-                    .position(currentLatLng)
-                    .title("You are here.")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
-            }
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when(requestCode) {
-            LOCATION_PERMISSION_ACCESS_CODE -> {
-                if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    goToCurrentLocation()
-                }
-                return
-            }
-            // Add switch case statements for other permissions (e.g. contacts or calendar) here
-            else -> {
-                // Ignore all other requests
-            }
-        }
+    //This is a testing method for Francois' eyes only. If you're seeing this then Francois messed up
+    private fun testDatabase(){
+        val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
+        val building = Building()
+        building.fullName = "Henry F. Hall Building"
+        building.abbreviationName = "H"
+        buildingBox.put(building)
+        val buildings = buildingBox.all
+        val firstbuilding = buildings.get(0)
+        Log.d("D", firstbuilding.fullName)
+        Log.d("D", firstbuilding.abbreviationName)
     }
 
     fun addBuildingHighlights(googleMap: GoogleMap){
