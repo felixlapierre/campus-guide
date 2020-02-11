@@ -12,7 +12,6 @@ import com.example.campusguide.directions.GetDirectionsDialogFragment
 import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import android.util.Log
 import com.example.campusguide.utils.BuildingHighlights
 
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -22,16 +21,13 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolygonOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import database.AppDatabase
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var route: Route
-    private lateinit var db: AppDatabase
     private lateinit var  buildingHighlights: BuildingHighlights
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +37,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        var db = AppDatabase.getInstance(this.applicationContext)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {

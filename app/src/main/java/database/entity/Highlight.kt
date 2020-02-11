@@ -1,11 +1,14 @@
 package database.entity
 
-import androidx.room.ColumnInfo
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+import io.objectbox.annotation.Backlink
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
 
-@Entity(tableName = "highlight")
+@Entity
 data class Highlight (
-    @PrimaryKey val uid: Int,
-    @ColumnInfo(name="building_id") val buildingId: Int
-)
+    @Id var id: Long = 0
+){
+    @Backlink(to = "highlight")
+    lateinit var outlines: ToMany<Outline>
+}

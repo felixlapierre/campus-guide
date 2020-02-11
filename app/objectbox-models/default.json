@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:4865408894138207333",
-      "lastPropertyId": "3:3345510463695138329",
+      "lastPropertyId": "4:6897660730368126203",
       "name": "Building",
       "properties": [
         {
@@ -23,13 +23,127 @@
           "id": "3:3345510463695138329",
           "name": "abbreviationName",
           "type": 9
+        },
+        {
+          "id": "4:6897660730368126203",
+          "name": "highlightId",
+          "indexId": "1:4745842477158500114",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2273311202306980868",
+      "lastPropertyId": "1:8653727079154488402",
+      "name": "Highlight",
+      "properties": [
+        {
+          "id": "1:8653727079154488402",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:5808509705340976460",
+      "lastPropertyId": "2:5669587722174108724",
+      "name": "Hole",
+      "properties": [
+        {
+          "id": "1:8415622858978392519",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5669587722174108724",
+          "name": "outlineId",
+          "indexId": "2:8475358497072644599",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Outline"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "4:979107588825278787",
+      "lastPropertyId": "2:581524586020932169",
+      "name": "Outline",
+      "properties": [
+        {
+          "id": "1:8744848346743062063",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:581524586020932169",
+          "name": "highlightId",
+          "indexId": "3:8750872319771073481",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:376825112130238433",
+      "lastPropertyId": "6:2270437056736843051",
+      "name": "Point",
+      "properties": [
+        {
+          "id": "1:5804080741670105019",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5139106651117799950",
+          "name": "order",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "3:7809547777863326315",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:213248402279956257",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "5:1447524466454099297",
+          "name": "outlineId",
+          "indexId": "4:8296567612132023551",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Outline"
+        },
+        {
+          "id": "6:2270437056736843051",
+          "name": "holeId",
+          "indexId": "5:8246044350848783847",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Hole"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:4865408894138207333",
-  "lastIndexId": "0:0",
+  "lastEntityId": "5:376825112130238433",
+  "lastIndexId": "5:8246044350848783847",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
