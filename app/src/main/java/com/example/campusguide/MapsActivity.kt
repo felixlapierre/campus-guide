@@ -2,8 +2,6 @@ package com.example.campusguide
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.example.campusguide.utils.BuildingHighlights
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,11 +9,6 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolygonOptions
-import database.ObjectBox
-import database.entity.Building
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 

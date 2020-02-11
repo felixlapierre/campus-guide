@@ -1,4 +1,4 @@
-package com.example.campusguide.utils
+package com.example.campusguide
 
 import android.util.Log
 import com.google.android.gms.maps.GoogleMap
