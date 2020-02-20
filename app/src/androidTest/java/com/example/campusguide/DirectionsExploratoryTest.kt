@@ -4,6 +4,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalTo
 import org.hamcrest.Matchers.greaterThan
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -16,8 +17,8 @@ class DirectionsExploratoryTest {
             val context = getInstrumentation().targetContext
 
             val response = Directions(context).getDirections("Hall Building", "Faubourg Building")
-            val routes = response.getJSONArray("routes")
-            assertThat(routes.length(), greaterThan(0))
+            val eq = response?.status.equals("OK")
+            assertThat(eq, equalTo(true))
         }
     }
 }

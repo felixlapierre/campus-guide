@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.maps.DirectionsApiRequest
+import com.google.maps.GeoApiContext
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
