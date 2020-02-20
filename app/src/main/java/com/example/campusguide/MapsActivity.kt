@@ -17,8 +17,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.maps.DirectionsApiRequest
-import com.google.maps.GeoApiContext
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -47,8 +45,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
         navigateButton.setOnClickListener {
             val getDirectionsDialogFragment = GetDirectionsDialogFragment(
-                GetDirectionsDialogFragment.DirectionsDialogOptions(null, null) { start, end ->
+                GetDirectionsDialogFragment.DirectionsDialogOptions("Concordia University Hall Building", "Faubourg Building") { start, end ->
                     //Display the directions time
+                    Route(mMap, this, start, end)
                     println("Getting directions from $start to $end")
                 }
             )
