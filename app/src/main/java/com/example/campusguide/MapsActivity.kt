@@ -42,6 +42,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment = GetDirectionsDialogFragment(
+                GetDirectionsDialogFragment.DirectionsDialogOptions(null, null) { start, end ->
+                    //Display the directions time
+                    println("Getting directions from $start to $end")
+                }
+            )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+        }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
