@@ -1,4 +1,4 @@
-package com.example.campusguide
+package com.example.campusguide.directions
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -6,24 +6,41 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.R
 import java.lang.IllegalStateException
 
+/**
+ * An Android fragment that contains a dialog window prompting the user to
+ * enter their start and end location for getting directions.
+ */
 class GetDirectionsDialogFragment constructor(private val options: DirectionsDialogOptions) :
     DialogFragment() {
 
+    /**
+     * Options for creating a Directions dialog.
+     * @param start Autofills the start location to the specified value
+     * @param end Autofills the end location to the specified value
+     * @param onConfirm Callback that will be executed when the user confirms the dialog window
+     */
     class DirectionsDialogOptions constructor(
         val start: String?, val end: String?,
         val onConfirm: (String, String) -> Unit
     )
 
+    /**
+     * Called when the dialog window is created.
+     */
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Creates a scope where the current activity is bound to the variable "it"
         return activity?.let {
-            val builder = AlertDialog.Builder(it)
 
             val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.directions_dialog_layout, null)
+
             setDefaultLocations(view)
-            builder.setView(view)
+
+            val builder = AlertDialog.Builder(it)
+                .setView(view)
                 .setMessage("Enter start and end location")
                 .setPositiveButton("Go") { _, _ ->
                     val startEditText =
@@ -32,6 +49,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
                     val start = startEditText?.text.toString()
                     val end = endEditText?.text.toString()
+
                     options.onConfirm(start, end)
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->

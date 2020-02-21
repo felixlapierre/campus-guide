@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.directions.GetDirectionsDialogFragment
+import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -44,13 +46,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
         navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment = GetDirectionsDialogFragment(
-                GetDirectionsDialogFragment.DirectionsDialogOptions("Concordia University Hall Building", "Faubourg Building") { start, end ->
-                    //Display the directions time
-                    Route(mMap, this, start, end)
-                    println("Getting directions from $start to $end")
-                }
-            )
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        "Concordia University Hall Building",
+                        "Faubourg Building"
+                    ) { start, end ->
+                        //Display the directions time
+                        Route(mMap, this, start, end)
+                        println("Getting directions from $start to $end")
+                    }
+                )
             getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
         }
 

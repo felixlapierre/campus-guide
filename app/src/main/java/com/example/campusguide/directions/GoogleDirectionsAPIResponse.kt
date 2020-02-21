@@ -1,9 +1,11 @@
-package com.example.campusguide.utils.dtos
+package com.example.campusguide.directions
 
 import com.beust.klaxon.*
 
-
-
+/**
+ * A set of data classes to represent the contents
+ * of a Google Directions API response.
+ */
 data class GoogleDirectionsAPIResponse (
 
     @Json(name = "status")
