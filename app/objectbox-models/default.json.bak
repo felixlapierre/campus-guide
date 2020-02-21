@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:4865408894138207333",
-      "lastPropertyId": "3:3345510463695138329",
+      "lastPropertyId": "4:1086845066217589590",
       "name": "Building",
       "properties": [
         {
@@ -23,20 +23,161 @@
           "id": "3:3345510463695138329",
           "name": "abbreviationName",
           "type": 9
+        },
+        {
+          "id": "4:1086845066217589590",
+          "name": "highlightId",
+          "indexId": "1:4397766277234594283",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:7675794159114878049",
+      "lastPropertyId": "1:7487223644538674683",
+      "name": "Highlight",
+      "properties": [
+        {
+          "id": "1:7487223644538674683",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:4671669815610120735",
+      "lastPropertyId": "7:5005110481684069504",
+      "name": "Point",
+      "properties": [
+        {
+          "id": "1:5643837796513444430",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5321796577387995996",
+          "name": "order",
+          "type": 5,
+          "flags": 4
+        },
+        {
+          "id": "3:6135406467875326915",
+          "name": "latitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "4:1410265283058249673",
+          "name": "longitude",
+          "type": 8,
+          "flags": 4
+        },
+        {
+          "id": "6:2933218887640789020",
+          "name": "outlineId",
+          "indexId": "9:7472042271885945031",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Outline"
+        },
+        {
+          "id": "7:5005110481684069504",
+          "name": "holeId",
+          "indexId": "10:157140034608265415",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Hole"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "5:5461194227660504461",
+      "lastPropertyId": "3:8541406304222303640",
+      "name": "Hole",
+      "properties": [
+        {
+          "id": "1:671220719390436110",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4302232123554110124",
+          "name": "highlightOutlineId",
+          "indexId": "5:6475207934657758594",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        },
+        {
+          "id": "3:8541406304222303640",
+          "name": "highlightHoleId",
+          "indexId": "6:4030069565823951195",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "6:2538353799241150413",
+      "lastPropertyId": "3:7023037564965793413",
+      "name": "Outline",
+      "properties": [
+        {
+          "id": "1:7043611697871086656",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:181231789849946544",
+          "name": "highlightOutlineId",
+          "indexId": "7:753080009766208761",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
+        },
+        {
+          "id": "3:7023037564965793413",
+          "name": "highlightHoleId",
+          "indexId": "8:2843774975596864011",
+          "type": 11,
+          "flags": 1548,
+          "relationTarget": "Highlight"
         }
       ],
       "relations": []
     }
   ],
-  "lastEntityId": "1:4865408894138207333",
-  "lastIndexId": "0:0",
+  "lastEntityId": "6:2538353799241150413",
+  "lastIndexId": "10:157140034608265415",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredEntityUids": [
+    1792899123297018307
+  ],
+  "retiredIndexUids": [
+    8175606772577645496,
+    5582401198260518308,
+    7065360965968481709
+  ],
+  "retiredPropertyUids": [
+    1317066637255259505,
+    7957354378674056618,
+    7482506891707675687,
+    2108802986397402080
+  ],
   "retiredRelationUids": [],
   "version": 1
 }

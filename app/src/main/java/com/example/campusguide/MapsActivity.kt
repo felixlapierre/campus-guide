@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import database.ObjectBox
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -37,6 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        ObjectBox.init(this.applicationContext)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
