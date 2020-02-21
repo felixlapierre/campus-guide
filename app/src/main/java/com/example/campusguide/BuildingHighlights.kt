@@ -6,6 +6,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.PolygonOptions
 import database.ObjectBox
 import database.entity.Building
+import database.entity.Highlight
+import database.entity.Point
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
@@ -14,14 +16,6 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
     //This is a testing method for Francois' eyes only. If you're seeing this then Francois messed up
     fun testDatabase(){
         val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
-        val building = Building()
-        building.fullName = "Henry F. Hall Building"
-        building.abbreviationName = "H"
-        buildingBox.put(building)
-        val buildings = buildingBox.all
-        val firstbuilding = buildings.get(0)
-        Log.d("D", firstbuilding.fullName)
-        Log.d("D", firstbuilding.abbreviationName)
     }
 
     fun addBuildingHighlights(){

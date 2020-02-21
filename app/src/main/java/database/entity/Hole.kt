@@ -1,12 +1,16 @@
-//package database.entity
-//
-//import androidx.room.ColumnInfo
-//import androidx.room.Entity
-//import androidx.room.PrimaryKey
-//import androidx.room.Relation
-//
-//@Entity(tableName = "hole")
-//data class Hole(
-//    @PrimaryKey(autoGenerate = true) val uid: Int,
-//    @ColumnInfo(name="highlight_id") val highlightId: Int
-//)
+package database.entity
+
+import io.objectbox.annotation.Backlink
+import io.objectbox.annotation.Entity
+import io.objectbox.annotation.Id
+import io.objectbox.relation.ToMany
+import io.objectbox.relation.ToOne
+
+@Entity
+data class Hole (
+    @Id var id: Long = 0
+){
+    lateinit var highlight: ToOne<Highlight>
+    @Backlink(to = "hole")
+    lateinit var points: ToMany<Point>
+}
