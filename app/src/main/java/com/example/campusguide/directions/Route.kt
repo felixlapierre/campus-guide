@@ -18,12 +18,13 @@ import kotlinx.coroutines.launch
  * @param start The name of the location where the route starts
  * @param end The name of the location where the route ends
  */
-class Route constructor(private val map: GoogleMap, ctx: AppCompatActivity, start: String, end: String) {
-    private lateinit var polyline: Polyline
+class Route constructor(private val map: GoogleMap, private val activity: AppCompatActivity) {
+    private var polyline: Polyline? = null
 
-    //This is the body of the primary constructor which was defined on the class declaration line
-    init {
-        val directions = Directions(ctx)
+    fun set(start: String, end: String) {
+        polyline?.remove()
+
+        val directions = Directions(activity)
 
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
@@ -45,14 +46,10 @@ class Route constructor(private val map: GoogleMap, ctx: AppCompatActivity, star
                 /**
                  * addPolyline throws an exception if it is not run on the Ui thread.
                  */
-                ctx.runOnUiThread {
-                    map.addPolyline(PolylineOptions().addAll(decodedAsGoodLatLng))
+                activity.runOnUiThread {
+                    polyline = map.addPolyline(PolylineOptions().addAll(decodedAsGoodLatLng))
                 }
             }
         }
-    }
-
-    fun remove() {
-        polyline.remove()
     }
 }

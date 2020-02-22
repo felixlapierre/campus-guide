@@ -26,6 +26,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var route: Route
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,8 +56,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         EmptyDirectionsGuard(this,
                             CallbackDirectionsConfirmListener { start, end ->
                                 //Display the directions time
-                                Route(mMap, this, start, end)
-                                println("Getting directions from $start to $end")
+                                route.set(start, end)
                             })
                     )
                 )
@@ -77,6 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        route = Route(mMap, this)
 
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
