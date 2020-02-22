@@ -16,6 +16,10 @@ import java.lang.IllegalStateException
 class GetDirectionsDialogFragment constructor(private val options: DirectionsDialogOptions) :
     DialogFragment() {
 
+    interface DirectionsDialogConfirmationListener {
+        fun onConfirm(start: String, end: String)
+    }
+
     /**
      * Options for creating a Directions dialog.
      * @param start Autofills the start location to the specified value
@@ -24,7 +28,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
      */
     class DirectionsDialogOptions constructor(
         val start: String?, val end: String?,
-        val onConfirm: (String, String) -> Unit
+        val confirmationListener: DirectionsDialogConfirmationListener
     )
 
     /**
@@ -50,7 +54,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
                     val start = startEditText?.text.toString()
                     val end = endEditText?.text.toString()
 
-                    options.onConfirm(start, end)
+                    options.confirmationListener.onConfirm(start, end)
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()

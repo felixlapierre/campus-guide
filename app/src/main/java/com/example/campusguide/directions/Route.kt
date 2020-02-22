@@ -1,6 +1,8 @@
 package com.example.campusguide.directions
 
 import android.app.Activity
+import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.utils.MessageDialogFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
@@ -16,7 +18,7 @@ import kotlinx.coroutines.launch
  * @param start The name of the location where the route starts
  * @param end The name of the location where the route ends
  */
-class Route constructor(private val map: GoogleMap, ctx: Activity, start: String, end: String) {
+class Route constructor(private val map: GoogleMap, ctx: AppCompatActivity, start: String, end: String) {
     private lateinit var polyline: Polyline
 
     //This is the body of the primary constructor which was defined on the class declaration line
@@ -27,7 +29,7 @@ class Route constructor(private val map: GoogleMap, ctx: Activity, start: String
         GlobalScope.launch {
             val response = directions.getDirections(start, end)
 
-            if (response != null) {
+            if(response != null) {
                 val line = response.routes[0].overviewPolyline.points
                 val decoded = PolylineEncoding.decode(line)
 

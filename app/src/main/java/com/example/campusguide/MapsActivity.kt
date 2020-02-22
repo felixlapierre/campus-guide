@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.directions.CallbackDirectionsConfirmListener
+import com.example.campusguide.directions.EmptyDirectionsGuard
 import com.example.campusguide.directions.GetDirectionsDialogFragment
 import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -49,13 +51,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val getDirectionsDialogFragment =
                 GetDirectionsDialogFragment(
                     GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        "Concordia University Hall Building",
-                        "Faubourg Building"
-                    ) { start, end ->
-                        //Display the directions time
-                        Route(mMap, this, start, end)
-                        println("Getting directions from $start to $end")
-                    }
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                Route(mMap, this, start, end)
+                                println("Getting directions from $start to $end")
+                            })
+                    )
                 )
             getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
         }
