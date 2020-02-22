@@ -34,4 +34,16 @@
         app:fabSize="normal"
         app:backgroundTint="@android:color/white"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/navigateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_margin="8dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_compass_outline"
+        app:maxImageSize="36dp"
+        app:fabSize="normal"
+        app:backgroundTint="@android:color/white"/>
+
 </fragment>
