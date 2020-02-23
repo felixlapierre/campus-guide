@@ -12,13 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77284fa9-e9db-4f17-8a6d-8b75792d5ea2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_exit_search.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/res/drawable/ic_search_location.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/campusguide/MapsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/campusguide/MapsActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/res/layout/activity_maps.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/activity_maps.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,8 +42,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/campusguide/MapsActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2040">
-              <caret line="153" column="8" selection-start-line="153" selection-start-column="8" selection-end-line="153" selection-end-column="8" />
+            <state relative-caret-position="238">
+              <caret line="44" column="61" selection-start-line="44" selection-start-column="61" selection-end-line="44" selection-end-column="61" />
             </state>
           </provider>
         </entry>
@@ -56,8 +51,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="306">
+              <caret line="21" column="102" selection-start-line="21" selection-start-column="102" selection-end-line="21" selection-end-column="102" />
             </state>
           </provider>
         </entry>
@@ -143,16 +138,17 @@
         <option value="$PROJECT_DIR$/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/src/main/res/drawable/ic_search_location" />
         <option value="$PROJECT_DIR$/src/main/res/drawable/ic_exit_search.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt" />
         <option value="$PROJECT_DIR$/src/main/res/layout/activity_maps.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/example/campusguide/MapsActivity.kt" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-15" />
-    <option name="width" value="1950" />
-    <option name="height" value="2175" />
+    <option name="y" value="-15" />
+    <option name="width" value="1953" />
+    <option name="height" value="2093" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -304,7 +300,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-6" y="-6" width="1549" height="837" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.27900738" />
@@ -319,9 +314,9 @@
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49832326" weight="0.3281471" />
       <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49899396" weight="0.3281471" />
       <window_info anchor="bottom" id="Debug" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.4969819" weight="0.3281471" />
-      <window_info active="true" anchor="bottom" id="Event Log" order="5" sideWeight="0.50167674" side_tool="true" visible="true" weight="0.3281471" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.49832326" weight="0.3281471" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="4" sideWeight="0.49564052" visible="true" weight="0.3281471" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5043595" side_tool="true" visible="true" weight="0.3281471" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4976526" weight="0.3281471" />
       <window_info anchor="bottom" id="Build" order="7" sideWeight="0.4963112" weight="0.3281471" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.32931727" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32931727" />
@@ -429,13 +424,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/res/layout/activity_maps.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -448,10 +436,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/campusguide/SwitchCampus.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="21" column="102" selection-start-line="21" selection-start-column="102" selection-end-line="21" selection-end-column="102" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/campusguide/MapsActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2040">
-          <caret line="153" column="8" selection-start-line="153" selection-start-column="8" selection-end-line="153" selection-end-column="8" />
+        <state relative-caret-position="238">
+          <caret line="44" column="61" selection-start-line="44" selection-start-column="61" selection-end-line="44" selection-end-column="61" />
         </state>
       </provider>
     </entry>
