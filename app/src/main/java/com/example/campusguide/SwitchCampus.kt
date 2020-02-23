@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import android.widget.TextView
 import android.widget.ToggleButton
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

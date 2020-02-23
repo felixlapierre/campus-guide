@@ -11,17 +11,18 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@android:color/holo_blue_light">
+
         <TextView
             android:id="@+id/campus_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_width="116dp"
+            android:layout_height="176dp" />
         <EditText
             android:layout_width="248dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_weight="0.5"
             android:inputType="textPersonName"
-            android:hint="Search Location">
+            android:hint="Search Location">5
         </EditText>
         <ImageButton
             android:id="@+id/search_location"
