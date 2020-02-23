@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Campus Guide</string>
     <string name="title_activity_maps">Map</string>
-    <string name="places_api">AIzaSyAdu7knegs21yz0K9p-G1yK7X6rccaaqOc</string>
     <string name="title_activity_calculator">CalculatorActivity</string>
     <string name="loy_campus">LOY</string>
     <string name="sgw_campus">SGW</string>
