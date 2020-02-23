@@ -9,20 +9,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="@android:color/holo_blue_light">
+        <TextView
+            android:id="@+id/campus_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <EditText
             android:layout_width="248dp"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:layout_weight="0.5"
             android:inputType="textPersonName"
-            android:hint="Search Location" />
-        <Button
+            android:hint="Search Location">
+        </EditText>
+        <ImageButton
+            android:id="@+id/search_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:onClick="searchLocation"
-            android:text="Search" />
+            android:src="@drawable/ic_search_location"
+            style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/currentLocationButton"

@@ -29,6 +29,7 @@ import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import java.io.IOException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -64,6 +65,9 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        editText.visibility = View.GONE
+        campus_name.text = "SGW Campus"
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -144,6 +148,10 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
     }
 
     fun searchLocation(view: View) {
+        campus_name.visibility = View.GONE
+        editText.visibility = View.VISIBLE
+        editText.requestFocus()
+
         val locationSearch:EditText = findViewById<EditText>(R.id.editText)
         lateinit var location: String
         location = locationSearch.text.toString()
