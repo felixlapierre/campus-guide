@@ -43,7 +43,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
         buildingHighlights = BuildingHighlights(mMap)
-        buildingHighlights.testDatabase()
         buildingHighlights.addBuildingHighlights()
     }
 }
