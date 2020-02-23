@@ -1,32 +1,65 @@
 package database.migration
 
+import android.content.Context
+import android.content.res.AssetManager
 import android.util.Log
 import database.ObjectBox
 import database.entity.*
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.File
 
-class Migration0_1{
+class Migration0_1(){
     companion object{
-        fun migrate(){
+        fun migrate(applicationContext: Context){
+            val buildingHighlightData = JSONArray(applicationContext.assets.open("buildingHighlightData.json").bufferedReader().readText())
             val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
             buildingBox.removeAll()
 
-            val Hbuilding = Building("Henry F. Hall Building", "H")
-            val highlight = Highlight()
-            val outline = Outline()
-            outline.points.add(Point(0,45.497165, -73.579545))
-            outline.points.add(Point(1, 45.497710, -73.579034))
-            outline.points.add(Point(2, 45.497373, -73.578338))
-            outline.points.add(Point(3, 45.496830, -73.578850))
-            highlight.outlines.add(outline)
-            Hbuilding.highlight.target = highlight
-            buildingBox.put(Hbuilding)
+            for(i in 0 until buildingHighlightData.length()){
+                val building = buildingHighlightData.getJSONObject(i)
+                val buildingEntity = Building(building.getString("fullName"), building.getString("abbreviationName"))
+                val highlight = building.getJSONObject("highlight")
+                val highlightEntity = Highlight()
 
+                //Creating the highlight outlines
+                val outlines = highlight.getJSONArray("outlines")
+                for(j in 0 until outlines.length()){
+                    val outlineEntity = Outline()
+                    val points = outlines.getJSONArray(j)
+                    for(k in 0 until points.length()){
+                        outlineEntity.points.addAll(getPointEntityCollection(points))
+                    }
+                    highlightEntity.outlines.add(outlineEntity)
+                }
 
-            //testing
+                //Creating the highlight holes
+                val holes = highlight.getJSONArray("holes")
+                for(j in 0 until holes.length()){
+                    val holeEntity = Hole()
+                    val points = outlines.getJSONArray(j)
+                    for(k in 0 until points.length()){
+                        holeEntity.points.addAll(getPointEntityCollection(points))
+                    }
+                    highlightEntity.holes.add(holeEntity)
+                }
+                buildingEntity.highlight.target = highlightEntity
+                buildingBox.put(buildingEntity)
+            }
+
             val buildings = buildingBox.all
-            Log.d("BUILDINGS", buildings.toString())
+            Log.d("BUILDINGS",buildings.size.toString())
+        }
+
+        private fun getPointEntityCollection(points: JSONArray): Collection<Point>{
+            val pointEntities = mutableListOf<Point>()
+            for(i in 0 until points.length()){
+                val point = points.getJSONObject(i)
+                pointEntities.add(Point(i, point.getDouble("latitude"), point.getDouble("longitude")))
+            }
+            return pointEntities
         }
     }
 }

@@ -7,11 +7,11 @@ import io.objectbox.relation.ToOne
 @Entity
 data class Point (
     @Id var id: Long = 0,
-    var order: Int,
-    var latitude: Double,
-    var longitude: Double
+    var order: Int = 0,
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0
 ){
-    lateinit var outline: ToOne<Outline>
-    lateinit var hole: ToOne<Hole>
+    var outline: ToOne<Outline>? = null
+    var hole: ToOne<Hole>? = null
     constructor(order: Int, latitude: Double, longitude: Double): this(0, order, latitude, longitude)
 }

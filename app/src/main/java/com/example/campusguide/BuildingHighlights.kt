@@ -19,7 +19,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
     }
 
     fun addBuildingHighlights(){
-        val hall = PolygonOptions()
+        val hall = PolygonOptions()//done
             .add(
                 LatLng(45.497165, -73.579545),
                 LatLng(45.497710, -73.579034),
@@ -27,7 +27,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496830, -73.578850)
             )
 
-        val websterLibrary = PolygonOptions()
+        val websterLibrary = PolygonOptions()//done
             .add(
                 LatLng(45.496913, -73.578330),
                 LatLng(45.496897, -73.578290),
@@ -61,7 +61,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496869, -73.578372)
             )
 
-        val bAnnex = PolygonOptions()
+        val bAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497883, -73.579384),
                 LatLng(45.497917, -73.579453),
@@ -69,7 +69,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497705, -73.579560)
             )
 
-        val ev = PolygonOptions()
+        val ev = PolygonOptions()//done
             .add(
                 LatLng(45.4952462, -73.5780194),
                 LatLng(45.4952631, -73.5779996),
@@ -85,7 +85,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 //LatLng(45.4952453, -73.5780184)
             )
 
-        val gm = PolygonOptions()
+        val gm = PolygonOptions()//done
             .add(
                 LatLng(45.4957625, -73.5791047),
                 LatLng(45.4957797, -73.5791463),
@@ -96,7 +96,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4957781, -73.5790909)
             )
 
-        val jmsb = PolygonOptions()
+        val jmsb = PolygonOptions()//done
             .add(
                 LatLng(45.495187, -73.578526),
                 LatLng(45.495006, -73.578737),
@@ -109,7 +109,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.495440, -73.578962)
             )
 
-        val muAnnex = PolygonOptions()
+        val muAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497963, -73.579537),
                 LatLng(45.497785, -73.579704),
@@ -117,7 +117,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497920, -73.579460)
             )
 
-        val dAnnex = PolygonOptions()
+        val dAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497849, -73.579311),
                 LatLng(45.497811, -73.579232),
@@ -125,7 +125,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497742, -73.579412)
             )
 
-        val miAnnex = PolygonOptions()
+        val miAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497811, -73.579233),
                 LatLng(45.497779, -73.579167),
@@ -135,7 +135,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497648, -73.579403)
             )
 
-        val ciAnnex = PolygonOptions()
+        val ciAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497407, -73.580016),
                 LatLng(45.497585, -73.579839),
@@ -143,7 +143,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497366, -73.579933)
             )
 
-        val sAnnex = PolygonOptions()
+        val sAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497366, -73.579933),
                 LatLng(45.497325, -73.579851),
@@ -153,7 +153,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497491, -73.579815)
             )
 
-        val mAnnex = PolygonOptions()
+        val mAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497325, -73.579851),
                 LatLng(45.497290, -73.579781),
@@ -161,7 +161,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497426, -73.579752)
             )
 
-        val cbBuilding = PolygonOptions()
+        val cbBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.495030, -73.574065),
                 LatLng(45.495107, -73.573991),
@@ -177,7 +177,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.495062, -73.574131)
             )
 
-        val enAnnex = PolygonOptions()
+        val enAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496932, -73.579553),
                 LatLng(45.496892, -73.579470),
@@ -187,7 +187,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496700, -73.579784)
             )
 
-        val erBuilding = PolygonOptions()
+        val erBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.496262, -73.580352),
                 LatLng(45.496162, -73.580070),
@@ -197,7 +197,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496679, -73.579971)
             )
 
-        val fbBuilding = PolygonOptions()
+        val fbBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.494696, -73.578039),
                 LatLng(45.494913, -73.577786),
@@ -215,7 +215,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.494397, -73.577521)
             )
 
-        val gsBuilding = PolygonOptions()
+        val gsBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.496578, -73.581437),
                 LatLng(45.496415, -73.580943),
@@ -228,7 +228,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4966265, -73.5814486)
             )
 
-        val kAnnex = PolygonOptions()
+        val kAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497883, -73.579384),
                 LatLng(45.497849, -73.579311),
@@ -240,7 +240,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.497627, -73.579635)
             )
 
-        val ldBuilding = PolygonOptions()
+        val ldBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.496859, -73.577171),
                 LatLng(45.496564, -73.577471),
@@ -248,7 +248,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496818, -73.577087)
             )
 
-        val gaAnnex = PolygonOptions()
+        val gaAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.4943430, -73.5777361),
                 LatLng(45.4942826, -73.5776241),
@@ -260,7 +260,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4941191, -73.5779832)
             )
 
-        val fgBuilding = PolygonOptions()
+        val fgBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.4946949, -73.5780358),
                 LatLng(45.4944521, -73.5776147),
@@ -286,7 +286,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4943611, -73.5784264)
             )
 
-        val faAnnex = PolygonOptions()
+        val faAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.4967752, -73.5795838),
                 LatLng(45.4968697, -73.5794846),
@@ -294,7 +294,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4967329, -73.5794996)
             )
 
-        val clAnnex = PolygonOptions()
+        val clAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.494471,-73.579282),
                 LatLng(45.4941639, -73.5796579),
@@ -306,7 +306,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.494260, -73.578942)
             )
 
-        val lsBuilding = PolygonOptions()
+        val lsBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.4961889, -73.5797400),
                 LatLng(45.4961574, -73.5796646),
@@ -316,7 +316,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.4960528, -73.5798567)
             )
 
-        val pAnnex = PolygonOptions()
+        val pAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496723, -73.579171),
                 LatLng(45.496677, -73.579081),
@@ -324,7 +324,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496629, -73.579267)
             )
 
-        val prAnnex = PolygonOptions()
+        val prAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497018, -73.579829),
                 LatLng(45.496979, -73.579749),
@@ -332,7 +332,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496933, -73.579914)
             )
 
-        val qAnnex = PolygonOptions()
+        val qAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496676, -73.579082),
                 LatLng(45.496646, -73.579023),
@@ -340,7 +340,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496582, -73.579177)
             )
 
-        val rAnnex = PolygonOptions()
+        val rAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496838, -73.579400),
                 LatLng(45.496803, -73.579329),
@@ -348,14 +348,14 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496746, -73.579492)
             )
 
-        val rrAnnex = PolygonOptions()
+        val rrAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496799, -73.579333),
                 LatLng(45.496760, -73.579254),
                 LatLng(45.496613, -73.579400),
                 LatLng(45.496652, -73.579480)
             )
-        val sbBuilding = PolygonOptions() //Needs a hole
+        val sbBuilding = PolygonOptions() //Needs a hole doneish
             .add(
                 LatLng(45.496438, -73.586207),
                 LatLng(45.496468, -73.585738),
@@ -375,7 +375,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496501, -73.586208)
             )
 
-        val tAnnex = PolygonOptions()
+        val tAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496752, -73.579261),
                 LatLng(45.496712, -73.579184),
@@ -383,7 +383,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496668, -73.579345)
             )
 
-        val tdBuilding = PolygonOptions()
+        val tdBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.495128, -73.578501),
                 LatLng(45.495190, -73.578428),
@@ -395,7 +395,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.495048, -73.578365)
             )
 
-        val vAnnex = PolygonOptions()
+        val vAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.497089, -73.579918),
                 LatLng(45.497049, -73.579834),
@@ -403,7 +403,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496985, -73.580019)
             )
 
-        val vaBuilding = PolygonOptions()
+        val vaBuilding = PolygonOptions()//done
             .add(
                 LatLng(45.495403, -73.573766),
                 LatLng(45.495668, -73.573509),
@@ -413,7 +413,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.495670, -73.574310)
             )
 
-        val xAnnex = PolygonOptions()
+        val xAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496949, -73.579666),
                 LatLng(45.496907, -73.579579),
@@ -421,7 +421,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 LatLng(45.496857, -73.579758)
             )
 
-        val zAnnex = PolygonOptions()
+        val zAnnex = PolygonOptions()//done
             .add(
                 LatLng(45.496986, -73.579742),
                 LatLng(45.496949, -73.579666),
