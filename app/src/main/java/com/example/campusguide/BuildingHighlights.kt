@@ -12,12 +12,6 @@ import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
 class BuildingHighlights(private val googleMap: GoogleMap) {
-
-    //This is a testing method for Francois' eyes only. If you're seeing this then Francois messed up
-    fun testDatabase(){
-        val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
-    }
-
     fun addBuildingHighlights(){
         val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
         for(building in buildingBox.all){

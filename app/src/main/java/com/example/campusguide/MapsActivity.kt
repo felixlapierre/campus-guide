@@ -89,7 +89,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
         buildingHighlights = BuildingHighlights(mMap)
-        buildingHighlights.testDatabase()
         buildingHighlights.addBuildingHighlights()
 
         // Update switch campus button listener
