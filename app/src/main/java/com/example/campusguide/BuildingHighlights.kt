@@ -19,6 +19,26 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
     }
 
     fun addBuildingHighlights(){
+        val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
+        for(building in buildingBox.all){
+            for(outline in building.highlight.target.outlines){
+                val polygon = PolygonOptions()
+                for(point in outline.points){
+                    polygon.add(LatLng(point.latitude, point.longitude))
+                }
+                googleMap.addPolygon(polygon)
+            }
+            for(hole in building.highlight.target.holes){
+                val polygon = PolygonOptions()
+                for(point in hole.points){
+                    polygon.add(LatLng(point.latitude, point.longitude))
+                }
+                googleMap.addPolygon(polygon)
+            }
+        }
+    }
+
+    fun addBuildingHighlightsBadOne(){
         val hall = PolygonOptions()//done
             .add(
                 LatLng(45.497165, -73.579545),

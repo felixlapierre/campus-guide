@@ -48,9 +48,6 @@ class Migration0_1(){
                 buildingEntity.highlight.target = highlightEntity
                 buildingBox.put(buildingEntity)
             }
-
-            val buildings = buildingBox.all
-            Log.d("BUILDINGS",buildings.size.toString())
         }
 
         private fun getPointEntityCollection(points: JSONArray): Collection<Point>{
