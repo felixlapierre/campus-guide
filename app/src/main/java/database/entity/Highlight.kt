@@ -11,6 +11,4 @@ data class Highlight (
 ){
     @Backlink(to = "highlight")
     lateinit var outlines: ToMany<Outline>
-    @Backlink(to = "highlight")
-    lateinit var holes: ToMany<Hole>
 }

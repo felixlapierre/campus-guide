@@ -32,20 +32,20 @@ class Migration0_1(){
                 val outlines = highlight.getJSONArray("outlines")
                 for(j in 0 until outlines.length()){
                     val outlineEntity = Outline()
-                    val points = outlines.getJSONArray(j)
+                    val points = outlines.getJSONObject(j).getJSONArray("points")
                     outlineEntity.points.addAll(getPointEntityCollection(points))
                     outlineBox.put(outlineEntity)
                     highlightEntity.outlines.add(outlineEntity)
-                }
 
-                //Creating the highlight holes
-                val holes = highlight.getJSONArray("holes")
-                for(j in 0 until holes.length()){
-                    val holeEntity = Hole()
-                    val points = outlines.getJSONArray(j)
-                    holeEntity.points.addAll(getPointEntityCollection(points))
-                    holeBox.put(holeEntity)
-                    highlightEntity.holes.add(holeEntity)
+                    //Creating the highlight holes
+                    val holes = outlines.getJSONObject(j).getJSONArray("holes")
+                    for(j in 0 until holes.length()) {
+                        val holeEntity = Hole()
+                        val points = holes.getJSONArray(j)
+                        holeEntity.points.addAll(getPointEntityCollection(points))
+                        holeBox.put(holeEntity)
+                        outlineEntity.holes.add(holeEntity)
+                    }
                 }
                 highlightBox.put(highlightEntity)
                 buildingBox.put(buildingEntity)

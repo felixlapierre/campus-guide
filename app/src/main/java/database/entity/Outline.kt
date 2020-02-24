@@ -13,4 +13,6 @@ data class Outline(
     lateinit var highlight: ToOne<Highlight>
     @Backlink(to = "outline")
     lateinit var points: ToMany<Point>
+    @Backlink(to = "outline")
+    lateinit var holes: ToMany<Hole>
 }

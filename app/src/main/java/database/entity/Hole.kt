@@ -10,7 +10,7 @@ import io.objectbox.relation.ToOne
 data class Hole (
     @Id var id: Long = 0
 ){
-    lateinit var highlight: ToOne<Highlight>
+    lateinit var outline: ToOne<Outline>
     @Backlink(to = "hole")
     lateinit var points: ToMany<Point>
 }
