@@ -2,6 +2,17 @@ package com.example.campusguide
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+<<<<<<< HEAD
+=======
+import android.widget.ToggleButton
+import androidx.core.app.ActivityCompat
+import com.example.campusguide.directions.CallbackDirectionsConfirmListener
+import com.example.campusguide.directions.EmptyDirectionsGuard
+import com.example.campusguide.directions.GetDirectionsDialogFragment
+import com.example.campusguide.directions.Route
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+>>>>>>> master
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -14,7 +25,12 @@ import database.ObjectBox
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+<<<<<<< HEAD
     private lateinit var  buildingHighlights: BuildingHighlights
+=======
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var route: Route
+>>>>>>> master
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +39,39 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+<<<<<<< HEAD
         ObjectBox.init(this.applicationContext)
+=======
+
+        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
+        currentLocationButton.setOnClickListener {
+            //Check if location permission has been granted
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                goToCurrentLocation()
+            } else {
+                //Request location permission
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
+            }
+        }
+
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+        }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+>>>>>>> master
     }
 
     /**
@@ -37,6 +85,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        route = Route(mMap, this)
 
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
