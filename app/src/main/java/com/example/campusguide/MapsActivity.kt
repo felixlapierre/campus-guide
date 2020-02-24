@@ -1,4 +1,5 @@
 package com.example.campusguide
+
 import android.os.Bundle
 import android.Manifest
 import android.content.pm.PackageManager
@@ -18,6 +19,7 @@ import android.os.Build
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.model.Marker
 import android.location.Location
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -25,20 +27,26 @@ import android.widget.ToggleButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import java.io.IOException
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
+import java.util.*
 
 class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
-        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private lateinit var mMap: GoogleMap
-    internal lateinit var mLastLocation: Location
-    internal var mCurrLocationMarker: Marker? = null
-    internal var mGoogleApiClient: GoogleApiClient? = null
-    internal lateinit var mLocationRequest: LocationRequest
+    private lateinit var mLastLocation: Location
+    private var mCurrLocationMarker: Marker? = null
+    private var mGoogleApiClient: GoogleApiClient? = null
+    private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     companion object {
@@ -50,24 +58,48 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         setContentView(R.layout.activity_maps)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
             //Check if location permission has been granted
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 goToCurrentLocation()
             } else {
                 //Request location permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    LOCATION_PERMISSION_ACCESS_CODE
+                )
             }
         }
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        Places.initialize(applicationContext, getString(R.string.google_maps_key))
+        // Initialize the AutocompleteSupportFragment.
+        val autocompleteFragment : AutocompleteSupportFragment = supportFragmentManager
+            .findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG))
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object: PlaceSelectionListener {
+            override fun onPlaceSelected(p0: Place) {
+                mMap!!.addMarker(MarkerOptions()
+                    .position(LatLng(p0.latLng!!.latitude, p0.latLng!!.longitude)))
+                mMap!!.animateCamera(CameraUpdateFactory.newLatLng(p0.latLng))
+            }
 
-        editText.visibility = View.GONE
-        campus_name.text = "SGW Campus"
+            override fun onError(p0: Status) {
+                Log.i("fail", "An error occurred: $p0")
+            }
+        })
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -81,15 +113,18 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(this,
-                            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
                 buildGoogleApiClient()
-                mMap!!.isMyLocationEnabled = true
             }
         } else {
             buildGoogleApiClient()
-            mMap!!.isMyLocationEnabled = true
         }
 
         // Add a marker on Hall Building and move the camera
@@ -105,20 +140,22 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
     @Synchronized
     protected fun buildGoogleApiClient() {
         mGoogleApiClient = GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API).build()
+            .addConnectionCallbacks(this)
+            .addOnConnectionFailedListener(this)
+            .addApi(LocationServices.API).build()
         mGoogleApiClient!!.connect()
     }
 
     override fun onConnected(bundle: Bundle?) {
-
         mLocationRequest = LocationRequest()
         mLocationRequest.interval = 1000
         mLocationRequest.fastestInterval = 1000
         mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             LocationServices.getFusedLocationProviderClient(this)
         }
     }
@@ -142,8 +179,8 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         mCurrLocationMarker = mMap!!.addMarker(markerOptions)
 
         //move map camera
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-        mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(11f))
 
         //stop location updates
         if (mGoogleApiClient != null) {
@@ -156,48 +193,25 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
 
     }
 
-    fun searchLocation(view: View) {
-        campus_name.visibility = View.GONE
-        editText.visibility = View.VISIBLE
-        editText.requestFocus()
-
-        val locationSearch:EditText = findViewById<EditText>(R.id.editText)
-        lateinit var location: String
-        location = locationSearch.text.toString()
-        var addressList: List<Address>? = null
-
-        if (location == null || location == "") {
-            Toast.makeText(applicationContext,"provide location",Toast.LENGTH_SHORT).show()
-        }
-        else{
-            val geoCoder = Geocoder(this)
-            try {
-                addressList = geoCoder.getFromLocationName(location, 1)
-
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            val address = addressList!![0]
-            val latLng = LatLng(address.latitude, address.longitude)
-            mMap!!.addMarker(MarkerOptions().position(latLng).title(location))
-            mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
-            Toast.makeText(applicationContext, address.latitude.toString() + " " + address.longitude, Toast.LENGTH_LONG).show()
-        }
-    }
-
-
     /**
      * Centers the map on the user's current location and places a marker.
      */
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if(location != null) {
+            if (location != null) {
                 val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(MarkerOptions()
+                mMap.addMarker(
+                    MarkerOptions()
                         .position(currentLatLng)
                         .title("You are here.")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                )
+                mMap.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLatLng,
+                        Constants.ZOOM_STREET_LVL
+                    )
+                )
             }
         }
     }
@@ -207,9 +221,9 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        when(requestCode) {
+        when (requestCode) {
             LOCATION_PERMISSION_ACCESS_CODE -> {
-                if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     goToCurrentLocation()
                 }
                 return

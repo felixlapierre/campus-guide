@@ -21,6 +21,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
+    }
 }
 
 dependencies {
@@ -30,6 +34,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:11.8.0'
     implementation 'com.google.android.gms:play-services-maps:16.1.0'
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.libraries.places:places:2.0.0'
     implementation 'com.google.android.material:material:1.2.0-alpha04'
     androidTestImplementation 'com.android.support.test:rules:1.1.0'
     androidTestImplementation 'com.android.support.test:runner:1.1.0'
