@@ -683,6 +683,328 @@
     }
   },
   {
+    "fullName": "Grey Nuns Building",
+    "abbreviationName": "GN",
+    "highlight": {
+      "outlines":[
+        [
+          {
+            "latitude": 45.4939738,
+            "longitude": -73.5775544
+
+          },
+          {
+            "latitude": 45.4941223,
+            "longitude": -73.5774115
+
+          },
+          {
+            "latitude": 45.4940937,
+            "longitude": -73.5773472
+
+          },
+          {
+            "latitude": 45.4943891,
+            "longitude": -73.5770535
+
+          },
+          {
+            "latitude": 45.4940168,
+            "longitude": -73.5762786
+
+          },
+          {
+            "latitude": 45.494125,
+            "longitude": -73.576179
+
+          },
+          {
+            "latitude": 45.4940352,
+            "longitude": -73.5759927
+
+          },
+          {
+            "latitude": 45.4939317,
+            "longitude": -73.5760902
+
+          },
+          {
+            "latitude": 45.4937141,
+            "longitude": -73.5756366
+
+          },
+          {
+            "latitude": 45.4935703,
+            "longitude": -73.5757818
+
+          },
+          {
+            "latitude": 45.4937921,
+            "longitude": -73.5762421
+
+          },
+          {
+            "latitude": 45.4934915,
+            "longitude": -73.5765355
+
+          },
+          {
+            "latitude": 45.4934697,
+            "longitude": -73.5764972
+
+          },
+          {
+            "latitude": 45.4933409,
+            "longitude": -73.5766210
+
+          },
+          {
+            "latitude": 45.4933637,
+            "longitude": -73.5766689
+
+          },
+          {
+            "latitude": 45.4930245,
+            "longitude": -73.5770028
+
+          },
+          {
+            "latitude": 45.4929392,
+            "longitude": -73.5768275
+
+          },
+          {
+            "latitude": 45.4929479,
+            "longitude": -73.5767896
+
+          },
+          {
+            "latitude": 45.4929247,
+            "longitude": -73.5767447
+
+          },
+          {
+            "latitude": 45.4928988,
+            "longitude": -73.5767383
+
+          },
+          {
+            "latitude": 45.4927319,
+            "longitude": -73.5763933
+
+          },
+          {
+            "latitude": 45.4925937,
+            "longitude": -73.5765301
+
+          },
+          {
+            "latitude": 45.4926142,
+            "longitude": -73.5765750
+
+          },
+          {
+            "latitude": 45.4926071,
+            "longitude": -73.5765824
+
+          },
+          {
+            "latitude": 45.4927467,
+            "longitude": -73.5768647
+
+          },
+          {
+            "latitude": 45.4927270,
+            "longitude": -73.5768704
+
+          },
+          {
+            "latitude": 45.4926769,
+            "longitude": -73.5769204
+
+          },
+          {
+            "latitude": 45.492678,
+            "longitude": -73.576965
+
+          },
+          {
+            "latitude": 45.4927103,
+            "longitude": -73.5770303
+
+          },
+          {
+            "latitude": 45.4927728,
+            "longitude": -73.5769686
+
+          },
+          {
+            "latitude": 45.4927933,
+            "longitude": -73.5769747
+
+          },
+          {
+            "latitude": 45.4928095,
+            "longitude": -73.5769576
+
+          },
+          {
+            "latitude": 45.492895,
+            "longitude": -73.577139
+
+          },
+          {
+            "latitude": 45.4928398,
+            "longitude": -73.5771960
+
+          },
+          {
+            "latitude": 45.4929247,
+            "longitude": -73.5773757
+
+          },
+          {
+            "latitude": 45.4929931,
+            "longitude": -73.5773110
+
+          },
+          {
+            "latitude": 45.4930885,
+            "longitude": -73.5775088
+
+          },
+          {
+            "latitude": 45.4931982,
+            "longitude": -73.5773978
+
+          },
+          {
+            "latitude": 45.4931085,
+            "longitude": -73.5772111
+
+          },
+          {
+            "latitude": 45.4933642,
+            "longitude": -73.5769579
+
+          },
+          {
+            "latitude": 45.4933526,
+            "longitude": -73.5769334
+
+          },
+          {
+            "latitude": 45.4934394,
+            "longitude": -73.5768490
+
+          },
+          {
+            "latitude": 45.4934781,
+            "longitude": -73.5769311
+
+          },
+          {
+            "latitude": 45.4934509,
+            "longitude": -73.5769609
+
+          },
+          {
+            "latitude": 45.4935291,
+            "longitude": -73.5771256
+
+          },
+          {
+            "latitude": 45.4935747,
+            "longitude": -73.5770803
+
+          },
+          {
+            "latitude": 45.4936018,
+            "longitude": -73.5771286
+
+          },
+          {
+            "latitude": 45.4935797,
+            "longitude": -73.5771494
+
+          },
+          {
+            "latitude": 45.4936337,
+            "longitude": -73.5772637
+
+          },
+          {
+            "latitude": 45.4937477,
+            "longitude": -73.5771520
+
+          },
+          {
+            "latitude": 45.4936716,
+            "longitude": -73.5769945
+
+          },
+          {
+            "latitude": 45.4937268,
+            "longitude": -73.5769408
+
+          },
+          {
+            "latitude": 45.4936669,
+            "longitude": -73.5768201
+
+          },
+          {
+            "latitude": 45.4936119,
+            "longitude": -73.5768714
+
+          },
+          {
+            "latitude": 45.4935494,
+            "longitude": -73.5767450
+
+          },
+          {
+            "latitude": 45.4938958,
+            "longitude": -73.5764047
+
+          },
+          {
+            "latitude": 45.4941919,
+            "longitude": -73.5770156
+
+          },
+          {
+            "latitude": 45.4938678,
+            "longitude": -73.5773411
+          }
+        ],
+        [
+          {
+            "latitude": 45.4939026,
+            "longitude": -73.5771698
+          },
+          {
+            "latitude": 45.4940596,
+            "longitude": -73.5770092
+          },
+          {
+            "latitude": 45.4938946,
+            "longitude": -73.5766562
+          },
+          {
+            "latitude": 45.4938333,
+            "longitude": -73.5766676
+          },
+          {
+            "latitude": 45.4937172,
+            "longitude": -73.5767816
+          }
+        ]
+      ],
+      "holes": []
+    }
+  },
+  {
     "fullName": "GS Building",
     "abbreviationName": "GS",
     "highlight": {
