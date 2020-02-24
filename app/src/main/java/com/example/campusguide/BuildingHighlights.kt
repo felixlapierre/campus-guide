@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import android.graphics.Color
 import android.util.Log
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -17,18 +18,21 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
         for(building in buildingBox.all){
             for(outline in building.highlight.target.outlines){
                 val polygon = PolygonOptions()
-                for(point in outline.points.sortedBy { it.order }){
-                    polygon.add(LatLng(point.latitude, point.longitude))
+                polygon.addAll(getLatLngList(outline.points))
+                for(hole in outline.holes){
+                    polygon.addHole(getLatLngList(hole.points))
                 }
-                googleMap.addPolygon(polygon)
-            }
-            for(hole in building.highlight.target.holes){
-                val polygon = PolygonOptions()
-                for(point in hole.points.sortedBy { it.order }){
-                    polygon.add(LatLng(point.latitude, point.longitude))
-                }
+                polygon.fillColor(Color.RED)
                 googleMap.addPolygon(polygon)
             }
         }
+    }
+
+    private fun getLatLngList(points: Collection<Point>): Collection<LatLng>{
+        val latLngs = mutableListOf<LatLng>()
+        for(point in points.sortedBy { it.order }){
+            latLngs.add(LatLng(point.latitude, point.longitude))
+        }
+        return latLngs
     }
 }
