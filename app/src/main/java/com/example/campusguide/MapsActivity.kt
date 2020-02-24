@@ -21,6 +21,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.gms.maps.model.Marker
+import android.text.method.TextKeyListener.clear
+import com.google.android.gms.maps.GoogleMap.OnMapClickListener
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -70,7 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
+     * we just add a marker on the Hall Building.
      * If Google Play services is not installed on the device, the user will be prompted to install
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
@@ -81,12 +89,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
-        mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
+        mMap.addMarker(MarkerOptions().position(hall).title("Hall Building").snippet("Population: 4,137,400"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap)
+
+
+        // Adding and showing marker while touching the GoogleMap
+        googleMap.setOnMapClickListener { arg0 ->
+            // Clears any existing markers from the GoogleMap
+            googleMap.clear()
+
+            // Creating an instance of MarkerOptions to set position
+            val markerOptions = MarkerOptions()
+
+            // Setting position on the MarkerOptions
+            markerOptions.position(arg0)
+
+            // Animating to the currently touched position
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0))
+
+            // Adding marker on the GoogleMap
+            val marker = googleMap.addMarker(markerOptions)
+
+            // Showing InfoWindow on the GoogleMap
+            marker.showInfoWindow()
+        }
+        //make popup appear on hall
     }
     
 
