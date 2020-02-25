@@ -5,6 +5,10 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.directions.CallbackDirectionsConfirmListener
+import com.example.campusguide.directions.EmptyDirectionsGuard
+import com.example.campusguide.directions.GetDirectionsDialogFragment
+import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -20,6 +24,7 @@ import com.google.android.gms.maps.model.Marker
 import android.location.Location
 import android.view.View
 import android.widget.ToggleButton
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.common.ConnectionResult
@@ -33,7 +38,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
-class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
+class MapsActivity() : AppCompatActivity(), OnMapReadyCallback, LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private lateinit var mMap: GoogleMap
@@ -42,6 +47,7 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
     private var mGoogleApiClient: GoogleApiClient? = null
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var route: Route
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
@@ -75,6 +81,22 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
             }
         }
 
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+        }
+
         if(!Places.isInitialized())
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
@@ -93,6 +115,7 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.uiSettings.isMyLocationButtonEnabled = false
+        route = Route(mMap, this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
@@ -105,6 +128,7 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
         } else {
             buildGoogleApiClient()
         }
+
 
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)

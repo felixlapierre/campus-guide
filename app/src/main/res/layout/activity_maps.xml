@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="115px"
@@ -59,12 +60,21 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/ic_switch_campus_button"
-            android:textAlignment="center"
             android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textOff="@string/loy_campus"
             android:textOn="@string/sgw_campus"
             android:textStyle="bold" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/navigateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_margin="8dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_compass_outline"
+            app:maxImageSize="36dp"
+            app:fabSize="normal"
+            app:backgroundTint="@android:color/white"/>
     </fragment>
 </LinearLayout>
-

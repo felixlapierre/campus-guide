@@ -6,9 +6,11 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
+import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.equalToIgnoringWhiteSpace
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.junit.Rule
 
 /**
@@ -36,6 +38,6 @@ class CalculatorAcceptanceTest {
 
         val result = device.findObject(UiSelector().className("android.widget.TextView"))
 
-        assert(result.text.equals("8"))
+        assertThat(result.text, equalTo("8"))
     }
 }
