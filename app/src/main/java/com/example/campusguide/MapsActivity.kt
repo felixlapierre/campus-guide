@@ -41,11 +41,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         ObjectBox.init(this.applicationContext)
 
-        // set listeners for relevant buttons
-        // this can be moved into a setOnCreateListeners function or class later
-        setCurrentLocationListener()
-        setNavButtonListener()
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -69,10 +64,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         buildingHighlights = BuildingHighlights(mMap)
         buildingHighlights.addBuildingHighlights()
 
-        // Update switch campus button listener
-        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        SwitchCampus(switchCampusToggle, mMap)
-
+        setButtonListeners()
         mMap.setContentDescription("Google Maps Ready")
     }
 
@@ -119,8 +111,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     /**
-     * Methods for shortening the onCreate function.
+     * Methods for setting button listeners all at once.
      */
+    private fun setButtonListeners(){
+        setCurrentLocationListener()
+        setNavButtonListener()
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        SwitchCampus(switchCampusToggle, mMap)
+    }
     private fun setCurrentLocationListener() {
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
