@@ -6,6 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ToggleButton
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.directions.CallbackDirectionsConfirmListener
+import com.example.campusguide.directions.EmptyDirectionsGuard
+import com.example.campusguide.directions.GetDirectionsDialogFragment
+import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -22,6 +26,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var route: Route
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+        }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -56,6 +77,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        route = Route(mMap, this)
 
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
