@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="115px"
         android:orientation="horizontal"
         android:background="@android:color/holo_blue_light">
         <ImageButton
@@ -14,7 +14,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".10"
-            android:onClick="openMenu"
+            android:onClick="onOpenMenu"
             android:src="@drawable/ic_hamburger_menu"
             style="?android:attr/borderlessButtonStyle"/>
         <TextView
@@ -24,14 +24,15 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
-            android:text="SGW Campus"
-            android:visibility="gone"/>
-        <fragment
-            android:id="@+id/autocomplete_fragment"
+            android:text="SGW Campus"/>
+        <ImageButton
             android:layout_width="0dp"
-            android:layout_weight=".90"
+            android:layout_weight=".15"
             android:layout_height="wrap_content"
-            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"/>
+            android:src="@drawable/ic_search_location"
+            android:onClick="onSearchCalled"
+            android:layout_gravity="center_vertical"
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
     <fragment
         android:id="@+id/map"

@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.os.Bundle
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -13,31 +14,24 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import android.location.Address
-import android.location.Geocoder
 import android.os.Build
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.maps.model.Marker
 import android.location.Location
-import android.util.Log
 import android.view.View
-import android.widget.EditText
-import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.LocationListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
-import java.io.IOException
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
-import java.util.*
 
 class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -51,6 +45,7 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
+        private const val AUTOCOMPLETE_REQUEST_CODE = 2
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,24 +75,8 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
             }
         }
 
-        Places.initialize(applicationContext, getString(R.string.google_maps_key))
-        // Initialize the AutocompleteSupportFragment.
-        val autocompleteFragment : AutocompleteSupportFragment = supportFragmentManager
-            .findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-        // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG))
-        // Set up a PlaceSelectionListener to handle the response.
-        autocompleteFragment.setOnPlaceSelectedListener(object: PlaceSelectionListener {
-            override fun onPlaceSelected(p0: Place) {
-                mMap!!.addMarker(MarkerOptions()
-                    .position(LatLng(p0.latLng!!.latitude, p0.latLng!!.longitude)))
-                mMap!!.animateCamera(CameraUpdateFactory.newLatLng(p0.latLng))
-            }
-
-            override fun onError(p0: Status) {
-                Log.i("fail", "An error occurred: $p0")
-            }
-        })
+        if(!Places.isInitialized())
+            Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -134,7 +113,8 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        SwitchCampus(switchCampusToggle, mMap)
+        SwitchCampus(switchCampusToggle, mMap, campus_name)
+
     }
 
     @Synchronized
@@ -233,5 +213,39 @@ class MapsActivity() : FragmentActivity(), OnMapReadyCallback, LocationListener,
                 // Ignore all other requests
             }
         }
+    }
+
+    fun onSearchCalled(view :View){
+        val fields = arrayListOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+        val intent : Intent =
+                Autocomplete.IntentBuilder(
+                AutocompleteActivityMode.FULLSCREEN, fields
+                )
+                .build(this)
+        startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
+    }
+
+   override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+       super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                val place: Place = Autocomplete.getPlaceFromIntent(data!!)
+                mMap!!.addMarker(MarkerOptions()
+                    .position(LatLng(place.latLng!!.latitude, place.latLng!!.longitude)))
+                mMap!!.animateCamera(CameraUpdateFactory.newLatLng(place.latLng))
+                campus_name.text = place.name
+
+            } else if (resultCode == AutocompleteActivity.RESULT_ERROR) {
+                print("The Request has run into an error")
+                print(data)
+            } else if (resultCode == RESULT_CANCELED) {
+                print("The Request was cancelled")
+                print(data)
+            }
+        }
+    }
+
+    fun onOpenMenu(view : View){
+        print("Menu was opened")
     }
 }
