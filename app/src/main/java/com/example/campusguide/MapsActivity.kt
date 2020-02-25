@@ -86,7 +86,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, 17.0f))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
         buildingHighlights = BuildingHighlights(mMap)
         buildingHighlights.addBuildingHighlights()
