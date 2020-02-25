@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ToggleButton
@@ -85,14 +86,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             if(location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(MarkerOptions()
-                    .position(currentLatLng)
-                    .title("You are here.")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
+                animateCurrentLocation(location)
             }
         }
+    }
+    private fun animateCurrentLocation(location: Location) {
+        val currentLatLng = LatLng(location.latitude, location.longitude)
+        mMap.addMarker(MarkerOptions()
+            .position(currentLatLng)
+            .title("You are here.")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
     }
 
     override fun onRequestPermissionsResult(
