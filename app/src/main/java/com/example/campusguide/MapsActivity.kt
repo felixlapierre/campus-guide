@@ -36,11 +36,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        setCurrentLocationListener(currentLocationButton)
-
-        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-        setNavButtonListener(navigateButton)
+        // set listeners for relevant buttons
+        // this can be moved into a setOnCreateListeners function or class later
+        setCurrentLocationListener()
+        setNavButtonListener()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -112,7 +111,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     /**
      * Methods for shortening the onCreate function.
      */
-    private fun setCurrentLocationListener(currentLocationButton: FloatingActionButton) {
+    private fun setCurrentLocationListener() {
+        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
             //Check if location permission has been granted
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -124,7 +124,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setNavButtonListener(navigateButton: FloatingActionButton){
+    private fun setNavButtonListener(){
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
         navigateButton.setOnClickListener {
             val getDirectionsDialogFragment =
                 GetDirectionsDialogFragment(
