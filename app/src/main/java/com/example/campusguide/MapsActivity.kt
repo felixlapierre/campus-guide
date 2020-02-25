@@ -37,11 +37,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // set listeners for relevant buttons
-        // this can be moved into a setOnCreateListeners function or class later
-        setCurrentLocationListener()
-        setNavButtonListener()
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -63,9 +58,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
 
-        // Update switch campus button listener
-        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        SwitchCampus(switchCampusToggle, mMap)
+        setButtonListeners()
     }
 
     companion object {
@@ -111,8 +104,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     /**
-     * Methods for shortening the onCreate function.
+     * Methods for setting button listeners all at once.
      */
+    private fun setButtonListeners(){
+        setCurrentLocationListener()
+        setNavButtonListener()
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        SwitchCampus(switchCampusToggle, mMap)
+    }
     private fun setCurrentLocationListener() {
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
