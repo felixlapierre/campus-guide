@@ -41,31 +41,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         ObjectBox.init(this.applicationContext)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener {
-            //Check if location permission has been granted
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                goToCurrentLocation()
-            } else {
-                //Request location permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
-            }
-        }
+        setCurrentLocationListener(currentLocationButton)
 
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-        navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
-        }
+        setNavButtonListener(navigateButton)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
@@ -133,6 +112,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else -> {
                 // Ignore all other requests
             }
+        }
+    }
+
+    /**
+     * Methods for shortening the onCreate function.
+     */
+    private fun setCurrentLocationListener(currentLocationButton: FloatingActionButton) {
+        currentLocationButton.setOnClickListener {
+            //Check if location permission has been granted
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                goToCurrentLocation()
+            } else {
+                //Request location permission
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
+            }
+        }
+    }
+
+    private fun setNavButtonListener(navigateButton: FloatingActionButton){
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
         }
     }
 }
