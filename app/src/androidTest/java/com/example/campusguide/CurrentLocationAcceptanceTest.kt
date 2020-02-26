@@ -19,7 +19,7 @@ private const val LAUNCH_TIMEOUT = 5000L
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
-class AcceptanceTest {
+class CurrentLocationAcceptanceTest {
 
     private lateinit var device: UiDevice
 
