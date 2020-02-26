@@ -11,6 +11,7 @@
 
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/switchCampusButton"
+        android:contentDescription="switchCampusButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
