@@ -25,12 +25,11 @@ class SwitchCampus {
         if(isAtDowntownCampus){
             val loyCoord = LatLng(45.458153, -73.640490)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(loyCoord, Constants.ZOOM_STREET_LVL))
-            campusName.text = "Loyola Campus"
+            campusName.text = Constants.LOYOLA_CAMPUS
         } else {
             val sgwCoord = LatLng(45.495792, -73.578096)
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(sgwCoord, Constants.ZOOM_STREET_LVL))
-            campusName.text = "SGW Campus"
+            campusName.text = Constants.SGW_CAMPUS
         }
     }
-
 }
