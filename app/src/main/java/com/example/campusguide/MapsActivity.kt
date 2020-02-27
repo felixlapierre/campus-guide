@@ -12,6 +12,7 @@ import com.example.campusguide.directions.GetDirectionsDialogFragment
 import com.example.campusguide.directions.Route
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.example.campusguide.utils.BuildingHighlights
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -29,14 +30,14 @@ import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import CustomInfoWindowGoogleMap
 import com.example.campusguide.utils.InfoWindowData
-
-
+import database.ObjectBox
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var route: Route
+    private lateinit var  buildingHighlights: BuildingHighlights
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+        ObjectBox.init(this.applicationContext)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener {
@@ -110,6 +112,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         m.showInfoWindow()
 
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
+        buildingHighlights = BuildingHighlights(mMap)
+        buildingHighlights.addBuildingHighlights()
 
 
         // Update switch campus button listener
@@ -144,7 +148,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             marker.showInfoWindow()
         }
     }
-
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
