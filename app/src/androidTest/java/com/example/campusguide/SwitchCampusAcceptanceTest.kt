@@ -40,11 +40,6 @@ class SwitchCampusAcceptanceTest {
     }
 
     @Test
-    fun checkPreconditions() {
-        assertThat(device, notNullValue())
-    }
-
-    @Test
     fun clickSwitchCampusButtonOnce() {
 
         // Wait 5 seconds

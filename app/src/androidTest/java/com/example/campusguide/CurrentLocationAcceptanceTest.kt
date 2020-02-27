@@ -45,11 +45,6 @@ class CurrentLocationAcceptanceTest {
     }
 
     @Test
-    fun checkPreconditions() {
-        assertThat(device, notNullValue())
-    }
-
-    @Test
     fun clickCurrentLocationButton() {
 
         // Wait 5 seconds
