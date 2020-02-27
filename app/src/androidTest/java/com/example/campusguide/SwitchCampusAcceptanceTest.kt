@@ -45,36 +45,50 @@ class SwitchCampusAcceptanceTest {
     }
 
     @Test
-    fun verifyInitialState() {
+    fun clickSwitchCampusButtonOnce() {
 
         // Wait 5 seconds
         device.waitForWindowUpdate(null, 5000)
 
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
-        // Verify that the Switch Campus button exists and presents the correct text
-        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
-            assertEquals("LOY", switchCampusButton.text)
-        }
-    }
-
-    @Test
-    fun clickSwitchCampusButton() {
-
-        // Wait 5 seconds
-        device.waitForWindowUpdate(null, 5000)
-
-        val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
-
-        // Click on the Switch Campus button
+        // Click the Switch Campus Button
         if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
             switchCampusButton.click()
         }
 
-        // Wait 5 seconds
-        device.waitForWindowUpdate(null, 5000)
+        // Wait 3 seconds
+        device.waitForWindowUpdate(null, 3000)
 
         // Verify that the Switch Campus button presents the correct text
         assertEquals("SGW", switchCampusButton.text)
+    }
+
+    @Test
+    fun clickSwitchCampusButtonTwice() {
+
+        // Wait 5 seconds
+        device.waitForWindowUpdate(null, 5000)
+
+        val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
+
+        // Click the Switch Campus button
+        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
+            switchCampusButton.click()
+        }
+
+        // Wait 3 seconds
+        device.waitForWindowUpdate(null, 3000)
+
+        // Click it a second time
+        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
+            switchCampusButton.click()
+        }
+
+        // Wait 3 seconds
+        device.waitForWindowUpdate(null, 3000)
+
+        // Verify that the Switch Campus button presents the correct text
+        assertEquals("LOY", switchCampusButton.text)
     }
 }
