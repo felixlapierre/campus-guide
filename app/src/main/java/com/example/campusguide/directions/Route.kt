@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.R
 import com.example.campusguide.utils.MessageDialogFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -10,6 +11,13 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.net.URLEncoder
+import com.google.android.gms.maps.model.MarkerOptions
+import java.util.Arrays.asList
+import com.google.android.gms.maps.model.PatternItem
+import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.Dot
+
 
 /**
  * Represents a route between two coordinates on the map.
@@ -23,14 +31,20 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
 
     fun set(start: String, end: String) {
         polyline?.remove()
-
         val directions = Directions(activity)
 
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
+            val apiKey = activity.resources.getString(com.example.campusguide.R.string.google_maps_key)
             val response = directions.getDirections(start, end)
-
             if(response != null) {
+                response.routes[0]
+                val startLat = response.routes[0].legs[0].startLocation.lat
+                val startLng = response.routes[0].legs[0].startLocation.lng
+                val endLat = response.routes[0].legs[0].endLocation.lat
+                val endLng = response.routes[0].legs[0].endLocation.lng
+                val start = MarkerOptions().position(LatLng(startLat.toDouble(), startLng.toDouble())).title("Start")
+                val dest = MarkerOptions().position(LatLng(endLat.toDouble(), endLng.toDouble())).title("Destination");
                 val line = response.routes[0].overviewPolyline.points
                 val decoded = PolylineEncoding.decode(line)
 
@@ -48,6 +62,8 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                  */
                 activity.runOnUiThread {
                     polyline = map.addPolyline(PolylineOptions().addAll(decodedAsGoodLatLng))
+                    map.addMarker(start)
+                    map.addMarker(dest)
                 }
             }
         }
