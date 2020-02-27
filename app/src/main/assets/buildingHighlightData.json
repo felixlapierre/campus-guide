@@ -1,0 +1,1839 @@
+[
+  {
+    "fullName": "B Annex",
+    "abbreviationName": "B",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497883,
+              "longitude": -73.579384
+            },
+            {
+              "latitude": 45.497917,
+              "longitude": -73.579453
+            },
+            {
+              "latitude": 45.497741,
+              "longitude": -73.579636
+            },
+            {
+              "latitude": 45.497705,
+              "longitude": -73.57956
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "CB Building",
+    "abbreviationName": "CB",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.49503,
+              "longitude": -73.574065
+            },
+            {
+              "latitude": 45.495107,
+              "longitude": -73.573991
+            },
+            {
+              "latitude": 45.495137,
+              "longitude": -73.574054
+            },
+            {
+              "latitude": 45.495195,
+              "longitude": -73.573997
+            },
+            {
+              "latitude": 45.495165,
+              "longitude": -73.573934
+            },
+            {
+              "latitude": 45.495246,
+              "longitude": -73.573856
+            },
+            {
+              "latitude": 45.495403,
+              "longitude": -73.57419
+            },
+            {
+              "latitude": 45.495061,
+              "longitude": -73.57452
+            },
+            {
+              "latitude": 45.494942,
+              "longitude": -73.57427
+            },
+            {
+              "latitude": 45.495009,
+              "longitude": -73.574204
+            },
+            {
+              "latitude": 45.495002,
+              "longitude": -73.574189
+            },
+            {
+              "latitude": 45.495062,
+              "longitude": -73.574131
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "CI Annex",
+    "abbreviationName": "CI",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497407,
+              "longitude": -73.580016
+            },
+            {
+              "latitude": 45.497585,
+              "longitude": -73.579839
+            },
+            {
+              "latitude": 45.497546,
+              "longitude": -73.57976
+            },
+            {
+              "latitude": 45.497366,
+              "longitude": -73.579933
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "CL Annex",
+    "abbreviationName": "CL",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.494471,
+              "longitude": -73.579282
+            },
+            {
+              "latitude": 45.4941639,
+              "longitude": -73.5796579
+            },
+            {
+              "latitude": 45.4939839,
+              "longitude": -73.5793525
+            },
+            {
+              "latitude": 45.4939785,
+              "longitude": -73.5793243
+            },
+            {
+              "latitude": 45.49399,
+              "longitude": -73.5792874
+            },
+            {
+              "latitude": 45.4940112,
+              "longitude": -73.5792472
+            },
+            {
+              "latitude": 45.4940328,
+              "longitude": -73.5792106
+            },
+            {
+              "latitude": 45.49426,
+              "longitude": -73.578942
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "D Annex",
+    "abbreviationName": "D",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497849,
+              "longitude": -73.579311
+            },
+            {
+              "latitude": 45.497811,
+              "longitude": -73.579232
+            },
+            {
+              "latitude": 45.497707,
+              "longitude": -73.579342
+            },
+            {
+              "latitude": 45.497742,
+              "longitude": -73.579412
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "EN Annex",
+    "abbreviationName": "EN",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496932,
+              "longitude": -73.579553
+            },
+            {
+              "latitude": 45.496892,
+              "longitude": -73.57947
+            },
+            {
+              "latitude": 45.496788,
+              "longitude": -73.579574
+            },
+            {
+              "latitude": 45.496803,
+              "longitude": -73.579607
+            },
+            {
+              "latitude": 45.496676,
+              "longitude": -73.579734
+            },
+            {
+              "latitude": 45.4967,
+              "longitude": -73.579784
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "ER Building",
+    "abbreviationName": "ER",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496262,
+              "longitude": -73.580352
+            },
+            {
+              "latitude": 45.496162,
+              "longitude": -73.58007
+            },
+            {
+              "latitude": 45.496249,
+              "longitude": -73.579973
+            },
+            {
+              "latitude": 45.496217,
+              "longitude": -73.579906
+            },
+            {
+              "latitude": 45.496523,
+              "longitude": -73.579633
+            },
+            {
+              "latitude": 45.496679,
+              "longitude": -73.579971
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Engineering, Computer Science and Visual Arts Integrated Complex",
+    "abbreviationName": "EV",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4952462,
+              "longitude": -73.5780194
+            },
+            {
+              "latitude": 45.4952631,
+              "longitude": -73.5779996
+            },
+            {
+              "latitude": 45.4952465,
+              "longitude": -73.5779128
+            },
+            {
+              "latitude": 45.4952328,
+              "longitude": -73.5779141
+            },
+            {
+              "latitude": 45.4952375,
+              "longitude": -73.5778752
+            },
+            {
+              "latitude": 45.4952965,
+              "longitude": -73.5777948
+            },
+            {
+              "latitude": 45.4953531,
+              "longitude": -73.5777415
+            },
+            {
+              "latitude": 45.4953541,
+              "longitude": -73.5776955
+            },
+            {
+              "latitude": 45.4954455,
+              "longitude": -73.5776097
+            },
+            {
+              "latitude": 45.4958638,
+              "longitude": -73.5784952
+            },
+            {
+              "latitude": 45.4955938,
+              "longitude": -73.5787597
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "FA Annex",
+    "abbreviationName": "FA",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4967752,
+              "longitude": -73.5795838
+            },
+            {
+              "latitude": 45.4968697,
+              "longitude": -73.5794846
+            },
+            {
+              "latitude": 45.4968302,
+              "longitude": -73.5794031
+            },
+            {
+              "latitude": 45.4967329,
+              "longitude": -73.5794996
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Faubourg Building",
+    "abbreviationName": "FB",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.494696,
+              "longitude": -73.578039
+            },
+            {
+              "latitude": 45.494913,
+              "longitude": -73.577786
+            },
+            {
+              "latitude": 45.49487,
+              "longitude": -73.577713
+            },
+            {
+              "latitude": 45.494877,
+              "longitude": -73.577705
+            },
+            {
+              "latitude": 45.494836,
+              "longitude": -73.577633
+            },
+            {
+              "latitude": 45.494843,
+              "longitude": -73.577626
+            },
+            {
+              "latitude": 45.494799,
+              "longitude": -73.57755
+            },
+            {
+              "latitude": 45.494807,
+              "longitude": -73.577541
+            },
+            {
+              "latitude": 45.494764,
+              "longitude": -73.577465
+            },
+            {
+              "latitude": 45.494775,
+              "longitude": -73.577453
+            },
+            {
+              "latitude": 45.494692,
+              "longitude": -73.577309
+            },
+            {
+              "latitude": 45.494701,
+              "longitude": -73.577299
+            },
+            {
+              "latitude": 45.494655,
+              "longitude": -73.577219
+            },
+            {
+              "latitude": 45.494397,
+              "longitude": -73.577521
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Faubourg Ste-Catherine Building",
+    "abbreviationName": "FG",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4946949,
+              "longitude": -73.5780358
+            },
+            {
+              "latitude": 45.4944521,
+              "longitude": -73.5776147
+            },
+            {
+              "latitude": 45.4943853,
+              "longitude": -73.5776892
+            },
+            {
+              "latitude": 45.494426,
+              "longitude": -73.5777592
+            },
+            {
+              "latitude": 45.4943914,
+              "longitude": -73.5778018
+            },
+            {
+              "latitude": 45.4943696,
+              "longitude": -73.5777666
+            },
+            {
+              "latitude": 45.4941849,
+              "longitude": -73.5779842
+            },
+            {
+              "latitude": 45.4942018,
+              "longitude": -73.5780144
+            },
+            {
+              "latitude": 45.4941108,
+              "longitude": -73.5781247
+            },
+            {
+              "latitude": 45.4941043,
+              "longitude": -73.5781119
+            },
+            {
+              "latitude": 45.4939087,
+              "longitude": -73.5783403
+            },
+            {
+              "latitude": 45.4939207,
+              "longitude": -73.5783614
+            },
+            {
+              "latitude": 45.4938918,
+              "longitude": -73.5783969
+            },
+            {
+              "latitude": 45.4938817,
+              "longitude": -73.5783835
+            },
+            {
+              "latitude": 45.4938337,
+              "longitude": -73.5784372
+            },
+            {
+              "latitude": 45.4938481,
+              "longitude": -73.57846
+            },
+            {
+              "latitude": 45.4936253,
+              "longitude": -73.5787272
+            },
+            {
+              "latitude": 45.4938213,
+              "longitude": -73.5790655
+            },
+            {
+              "latitude": 45.4942932,
+              "longitude": -73.5785096
+            },
+            {
+              "latitude": 45.4943007,
+              "longitude": -73.57852
+            },
+            {
+              "latitude": 45.4943677,
+              "longitude": -73.5784388
+            },
+            {
+              "latitude": 45.4943611,
+              "longitude": -73.5784264
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Grey Nuns Annex",
+    "abbreviationName": "GA",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.494343,
+              "longitude": -73.5777361
+            },
+            {
+              "latitude": 45.4942826,
+              "longitude": -73.5776241
+            },
+            {
+              "latitude": 45.494053,
+              "longitude": -73.577868
+            },
+            {
+              "latitude": 45.4940739,
+              "longitude": -73.5779064
+            },
+            {
+              "latitude": 45.4937893,
+              "longitude": -73.5782534
+            },
+            {
+              "latitude": 45.4938474,
+              "longitude": -73.5783523
+            },
+            {
+              "latitude": 45.4941332,
+              "longitude": -73.5780087
+            },
+            {
+              "latitude": 45.4941191,
+              "longitude": -73.5779832
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Guy-De Maisonneuve Building",
+    "abbreviationName": "GM",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4957625,
+              "longitude": -73.5791047
+            },
+            {
+              "latitude": 45.4957797,
+              "longitude": -73.5791463
+            },
+            {
+              "latitude": 45.4961278,
+              "longitude": -73.578807
+            },
+            {
+              "latitude": 45.4959454,
+              "longitude": -73.5784318
+            },
+            {
+              "latitude": 45.4958591,
+              "longitude": -73.5785072
+            },
+            {
+              "latitude": 45.4956175,
+              "longitude": -73.5787449
+            },
+            {
+              "latitude": 45.4957781,
+              "longitude": -73.5790909
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Grey Nuns Building",
+    "abbreviationName": "GN",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4939738,
+              "longitude": -73.5775544
+            },
+            {
+              "latitude": 45.4941223,
+              "longitude": -73.5774115
+            },
+            {
+              "latitude": 45.4940937,
+              "longitude": -73.5773472
+            },
+            {
+              "latitude": 45.4943891,
+              "longitude": -73.5770535
+            },
+            {
+              "latitude": 45.4940168,
+              "longitude": -73.5762786
+            },
+            {
+              "latitude": 45.494125,
+              "longitude": -73.576179
+            },
+            {
+              "latitude": 45.4940352,
+              "longitude": -73.5759927
+            },
+            {
+              "latitude": 45.4939317,
+              "longitude": -73.5760902
+            },
+            {
+              "latitude": 45.4937141,
+              "longitude": -73.5756366
+            },
+            {
+              "latitude": 45.4935703,
+              "longitude": -73.5757818
+            },
+            {
+              "latitude": 45.4937921,
+              "longitude": -73.5762421
+            },
+            {
+              "latitude": 45.4934915,
+              "longitude": -73.5765355
+            },
+            {
+              "latitude": 45.4934697,
+              "longitude": -73.5764972
+            },
+            {
+              "latitude": 45.4933409,
+              "longitude": -73.576621
+            },
+            {
+              "latitude": 45.4933637,
+              "longitude": -73.5766689
+            },
+            {
+              "latitude": 45.4930245,
+              "longitude": -73.5770028
+            },
+            {
+              "latitude": 45.4929392,
+              "longitude": -73.5768275
+            },
+            {
+              "latitude": 45.4929479,
+              "longitude": -73.5767896
+            },
+            {
+              "latitude": 45.4929247,
+              "longitude": -73.5767447
+            },
+            {
+              "latitude": 45.4928988,
+              "longitude": -73.5767383
+            },
+            {
+              "latitude": 45.4927319,
+              "longitude": -73.5763933
+            },
+            {
+              "latitude": 45.4925937,
+              "longitude": -73.5765301
+            },
+            {
+              "latitude": 45.4926142,
+              "longitude": -73.576575
+            },
+            {
+              "latitude": 45.4926071,
+              "longitude": -73.5765824
+            },
+            {
+              "latitude": 45.4927467,
+              "longitude": -73.5768647
+            },
+            {
+              "latitude": 45.492727,
+              "longitude": -73.5768704
+            },
+            {
+              "latitude": 45.4926769,
+              "longitude": -73.5769204
+            },
+            {
+              "latitude": 45.492678,
+              "longitude": -73.576965
+            },
+            {
+              "latitude": 45.4927103,
+              "longitude": -73.5770303
+            },
+            {
+              "latitude": 45.4927728,
+              "longitude": -73.5769686
+            },
+            {
+              "latitude": 45.4927933,
+              "longitude": -73.5769747
+            },
+            {
+              "latitude": 45.4928095,
+              "longitude": -73.5769576
+            },
+            {
+              "latitude": 45.492895,
+              "longitude": -73.577139
+            },
+            {
+              "latitude": 45.4928398,
+              "longitude": -73.577196
+            },
+            {
+              "latitude": 45.4929247,
+              "longitude": -73.5773757
+            },
+            {
+              "latitude": 45.4929931,
+              "longitude": -73.577311
+            },
+            {
+              "latitude": 45.4930885,
+              "longitude": -73.5775088
+            },
+            {
+              "latitude": 45.4931982,
+              "longitude": -73.5773978
+            },
+            {
+              "latitude": 45.4931085,
+              "longitude": -73.5772111
+            },
+            {
+              "latitude": 45.4933642,
+              "longitude": -73.5769579
+            },
+            {
+              "latitude": 45.4933526,
+              "longitude": -73.5769334
+            },
+            {
+              "latitude": 45.4934394,
+              "longitude": -73.576849
+            },
+            {
+              "latitude": 45.4934781,
+              "longitude": -73.5769311
+            },
+            {
+              "latitude": 45.4934509,
+              "longitude": -73.5769609
+            },
+            {
+              "latitude": 45.4935291,
+              "longitude": -73.5771256
+            },
+            {
+              "latitude": 45.4935747,
+              "longitude": -73.5770803
+            },
+            {
+              "latitude": 45.4936018,
+              "longitude": -73.5771286
+            },
+            {
+              "latitude": 45.4935797,
+              "longitude": -73.5771494
+            },
+            {
+              "latitude": 45.4936337,
+              "longitude": -73.5772637
+            },
+            {
+              "latitude": 45.4937477,
+              "longitude": -73.577152
+            },
+            {
+              "latitude": 45.4936716,
+              "longitude": -73.5769945
+            },
+            {
+              "latitude": 45.4937268,
+              "longitude": -73.5769408
+            },
+            {
+              "latitude": 45.4936669,
+              "longitude": -73.5768201
+            },
+            {
+              "latitude": 45.4936119,
+              "longitude": -73.5768714
+            },
+            {
+              "latitude": 45.4935494,
+              "longitude": -73.576745
+            },
+            {
+              "latitude": 45.4938958,
+              "longitude": -73.5764047
+            },
+            {
+              "latitude": 45.4941919,
+              "longitude": -73.5770156
+            },
+            {
+              "latitude": 45.4938678,
+              "longitude": -73.5773411
+            }
+          ],
+          "holes": []
+        },
+        {
+          "points": [
+            {
+              "latitude": 45.4939026,
+              "longitude": -73.5771698
+            },
+            {
+              "latitude": 45.4940596,
+              "longitude": -73.5770092
+            },
+            {
+              "latitude": 45.4938946,
+              "longitude": -73.5766562
+            },
+            {
+              "latitude": 45.4938333,
+              "longitude": -73.5766676
+            },
+            {
+              "latitude": 45.4937172,
+              "longitude": -73.5767816
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "GS Building",
+    "abbreviationName": "GS",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496578,
+              "longitude": -73.581437
+            },
+            {
+              "latitude": 45.496415,
+              "longitude": -73.580943
+            },
+            {
+              "latitude": 45.496487,
+              "longitude": -73.580874
+            },
+            {
+              "latitude": 45.496477,
+              "longitude": -73.580845
+            },
+            {
+              "latitude": 45.496518,
+              "longitude": -73.580804
+            },
+            {
+              "latitude": 45.496653,
+              "longitude": -73.581172
+            },
+            {
+              "latitude": 45.496711,
+              "longitude": -73.581128
+            },
+            {
+              "latitude": 45.496785,
+              "longitude": -73.581302
+            },
+            {
+              "latitude": 45.4966265,
+              "longitude": -73.5814486
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Henry F. Hall Building",
+    "abbreviationName": "H",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497165,
+              "longitude": -73.579545
+            },
+            {
+              "latitude": 45.49771,
+              "longitude": -73.579034
+            },
+            {
+              "latitude": 45.497373,
+              "longitude": -73.578338
+            },
+            {
+              "latitude": 45.49683,
+              "longitude": -73.57885
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "K Annex",
+    "abbreviationName": "K",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497883,
+              "longitude": -73.579384
+            },
+            {
+              "latitude": 45.497849,
+              "longitude": -73.579311
+            },
+            {
+              "latitude": 45.497754,
+              "longitude": -73.579401
+            },
+            {
+              "latitude": 45.497772,
+              "longitude": -73.579439
+            },
+            {
+              "latitude": 45.497697,
+              "longitude": -73.57951
+            },
+            {
+              "latitude": 45.497686,
+              "longitude": -73.579487
+            },
+            {
+              "latitude": 45.497597,
+              "longitude": -73.579572
+            },
+            {
+              "latitude": 45.497627,
+              "longitude": -73.579635
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "J.W. McConnell Building",
+    "abbreviationName": "LB",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496913,
+              "longitude": -73.57833
+            },
+            {
+              "latitude": 45.496897,
+              "longitude": -73.57829
+            },
+            {
+              "latitude": 45.496941,
+              "longitude": -73.578247
+            },
+            {
+              "latitude": 45.496965,
+              "longitude": -73.578295
+            },
+            {
+              "latitude": 45.497002,
+              "longitude": -73.578257
+            },
+            {
+              "latitude": 45.497018,
+              "longitude": -73.578295
+            },
+            {
+              "latitude": 45.49726,
+              "longitude": -73.578058
+            },
+            {
+              "latitude": 45.497142,
+              "longitude": -73.577818
+            },
+            {
+              "latitude": 45.497108,
+              "longitude": -73.577849
+            },
+            {
+              "latitude": 45.497086,
+              "longitude": -73.5778
+            },
+            {
+              "latitude": 45.497078,
+              "longitude": -73.577806
+            },
+            {
+              "latitude": 45.497071,
+              "longitude": -73.577792
+            },
+            {
+              "latitude": 45.497116,
+              "longitude": -73.577748
+            },
+            {
+              "latitude": 45.497041,
+              "longitude": -73.577589
+            },
+            {
+              "latitude": 45.496994,
+              "longitude": -73.577631
+            },
+            {
+              "latitude": 45.496989,
+              "longitude": -73.57762
+            },
+            {
+              "latitude": 45.496999,
+              "longitude": -73.577612
+            },
+            {
+              "latitude": 45.496978,
+              "longitude": -73.577568
+            },
+            {
+              "latitude": 45.497008,
+              "longitude": -73.577538
+            },
+            {
+              "latitude": 45.496892,
+              "longitude": -73.577294
+            },
+            {
+              "latitude": 45.496616,
+              "longitude": -73.577557
+            },
+            {
+              "latitude": 45.496637,
+              "longitude": -73.577601
+            },
+            {
+              "latitude": 45.496583,
+              "longitude": -73.577651
+            },
+            {
+              "latitude": 45.496496,
+              "longitude": -73.577466
+            },
+            {
+              "latitude": 45.496256,
+              "longitude": -73.577698
+            },
+            {
+              "latitude": 45.496669,
+              "longitude": -73.578567
+            },
+            {
+              "latitude": 45.496706,
+              "longitude": -73.578531
+            },
+            {
+              "latitude": 45.496729,
+              "longitude": -73.578579
+            },
+            {
+              "latitude": 45.496889,
+              "longitude": -73.578415
+            },
+            {
+              "latitude": 45.496869,
+              "longitude": -73.578372
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "LD Building",
+    "abbreviationName": "LD",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496859,
+              "longitude": -73.577171
+            },
+            {
+              "latitude": 45.496564,
+              "longitude": -73.577471
+            },
+            {
+              "latitude": 45.496522,
+              "longitude": -73.577387
+            },
+            {
+              "latitude": 45.496818,
+              "longitude": -73.577087
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Learning Square (LS Building)",
+    "abbreviationName": "LS",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.4961889,
+              "longitude": -73.57974
+            },
+            {
+              "latitude": 45.4961574,
+              "longitude": -73.5796646
+            },
+            {
+              "latitude": 45.4961825,
+              "longitude": -73.5796395
+            },
+            {
+              "latitude": 45.4961137,
+              "longitude": -73.5794799
+            },
+            {
+              "latitude": 45.4959508,
+              "longitude": -73.579623
+            },
+            {
+              "latitude": 45.4960528,
+              "longitude": -73.5798567
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "M Annex",
+    "abbreviationName": "M",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497325,
+              "longitude": -73.579851
+            },
+            {
+              "latitude": 45.49729,
+              "longitude": -73.579781
+            },
+            {
+              "latitude": 45.49739,
+              "longitude": -73.579681
+            },
+            {
+              "latitude": 45.497426,
+              "longitude": -73.579752
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "John Molson Building",
+    "abbreviationName": "MB",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.495187,
+              "longitude": -73.578526
+            },
+            {
+              "latitude": 45.495006,
+              "longitude": -73.578737
+            },
+            {
+              "latitude": 45.495038,
+              "longitude": -73.578791
+            },
+            {
+              "latitude": 45.495007,
+              "longitude": -73.578824
+            },
+            {
+              "latitude": 45.495166,
+              "longitude": -73.579171
+            },
+            {
+              "latitude": 45.495222,
+              "longitude": -73.579115
+            },
+            {
+              "latitude": 45.495358,
+              "longitude": -73.579367
+            },
+            {
+              "latitude": 45.495519,
+              "longitude": -73.5792
+            },
+            {
+              "latitude": 45.49544,
+              "longitude": -73.578962
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "MI Annex",
+    "abbreviationName": "MI",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497811,
+              "longitude": -73.579233
+            },
+            {
+              "latitude": 45.497779,
+              "longitude": -73.579167
+            },
+            {
+              "latitude": 45.497682,
+              "longitude": -73.57926
+            },
+            {
+              "latitude": 45.497695,
+              "longitude": -73.579285
+            },
+            {
+              "latitude": 45.497623,
+              "longitude": -73.579354
+            },
+            {
+              "latitude": 45.497648,
+              "longitude": -73.579403
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "MU Annex",
+    "abbreviationName": "MU",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497963,
+              "longitude": -73.579537
+            },
+            {
+              "latitude": 45.497785,
+              "longitude": -73.579704
+            },
+            {
+              "latitude": 45.497748,
+              "longitude": -73.579629
+            },
+            {
+              "latitude": 45.49792,
+              "longitude": -73.57946
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "P Annex",
+    "abbreviationName": "P",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496723,
+              "longitude": -73.579171
+            },
+            {
+              "latitude": 45.496677,
+              "longitude": -73.579081
+            },
+            {
+              "latitude": 45.496582,
+              "longitude": -73.579177
+            },
+            {
+              "latitude": 45.496629,
+              "longitude": -73.579267
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "PR Annex",
+    "abbreviationName": "PR",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497018,
+              "longitude": -73.579829
+            },
+            {
+              "latitude": 45.496979,
+              "longitude": -73.579749
+            },
+            {
+              "latitude": 45.496895,
+              "longitude": -73.579833
+            },
+            {
+              "latitude": 45.496933,
+              "longitude": -73.579914
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Q Annex",
+    "abbreviationName": "Q",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496676,
+              "longitude": -73.579082
+            },
+            {
+              "latitude": 45.496646,
+              "longitude": -73.579023
+            },
+            {
+              "latitude": 45.496553,
+              "longitude": -73.57912
+            },
+            {
+              "latitude": 45.496582,
+              "longitude": -73.579177
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "R Annex",
+    "abbreviationName": "R",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496838,
+              "longitude": -73.5794
+            },
+            {
+              "latitude": 45.496803,
+              "longitude": -73.579329
+            },
+            {
+              "latitude": 45.496711,
+              "longitude": -73.579421
+            },
+            {
+              "latitude": 45.496746,
+              "longitude": -73.579492
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "RR Annex",
+    "abbreviationName": "RR",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496799,
+              "longitude": -73.579333
+            },
+            {
+              "latitude": 45.49676,
+              "longitude": -73.579254
+            },
+            {
+              "latitude": 45.496613,
+              "longitude": -73.5794
+            },
+            {
+              "latitude": 45.496652,
+              "longitude": -73.57948
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "S Annex",
+    "abbreviationName": "S",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497366,
+              "longitude": -73.579933
+            },
+            {
+              "latitude": 45.497325,
+              "longitude": -73.579851
+            },
+            {
+              "latitude": 45.497426,
+              "longitude": -73.579752
+            },
+            {
+              "latitude": 45.497437,
+              "longitude": -73.579773
+            },
+            {
+              "latitude": 45.49746,
+              "longitude": -73.579752
+            },
+            {
+              "latitude": 45.497491,
+              "longitude": -73.579815
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Samuel Bronfman Building",
+    "abbreviationName": "SB",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496438,
+              "longitude": -73.586207
+            },
+            {
+              "latitude": 45.496468,
+              "longitude": -73.585738
+            },
+            {
+              "latitude": 45.496493,
+              "longitude": -73.585739
+            },
+            {
+              "latitude": 45.496511,
+              "longitude": -73.585779
+            },
+            {
+              "latitude": 45.49651,
+              "longitude": -73.585792
+            },
+            {
+              "latitude": 45.496554,
+              "longitude": -73.585792
+            },
+            {
+              "latitude": 45.496574,
+              "longitude": -73.585836
+            },
+            {
+              "latitude": 45.496582,
+              "longitude": -73.58583
+            },
+            {
+              "latitude": 45.496659,
+              "longitude": -73.586008
+            },
+            {
+              "latitude": 45.496652,
+              "longitude": -73.586014
+            },
+            {
+              "latitude": 45.496684,
+              "longitude": -73.586088
+            },
+            {
+              "latitude": 45.496538,
+              "longitude": -73.586212
+            },
+            {
+              "latitude": 45.496519,
+              "longitude": -73.586168
+            },
+            {
+              "latitude": 45.496521,
+              "longitude": -73.586136
+            },
+            {
+              "latitude": 45.496506,
+              "longitude": -73.586136
+            },
+            {
+              "latitude": 45.496501,
+              "longitude": -73.586208
+            }
+          ],
+          "holes": [
+            [
+              {
+                "latitude": 45.496541,
+                "longitude": -73.586032
+              },
+              {
+                "latitude": 45.496538,
+                "longitude": -73.586077
+              },
+              {
+                "latitude": 45.496512,
+                "longitude": -73.586076
+              },
+              {
+                "latitude": 45.496522,
+                "longitude": -73.585920
+              },
+              {
+                "latitude": 45.496546,
+                "longitude": -73.585921
+              },
+              {
+                "latitude": 45.496580,
+                "longitude": -73.585999
+              }
+            ]
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "T Annex",
+    "abbreviationName": "T",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496752,
+              "longitude": -73.579261
+            },
+            {
+              "latitude": 45.496712,
+              "longitude": -73.579184
+            },
+            {
+              "latitude": 45.496626,
+              "longitude": -73.579262
+            },
+            {
+              "latitude": 45.496668,
+              "longitude": -73.579345
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Toronto-Dominion Building",
+    "abbreviationName": "TD",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.495128,
+              "longitude": -73.578501
+            },
+            {
+              "latitude": 45.49519,
+              "longitude": -73.578428
+            },
+            {
+              "latitude": 45.495038,
+              "longitude": -73.578074
+            },
+            {
+              "latitude": 45.494944,
+              "longitude": -73.578178
+            },
+            {
+              "latitude": 45.495025,
+              "longitude": -73.578324
+            },
+            {
+              "latitude": 45.495043,
+              "longitude": -73.5783
+            },
+            {
+              "latitude": 45.495066,
+              "longitude": -73.578342
+            },
+            {
+              "latitude": 45.495048,
+              "longitude": -73.578365
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "V Annex",
+    "abbreviationName": "V",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.497089,
+              "longitude": -73.579918
+            },
+            {
+              "latitude": 45.497049,
+              "longitude": -73.579834
+            },
+            {
+              "latitude": 45.496946,
+              "longitude": -73.579938
+            },
+            {
+              "latitude": 45.496985,
+              "longitude": -73.580019
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Visual Arts Building",
+    "abbreviationName": "VA",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.495403,
+              "longitude": -73.573766
+            },
+            {
+              "latitude": 45.495668,
+              "longitude": -73.573509
+            },
+            {
+              "latitude": 45.495817,
+              "longitude": -73.573811
+            },
+            {
+              "latitude": 45.49607,
+              "longitude": -73.573559
+            },
+            {
+              "latitude": 45.496187,
+              "longitude": -73.573796
+            },
+            {
+              "latitude": 45.49567,
+              "longitude": -73.57431
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "X Annex",
+    "abbreviationName": "X",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496949,
+              "longitude": -73.579666
+            },
+            {
+              "latitude": 45.496907,
+              "longitude": -73.579579
+            },
+            {
+              "latitude": 45.496815,
+              "longitude": -73.579671
+            },
+            {
+              "latitude": 45.496857,
+              "longitude": -73.579758
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  },
+  {
+    "fullName": "Z Annex",
+    "abbreviationName": "Z",
+    "highlight": {
+      "outlines": [
+        {
+          "points": [
+            {
+              "latitude": 45.496986,
+              "longitude": -73.579742
+            },
+            {
+              "latitude": 45.496949,
+              "longitude": -73.579666
+            },
+            {
+              "latitude": 45.496851,
+              "longitude": -73.579764
+            },
+            {
+              "latitude": 45.496875,
+              "longitude": -73.579813
+            },
+            {
+              "latitude": 45.496898,
+              "longitude": -73.57979
+            },
+            {
+              "latitude": 45.49691,
+              "longitude": -73.579817
+            }
+          ],
+          "holes": []
+        }
+      ]
+    }
+  }
+]
