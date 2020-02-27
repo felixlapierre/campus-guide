@@ -95,8 +95,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         SwitchCampus(switchCampusToggle, mMap)
     }
 
-
-
+    override fun onDestroy() {
+        super.onDestroy()
+        ObjectBox.boxStore.close()
+    }
+    
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
     }
