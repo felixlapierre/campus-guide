@@ -2,7 +2,6 @@ package com.example.campusguide.directions
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.R
 import com.example.campusguide.utils.MessageDialogFragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -11,12 +10,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.net.URLEncoder
 import com.google.android.gms.maps.model.MarkerOptions
-import java.util.Arrays.asList
-import com.google.android.gms.maps.model.PatternItem
-import com.google.android.gms.maps.model.Gap
-import com.google.android.gms.maps.model.Dot
 
 
 /**
