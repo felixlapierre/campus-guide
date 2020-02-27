@@ -3,11 +3,13 @@ package com.example.campusguide.directions
 import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
-import java.lang.IllegalStateException
+
 
 /**
  * An Android fragment that contains a dialog window prompting the user to
@@ -59,6 +61,10 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
+
+            dialog?.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
+                Log.d("WTV", "TESTING DAMMIT")
+            })
 
             return builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
