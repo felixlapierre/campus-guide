@@ -27,6 +27,8 @@ import com.google.android.gms.maps.GoogleMap.OnMapClickListener
 import androidx.core.app.ComponentActivity.ExtraData
 import androidx.core.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import CustomInfoWindowGoogleMap
+import com.example.campusguide.utils.InfoWindowData
 
 
 
@@ -87,39 +89,63 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
         route = Route(mMap, this)
 
-        // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
-        mMap.addMarker(MarkerOptions().position(hall).title("Hall Building").snippet("Population: 4,137,400"))
+
+        val info = InfoWindowData()
+        info.hotel = "Hotel : excellent hotels available"
+        info.food = "Food : all types of restaurants available"
+        info.transport = "Reach the site by bus, car and train."
+
+        val customInfoWindow = CustomInfoWindowGoogleMap(this)
+        mMap.setInfoWindowAdapter(customInfoWindow)
+
+        //mMap.addMarker(MarkerOptions().position(hall).title("Hall Building").snippet("this is a string"))
+        val markerOptions = MarkerOptions()
+        markerOptions.position(hall)
+            .title("Hallddddsss Building")
+            .snippet("this is the hall building")
+
+
+
+        val m = mMap.addMarker(markerOptions)
+        m.tag = info
+        m.showInfoWindow()
+
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
+
+
+//        // Add a marker on Hall Building and move the camera
+//        val hall = LatLng(45.497290, -73.578824)
+       // mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
+       // mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap)
 
+//        // Adding and showing marker while touching the GoogleMap
+//        googleMap.setOnMapClickListener { arg0 ->
+//            // Clears any existing markers from the GoogleMap
+//            googleMap.clear()
+//
+//            // Creating an instance of MarkerOptions to set position
+//            val markerOptions = MarkerOptions()
+//
+//            // Setting position on the MarkerOptions
+//            markerOptions.position(arg0).title("title").snippet("Subtitle")
+//
+//            //Set Custom InfoWindow Adapter
+//            val adapter = CustomInfoWindowGoogleMap(this@MainActivity)
+//            mMap.setInfoWindowAdapter(adapter)
+//
+//            // Animating to the currently touched position
+//            googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0))
+//
+//            mMap.addMarker(markerOptions).showInfoWindow()
+//        }
 
-        // Adding and showing marker while touching the GoogleMap
-        googleMap.setOnMapClickListener { arg0 ->
-            // Clears any existing markers from the GoogleMap
-            googleMap.clear()
 
-            // Creating an instance of MarkerOptions to set position
-            val markerOptions = MarkerOptions()
-
-            // Setting position on the MarkerOptions
-            markerOptions.position(arg0)
-
-            // Animating to the currently touched position
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0))
-
-            // Adding marker on the GoogleMap
-            val marker = googleMap.addMarker(markerOptions)
-
-            // Showing InfoWindow on the GoogleMap
-            marker.showInfoWindow()
-        }
-        //make popup appear on hall
     }
-    
 
 
     companion object {
