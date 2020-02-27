@@ -1,8 +1,9 @@
 package com.example.campusguide.utils
 
 class InfoWindowData {
-    var image: String? = null
-    var hotel: String? = null
-    var food: String? = null
-    var transport: String? = null
+    var symbol: String? = null
+    var full_name: String? = null
+    var address: String? = null
+    var services: String? = null
+    var events: String? = null
 }
