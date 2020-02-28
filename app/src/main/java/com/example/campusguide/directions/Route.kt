@@ -1,8 +1,8 @@
 package com.example.campusguide.directions
 
-import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.utils.MessageDialogFragment
+import com.example.campusguide.Constants
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.maps.internal.PolylineEncoding
@@ -12,6 +12,8 @@ import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.PatternItem
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.LatLngBounds
+
 
 
 /**
@@ -54,15 +56,21 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
             val startCapitalized = capitalizeWords(start)
             val endCapitalized = capitalizeWords(end)
             if(response != null) {
-                response.routes[0]
-                val startLat = response.routes[0].legs[0].startLocation.lat
-                val startLng = response.routes[0].legs[0].startLocation.lng
-                val endLat = response.routes[0].legs[0].endLocation.lat
-                val endLng = response.routes[0].legs[0].endLocation.lng
-                val startPoint = MarkerOptions().position(LatLng(startLat.toDouble(),
-                    startLng.toDouble())).title(startCapitalized).snippet("Start")
-                val endPoint = MarkerOptions().position(LatLng(endLat.toDouble(),
-                    endLng.toDouble())).title(endCapitalized).snippet("Destination")
+                val startLat = response.routes[0].legs[0].startLocation.lat.toDouble()
+                val startLng = response.routes[0].legs[0].startLocation.lng.toDouble()
+                val endLat = response.routes[0].legs[0].endLocation.lat.toDouble()
+                val endLng = response.routes[0].legs[0].endLocation.lng.toDouble()
+                val startPoint = MarkerOptions().position(LatLng(startLat,
+                    startLng)).title(startCapitalized).snippet("Start")
+                val endPoint = MarkerOptions().position(LatLng(endLat,
+                    endLng)).title(endCapitalized).snippet("Destination")
+                val startBoundLat = response.routes[0].bounds.southwest.lat.toDouble()
+                val startBoundLng = response.routes[0].bounds.southwest.lng.toDouble()
+                val endBoundLat = response.routes[0].bounds.northeast.lat.toDouble()
+                val endBoundLng = response.routes[0].bounds.northeast.lng.toDouble()
+                val routeBounds = LatLngBounds(
+                        LatLng(startBoundLat, startBoundLng), LatLng(endBoundLat, endBoundLng)
+                )
                 val line = response.routes[0].overviewPolyline.points
                 val decoded = PolylineEncoding.decode(line)
 
@@ -80,12 +88,14 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                  */
                 activity.runOnUiThread {
                     val polyOptions = PolylineOptions()
-                    polyOptions.color(COLOR_BLUE_ARGB.toInt())
-                    polyOptions.pattern(PATTERN_POLYGON_ALPHA)
-                    polyOptions.addAll(decodedAsGoodLatLng)
+                        .color(COLOR_BLUE_ARGB.toInt())
+                        .pattern(PATTERN_POLYGON_ALPHA)
+                        .addAll(decodedAsGoodLatLng)
                     polyline = map.addPolyline(polyOptions)
                     begin = map.addMarker(startPoint)
                     dest = map.addMarker(endPoint)
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(routeBounds.center,
+                        Constants.ZOOM_STREET_LVL))
                 }
             }
         }
