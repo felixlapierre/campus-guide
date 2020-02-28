@@ -8,6 +8,10 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import com.google.android.gms.maps.model.Dash
+import com.google.android.gms.maps.model.PatternItem
+import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.PolylineOptions
 
 
 /**
@@ -18,6 +22,12 @@ import kotlinx.coroutines.launch
  * @param end The name of the location where the route ends
  */
 class Route constructor(private val map: GoogleMap, private val activity: AppCompatActivity) {
+    private val PATTERN_DASH_LENGTH_PX = 20
+    private val PATTERN_GAP_LENGTH_PX = 20
+    private val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX.toFloat())
+    private val GAP: PatternItem = Gap(PATTERN_GAP_LENGTH_PX.toFloat())
+    private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
+    private val COLOR_BLUE_ARGB = 0xff0000ff
     private var polyline: Polyline? = null
     private var begin: Marker? = null
     private var dest: Marker? = null
@@ -49,10 +59,10 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                 val startLng = response.routes[0].legs[0].startLocation.lng
                 val endLat = response.routes[0].legs[0].endLocation.lat
                 val endLng = response.routes[0].legs[0].endLocation.lng
-                val startPoint = MarkerOptions().position(LatLng(startLat.toDouble(), startLng.toDouble()))
-                    .title(startCapitalized).snippet("Start")
-                val endPoint = MarkerOptions().position(LatLng(endLat.toDouble(), endLng.toDouble()))
-                    .title(endCapitalized).snippet("Destination")
+                val startPoint = MarkerOptions().position(LatLng(startLat.toDouble(),
+                    startLng.toDouble())).title(startCapitalized).snippet("Start")
+                val endPoint = MarkerOptions().position(LatLng(endLat.toDouble(),
+                    endLng.toDouble())).title(endCapitalized).snippet("Destination")
                 val line = response.routes[0].overviewPolyline.points
                 val decoded = PolylineEncoding.decode(line)
 
@@ -69,7 +79,11 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                  * addPolyline throws an exception if it is not run on the Ui thread.
                  */
                 activity.runOnUiThread {
-                    polyline = map.addPolyline(PolylineOptions().addAll(decodedAsGoodLatLng))
+                    val polyOptions = PolylineOptions()
+                    polyOptions.color(COLOR_BLUE_ARGB.toInt())
+                    polyOptions.pattern(PATTERN_POLYGON_ALPHA)
+                    polyOptions.addAll(decodedAsGoodLatLng)
+                    polyline = map.addPolyline(polyOptions)
                     begin = map.addMarker(startPoint)
                     dest = map.addMarker(endPoint)
                 }
