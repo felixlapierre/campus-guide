@@ -7,6 +7,7 @@ import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.*
+import com.example.campusguide.utils.LocalResources
 import database.ObjectBox
 import junit.framework.Assert.assertEquals
 import org.hamcrest.CoreMatchers.notNullValue
@@ -59,10 +60,10 @@ class SwitchCampusAcceptanceTest {
         }
 
         // Wait until the text of the Switch Campus button has changed
-        device.wait(Until.hasObject(By.text("SGW")), TIMEOUT)
+        device.wait(Until.hasObject(By.text(LocalResources.getContext().getString(R.string.sgw_campus))), TIMEOUT)
 
         // Verify that the Switch Campus button presents the correct text
-        assertEquals("SGW", switchCampusButton.text)
+        assertEquals(LocalResources.getContext().getString(R.string.sgw_campus), switchCampusButton.text)
     }
 
     @Test
@@ -80,10 +81,10 @@ class SwitchCampusAcceptanceTest {
         }
 
         // Wait until the text of the Switch Campus button has changed
-        device.wait(Until.hasObject(By.text("LOY")), TIMEOUT)
+        device.wait(Until.hasObject(By.text(LocalResources.getContext().getString(R.string.loy_campus))), TIMEOUT)
 
         // Verify that the Switch Campus button presents the correct text
-        assertEquals("LOY", switchCampusButton.text)
+        assertEquals(LocalResources.getContext().getString(R.string.loy_campus), switchCampusButton.text)
     }
 
     @After
