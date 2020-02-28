@@ -13,7 +13,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
-private const val LAUNCH_TIMEOUT = 5000L
+private const val TIMEOUT = 5000L
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
@@ -30,20 +30,24 @@ class SwitchCampusAcceptanceTest {
 
         val launcherPackage: String = device.launcherPackageName
         assertThat(launcherPackage, notNullValue())
-        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), LAUNCH_TIMEOUT)
+        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)),
+            TIMEOUT
+        )
 
         val context = ApplicationProvider.getApplicationContext<Context>()
         val intent = context.packageManager.getLaunchIntentForPackage("com.example.campusguide")
         context.startActivity(intent)
 
-        device.wait(Until.hasObject(By.pkg("com.example.campusguide").depth(0)), LAUNCH_TIMEOUT)
+        device.wait(Until.hasObject(By.pkg("com.example.campusguide").depth(0)),
+            TIMEOUT
+        )
     }
 
     @Test
     fun clickSwitchCampusButtonOnce() {
 
-        // Wait 5 seconds
-        device.waitForWindowUpdate(null, 5000)
+        // Wait until the map is loaded
+        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
 
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
@@ -52,8 +56,8 @@ class SwitchCampusAcceptanceTest {
             switchCampusButton.click()
         }
 
-        // Wait 3 seconds
-        device.waitForWindowUpdate(null, 3000)
+        // Wait until the text of the Switch Campus button has changed
+        device.wait(Until.hasObject(By.text("SGW")), TIMEOUT)
 
         // Verify that the Switch Campus button presents the correct text
         assertEquals("SGW", switchCampusButton.text)
@@ -62,26 +66,19 @@ class SwitchCampusAcceptanceTest {
     @Test
     fun clickSwitchCampusButtonTwice() {
 
-        // Wait 5 seconds
-        device.waitForWindowUpdate(null, 5000)
+        // Wait until the map is loaded
+        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
 
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
-        // Click the Switch Campus button
+        // Click the Switch Campus button twice
         if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
+            switchCampusButton.click()
             switchCampusButton.click()
         }
 
-        // Wait 3 seconds
-        device.waitForWindowUpdate(null, 3000)
-
-        // Click it a second time
-        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
-            switchCampusButton.click()
-        }
-
-        // Wait 3 seconds
-        device.waitForWindowUpdate(null, 3000)
+        // Wait until the text of the Switch Campus button has changed
+        device.wait(Until.hasObject(By.text("LOY")), TIMEOUT)
 
         // Verify that the Switch Campus button presents the correct text
         assertEquals("LOY", switchCampusButton.text)
