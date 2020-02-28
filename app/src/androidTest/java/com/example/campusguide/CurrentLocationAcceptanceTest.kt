@@ -8,8 +8,10 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
 import androidx.test.uiautomator.*
+import database.ObjectBox
 import junit.framework.Assert.assertEquals
 import org.hamcrest.CoreMatchers.notNullValue
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -65,4 +67,10 @@ class CurrentLocationAcceptanceTest {
         assertEquals("You are here.. ", marker.contentDescription)
 
     }
+
+    @After
+    fun cleanUp() {
+        ObjectBox.boxStore.close()
+    }
+
 }

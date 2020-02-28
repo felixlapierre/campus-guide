@@ -7,8 +7,10 @@ import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.*
+import database.ObjectBox
 import junit.framework.Assert.assertEquals
 import org.hamcrest.CoreMatchers.notNullValue
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -82,5 +84,10 @@ class SwitchCampusAcceptanceTest {
 
         // Verify that the Switch Campus button presents the correct text
         assertEquals("LOY", switchCampusButton.text)
+    }
+
+    @After
+    fun cleanUp() {
+        ObjectBox.boxStore.close()
     }
 }

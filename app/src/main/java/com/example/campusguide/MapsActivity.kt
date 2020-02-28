@@ -97,11 +97,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.setContentDescription("Google Maps Ready")
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        ObjectBox.boxStore.close()
-    }
-
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
     }
