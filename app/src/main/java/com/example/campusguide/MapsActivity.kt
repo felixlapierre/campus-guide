@@ -4,14 +4,12 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
-import com.example.campusguide.directions.CallbackDirectionsConfirmListener
-import com.example.campusguide.directions.EmptyDirectionsGuard
-import com.example.campusguide.directions.GetDirectionsDialogFragment
-import com.example.campusguide.directions.Route
+import com.example.campusguide.directions.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.example.campusguide.utils.BuildingHighlights
@@ -22,13 +20,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.maps.DirectionsApiRequest
 import com.google.maps.GeoApiContext
-import com.google.maps.PendingResult
-import com.google.maps.model.DirectionsResult
 import database.ObjectBox
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -60,19 +54,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+//        navigateButton.setOnClickListener {
+//            val getDirectionsDialogFragment =
+//                GetDirectionsDialogFragment(
+//                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+//                        null, null,
+//                        EmptyDirectionsGuard(this,
+//                            CallbackDirectionsConfirmListener { start, end ->
+//                                //Display the directions time
+//                                route.set(start, end)
+//                            })
+//                    )
+//                )
+//            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+//        }
+
         navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+            val chooseDirectionOptions = ChooseDirectionOptions()
+            chooseDirectionOptions.show(supportFragmentManager, "directionsOptions")
         }
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
@@ -100,59 +99,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        //SwitchCampus(switchCampusToggle, mMap)
-        calculateDirections()
-
+        SwitchCampus(switchCampusToggle, mMap)
 
         mGeoApiContext = GeoApiContext.Builder()
             .apiKey(getString(R.string.google_maps_key))
             .build()
 
     }
-
-    private fun calculateDirections() {
-        Log.d("TEST", "calculateDirections: calculating directions.");
-
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if (location != null) {
-//                val destination : com.google.maps.model.LatLng = com.google.maps.model.LatLng(
-//                    destinationMarker.position.latitude,
-//                    destinationMarker.position.latitude
-//                )
-
-                val destination : com.google.maps.model.LatLng = com.google.maps.model.LatLng(
-                    location.latitude,
-                    location.longitude
-                )
-
-                //Current user location
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-
-                val directions = DirectionsApiRequest(mGeoApiContext)
-                directions.alternatives(true)
-                directions.origin(
-                    com.google.maps.model.LatLng(
-                        currentLatLng.latitude,
-                        currentLatLng.longitude
-                    )
-                )
-                Log.d("TEST", "calculateDirections: destination: $destination")
-                directions.destination(destination)
-                    .setCallback(object : PendingResult.Callback<DirectionsResult> {
-                        override fun onResult(result: DirectionsResult) {
-                            Log.d("TEST", "calculateDirections: routes: " + result.routes[0].toString());
-                            Log.d("TEST", "calculateDirections: geocodeWayPoints : " + result.geocodedWaypoints[0].toString());
-                        }
-
-                        override fun onFailure(e: Throwable) {
-                            Log.e("TEST", "onFailure: " + e.message)
-                        }
-                    })
-            }
-        }
-    }
-    
-
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
