@@ -61,10 +61,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         setButtonListeners()
     }
 
-    companion object {
-        private const val LOCATION_PERMISSION_ACCESS_CODE = 1
-    }
-
     /**
      * Centers the map on the user's current location and places a marker.
      */
@@ -90,7 +86,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         grantResults: IntArray
     ) {
         when(requestCode) {
-            LOCATION_PERMISSION_ACCESS_CODE -> {
+            Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     goToCurrentLocation()
                 }
@@ -120,7 +116,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 goToCurrentLocation()
             } else {
                 //Request location permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), Constants.LOCATION_PERMISSION_ACCESS_CODE)
             }
         }
     }
