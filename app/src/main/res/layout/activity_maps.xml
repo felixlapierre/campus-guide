@@ -11,6 +11,7 @@
 
     <androidx.appcompat.widget.AppCompatToggleButton
         android:id="@+id/switchCampusButton"
+        android:contentDescription="switchCampusButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_gravity="bottom|end"
@@ -26,6 +27,7 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/currentLocationButton"
+        android:contentDescription="currentLocationButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right|top"

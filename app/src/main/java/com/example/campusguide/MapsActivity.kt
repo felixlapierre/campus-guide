@@ -93,9 +93,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap)
+
+        mMap.setContentDescription("Google Maps Ready")
     }
-
-
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
