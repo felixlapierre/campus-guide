@@ -2,13 +2,10 @@ package com.example.campusguide.directions
 
 import android.app.AlertDialog
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.fragment.app.DialogFragment
 
 import com.example.campusguide.R
@@ -48,9 +45,6 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
             val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.directions_dialog_layout, null)
 
-            val optionsView = inflater.inflate(R.layout.choose_directions, null)
-            val optionsBuilder = AlertDialog.Builder(optionsView.context)
-
             setDefaultLocations(view)
 
             val builder = AlertDialog.Builder(it)
@@ -80,7 +74,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
     }
 
     private fun setDefaultText(view: View, editTextId: Int, text: String?) {
-        if (text != null) { //Using current location for directions
+        if (text != null) {
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
             textInput.isGone = true

@@ -16,13 +16,13 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Placeholder" />
+        android:text="Use Last Event" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Placeholder" />
+        android:text="Choose from Map" />
 
     <Button
         android:id="@+id/searchForLocation"

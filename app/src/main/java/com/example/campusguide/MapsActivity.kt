@@ -3,19 +3,17 @@ package com.example.campusguide
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.FragmentActivity
+
+import com.example.campusguide.Constants.LOCATION_PERMISSION_ACCESS_CODE
 import com.example.campusguide.directions.*
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.example.campusguide.utils.BuildingHighlights
 
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,7 +22,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.maps.GeoApiContext
 import database.ObjectBox
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -32,7 +29,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var route: Route
-    private lateinit var mGeoApiContext: GeoApiContext
     private lateinit var  buildingHighlights: BuildingHighlights
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,13 +51,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-
-        navigateButton.setOnClickListener {
-            val chooseDirectionOptions = ChooseDirectionOptions(route)
-            chooseDirectionOptions.show(supportFragmentManager, "directionsOptions")
-        }
-      
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -152,18 +141,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setNavButtonListener(){
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
         navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+            val chooseDirectionOptions = ChooseDirectionOptions(route)
+            chooseDirectionOptions.show(supportFragmentManager, "directionsOptions")
         }
     }
 }
