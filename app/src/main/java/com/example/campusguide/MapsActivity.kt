@@ -89,11 +89,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         mMap.setContentDescription("Google Maps Ready")
     }
-        mGeoApiContext = GeoApiContext.Builder()
-            .apiKey(getString(R.string.google_maps_key))
-            .build()
-
-    }
 
     companion object {
         private const val LOCATION_PERMISSION_ACCESS_CODE = 1
