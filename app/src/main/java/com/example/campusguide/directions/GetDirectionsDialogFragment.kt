@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -80,61 +81,8 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
         if (text != null) {
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
-            //textInput.isGone = true
         }
     }
-
-//    private fun getCurrentLocation(): AlertDialog? {
-//        return activity?.let {
-//
-//            val inflater = requireActivity().layoutInflater
-//            val view = inflater.inflate(R.layout.choose_directions, null)
-//
-////            setDefaultLocations(view)
-//
-//            val builder = AlertDialog.Builder(it)
-//                .setView(view)
-//                .setMessage("Enter start and end location")
-//                .setPositiveButton("Go") { _, _ ->
-//                    val startEditText =
-//                        dialog?.findViewById<EditText>(R.id.startLocationTextInput)
-//                    val endEditText = dialog?.findViewById<EditText>(R.id.endLocationTextInput)
-//
-//                    val start = startEditText?.text.toString()
-//                    val end = endEditText?.text.toString()
-//
-//                    options.confirmationListener.onConfirm(start, end)
-//                }
-//                .setNegativeButton("Cancel") { dialog, _ ->
-//                    dialog.cancel()
-//                }
-//
-//            builder.create()
-//
-//            val getDirectionsDialogFragment =
-//                GetDirectionsDialogFragment(
-//                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-//                        null, null,
-//                        EmptyDirectionsGuard(this,
-//                            CallbackDirectionsConfirmListener { start, end ->
-//                                //Display the directions time
-//                                route.set(start, end)
-//                            })
-//                    )
-//                )
-//            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
-//
-//            return builder.create()
-//        } ?: throw IllegalStateException("Activity cannot be null")
-//
-//
-////        this.activity?.let {
-////            mFusedLocationProviderClient.lastLocation.addOnSuccessListener(it) { location ->
-////                    val currentLatLng = LatLng(location.latitude, location.longitude)
-////                Log.d("TEST", "current Location: $currentLatLng")
-////            }
-////        }
-//    }
 
 //    private fun calculateDirections(marker : Marker) {
 //        Log.d("TEST", "calculateDirections: calculating directions.");
