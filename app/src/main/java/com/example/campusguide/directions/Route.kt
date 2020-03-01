@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.LatLngBounds
 
-
 /**
  * Represents a route between two coordinates on the map.
  * @param map The google map object on which the route will be displayed
@@ -32,8 +31,11 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
     private var polyline: Polyline? = null
     private var begin: Marker? = null
     private var dest: Marker? = null
+    private val startString: String = "Start"
+    private val destString: String = "Destination"
 
-    private fun capitalizeWords(location: String): String {
+    private fun capitalizeWords(location: String): String
+    {
         val words = location.split(" ").toMutableList()
         var output = ""
         for (word in words) {
@@ -58,13 +60,13 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                         response.routes[0].legs[0].startLocation.lat.toDouble(),
                         response.routes[0].legs[0].startLocation.lng.toDouble()
                     )
-                ).title(capitalizeWords(start)).snippet("Start")
+                ).title(capitalizeWords(start)).snippet(startString)
                 val endPoint = MarkerOptions().position(
                     LatLng(
                         response.routes[0].legs[0].endLocation.lat.toDouble(),
                         response.routes[0].legs[0].endLocation.lng.toDouble()
                     )
-                ).title(capitalizeWords(end)).snippet("Destination")
+                ).title(capitalizeWords(end)).snippet(destString)
                 val routeBounds = LatLngBounds(
                     LatLng(
                         response.routes[0].bounds.southwest.lat.toDouble(),
