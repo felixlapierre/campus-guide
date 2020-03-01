@@ -87,6 +87,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap)
 
+        mMap.setContentDescription("Google Maps Ready")
+    }
         mGeoApiContext = GeoApiContext.Builder()
             .apiKey(getString(R.string.google_maps_key))
             .build()
