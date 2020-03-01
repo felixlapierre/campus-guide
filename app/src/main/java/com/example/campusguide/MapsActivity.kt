@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ToggleButton
@@ -40,33 +41,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
         ObjectBox.init(this.applicationContext)
 
-        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener {
-            //Check if location permission has been granted
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                goToCurrentLocation()
-            } else {
-                //Request location permission
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_ACCESS_CODE)
-            }
-        }
-
-        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-        navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
-        }
-
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -90,15 +64,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         buildingHighlights = BuildingHighlights(mMap)
         buildingHighlights.addBuildingHighlights()
 
-        // Update switch campus button listener
-        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
-        SwitchCampus(switchCampusToggle, mMap)
-    }
-
-
-
-    companion object {
-        private const val LOCATION_PERMISSION_ACCESS_CODE = 1
+        setButtonListeners()
+        mMap.setContentDescription("Google Maps Ready")
     }
 
     /**
@@ -107,14 +74,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
             if(location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(MarkerOptions()
-                    .position(currentLatLng)
-                    .title("You are here.")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
+                animateCurrentLocation(location)
             }
         }
+    }
+    private fun animateCurrentLocation(location: Location) {
+        val currentLatLng = LatLng(location.latitude, location.longitude)
+        mMap.addMarker(MarkerOptions()
+            .position(currentLatLng)
+            .title("You are here.")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)))
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, Constants.ZOOM_STREET_LVL))
     }
 
     override fun onRequestPermissionsResult(
@@ -123,7 +93,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         grantResults: IntArray
     ) {
         when(requestCode) {
-            LOCATION_PERMISSION_ACCESS_CODE -> {
+            Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     goToCurrentLocation()
                 }
@@ -133,6 +103,46 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else -> {
                 // Ignore all other requests
             }
+        }
+    }
+
+    /**
+     * Methods for setting button listeners all at once.
+     */
+    private fun setButtonListeners(){
+        setCurrentLocationListener()
+        setNavButtonListener()
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        SwitchCampus(switchCampusToggle, mMap)
+    }
+    private fun setCurrentLocationListener() {
+        val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
+        currentLocationButton.setOnClickListener {
+            //Check if location permission has been granted
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                goToCurrentLocation()
+            } else {
+                //Request location permission
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), Constants.LOCATION_PERMISSION_ACCESS_CODE)
+            }
+        }
+    }
+
+    private fun setNavButtonListener(){
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
         }
     }
 }
