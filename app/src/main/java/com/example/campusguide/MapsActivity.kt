@@ -70,7 +70,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 //        }
 
         navigateButton.setOnClickListener {
-            val chooseDirectionOptions = ChooseDirectionOptions()
+            val chooseDirectionOptions = ChooseDirectionOptions(route)
             chooseDirectionOptions.show(supportFragmentManager, "directionsOptions")
         }
 

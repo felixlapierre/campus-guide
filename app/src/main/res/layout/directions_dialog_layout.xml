@@ -36,24 +36,28 @@
         android:id="@+id/useCurrentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Use Current Location" />
+        android:text="Use Current Location"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/button6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Button"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/searchForLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search for Location" />
+        android:text="Search for Location"
+        android:visibility="gone" />
 
 </LinearLayout>

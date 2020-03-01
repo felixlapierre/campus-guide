@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -20,8 +22,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 class GetDirectionsDialogFragment constructor(private val options: DirectionsDialogOptions) :
     DialogFragment() {
 
-    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-
     interface DirectionsDialogConfirmationListener {
         fun onConfirm(start: String, end: String)
     }
@@ -33,6 +33,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
      * @param onConfirm Callback that will be executed when the user confirms the dialog window
      */
     class DirectionsDialogOptions constructor(
+        val message : String?,
         val start: String?, val end: String?,
         val confirmationListener: DirectionsDialogConfirmationListener
     )
@@ -47,49 +48,39 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
             val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.directions_dialog_layout, null)
 
-//            setDefaultLocations(view)
-
-            view.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
-                //getCurrentLocation()
-            })
-
-            view.findViewById<Button>(R.id.searchForLocation)?.setOnClickListener(View.OnClickListener {
-
-            })
+            setDefaultLocations(view)
 
             val builder = AlertDialog.Builder(it)
                 .setView(view)
-//                .setMessage("Enter start and end location")
-//                .setPositiveButton("Go") { _, _ ->
-//                    val startEditText =
-//                        dialog?.findViewById<EditText>(R.id.startLocationTextInput)
-//                    val endEditText = dialog?.findViewById<EditText>(R.id.endLocationTextInput)
-//
-//                    val start = startEditText?.text.toString()
-//                    val end = endEditText?.text.toString()
-//
-//                    options.confirmationListener.onConfirm(start, end)
-//                }
-//                .setNegativeButton("Cancel") { dialog, _ ->
-//                    dialog.cancel()
-//                }
+                .setMessage(this.options.message)
+                .setPositiveButton("Go") { _, _ ->
+                    val startEditText =
+                        dialog?.findViewById<EditText>(R.id.startLocationTextInput)
+                    val endEditText = dialog?.findViewById<EditText>(R.id.endLocationTextInput)
 
-            val dialog : AlertDialog = builder.create()
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    val start = startEditText?.text.toString()
+                    val end = endEditText?.text.toString()
 
-            return dialog
+                    options.confirmationListener.onConfirm(start, end)
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }
+
+            return builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")
     }
 
-//    private fun setDefaultLocations(view: View) {
-//        setDefaultText(view, R.id.startLocationTextInput, options.start)
-//        setDefaultText(view, R.id.endLocationTextInput, options.end)
-//    }
+    private fun setDefaultLocations(view: View) {
+        setDefaultText(view, R.id.startLocationTextInput, options.start)
+        setDefaultText(view, R.id.endLocationTextInput, options.end)
+    }
 
     private fun setDefaultText(view: View, editTextId: Int, text: String?) {
         if (text != null) {
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
+            //textInput.isGone = true
         }
     }
 
