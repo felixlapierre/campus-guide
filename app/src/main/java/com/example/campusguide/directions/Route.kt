@@ -15,7 +15,6 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.LatLngBounds
 
 
-
 /**
  * Represents a route between two coordinates on the map.
  * @param map The google map object on which the route will be displayed
@@ -34,10 +33,10 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
     private var begin: Marker? = null
     private var dest: Marker? = null
 
-    private fun capitalizeWords (location: String): String{
+    private fun capitalizeWords(location: String): String {
         val words = location.split(" ").toMutableList()
         var output = ""
-        for (word in words){
+        for (word in words) {
             output += word.capitalize() + " "
         }
         output = output.trim()
@@ -53,23 +52,28 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
             val response = directions.getDirections(start, end)
-            val startCapitalized = capitalizeWords(start)
-            val endCapitalized = capitalizeWords(end)
-            if(response != null) {
-                val startLat = response.routes[0].legs[0].startLocation.lat.toDouble()
-                val startLng = response.routes[0].legs[0].startLocation.lng.toDouble()
-                val endLat = response.routes[0].legs[0].endLocation.lat.toDouble()
-                val endLng = response.routes[0].legs[0].endLocation.lng.toDouble()
-                val startPoint = MarkerOptions().position(LatLng(startLat,
-                    startLng)).title(startCapitalized).snippet("Start")
-                val endPoint = MarkerOptions().position(LatLng(endLat,
-                    endLng)).title(endCapitalized).snippet("Destination")
-                val startBoundLat = response.routes[0].bounds.southwest.lat.toDouble()
-                val startBoundLng = response.routes[0].bounds.southwest.lng.toDouble()
-                val endBoundLat = response.routes[0].bounds.northeast.lat.toDouble()
-                val endBoundLng = response.routes[0].bounds.northeast.lng.toDouble()
+            if (response != null) {
+                val startPoint = MarkerOptions().position(
+                    LatLng(
+                        response.routes[0].legs[0].startLocation.lat.toDouble(),
+                        response.routes[0].legs[0].startLocation.lng.toDouble()
+                    )
+                ).title(capitalizeWords(start)).snippet("Start")
+                val endPoint = MarkerOptions().position(
+                    LatLng(
+                        response.routes[0].legs[0].endLocation.lat.toDouble(),
+                        response.routes[0].legs[0].endLocation.lng.toDouble()
+                    )
+                ).title(capitalizeWords(end)).snippet("Destination")
                 val routeBounds = LatLngBounds(
-                        LatLng(startBoundLat, startBoundLng), LatLng(endBoundLat, endBoundLng)
+                    LatLng(
+                        response.routes[0].bounds.southwest.lat.toDouble(),
+                        response.routes[0].bounds.southwest.lng.toDouble()
+                    ),
+                    LatLng(
+                        response.routes[0].bounds.northeast.lat.toDouble(),
+                        response.routes[0].bounds.northeast.lng.toDouble()
+                    )
                 )
                 val line = response.routes[0].overviewPolyline.points
                 val decoded = PolylineEncoding.decode(line)
@@ -94,8 +98,12 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
                     polyline = map.addPolyline(polyOptions)
                     begin = map.addMarker(startPoint)
                     dest = map.addMarker(endPoint)
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(routeBounds.center,
-                        Constants.ZOOM_STREET_LVL))
+                    map.moveCamera(
+                        CameraUpdateFactory.newLatLngZoom(
+                            routeBounds.center,
+                            Constants.ZOOM_STREET_LVL
+                        )
+                    )
                 }
             }
         }
