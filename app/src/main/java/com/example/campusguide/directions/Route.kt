@@ -110,4 +110,27 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
             }
         }
     }
+
+    private fun decodeLine(line: String): List<LatLng>{
+        /**
+         * The com.google package contains two different representations of the
+         * LatLng class. The decoded points must be converted to the representation
+         * in com.google.android for PolylineOptions to accept them.
+         */
+        val decoded = PolylineEncoding.decode(line)
+        return decoded.map {
+            LatLng(it.lat, it.lng)
+        }
+    }
+
+    private fun runAddPolyline(decodedAsGoodLatLng: List<LatLng>){
+        /**
+         * addPolyline throws an exception if it is not run on the Ui thread.
+         */
+        activity.runOnUiThread {
+            polyline = map.addPolyline(
+                PolylineOptions().addAll(
+                    decodedAsGoodLatLng))
+        }
+    }
 }
