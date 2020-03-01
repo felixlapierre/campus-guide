@@ -30,20 +30,23 @@ class Directions constructor(private var activity: AppCompatActivity){
 
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener<JSONObject> { response ->
-                val responseObj = Klaxon().parse<GoogleDirectionsAPIResponse>(response.toString(0))
-
-                if(responseObj == null) {
-                    MessageDialogFragment("Could not get a response from the Google Directions API")
-                        .show(activity.supportFragmentManager, "message")
-                } else if(responseObj.status == "REQUEST_DENIED") {
+                if(response.getString("status") == "REQUEST_DENIED") {
                     MessageDialogFragment(
                         "Request to Google Directions API was denied. Make sure the" +
                                 " API key has permissions to access the Google Directions API."
                     )
                         .show(activity.supportFragmentManager, "message")
-                }
+                } else {
+                    val responseObj = Klaxon().parse<GoogleDirectionsAPIResponse>(response.toString(0))
 
-                cont.resume(responseObj)
+                    if(responseObj == null) {
+                        MessageDialogFragment("Could not get a response from the Google Directions API")
+                            .show(activity.supportFragmentManager, "message")
+                    }
+
+                    cont.resume(responseObj)
+
+                }
             },
             Response.ErrorListener { println("Error sending request") }
         )

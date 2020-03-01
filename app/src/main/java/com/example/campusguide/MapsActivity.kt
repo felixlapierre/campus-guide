@@ -3,6 +3,7 @@ package com.example.campusguide
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -14,6 +15,7 @@ import com.example.campusguide.directions.CallbackDirectionsConfirmListener
 import com.example.campusguide.directions.EmptyDirectionsGuard
 import com.example.campusguide.directions.GetDirectionsDialogFragment
 import com.example.campusguide.directions.Route
+import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -32,9 +34,10 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import database.ObjectBox
 import kotlinx.android.synthetic.main.activity_maps.*
 
-class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private lateinit var mMap: GoogleMap
@@ -42,6 +45,7 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var route: Route
+    private lateinit var buildingHighlights: BuildingHighlights
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,6 +90,8 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
             getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
         }
 
+        ObjectBox.init(this.applicationContext)
+
         if (!Places.isInitialized())
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
@@ -122,10 +128,15 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
         val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
+        buildingHighlights = BuildingHighlights(mMap)
+        buildingHighlights.addBuildingHighlights()
 
         // Update switch campus button listener
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap, campus_name)
+
+        setButtonListeners()
+        mMap.setContentDescription("Google Maps Ready")
     }
 
     @Synchronized
@@ -164,22 +175,26 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
      */
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if (location != null) {
-                val currentLatLng = LatLng(location.latitude, location.longitude)
-                mMap.addMarker(
-                    MarkerOptions()
-                        .position(currentLatLng)
-                        .title("You are here.")
-                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-                )
-                mMap.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        currentLatLng,
-                        Constants.ZOOM_STREET_LVL
-                    )
-                )
+            if(location != null) {
+                animateCurrentLocation(location)
             }
         }
+    }
+
+    private fun animateCurrentLocation(location: Location) {
+        val currentLatLng = LatLng(location.latitude, location.longitude)
+        mMap.addMarker(
+            MarkerOptions()
+                .position(currentLatLng)
+                .title("You are here.")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        )
+        mMap.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                currentLatLng,
+                Constants.ZOOM_STREET_LVL
+            )
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -187,6 +202,7 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
+
         when (requestCode) {
             Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
@@ -203,7 +219,12 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
 
     fun onSearchCalled(view: View) {
         val fields =
-            arrayListOf(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+            arrayListOf(
+                Place.Field.ID,
+                Place.Field.NAME,
+                Place.Field.ADDRESS,
+                Place.Field.LAT_LNG
+            )
         val intent: Intent =
             Autocomplete.IntentBuilder(
                 AutocompleteActivityMode.FULLSCREEN, fields
@@ -237,7 +258,58 @@ class MapsActivity() : AppCompatActivity(), OnMapReadyCallback,
         }
     }
 
+    /**
+     * Methods for setting button listeners all at once.
+     */
+    private fun setButtonListeners() {
+        setCurrentLocationListener()
+        setNavButtonListener()
+        val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
+        SwitchCampus(switchCampusToggle, mMap, campus_name)
+    }
+
+    private fun setCurrentLocationListener() {
+        val currentLocationButton: FloatingActionButton =
+            findViewById(R.id.currentLocationButton)
+        currentLocationButton.setOnClickListener {
+            //Check if location permission has been granted
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                goToCurrentLocation()
+            } else {
+                //Request location permission
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    Constants.LOCATION_PERMISSION_ACCESS_CODE
+                )
+            }
+        }
+    }
+
     fun onOpenMenu(view: View) {
         print("Menu was opened")
+    }
+
+
+    private fun setNavButtonListener() {
+        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
+        navigateButton.setOnClickListener {
+            val getDirectionsDialogFragment =
+                GetDirectionsDialogFragment(
+                    GetDirectionsDialogFragment.DirectionsDialogOptions(
+                        null, null,
+                        EmptyDirectionsGuard(this,
+                            CallbackDirectionsConfirmListener { start, end ->
+                                //Display the directions time
+                                route.set(start, end)
+                            })
+                    )
+                )
+            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+        }
     }
 }
