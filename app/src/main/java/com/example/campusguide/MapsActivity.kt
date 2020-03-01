@@ -54,20 +54,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-//        navigateButton.setOnClickListener {
-//            val getDirectionsDialogFragment =
-//                GetDirectionsDialogFragment(
-//                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-//                        null, null,
-//                        EmptyDirectionsGuard(this,
-//                            CallbackDirectionsConfirmListener { start, end ->
-//                                //Display the directions time
-//                                route.set(start, end)
-//                            })
-//                    )
-//                )
-//            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
-//        }
 
         navigateButton.setOnClickListener {
             val chooseDirectionOptions = ChooseDirectionOptions(route)

@@ -5,15 +5,13 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.fragment.app.DialogFragment
+
 import com.example.campusguide.R
-import com.google.android.gms.location.FusedLocationProviderClient
 
 
 /**
@@ -29,6 +27,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
     /**
      * Options for creating a Directions dialog.
+     * @param message Displays appropriate instructions to user
      * @param start Autofills the start location to the specified value
      * @param end Autofills the end location to the specified value
      * @param onConfirm Callback that will be executed when the user confirms the dialog window
@@ -48,6 +47,9 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
             val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.directions_dialog_layout, null)
+
+            val optionsView = inflater.inflate(R.layout.choose_directions, null)
+            val optionsBuilder = AlertDialog.Builder(optionsView.context)
 
             setDefaultLocations(view)
 
@@ -78,51 +80,10 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
     }
 
     private fun setDefaultText(view: View, editTextId: Int, text: String?) {
-        if (text != null) {
+        if (text != null) { //Using current location for directions
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
+            textInput.isGone = true
         }
     }
-
-//    private fun calculateDirections(marker : Marker) {
-//        Log.d("TEST", "calculateDirections: calculating directions.");
-//
-//        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-//            if (location != null) {
-////                val destination : com.google.maps.model.LatLng = com.google.maps.model.LatLng(
-////                    destinationMarker.position.latitude,
-////                    destinationMarker.position.latitude
-////                )
-//
-//                val destination : com.google.maps.model.LatLng = com.google.maps.model.LatLng(
-//                    location.latitude,
-//                    location.longitude
-//                )
-//
-//                //Current user location
-//                val currentLatLng = LatLng(location.latitude, location.longitude)
-//
-//                val directions = DirectionsApiRequest(mGeoApiContext)
-//                directions.alternatives(true)
-//                directions.origin(
-//                    com.google.maps.model.LatLng(
-//                        currentLatLng.latitude,
-//                        currentLatLng.longitude
-//                    )
-//                )
-//                Log.d("TEST", "calculateDirections: destination: $destination")
-//                directions.destination(destination)
-//                    .setCallback(object : PendingResult.Callback<DirectionsResult> {
-//                        override fun onResult(result: DirectionsResult) {
-//                            Log.d("TEST", "calculateDirections: routes: " + result.routes[0].toString());
-//                            Log.d("TEST", "calculateDirections: geocodeWayPoints : " + result.geocodedWaypoints[0].toString());
-//                        }
-//
-//                        override fun onFailure(e: Throwable) {
-//                            Log.e("TEST", "onFailure: " + e.message)
-//                        }
-//                    })
-//            }
-//        }
-//    }
 }

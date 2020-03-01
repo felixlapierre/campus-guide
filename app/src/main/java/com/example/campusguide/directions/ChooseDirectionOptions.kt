@@ -11,11 +11,11 @@ import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+
 import com.example.campusguide.R
+
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.tasks.OnCompleteListener
 
 
@@ -35,32 +35,51 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
         val view = inflater.inflate(R.layout.choose_directions, null)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
+
         builder.setView(view)
+        builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        view.findViewById<Button>(R.id.useCurrentLocation2)
-            ?.setOnClickListener(View.OnClickListener {
-                useCurrentLocation()
-            })
+        view.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
+            useCurrentLocation()
+        })
 
-        view.findViewById<Button>(R.id.searchForLocation2)
-            ?.setOnClickListener(View.OnClickListener {
-                searchForLocation()
-            })
-
-        val dialog: AlertDialog = builder.create()
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        view.findViewById<Button>(R.id.searchForLocation)?.setOnClickListener(View.OnClickListener {
+            searchForLocation()
+        })
 
         return builder.create()
     }
 
+    /**
+     * Gets the user's last known most recent location
+     */
     private fun useCurrentLocation() {
-        getDeviceLocation()
+        val locationResult = mFusedLocationProviderClient.lastLocation
+
+        locationResult.addOnCompleteListener(
+            this.requireActivity(),
+            OnCompleteListener<Location?> { task ->
+                if (task.isSuccessful) {
+                    openDirectionsDialogFragment(
+                        task.result?.latitude.toString() + ", " + task.result?.longitude.toString(),
+                        "Enter end location"
+                    )
+                } else {
+                    Log.d("NullCurrentLocation", "Current location is null")
+                }
+            })
     }
 
+    /**
+     * Allows users to manually enter start and end point
+     */
     private fun searchForLocation() {
         openDirectionsDialogFragment(null, "Enter start and end location")
     }
 
+    /**
+     * Opens the GetDirectionsDialogFragment
+     */
     private fun openDirectionsDialogFragment(startingPoint: String?, message: String) {
         val getDirectionsDialogFragment =
             GetDirectionsDialogFragment(
@@ -77,26 +96,5 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
                 )
             )
         getDirectionsDialogFragment.show(childFragmentManager, "directionsDialog")
-    }
-
-    /**
-     * Gets the user's last known most recent location
-     */
-    private fun getDeviceLocation() {
-        val locationResult = mFusedLocationProviderClient.lastLocation
-        var currentLoc: String? = null
-        locationResult.addOnCompleteListener(
-            this.requireActivity(),
-            OnCompleteListener<Location?> { task ->
-                if (task.isSuccessful) {
-                    openDirectionsDialogFragment(
-                        task.result?.latitude.toString() + ", " + task.result?.longitude.toString(),
-                        "Enter end location"
-                    )
-                } else {
-                    Log.d("", "Current location is null")
-                    Log.e("YES", "Exception: %s", task.exception)
-                }
-            })
     }
 }

@@ -4,13 +4,10 @@
     android:id="@+id/chooseDirections"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent"
-    android:orientation="vertical"
-    android:visibility="visible"
-    tools:visibility="visible">
+    android:orientation="vertical">
 
     <Button
-        android:id="@+id/useCurrentLocation2"
+        android:id="@+id/useCurrentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Use Current Location" />
@@ -19,16 +16,16 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Placeholder" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:text="Placeholder" />
 
     <Button
-        android:id="@+id/searchForLocation2"
+        android:id="@+id/searchForLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Search for Location" />
