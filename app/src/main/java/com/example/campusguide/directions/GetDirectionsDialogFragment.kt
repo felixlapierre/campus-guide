@@ -5,9 +5,11 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
+
 import com.example.campusguide.R
-import java.lang.IllegalStateException
+
 
 /**
  * An Android fragment that contains a dialog window prompting the user to
@@ -22,11 +24,13 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
     /**
      * Options for creating a Directions dialog.
+     * @param message Displays appropriate instructions to user
      * @param start Autofills the start location to the specified value
      * @param end Autofills the end location to the specified value
      * @param onConfirm Callback that will be executed when the user confirms the dialog window
      */
     class DirectionsDialogOptions constructor(
+        val message : String?,
         val start: String?, val end: String?,
         val confirmationListener: DirectionsDialogConfirmationListener
     )
@@ -45,7 +49,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
             val builder = AlertDialog.Builder(it)
                 .setView(view)
-                .setMessage("Enter start and end location")
+                .setMessage(this.options.message)
                 .setPositiveButton("Go") { _, _ ->
                     val startEditText =
                         dialog?.findViewById<EditText>(R.id.startLocationTextInput)
@@ -73,6 +77,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
         if (text != null) {
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
+            textInput.isGone = true
         }
     }
 }

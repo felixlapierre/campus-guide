@@ -10,6 +10,10 @@ import android.view.View
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.Constants.LOCATION_PERMISSION_ACCESS_CODE
+import com.example.campusguide.directions.*
+import com.example.campusguide.utils.BuildingHighlights
+import com.google.android.gms.location.FusedLocationProviderClient
 import androidx.core.content.ContextCompat
 import com.example.campusguide.directions.CallbackDirectionsConfirmListener
 import com.example.campusguide.directions.EmptyDirectionsGuard
@@ -74,24 +78,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
             }
         }
 
-        val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
-        navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
-        }
-
         ObjectBox.init(this.applicationContext)
-
+      
         if (!Places.isInitialized())
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
 
@@ -298,18 +286,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private fun setNavButtonListener() {
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
         navigateButton.setOnClickListener {
-            val getDirectionsDialogFragment =
-                GetDirectionsDialogFragment(
-                    GetDirectionsDialogFragment.DirectionsDialogOptions(
-                        null, null,
-                        EmptyDirectionsGuard(this,
-                            CallbackDirectionsConfirmListener { start, end ->
-                                //Display the directions time
-                                route.set(start, end)
-                            })
-                    )
-                )
-            getDirectionsDialogFragment.show(supportFragmentManager, "directionsDialog")
+            val chooseDirectionOptions = ChooseDirectionOptions(route)
+            chooseDirectionOptions.show(supportFragmentManager, "directionsOptions")
         }
     }
 }
