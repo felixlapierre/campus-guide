@@ -10,14 +10,8 @@ import android.view.View
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.campusguide.Constants.LOCATION_PERMISSION_ACCESS_CODE
-import com.example.campusguide.directions.*
-import com.example.campusguide.utils.BuildingHighlights
-import com.google.android.gms.location.FusedLocationProviderClient
 import androidx.core.content.ContextCompat
-import com.example.campusguide.directions.CallbackDirectionsConfirmListener
-import com.example.campusguide.directions.EmptyDirectionsGuard
-import com.example.campusguide.directions.GetDirectionsDialogFragment
+import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.common.ConnectionResult
