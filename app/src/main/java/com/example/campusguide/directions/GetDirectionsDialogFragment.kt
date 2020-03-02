@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
-import androidx.core.view.isGone
 import androidx.fragment.app.DialogFragment
 
 import com.example.campusguide.R
@@ -77,7 +76,6 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
         if (text != null) {
             val textInput = view.findViewById<EditText>(editTextId)
             textInput?.setText(text)
-            textInput.isGone = true
         }
     }
 }
