@@ -9,17 +9,12 @@ import androidx.fragment.app.DialogFragment
 
 import com.example.campusguide.R
 
-
 /**
  * An Android fragment that contains a dialog window prompting the user to
  * enter their start and end location for getting directions.
  */
 class GetDirectionsDialogFragment constructor(private val options: DirectionsDialogOptions) :
     DialogFragment() {
-
-    interface DirectionsDialogConfirmationListener {
-        fun onConfirm(start: String, end: String)
-    }
 
     /**
      * Options for creating a Directions dialog.
