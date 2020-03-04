@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -49,7 +50,7 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
         polyline?.remove()
         begin?.remove()
         dest?.remove()
-        val directions = Directions(activity)
+        val directions = Directions(activity, DisplayMessageErrorListener(activity))
 
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {

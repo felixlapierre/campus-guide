@@ -6,6 +6,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.beust.klaxon.Klaxon
 import com.example.campusguide.R
+import com.example.campusguide.utils.ErrorListener
 import com.example.campusguide.utils.MessageDialogFragment
 import com.example.campusguide.utils.RequestDispatcher
 import org.json.JSONObject
@@ -13,7 +14,11 @@ import java.net.URLEncoder
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class Directions constructor(private var activity: AppCompatActivity){
+class Directions constructor(private var activity: AppCompatActivity, private var errorListener: ErrorListener){
+    val requestDeniedErrorMessage = "Request to Google Directions API was denied. Make sure the" +
+            " API key has permissions to access the Google Directions API."
+    val nullResponseObjErrorMessage = "Could not get a response from the Google Directions API"
+
     /**
      * Gets directions from the Google API
      */
@@ -31,17 +36,12 @@ class Directions constructor(private var activity: AppCompatActivity){
         val request = JsonObjectRequest(Request.Method.GET, url, null,
             Response.Listener<JSONObject> { response ->
                 if(response.getString("status") == "REQUEST_DENIED") {
-                    MessageDialogFragment(
-                        "Request to Google Directions API was denied. Make sure the" +
-                                " API key has permissions to access the Google Directions API."
-                    )
-                        .show(activity.supportFragmentManager, "message")
+                    errorListener.onError(requestDeniedErrorMessage)
                 } else {
                     val responseObj = Klaxon().parse<GoogleDirectionsAPIResponse>(response.toString(0))
 
                     if(responseObj == null) {
-                        MessageDialogFragment("Could not get a response from the Google Directions API")
-                            .show(activity.supportFragmentManager, "message")
+                        errorListener.onError(nullResponseObjErrorMessage)
                     }
 
                     cont.resume(responseObj)
