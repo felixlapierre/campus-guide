@@ -1,11 +1,17 @@
 package com.example.campusguide
 
-import android.Manifest
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 
 class Permissions constructor(private val activity: Activity) {
+
+    private val observers: MutableList<PermissionGrantedObserver> = mutableListOf()
+
+    fun addObserver(observer: PermissionGrantedObserver) {
+        observers.add(observer)
+    }
+
     fun havePermission(permission: String): Boolean {
         return ActivityCompat.checkSelfPermission(
             activity,
@@ -17,7 +23,7 @@ class Permissions constructor(private val activity: Activity) {
         ActivityCompat.requestPermissions(
             activity,
             arrayOf(permission),
-            Constants.LOCATION_PERMISSION_ACCESS_CODE
+            Constants.PERMISSION_REQUEST_CODE
         )
     }
 
@@ -26,17 +32,13 @@ class Permissions constructor(private val activity: Activity) {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-
-        when (requestCode) {
-            Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //goToCurrentLocation()
+        if(requestCode != Constants.PERMISSION_REQUEST_CODE)
+            return
+        for (i in 0..permissions.size) {
+            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                observers.forEach { observer ->
+                    observer.onPermissionGranted(permissions[i])
                 }
-                return
-            }
-            // Add switch case statements for other permissions (e.g. contacts or calendar) here
-            else -> {
-                // Ignore all other requests
             }
         }
     }

@@ -13,6 +13,9 @@ class CenterLocationListener constructor(
     private val map: Map,
     private val permissions: Permissions
 ) : View.OnClickListener, PermissionGrantedObserver {
+    init {
+        permissions.addObserver(this)
+    }
 
     private var fusedLocationClient: FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(activity)
