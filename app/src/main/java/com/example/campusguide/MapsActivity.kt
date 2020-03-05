@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
+import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.utils.permissions.Permissions
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.common.ConnectionResult
@@ -56,9 +57,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener(
             CenterLocationListener(
-                this,
                 map,
-                permissions
+                permissions,
+                FusedLocationProvider(this)
             )
         )
 
