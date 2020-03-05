@@ -8,10 +8,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
+import com.example.campusguide.location.CenterLocationListener
+import com.example.campusguide.permissions.Permissions
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -41,7 +42,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var route: Route
     private lateinit var buildingHighlights: BuildingHighlights
-    private val permissions = Permissions(this)
+    private val permissions =
+        Permissions(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         mapFragment.getMapAsync(this)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener(CenterLocationListener(this, map, permissions))
+        currentLocationButton.setOnClickListener(
+            CenterLocationListener(
+                this,
+                map,
+                permissions
+            )
+        )
 
         ObjectBox.init(this.applicationContext)
       
