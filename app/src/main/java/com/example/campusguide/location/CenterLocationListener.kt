@@ -6,13 +6,8 @@ import android.location.Location
 import android.view.View
 import com.example.campusguide.Constants
 import com.example.campusguide.Map
-<<<<<<< HEAD:app/src/main/java/com/example/campusguide/location/CenterLocationListener.kt
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
 import com.example.campusguide.utils.permissions.Permissions
-=======
-import com.example.campusguide.permissions.PermissionGrantedObserver
-import com.example.campusguide.permissions.Permissions
->>>>>>> c860ad3ec44499327e2258de457abedb12d17a61:app/src/main/java/com/example/campusguide/location/CenterLocationListener.kt
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
