@@ -1,24 +1,17 @@
 package com.example.campusguide
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
+import com.example.campusguide.search.Search
 import com.example.campusguide.utils.permissions.Permissions
 import com.example.campusguide.utils.BuildingHighlights
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,25 +19,18 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
-import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import database.ObjectBox
 import kotlinx.android.synthetic.main.activity_maps.*
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
-    GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private val map = GoogleMapAdapter()
     private lateinit var mMap: GoogleMap
-    private var mGoogleApiClient: GoogleApiClient? = null
-    private lateinit var mLocationRequest: LocationRequest
     private lateinit var route: Route
     private lateinit var buildingHighlights: BuildingHighlights
-    private val permissions =
-        Permissions(this)
+    private val permissions = Permissions(this)
+    private val search = Search(this, map)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,18 +70,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         googleMap.uiSettings.isMyLocationButtonEnabled = false
         route = Route(mMap, this)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                buildGoogleApiClient()
-            }
-        } else {
-            buildGoogleApiClient()
-        }
-
         // Add a marker on Hall Building and move the camera
         val hall = LatLng(45.497290, -73.578824)
         mMap.addMarker(MarkerOptions().position(hall).title("Hall Building"))
@@ -111,37 +85,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         mMap.setContentDescription("Google Maps Ready")
     }
 
-    @Synchronized
-    private fun buildGoogleApiClient() {
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-            .addConnectionCallbacks(this)
-            .addOnConnectionFailedListener(this)
-            .addApi(LocationServices.API).build()
-        mGoogleApiClient!!.connect()
-    }
-
-    override fun onConnected(bundle: Bundle?) {
-        mLocationRequest = LocationRequest()
-        mLocationRequest.interval = 1000
-        mLocationRequest.fastestInterval = 1000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            LocationServices.getFusedLocationProviderClient(this)
-        }
-    }
-
-    override fun onConnectionSuspended(i: Int) {
-        print("Connection is SUSPENDED")
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
-        print("Connection has FAILED")
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
         requestedPermissions: Array<out String>,
@@ -151,43 +94,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     }
 
     fun onSearchCalled(view: View) {
-        val fields =
-            arrayListOf(
-                Place.Field.ID,
-                Place.Field.NAME,
-                Place.Field.ADDRESS,
-                Place.Field.LAT_LNG
-            )
-        val intent: Intent =
-            Autocomplete.IntentBuilder(
-                AutocompleteActivityMode.FULLSCREEN, fields
-            )
-                .build(this)
-        startActivityForResult(intent, Constants.AUTOCOMPLETE_REQUEST_CODE)
+        search.onSearchButtonClicked(view)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Constants.AUTOCOMPLETE_REQUEST_CODE) {
-            when (resultCode) {
-                RESULT_OK -> {
-                    val place: Place = Autocomplete.getPlaceFromIntent(data!!)
-                    mMap.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(place.latLng!!.latitude, place.latLng!!.longitude))
-                    )
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(place.latLng))
-                    campus_name.text = place.name
-                }
-                AutocompleteActivity.RESULT_ERROR -> {
-                    print("The Request has run into an error")
-                    print(data)
-                }
-                RESULT_CANCELED -> {
-                    print("The Request was cancelled")
-                    print(data)
-                }
-            }
+            search.onAutocomplete(requestCode, resultCode, data)
         }
     }
 
@@ -203,7 +116,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     fun onOpenMenu(view: View) {
         print("Menu was opened")
     }
-
 
     private fun setNavButtonListener() {
         val navigateButton = findViewById<FloatingActionButton>(R.id.navigateButton)
