@@ -6,12 +6,12 @@ import android.view.View
 import com.example.campusguide.Constants
 import com.example.campusguide.Map
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
-import com.example.campusguide.utils.permissions.Permissions
+import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
 
 class CenterLocationListener constructor(
     private val map: Map,
-    private val permissions: Permissions,
+    private val permissions: PermissionsSubject,
     private val locationProvider: LocationProvider
 ) : View.OnClickListener,
     PermissionGrantedObserver {
@@ -47,7 +47,7 @@ class CenterLocationListener constructor(
 
     private fun animateCurrentLocation(location: Location) {
         val currentLatLng = LatLng(location.latitude, location.longitude)
-        map.addMarker(currentLatLng, "You are here.")
+        map.addMarker(currentLatLng, Constants.LOCATION_MARKER_TITLE)
         map.animateCamera(currentLatLng,
             Constants.ZOOM_STREET_LVL
         )

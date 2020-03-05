@@ -5,22 +5,22 @@ import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
 import com.example.campusguide.Constants
 
-class Permissions constructor(private val activity: Activity) {
+class Permissions constructor(private val activity: Activity): PermissionsSubject {
 
     private val observers: MutableList<PermissionGrantedObserver> = mutableListOf()
 
-    fun addObserver(observer: PermissionGrantedObserver) {
+    override fun addObserver(observer: PermissionGrantedObserver) {
         observers.add(observer)
     }
 
-    fun havePermission(permission: String): Boolean {
+    override fun havePermission(permission: String): Boolean {
         return ActivityCompat.checkSelfPermission(
             activity,
             permission
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun requestPermission(permission: String) {
+    override fun requestPermission(permission: String) {
         ActivityCompat.requestPermissions(
             activity,
             arrayOf(permission),

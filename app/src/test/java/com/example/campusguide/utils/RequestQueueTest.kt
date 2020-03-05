@@ -1,6 +1,7 @@
 package com.example.campusguide.utils
 
 import android.content.Context
+import com.example.campusguide.utils.request.RequestQueueSingleton
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -3,6 +3,7 @@ package com.example.campusguide
 import com.example.campusguide.directions.CallbackDirectionsConfirmTest
 import com.example.campusguide.directions.DirectionsTest
 import com.example.campusguide.directions.EmptyDirectionsGuardTest
+import com.example.campusguide.location.CenterLocationListenerTest
 import com.example.campusguide.utils.DatabaseTest
 import com.example.campusguide.utils.MessageDialogFragmentTest
 import com.example.campusguide.utils.request.ApiKeyRequestDecoratorTest
@@ -18,7 +19,8 @@ import org.junit.runners.Suite
     DirectionsTest::class,
     ApiKeyRequestDecoratorTest::class,
     MessageDialogFragmentTest::class,
-    CallbackDirectionsConfirmTest::class
+    CallbackDirectionsConfirmTest::class,
+    CenterLocationListenerTest::class
 )
 
 class RunAllTestSuite
