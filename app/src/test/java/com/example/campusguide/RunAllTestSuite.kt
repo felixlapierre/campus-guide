@@ -3,7 +3,7 @@ package com.example.campusguide
 import com.example.campusguide.directions.DirectionsTest
 import com.example.campusguide.directions.EmptyDirectionsGuardTest
 import com.example.campusguide.utils.DatabaseTest
-import com.example.campusguide.utils.RequestQueueTest
+import com.example.campusguide.utils.request.RequestQueueTest
 import org.junit.runner.RunWith
 import org.junit.runners.Suite
 

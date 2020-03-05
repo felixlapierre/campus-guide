@@ -1,4 +1,4 @@
-package com.example.campusguide.utils
+package com.example.campusguide.utils.request
 
 import android.content.Context
 import com.android.volley.Request
@@ -10,8 +10,12 @@ class RequestQueueSingleton constructor(context: Context){
         @Volatile
         private var INSTANCE: RequestQueueSingleton? = null
         fun getInstance(context: Context) =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: RequestQueueSingleton(context).also {
+            INSTANCE
+                ?: synchronized(this) {
+                INSTANCE
+                    ?: RequestQueueSingleton(
+                        context
+                    ).also {
                     INSTANCE = it
                 }
             }

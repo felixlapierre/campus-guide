@@ -2,8 +2,7 @@ package com.example.campusguide.directions
 
 import com.example.campusguide.Constants
 import com.example.campusguide.utils.ErrorListener
-import com.example.campusguide.utils.RequestDispatcher
-import com.google.maps.model.GeocodedWaypoint
+import com.example.campusguide.utils.request.RequestDispatcher
 import com.nhaarman.mockitokotlin2.*
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject

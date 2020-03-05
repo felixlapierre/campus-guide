@@ -1,4 +1,4 @@
-package com.example.campusguide.utils
+package com.example.campusguide.utils.request
 
 import android.app.Activity
 import com.example.campusguide.R

@@ -1,4 +1,4 @@
-package com.example.campusguide.utils
+package com.example.campusguide.utils.request
 
 import org.json.JSONObject
 

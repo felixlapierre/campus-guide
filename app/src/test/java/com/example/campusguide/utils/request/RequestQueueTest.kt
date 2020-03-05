@@ -1,4 +1,4 @@
-package com.example.campusguide.utils
+package com.example.campusguide.utils.request
 
 import android.content.Context
 import org.junit.Before

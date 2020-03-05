@@ -2,7 +2,7 @@ package com.example.campusguide.directions
 
 import com.example.campusguide.Constants
 import com.example.campusguide.utils.ErrorListener
-import com.example.campusguide.utils.RequestDispatcher
+import com.example.campusguide.utils.request.RequestDispatcher
 import java.net.URLEncoder
 
 class Directions constructor(

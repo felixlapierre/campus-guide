@@ -2,9 +2,9 @@ package com.example.campusguide.directions
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
-import com.example.campusguide.utils.ApiKeyRequestDecorator
+import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
-import com.example.campusguide.utils.VolleyRequestDispatcher
+import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
@@ -54,8 +54,13 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
         dest?.remove()
         val errorListener = DisplayMessageErrorListener(activity);
         val directions = Directions(
-            ApiKeyRequestDecorator(activity,
-                VolleyRequestDispatcher(activity, errorListener)),
+            ApiKeyRequestDecorator(
+                activity,
+                VolleyRequestDispatcher(
+                    activity,
+                    errorListener
+                )
+            ),
             KlaxonDirectionsAPIResponseParser(),
             errorListener)
 

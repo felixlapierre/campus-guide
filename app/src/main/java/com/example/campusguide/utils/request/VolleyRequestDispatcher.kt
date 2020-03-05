@@ -1,9 +1,10 @@
-package com.example.campusguide.utils
+package com.example.campusguide.utils.request
 
 import android.content.Context
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.example.campusguide.utils.ErrorListener
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import org.json.JSONObject
