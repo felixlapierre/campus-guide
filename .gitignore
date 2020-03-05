@@ -21,3 +21,6 @@ app/src/release/res/values/google_maps_api.xml
 
 # Code coverage reports
 coverage
+
+# Objectbox
+app/objectbox-jni-windows-x64.dll

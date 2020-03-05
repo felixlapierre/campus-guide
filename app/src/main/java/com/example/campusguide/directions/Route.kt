@@ -52,6 +52,7 @@ class Route constructor(private val map: GoogleMap, private val activity: AppCom
         polyline?.remove()
         begin?.remove()
         dest?.remove()
+
         val errorListener = DisplayMessageErrorListener(activity);
         val directions = Directions(
             ApiKeyRequestDecorator(
