@@ -47,18 +47,8 @@ class CenterLocationListener constructor(private val activity: Activity, private
 
     private fun animateCurrentLocation(location: Location) {
         val currentLatLng = LatLng(location.latitude, location.longitude)
-        map.addMarker(
-            MarkerOptions()
-                .position(currentLatLng)
-                .title("You are here.")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        )
-        map.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                currentLatLng,
-                Constants.ZOOM_STREET_LVL
-            )
-        )
+        map.addMarker(currentLatLng, "You are here.")
+        map.animateCamera(currentLatLng, Constants.ZOOM_STREET_LVL)
     }
 
 }

@@ -1,9 +1,8 @@
 package com.example.campusguide
 
-import com.google.android.gms.maps.CameraUpdate
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLng
 
 interface Map {
-    fun addMarker(options: MarkerOptions)
-    fun animateCamera(update: CameraUpdate)
+    fun addMarker(position: LatLng, title: String)
+    fun animateCamera(position: LatLng, zoom: Float)
 }
