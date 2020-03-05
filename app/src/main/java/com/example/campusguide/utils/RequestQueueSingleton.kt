@@ -5,13 +5,13 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
 
-class RequestDispatcher constructor(context: Context){
+class RequestQueueSingleton constructor(context: Context){
     companion object {
         @Volatile
-        private var INSTANCE: RequestDispatcher? = null
+        private var INSTANCE: RequestQueueSingleton? = null
         fun getInstance(context: Context) =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: RequestDispatcher(context).also {
+                INSTANCE ?: RequestQueueSingleton(context).also {
                     INSTANCE = it
                 }
             }
