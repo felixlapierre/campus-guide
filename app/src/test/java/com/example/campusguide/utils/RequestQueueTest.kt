@@ -1,8 +1,6 @@
 package com.example.campusguide.utils
 
 import android.content.Context
-import com.android.volley.RequestQueue
-import com.example.campusguide.directions.EmptyDirectionsGuard
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,8 +20,8 @@ class RequestQueueTest {
 
     @Test
     fun testMaxOneDispatcher() {
-        val obj1 = RequestDispatcher.getInstance(context)
-        val obj2 = RequestDispatcher.getInstance(context);
+        val obj1 = RequestQueueSingleton.getInstance(context)
+        val obj2 = RequestQueueSingleton.getInstance(context);
 
         assert(obj1 == obj2)
     }
