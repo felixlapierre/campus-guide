@@ -41,6 +41,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var route: Route
     private lateinit var buildingHighlights: BuildingHighlights
+    private val permissions = Permissions(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +52,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         mapFragment.getMapAsync(this)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener(CenterLocationListener(this, map))
+        currentLocationButton.setOnClickListener(CenterLocationListener(this, map, permissions))
 
         ObjectBox.init(this.applicationContext)
       
@@ -134,22 +135,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<out String>,
+        requestedPermissions: Array<out String>,
         grantResults: IntArray
     ) {
-
-        when (requestCode) {
-            Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    //goToCurrentLocation()
-                }
-                return
-            }
-            // Add switch case statements for other permissions (e.g. contacts or calendar) here
-            else -> {
-                // Ignore all other requests
-            }
-        }
+        permissions.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
     }
 
     fun onSearchCalled(view: View) {

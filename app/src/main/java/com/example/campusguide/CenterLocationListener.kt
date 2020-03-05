@@ -2,36 +2,35 @@ package com.example.campusguide
 
 import android.Manifest
 import android.app.Activity
-import android.content.pm.PackageManager
 import android.location.Location
 import android.view.View
-import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
-class CenterLocationListener constructor(private val activity: Activity, private val map: Map): View.OnClickListener {
-    private var fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(activity)
+class CenterLocationListener constructor(
+    private val activity: Activity,
+    private val map: Map,
+    private val permissions: Permissions
+) : View.OnClickListener, PermissionGrantedObserver {
+
+    private var fusedLocationClient: FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(activity)
+    private val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
 
     override fun onClick(v: View?) {
-        //Check if location permission has been granted
-        if (ActivityCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+        // Center only if location permissions have been granted
+        if (permissions.havePermission(locationPermission)) {
             goToCurrentLocation()
         } else {
             //Request location permission
-            ActivityCompat.requestPermissions(
-                activity,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                Constants.LOCATION_PERMISSION_ACCESS_CODE
-            )
+            permissions.requestPermission(locationPermission)
         }
+    }
+
+    override fun onPermissionGranted(permission: String) {
+        if(permission == locationPermission)
+            goToCurrentLocation()
     }
 
     /**
@@ -39,7 +38,7 @@ class CenterLocationListener constructor(private val activity: Activity, private
      */
     private fun goToCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener(activity) { location ->
-            if(location != null) {
+            if (location != null) {
                 animateCurrentLocation(location)
             }
         }
