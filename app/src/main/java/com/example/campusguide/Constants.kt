@@ -6,4 +6,7 @@ object Constants {
     const val AUTOCOMPLETE_REQUEST_CODE = 2
     const val LOYOLA_CAMPUS = "Loyola Campus"
     const val SGW_CAMPUS = "SGW Campus"
+
+    const val DIRECTIONS_API_NULL_RESPONSE = "Could not get a response from the Google Directions API"
+    const val DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json"
 }

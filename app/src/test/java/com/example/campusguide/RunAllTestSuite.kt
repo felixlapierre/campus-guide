@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import com.example.campusguide.directions.DirectionsTest
 import com.example.campusguide.directions.EmptyDirectionsGuardTest
 import com.example.campusguide.utils.DatabaseTest
 import com.example.campusguide.utils.RequestQueueTest
@@ -10,7 +11,8 @@ import org.junit.runners.Suite
 @Suite.SuiteClasses(
     EmptyDirectionsGuardTest::class,
     DatabaseTest::class,
-    RequestQueueTest::class
+    RequestQueueTest::class,
+    DirectionsTest::class
 )
 
 class RunAllTestSuite
