@@ -1,6 +1,5 @@
 package com.example.campusguide.directions
 
-import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.ErrorListener
 import org.junit.Before
 import org.junit.Test
@@ -8,7 +7,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.never
 import org.mockito.MockitoAnnotations
 
 @RunWith(JUnit4::class)
