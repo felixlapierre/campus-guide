@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 
 import com.example.campusguide.R
+import com.example.campusguide.utils.DisplayMessageErrorListener
 
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -88,11 +89,11 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
                     startingPoint,
                     null,
                     EmptyDirectionsGuard(
-                        this.requireActivity() as AppCompatActivity,
                         CallbackDirectionsConfirmListener { start, end ->
                             //Display the directions time
                             route?.set(start, end)
-                        })
+                        },
+                        DisplayMessageErrorListener(this.requireActivity()))
                 )
             )
         getDirectionsDialogFragment.show(childFragmentManager, "directionsDialog")

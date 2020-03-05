@@ -1,20 +1,18 @@
 package com.example.campusguide.directions
 
-import android.app.Activity
-import android.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.utils.MessageDialogFragment
+import com.example.campusguide.utils.ErrorListener
 
-class EmptyDirectionsGuard constructor(private val activity: AppCompatActivity, private val wrapped: GetDirectionsDialogFragment.DirectionsDialogConfirmationListener)
-    : GetDirectionsDialogFragment.DirectionsDialogConfirmationListener {
+class EmptyDirectionsGuard constructor(private val wrapped: DirectionsDialogConfirmationListener, private val errorListener: ErrorListener)
+    : DirectionsDialogConfirmationListener {
+
+    val errorMessage = "Start and end location must both not be blank"
 
     override fun onConfirm(start: String, end: String) {
         if(start.isNotEmpty() && end.isNotEmpty()) {
             wrapped.onConfirm(start, end)
         }
         else {
-            val message = MessageDialogFragment("Start and end location must both not be blank")
-            message.show(activity.supportFragmentManager, "message")
+            errorListener.onError(errorMessage)
         }
     }
 }
