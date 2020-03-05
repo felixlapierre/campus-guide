@@ -9,6 +9,7 @@ import com.example.campusguide.R
 import com.example.campusguide.utils.ErrorListener
 import com.example.campusguide.utils.MessageDialogFragment
 import com.example.campusguide.utils.RequestDispatcher
+import com.example.campusguide.utils.RequestQueueSingleton
 import org.json.JSONObject
 import java.net.URLEncoder
 import kotlin.coroutines.resume
@@ -51,6 +52,6 @@ class Directions constructor(private var activity: AppCompatActivity, private va
             Response.ErrorListener { println("Error sending request") }
         )
 
-        RequestDispatcher.getInstance(activity).sendRequest(request)
+        RequestQueueSingleton.getInstance(activity).sendRequest(request)
     }
 }
