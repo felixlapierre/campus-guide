@@ -1,57 +1,39 @@
 package com.example.campusguide.directions
 
-import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.JsonObjectRequest
-import com.beust.klaxon.Klaxon
-import com.example.campusguide.R
+import com.example.campusguide.Constants
 import com.example.campusguide.utils.ErrorListener
-import com.example.campusguide.utils.MessageDialogFragment
-import com.example.campusguide.utils.RequestDispatcher
-import com.example.campusguide.utils.RequestQueueSingleton
-import org.json.JSONObject
+import com.example.campusguide.utils.request.RequestDispatcher
 import java.net.URLEncoder
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
-class Directions constructor(private var activity: AppCompatActivity, private var errorListener: ErrorListener){
-    val requestDeniedErrorMessage = "Request to Google Directions API was denied. Make sure the" +
-            " API key has permissions to access the Google Directions API."
-    val nullResponseObjErrorMessage = "Could not get a response from the Google Directions API"
-
+class Directions constructor(
+    private var requestDispatcher: RequestDispatcher,
+    private var responseParser: GoogleDirectionsAPIResponseParser,
+    private var errorListener: ErrorListener
+) {
     /**
      * Gets directions from the Google API
      */
-    suspend fun getDirections(startLocation: String, endLocation: String) = suspendCoroutine<GoogleDirectionsAPIResponse?> { cont ->
-        val apiKey = activity.resources.getString(R.string.google_maps_key)
-
+    suspend fun getDirections(
+        startLocation: String,
+        endLocation: String
+    ): GoogleDirectionsAPIResponse? {
         /**
          * Start and end will be placed in query params, so they must be urlEncoded.
          */
         val startEncoded = URLEncoder.encode(startLocation, "UTF-8")
         val endEncoded = URLEncoder.encode(endLocation, "UTF-8")
 
-        val url = "https://maps.googleapis.com/maps/api/directions/json?origin=$startEncoded&destination=$endEncoded&key=$apiKey\n"
+        val path = Constants.DIRECTIONS_API_URL
+        val url =
+            "$path?origin=$startEncoded&destination=$endEncoded"
 
-        val request = JsonObjectRequest(Request.Method.GET, url, null,
-            Response.Listener<JSONObject> { response ->
-                if(response.getString("status") == "REQUEST_DENIED") {
-                    errorListener.onError(requestDeniedErrorMessage)
-                } else {
-                    val responseObj = Klaxon().parse<GoogleDirectionsAPIResponse>(response.toString(0))
+        val response = requestDispatcher.sendRequest(url)
+        val responseObj = responseParser.parse(response)
 
-                    if(responseObj == null) {
-                        errorListener.onError(nullResponseObjErrorMessage)
-                    }
+        if (responseObj == null) {
+            errorListener.onError(Constants.DIRECTIONS_API_NULL_RESPONSE)
+        }
 
-                    cont.resume(responseObj)
-
-                }
-            },
-            Response.ErrorListener { println("Error sending request") }
-        )
-
-        RequestQueueSingleton.getInstance(activity).sendRequest(request)
+        return responseObj
     }
 }
