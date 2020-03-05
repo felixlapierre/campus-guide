@@ -1,8 +1,9 @@
-package com.example.campusguide
+package com.example.campusguide.utils.permissions
 
 import android.app.Activity
 import android.content.pm.PackageManager
 import androidx.core.app.ActivityCompat
+import com.example.campusguide.Constants
 
 class Permissions constructor(private val activity: Activity) {
 
