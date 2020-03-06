@@ -3,16 +3,15 @@ package com.example.campusguide.location
 import android.Manifest
 import android.location.Location
 import com.example.campusguide.Constants
-import com.example.campusguide.Map
+
+import com.example.campusguide.map.Map
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
 import com.nhaarman.mockitokotlin2.*
-import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.validateMockitoUsage
 
 
 @RunWith(JUnit4::class)

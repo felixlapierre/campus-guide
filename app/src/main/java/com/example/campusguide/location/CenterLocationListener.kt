@@ -4,7 +4,8 @@ import android.Manifest
 import android.location.Location
 import android.view.View
 import com.example.campusguide.Constants
-import com.example.campusguide.Map
+import com.example.campusguide.map.Map
+
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
