@@ -7,15 +7,16 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115px"
+        android:layout_height="56dp"
         android:orientation="horizontal"
-        android:background="@android:color/holo_blue_light">
+        android:background="@color/colorPrimary">
         <ImageButton
             android:id="@+id/hamburger_menu"
-            android:layout_width="0dp"
+            android:layout_width="24dp"
             android:layout_height="match_parent"
             android:layout_weight=".10"
             android:onClick="onOpenMenu"
+            android:paddingLeft="16dp"
             android:src="@drawable/ic_hamburger_menu"
             style="?android:attr/borderlessButtonStyle"/>
         <TextView
@@ -25,6 +26,8 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:paddingLeft="16dp"
             android:text="SGW Campus"/>
         <ImageButton
             android:layout_width="0dp"
@@ -32,6 +35,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_search_location"
             android:onClick="onSearchCalled"
+            android:paddingRight="16dp"
             android:layout_gravity="center_vertical"
             style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
