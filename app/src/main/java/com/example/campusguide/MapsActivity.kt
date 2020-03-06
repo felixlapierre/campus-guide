@@ -3,27 +3,26 @@ package com.example.campusguide
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
+import com.example.campusguide.location.CenterLocationListener
+import com.example.campusguide.location.FusedLocationProvider
+import com.example.campusguide.utils.permissions.Permissions
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.Places
@@ -38,12 +37,14 @@ import kotlinx.android.synthetic.main.activity_maps.*
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private val map = GoogleMapAdapter()
     private lateinit var mMap: GoogleMap
     private var mGoogleApiClient: GoogleApiClient? = null
     private lateinit var mLocationRequest: LocationRequest
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var route: Route
     private lateinit var buildingHighlights: BuildingHighlights
+    private val permissions =
+        Permissions(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,30 +55,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         mapFragment.getMapAsync(this)
 
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener {
-            //Check if location permission has been granted
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                goToCurrentLocation()
-            } else {
-                //Request location permission
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    Constants.LOCATION_PERMISSION_ACCESS_CODE
-                )
-            }
-        }
+        currentLocationButton.setOnClickListener(
+            CenterLocationListener(
+                map,
+                permissions,
+                FusedLocationProvider(this)
+            )
+        )
 
         ObjectBox.init(this.applicationContext)
       
         if (!Places.isInitialized())
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
-
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     /**
@@ -90,8 +79,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
      * installed Google Play services and returned to the app.
      */
     override fun onMapReady(googleMap: GoogleMap) {
+        map.adapted = googleMap
         mMap = googleMap
-        mMap.uiSettings.isMyLocationButtonEnabled = false
+        googleMap.uiSettings.isMyLocationButtonEnabled = false
         route = Route(mMap, this)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -152,51 +142,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         print("Connection has FAILED")
     }
 
-    /**
-     * Centers the map on the user's current location and places a marker.
-     */
-    private fun goToCurrentLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener(this) { location ->
-            if(location != null) {
-                animateCurrentLocation(location)
-            }
-        }
-    }
-
-    private fun animateCurrentLocation(location: Location) {
-        val currentLatLng = LatLng(location.latitude, location.longitude)
-        mMap.addMarker(
-            MarkerOptions()
-                .position(currentLatLng)
-                .title("You are here.")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-        )
-        mMap.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                currentLatLng,
-                Constants.ZOOM_STREET_LVL
-            )
-        )
-    }
-
     override fun onRequestPermissionsResult(
         requestCode: Int,
-        permissions: Array<out String>,
+        requestedPermissions: Array<out String>,
         grantResults: IntArray
     ) {
-
-        when (requestCode) {
-            Constants.LOCATION_PERMISSION_ACCESS_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    goToCurrentLocation()
-                }
-                return
-            }
-            // Add switch case statements for other permissions (e.g. contacts or calendar) here
-            else -> {
-                // Ignore all other requests
-            }
-        }
+        permissions.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
     }
 
     fun onSearchCalled(view: View) {
@@ -244,32 +195,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
      * Methods for setting button listeners all at once.
      */
     private fun setButtonListeners() {
-        setCurrentLocationListener()
         setNavButtonListener()
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap, campus_name)
-    }
-
-    private fun setCurrentLocationListener() {
-        val currentLocationButton: FloatingActionButton =
-            findViewById(R.id.currentLocationButton)
-        currentLocationButton.setOnClickListener {
-            //Check if location permission has been granted
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-            ) {
-                goToCurrentLocation()
-            } else {
-                //Request location permission
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    Constants.LOCATION_PERMISSION_ACCESS_CODE
-                )
-            }
-        }
     }
 
     fun onOpenMenu(view: View) {
