@@ -5,11 +5,11 @@ import com.example.campusguide.utils.ErrorListener
 class EmptyDirectionsGuard constructor(private val wrapped: DirectionsDialogConfirmationListener, private val errorListener: ErrorListener)
     : DirectionsDialogConfirmationListener {
 
-    val errorMessage = "Start and end location must both not be blank"
+    val errorMessage = "Start location, end location and travel mode must all not be blank."
 
-    override fun onConfirm(start: String, end: String) {
-        if(start.isNotEmpty() && end.isNotEmpty()) {
-            wrapped.onConfirm(start, end)
+    override fun onConfirm(start: String, end: String, travelMode: String) {
+        if(start.isNotEmpty() && end.isNotEmpty() && travelMode.isNotEmpty()) {
+            wrapped.onConfirm(start, end, travelMode)
         }
         else {
             errorListener.onError(errorMessage)

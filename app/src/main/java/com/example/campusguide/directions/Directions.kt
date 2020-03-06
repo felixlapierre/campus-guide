@@ -15,17 +15,19 @@ class Directions constructor(
      */
     suspend fun getDirections(
         startLocation: String,
-        endLocation: String
+        endLocation: String,
+        travelMode: String
     ): GoogleDirectionsAPIResponse? {
         /**
          * Start and end will be placed in query params, so they must be urlEncoded.
          */
         val startEncoded = URLEncoder.encode(startLocation, "UTF-8")
         val endEncoded = URLEncoder.encode(endLocation, "UTF-8")
+        val travelModeEncoded = URLEncoder.encode(travelMode.toLowerCase(), "UTF-8")
 
         val path = Constants.DIRECTIONS_API_URL
         val url =
-            "$path?origin=$startEncoded&destination=$endEncoded"
+            "$path?origin=$startEncoded&destination=$endEncoded&mode=$travelModeEncoded"
 
         val response = requestDispatcher.sendRequest(url)
         val responseObj = responseParser.parse(response)

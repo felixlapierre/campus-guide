@@ -54,7 +54,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
                     val start = startEditText?.text.toString()
                     val end = endEditText?.text.toString()
 
-                    options.confirmationListener.onConfirm(start, end)
+                    options.confirmationListener.onConfirm(start, end, selectedTravelMode)
                 }
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
