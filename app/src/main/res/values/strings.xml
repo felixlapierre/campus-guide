@@ -4,4 +4,9 @@
     <string name="title_activity_calculator">CalculatorActivity</string>
     <string name="loy_campus">LOY</string>
     <string name="sgw_campus">SGW</string>
+    <string-array name="travel_modes">
+        <item>Driving</item>
+        <item>Walking</item>
+        <item>Transit</item>
+    </string-array>
 </resources>

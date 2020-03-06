@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -18,13 +19,13 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
     /**
      * Options for creating a Directions dialog.
-     * @param message Displays appropriate instructions to user
+     * @param title Displays appropriate instructions to user
      * @param start Autofills the start location to the specified value
      * @param end Autofills the end location to the specified value
      * @param onConfirm Callback that will be executed when the user confirms the dialog window
      */
     class DirectionsDialogOptions constructor(
-        val message : String?,
+        val title : String?,
         val start: String?, val end: String?,
         val confirmationListener: DirectionsDialogConfirmationListener
     )
@@ -38,12 +39,13 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
             val inflater = requireActivity().layoutInflater
             val view = inflater.inflate(R.layout.directions_dialog_layout, null)
+            var selectedTravelMode = ""
 
             setDefaultLocations(view)
 
             val builder = AlertDialog.Builder(it)
                 .setView(view)
-                .setMessage(this.options.message)
+                .setTitle(this.options.title)
                 .setPositiveButton("Go") { _, _ ->
                     val startEditText =
                         dialog?.findViewById<EditText>(R.id.startLocationTextInput)
@@ -57,6 +59,9 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
                 .setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
+                .setSingleChoiceItems(R.array.travel_modes, -1, DialogInterface.OnClickListener { _, which ->
+                    selectedTravelMode = resources.getStringArray(R.array.travel_modes)[which]
+                })
 
             return builder.create()
         } ?: throw IllegalStateException("Activity cannot be null")

@@ -81,11 +81,11 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
     /**
      * Opens the GetDirectionsDialogFragment
      */
-    private fun openDirectionsDialogFragment(startingPoint: String?, message: String) {
+    private fun openDirectionsDialogFragment(startingPoint: String?, title: String) {
         val getDirectionsDialogFragment =
             GetDirectionsDialogFragment(
                 GetDirectionsDialogFragment.DirectionsDialogOptions(
-                    message,
+                    title,
                     startingPoint,
                     null,
                     EmptyDirectionsGuard(
