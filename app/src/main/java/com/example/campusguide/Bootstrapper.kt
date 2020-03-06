@@ -10,6 +10,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
 import com.example.campusguide.utils.permissions.Permissions
+import database.ObjectBox
 
 /**
  * Bootstrapper sets up the application by adding event listeners to the
@@ -17,6 +18,9 @@ import com.example.campusguide.utils.permissions.Permissions
  */
 class Bootstrapper constructor(activity: MapsActivity) {
     init {
+        // Local Database
+        ObjectBox.init(activity.applicationContext)
+
         // Map
         val map = GoogleMapAdapter()
         GoogleMapInitializer(activity, map)

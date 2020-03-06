@@ -8,9 +8,7 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.permissions.Permissions
-import com.google.android.libraries.places.api.Places
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import database.ObjectBox
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity() {
@@ -23,11 +21,6 @@ class MapsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_maps)
 
         Bootstrapper(this)
-
-        ObjectBox.init(this.applicationContext)
-      
-        if (!Places.isInitialized())
-            Places.initialize(applicationContext, getString(R.string.google_maps_key))
     }
 
     fun getCampusNameTextView(): TextView {

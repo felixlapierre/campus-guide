@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -18,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
+import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
@@ -32,6 +34,9 @@ class Search constructor(private val activity: FragmentActivity, private val map
     private lateinit var locationRequest: LocationRequest
 
     init {
+        if (!Places.isInitialized())
+            Places.initialize(activity.applicationContext, activity.getString(R.string.google_maps_key))
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(
                     activity,
