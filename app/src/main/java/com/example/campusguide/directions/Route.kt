@@ -1,12 +1,12 @@
 package com.example.campusguide.directions
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
@@ -24,7 +24,7 @@ import com.google.android.gms.maps.model.LatLngBounds
  * @param start The name of the location where the route starts
  * @param end The name of the location where the route ends
  */
-class Route constructor(private val map: GoogleMap, private val activity: AppCompatActivity) {
+class Route constructor(private val map: Map, private val activity: FragmentActivity) {
     private val PATTERN_DASH_LENGTH_PX = 20
     private val PATTERN_GAP_LENGTH_PX = 20
     private val DASH: PatternItem = Dash(PATTERN_DASH_LENGTH_PX.toFloat())
