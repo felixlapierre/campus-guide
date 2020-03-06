@@ -2,7 +2,7 @@ package com.example.campusguide.directions
 
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
-import com.example.campusguide.Map
+import com.example.campusguide.map.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.VolleyRequestDispatcher

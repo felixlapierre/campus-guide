@@ -5,6 +5,9 @@ import com.example.campusguide.directions.ChooseDirectionOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
+import com.example.campusguide.location.SwitchCampus
+import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
 import com.example.campusguide.utils.permissions.Permissions
 
@@ -34,7 +37,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnCenterLocationListener(centerLocation)
 
         // Switch Campus
-        val switchCampus = SwitchCampus(map, activity.getCampusNameTextView())
+        val switchCampus = SwitchCampus(
+            map,
+            activity.getCampusNameTextView()
+        )
         activity.setSwitchCampusButtonListener(switchCampus)
 
         // Navigation

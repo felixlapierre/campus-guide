@@ -1,4 +1,4 @@
-package com.example.campusguide
+package com.example.campusguide.map
 
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory

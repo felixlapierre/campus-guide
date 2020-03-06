@@ -1,16 +1,14 @@
-package com.example.campusguide
+package com.example.campusguide.map
 
-import android.widget.ToggleButton
 import androidx.fragment.app.FragmentActivity
-import com.example.campusguide.directions.Route
+import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_maps.*
 
 class GoogleMapInitializer constructor(private val activity: FragmentActivity, private val wrapper: GoogleMapAdapter): OnMapReadyCallback {
     init {
@@ -27,7 +25,9 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
 
             // Center the map on Hall building
             val hall = LatLng(45.497290, -73.578824)
-            map.animateCamera(CameraUpdateFactory.newLatLngZoom(hall, Constants.ZOOM_STREET_LVL))
+            map.animateCamera(CameraUpdateFactory.newLatLngZoom(hall,
+                Constants.ZOOM_STREET_LVL
+            ))
 
             BuildingHighlights(map).addBuildingHighlights()
 
