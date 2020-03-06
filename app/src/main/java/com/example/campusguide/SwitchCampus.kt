@@ -1,20 +1,20 @@
 package com.example.campusguide
 
+import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 
-class SwitchCampus constructor(toggleBtn: ToggleButton, private val map: Map, campusName: TextView) {
+class SwitchCampus constructor(private val map: Map, private val campusName: TextView)
+    : CompoundButton.OnCheckedChangeListener {
 
-    init {
-        toggleBtn.setOnCheckedChangeListener{ _, isAtDowntownCampus ->
-            switchCampus(isAtDowntownCampus, campusName)
-        }
+    override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
+        switchCampus(isChecked)
     }
 
-    private fun switchCampus(isAtDowntownCampus: Boolean, campusName: TextView) {
+    private fun switchCampus(isAtDowntownCampus: Boolean) {
         if(isAtDowntownCampus){
             val loyCoord = LatLng(45.458153, -73.640490)
             map.animateCamera(loyCoord, Constants.ZOOM_STREET_LVL)

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
 import com.example.campusguide.Map
 import com.google.android.gms.common.ConnectionResult
@@ -22,7 +23,11 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 
-class Search constructor(private val activity: FragmentActivity, private val map: Map): ConnectionCallbacks, OnConnectionFailedListener {
+class Search constructor(private val activity: FragmentActivity, private val map: Map)
+    : ConnectionCallbacks,
+    OnConnectionFailedListener,
+    View.OnClickListener,
+    ActivityResultListener {
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var locationRequest: LocationRequest
 
@@ -71,7 +76,7 @@ class Search constructor(private val activity: FragmentActivity, private val map
         print("Connection has FAILED")
     }
 
-    fun onSearchButtonClicked(view: View) {
+    override fun onClick(view: View) {
         val fields =
             arrayListOf(
                 Place.Field.ID,
@@ -87,7 +92,9 @@ class Search constructor(private val activity: FragmentActivity, private val map
         activity.startActivityForResult(intent, Constants.AUTOCOMPLETE_REQUEST_CODE)
     }
 
-    fun onAutocomplete(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode != Constants.AUTOCOMPLETE_REQUEST_CODE) { return }
+
         when (resultCode) {
             AppCompatActivity.RESULT_OK -> {
                 val place: Place = Autocomplete.getPlaceFromIntent(data!!)
