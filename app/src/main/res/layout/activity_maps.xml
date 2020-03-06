@@ -48,6 +48,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/currentLocationButton"
+            android:contentDescription="currentLocationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="88dp"
@@ -58,6 +59,7 @@
             app:backgroundTint="@android:color/white"/>
         <androidx.appcompat.widget.AppCompatToggleButton
             android:id="@+id/switchCampusButton"
+            android:contentDescription="switchCampusButton"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="bottom|end"
