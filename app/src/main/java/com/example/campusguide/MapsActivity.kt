@@ -11,6 +11,7 @@ import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
+
 class MapsActivity : AppCompatActivity() {
     private val permissions = Permissions(this)
     private lateinit var onSearchListener: View.OnClickListener
@@ -51,6 +52,11 @@ class MapsActivity : AppCompatActivity() {
     fun setOnCenterLocationListener(listener: View.OnClickListener) {
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener(listener)
+    }
+
+    fun setChangeFloorListener(listener: View.OnClickListener){
+        val floorSelector: FloatingActionButton = findViewById(R.id.changeFloor)
+        floorSelector.setOnClickListener(listener);
     }
 
     fun addActivityResultListener(listener: ActivityResultListener) {

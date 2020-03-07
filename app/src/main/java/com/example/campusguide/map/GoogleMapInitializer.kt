@@ -41,7 +41,7 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
 
             map.addGroundOverlay(
                 GroundOverlayOptions()
-                    .image(BitmapDescriptorFactory.fromAsset("Hall7.bmp"))
+                    .image(BitmapDescriptorFactory.fromAsset("Hall4.bmp"))
                     .position(h, 68F, 63F).bearing(124F)
                     .zIndex(5F)
                     .visible(true)

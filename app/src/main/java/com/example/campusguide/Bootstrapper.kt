@@ -6,6 +6,7 @@ import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
+import com.example.campusguide.map.ChangeFloor
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
@@ -39,6 +40,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
             FusedLocationProvider(activity)
         )
         activity.setOnCenterLocationListener(centerLocation)
+
+        // Change Floor
+        val changeFloor = ChangeFloor(map)
+        activity.setChangeFloorListener(changeFloor)
 
         // Switch Campus
         val switchCampus = SwitchCampus(
