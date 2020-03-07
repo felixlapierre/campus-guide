@@ -20,7 +20,8 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     override fun onClick(v: View?) {
         var updatedFloor = ++currentFloor
 
-        if(currentFloor == 9){
+        if(updatedFloor == 9){
+            currentFloor = 4
             updatedFloor = 4
         }
 
@@ -33,6 +34,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
                     .zIndex(5F)
                     .visible(true)
                 )
-        map.animateCamera(hallCoordinates,Constants.ZOOM_STREET_LVL)
+        map.animateCamera(hallCoordinates,map.adapted.cameraPosition.zoom)
+
     }
 }
