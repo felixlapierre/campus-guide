@@ -9,4 +9,5 @@ interface Map {
     fun animateCamera(position: LatLng, zoom: Float)
     fun moveCamera(newLatLngZoom: CameraUpdate?)
     fun addPolyline(polyOptions: PolylineOptions?): Polyline?
+    fun setOnMapClickListener(mapClickListener: MapClickListener)
 }
