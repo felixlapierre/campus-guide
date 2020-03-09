@@ -34,6 +34,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
+        //building info wimdow
+
         // Center on Location
         val centerLocation = CenterLocationListener(map,
             permissions,

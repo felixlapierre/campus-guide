@@ -10,15 +10,12 @@ import com.google.android.gms.maps.model.Polygon
 
 class BuildingClickListener(private val context: Context, private val googleMap: GoogleMap) : GoogleMap.OnPolygonClickListener{
 
-    fun buildingInfoWindow(location: LatLng) {
-
-        val info = InfoWindowData()
-
+    fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
         val customInfoWindow = CustomInfoWindow(context)
         googleMap.setInfoWindowAdapter(customInfoWindow)
 
         // Clears any existing markers from the GoogleMap
-        googleMap.clear()
+        //googleMap.clear()
 
         // Creating an instance of MarkerOptions to set position
         val markerOptions = MarkerOptions()
@@ -48,7 +45,7 @@ class BuildingClickListener(private val context: Context, private val googleMap:
         info.services = "some"
         info.events = "Events"
 
-        buildingInfoWindow(location!!)
+        buildingInfoWindow(location!!, info)
     }
 
 }

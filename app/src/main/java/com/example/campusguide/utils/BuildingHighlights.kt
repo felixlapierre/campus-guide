@@ -21,6 +21,7 @@ class BuildingHighlights(private val googleMap: GoogleMap) {
                 for(hole in outline.holes){
                     polygon.addHole(getLatLngList(hole.points))
                 }
+                polygon.clickable(true)
                 googleMap.addPolygon(polygon)
             }
         }
