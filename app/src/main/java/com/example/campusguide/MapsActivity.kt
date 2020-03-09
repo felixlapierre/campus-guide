@@ -120,33 +120,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val switchCampusToggle: ToggleButton = findViewById(R.id.switchCampusButton)
         SwitchCampus(switchCampusToggle, mMap)
 
-        // Adding and showing marker while touching the GoogleMap
-        googleMap.setOnMapClickListener { arg0 ->
-            // Clears any existing markers from the GoogleMap
-            googleMap.clear()
-
-            // Creating an instance of MarkerOptions to set position
-            val markerOptions = MarkerOptions()
-
-            // Setting position on the MarkerOptions
-            markerOptions.position(arg0)
-
-            info.symbol = "B"
-            info.full_name = "Building"
-            info.address = "location" + arg0.latitude + ", " + arg0.longitude
-            info.services = "some"
-            info.events = "Events"
-
-            //Set Custom InfoWindow Adapter
-            mMap.setInfoWindowAdapter(customInfoWindow)
-
-            // Animating to the currently touched position
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0))
-
-            val marker = mMap.addMarker(markerOptions)
-            marker.tag = info
-            marker.showInfoWindow()
-        }
+        onclickMarker(googleMap)
     }
 
     companion object {
@@ -185,6 +159,47 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             else -> {
                 // Ignore all other requests
             }
+        }
+    }
+
+    fun onclickMarker(googleMap: GoogleMap) {
+
+        val info = InfoWindowData()
+        info.symbol = "H"
+        info.full_name = "Hall Building"
+        info.address = "1234 Rue Maisonneuve"
+        info.services = "ECA, CSU, dance floor"
+        info.events = "Events"
+
+        val customInfoWindow = CustomInfoWindowGoogleMap(this)
+        mMap.setInfoWindowAdapter(customInfoWindow)
+
+        // Adding and showing marker while touching the GoogleMap
+        googleMap.setOnMapClickListener { arg0 ->
+            // Clears any existing markers from the GoogleMap
+            googleMap.clear()
+
+            // Creating an instance of MarkerOptions to set position
+            val markerOptions = MarkerOptions()
+
+            // Setting position on the MarkerOptions
+            markerOptions.position(arg0)
+
+            info.symbol = "B"
+            info.full_name = "Building"
+            info.address = "location" + arg0.latitude + ", " + arg0.longitude
+            info.services = "some"
+            info.events = "Events"
+
+            //Set Custom InfoWindow Adapter
+            mMap.setInfoWindowAdapter(customInfoWindow)
+
+            // Animating to the currently touched position
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(arg0))
+
+            val marker = mMap.addMarker(markerOptions)
+            marker.tag = info
+            marker.showInfoWindow()
         }
     }
 }
