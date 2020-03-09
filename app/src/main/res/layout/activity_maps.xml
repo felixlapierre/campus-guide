@@ -1,3 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -5,20 +16,23 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
-        android:background="@color/colorPrimary">
-        <ImageButton
-            android:id="@+id/hamburger_menu"
-            android:layout_width="24dp"
-            android:layout_height="match_parent"
-            android:layout_weight=".10"
-            android:onClick="onOpenMenu"
-            android:paddingLeft="16dp"
-            android:src="@drawable/ic_hamburger_menu"
-            style="?android:attr/borderlessButtonStyle"/>
+        android:background="@color/colorPrimary">   
         <TextView
             android:id="@+id/campus_name"
             android:layout_width="0dp"
@@ -39,6 +53,9 @@
             android:layout_gravity="center_vertical"
             style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -84,3 +101,13 @@
             app:backgroundTint="@android:color/white"/>
     </fragment>
 </LinearLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:menu="@menu/options_menu"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
