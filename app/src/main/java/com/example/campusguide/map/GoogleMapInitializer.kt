@@ -29,7 +29,7 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
                 Constants.ZOOM_STREET_LVL
             ))
 
-            BuildingHighlights(map).addBuildingHighlights()
+            BuildingHighlights(map, activity).addBuildingHighlights()
 
             map.setContentDescription("Google Maps Ready")
         }
