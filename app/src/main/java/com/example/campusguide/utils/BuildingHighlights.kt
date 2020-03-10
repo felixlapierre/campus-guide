@@ -1,11 +1,7 @@
 package com.example.campusguide.utils
 
-import android.app.Activity
 import android.content.Context
-import android.content.res.Resources
-import android.graphics.Color
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import com.example.campusguide.R
 import com.google.android.gms.maps.GoogleMap
@@ -42,7 +38,7 @@ class BuildingHighlights(private val googleMap: GoogleMap, private val context: 
         return latLngs
     }
 
-    private fun applyPolygonStyle(polygon: PolygonOptio){
+    private fun applyPolygonStyle(polygon: PolygonOptions){
         val primaryColor = ContextCompat.getColor(context, R.color.colorPrimary)
         val darkColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
         polygon.strokeWidth(3.5F)
