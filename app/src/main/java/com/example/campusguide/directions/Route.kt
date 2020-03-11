@@ -115,9 +115,9 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                     begin = map.addMarker(startPoint)
                     dest = map.addMarker(endPoint)
                     map.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            routeBounds.center,
-                            Constants.ZOOM_STREET_LVL
+                        CameraUpdateFactory.newLatLngBounds(
+                            routeBounds,
+                            100 // padding around the route in unknown units
                         )
                     )
                 }
