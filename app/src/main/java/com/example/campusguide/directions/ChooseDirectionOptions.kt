@@ -85,10 +85,10 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
         val getDirectionsDialogFragment =
             GetDirectionsDialogFragment(
                 GetDirectionsDialogFragment.DirectionsDialogOptions(
-                    message,
-                    startingPoint,
-                    null,
-                    EmptyDirectionsGuard(
+                    message = message,
+                    start = startingPoint,
+                    end = null,
+                    confirmationListener = EmptyDirectionsGuard(
                         CallbackDirectionsConfirmListener { start, end ->
                             //Display the directions time
                             route?.set(start, end)
