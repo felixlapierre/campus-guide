@@ -20,7 +20,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 
 
-class ChooseDirectionOptions constructor(private val route: Route?) : DialogFragment() {
+class ChooseDirectionOptionsDialogFragment constructor(private val route: Route?) : DialogFragment() {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
