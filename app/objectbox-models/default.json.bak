@@ -72,9 +72,15 @@
       "relations": []
     },
     {
+<<<<<<< Updated upstream
       "id": "4:979107588825278787",
       "lastPropertyId": "2:581524586020932169",
       "name": "Outline",
+=======
+      "id": "5:5461194227660504461",
+      "lastPropertyId": "5:6597103652429022134",
+      "name": "Hole",
+>>>>>>> Stashed changes
       "properties": [
         {
           "id": "1:8744848346743062063",
@@ -83,12 +89,18 @@
           "flags": 1
         },
         {
+<<<<<<< Updated upstream
           "id": "2:581524586020932169",
           "name": "highlightId",
           "indexId": "3:8750872319771073481",
+=======
+          "id": "5:6597103652429022134",
+          "name": "outlineId",
+          "indexId": "13:537626894913372250",
+>>>>>>> Stashed changes
           "type": 11,
           "flags": 1548,
-          "relationTarget": "Highlight"
+          "relationTarget": "Outline"
         }
       ],
       "relations": []
@@ -142,15 +154,47 @@
       "relations": []
     }
   ],
+<<<<<<< Updated upstream
   "lastEntityId": "5:376825112130238433",
   "lastIndexId": "5:8246044350848783847",
+=======
+  "lastEntityId": "6:2538353799241150413",
+  "lastIndexId": "13:537626894913372250",
+>>>>>>> Stashed changes
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
+<<<<<<< Updated upstream
   "retiredEntityUids": [],
   "retiredIndexUids": [],
   "retiredPropertyUids": [],
+=======
+  "retiredEntityUids": [
+    1792899123297018307
+  ],
+  "retiredIndexUids": [
+    8175606772577645496,
+    5582401198260518308,
+    7065360965968481709,
+    753080009766208761,
+    2843774975596864011,
+    6475207934657758594,
+    4030069565823951195,
+    4543970194561581560
+  ],
+  "retiredPropertyUids": [
+    1317066637255259505,
+    7957354378674056618,
+    7482506891707675687,
+    2108802986397402080,
+    181231789849946544,
+    7023037564965793413,
+    4302232123554110124,
+    8541406304222303640,
+    2221179127968004980
+  ],
+>>>>>>> Stashed changes
   "retiredRelationUids": [],
   "version": 1
 }

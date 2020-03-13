@@ -2,6 +2,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
+<<<<<<< Updated upstream
     android:layout_width="match_parent"
     android:orientation="vertical"
     >
@@ -84,3 +85,47 @@
             app:backgroundTint="@android:color/white"/>
     </fragment>
 </LinearLayout>
+=======
+    android:id="@+id/map"
+    tools:context=".MapsActivity"
+    android:name="com.google.android.gms.maps.SupportMapFragment">
+
+    <androidx.appcompat.widget.AppCompatToggleButton
+        android:id="@+id/switchCampusButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/ic_switch_campus_button"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textColor="#FFFFFF"
+        android:textOff="@string/loy_campus"
+        android:textOn="@string/sgw_campus"
+        android:textStyle="bold" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/currentLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:layout_margin="8dp"
+        app:srcCompat="@drawable/ic_my_location"
+        app:fabSize="normal"
+        app:backgroundTint="@android:color/white"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/navigateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_margin="8dp"
+        android:scaleType="center"
+        app:srcCompat="@drawable/ic_compass_outline"
+        app:maxImageSize="36dp"
+        app:fabSize="normal"
+        app:backgroundTint="@android:color/white"/>
+
+</fragment>
+>>>>>>> Stashed changes
