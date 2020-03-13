@@ -7,9 +7,11 @@ import android.graphics.drawable.ColorDrawable
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 
 import com.example.campusguide.R
@@ -19,43 +21,32 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 
+class ChooseOriginOptions constructor(private val route: Route?) : DialogFragment() {
 
-class ChooseDirectionOptions constructor(private val route: Route?) : DialogFragment() {
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
-    private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
-
-    /**
-     * Called when the dialog window is created.
-     */
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        return inflater.inflate(R.layout.choose_directions, container, false)
+    }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-
-        mFusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(this.requireActivity())
-
-        val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.choose_directions, null)
-
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
-
-        builder.setView(view)
-        builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        view.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
+        val dialog = super.onCreateDialog(savedInstanceState)
+        dialog.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
             useCurrentLocation()
         })
 
-        view.findViewById<Button>(R.id.searchForLocation)?.setOnClickListener(View.OnClickListener {
+        dialog.findViewById<Button>(R.id.searchForLocation)?.setOnClickListener(View.OnClickListener {
             searchForLocation()
         })
 
-        return builder.create()
+        return dialog
     }
 
     /**
      * Gets the user's last known most recent location
      */
     private fun useCurrentLocation() {
-        val locationResult = mFusedLocationProviderClient.lastLocation
+        val locationResult = fusedLocationProviderClient.lastLocation
 
         locationResult.addOnCompleteListener(
             this.requireActivity(),
