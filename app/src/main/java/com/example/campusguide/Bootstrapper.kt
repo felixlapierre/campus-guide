@@ -1,7 +1,8 @@
 package com.example.campusguide
 
 import android.view.View
-import com.example.campusguide.directions.ChooseDirectionOptions
+import androidx.fragment.app.FragmentManager
+import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
@@ -10,6 +11,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
 import com.example.campusguide.utils.permissions.Permissions
+import com.google.android.gms.maps.SupportMapFragment
 import database.ObjectBox
 
 /**
@@ -50,8 +52,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Navigation
         val route = Route(map, activity)
         activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDirectionOptions = ChooseDirectionOptions(route)
-            chooseDirectionOptions.show(activity.supportFragmentManager, "directionsOptions")
+            val chooseDirectionOptions = ChooseOriginOptions(route)
+            chooseDirectionOptions.show(activity.supportFragmentManager, "dialog")
         })
     }
 }
