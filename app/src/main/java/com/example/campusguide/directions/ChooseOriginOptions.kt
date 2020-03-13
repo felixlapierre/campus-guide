@@ -1,6 +1,5 @@
 package com.example.campusguide.directions
 
-import android.app.AlertDialog
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -10,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 
@@ -18,7 +16,6 @@ import com.example.campusguide.R
 import com.example.campusguide.utils.DisplayMessageErrorListener
 
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 
 class ChooseOriginOptions constructor(private val route: Route?) : DialogFragment() {
@@ -27,15 +24,15 @@ class ChooseOriginOptions constructor(private val route: Route?) : DialogFragmen
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return inflater.inflate(R.layout.choose_directions, container, false)
+        return inflater.inflate(R.layout.choose_origin_options, container, false)
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.findViewById<Button>(R.id.useCurrentLocation)?.setOnClickListener(View.OnClickListener {
+        dialog.findViewById<Button>(R.id.currentLocation)?.setOnClickListener(View.OnClickListener {
             useCurrentLocation()
         })
 
-        dialog.findViewById<Button>(R.id.searchForLocation)?.setOnClickListener(View.OnClickListener {
+        dialog.findViewById<Button>(R.id.search)?.setOnClickListener(View.OnClickListener {
             searchForLocation()
         })
 

@@ -32,7 +32,7 @@ class ChooseDesitnationOptions: DialogFragment() {
             LocationServices.getFusedLocationProviderClient(this.requireActivity())
 
         val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.choose_directions, null)
+        val view = inflater.inflate(R.layout.choose_destination_options, null)
 
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
 
