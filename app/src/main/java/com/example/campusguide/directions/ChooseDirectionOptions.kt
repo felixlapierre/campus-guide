@@ -92,6 +92,7 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
                         CallbackDirectionsConfirmListener { start, end ->
                             //Display the directions time
                             route?.set(start, end)
+                            this.dismiss()
                         },
                         DisplayMessageErrorListener(this.requireActivity()))
                 )
