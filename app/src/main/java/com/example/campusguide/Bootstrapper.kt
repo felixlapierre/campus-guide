@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.view.View
 import androidx.fragment.app.FragmentManager
+import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
@@ -52,8 +53,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Navigation
         val route = Route(map, activity)
         activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDirectionOptions = ChooseOriginOptions(route)
-            chooseDirectionOptions.show(activity.supportFragmentManager, "dialog")
+            val chooseDestinationOptions = ChooseDestinationOptions()
+            chooseDestinationOptions.show(activity.supportFragmentManager, "dialog")
+            val chooseOriginOptions = ChooseOriginOptions(route)
+            chooseOriginOptions.show(activity.supportFragmentManager, "dialog")
         })
     }
 }

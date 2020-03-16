@@ -14,7 +14,7 @@ import com.example.campusguide.R
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
-class ChooseDesitnationOptions: DialogFragment() {
+class ChooseDestinationOptions: DialogFragment() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -23,22 +23,12 @@ class ChooseDesitnationOptions: DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        return inflater.inflate(R.layout.choose_destination_options, container, false)
     }
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        val dialog = super.onCreateDialog(savedInstanceState)
 
-        fusedLocationProviderClient =
-            LocationServices.getFusedLocationProviderClient(this.requireActivity())
-
-        val inflater = requireActivity().layoutInflater
-        val view = inflater.inflate(R.layout.choose_destination_options, null)
-
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
-
-        builder.setView(view)
-        builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        return builder.create()
+        return dialog
     }
 }
