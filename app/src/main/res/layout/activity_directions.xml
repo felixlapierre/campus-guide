@@ -51,6 +51,27 @@
             android:textSize="20sp"
             android:text="Destination"/>
     </LinearLayout>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:checkedButton="@id/radio_driving">
+        <RadioButton
+            android:id="@+id/radio_driving"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Driving" />
+        <RadioButton
+            android:id="@+id/radio_walking"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Walking" />
+        <RadioButton
+            android:id="@+id/radio_transit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Transit" />
+    </RadioGroup>
     <fragment
         android:id="@+id/directions_activity_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
