@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.os.Bundle
 import android.view.View
+import android.widget.RadioButton
 import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
@@ -38,7 +39,7 @@ class DirectionsActivity : AppCompatActivity() {
             text = end
         }
 
-        // Display directions as soon as the activity gets created
+        // Display driving directions by default as soon as the activity gets created
         route = Route(map, this)
         route.set(start, end, travelMode)
 
@@ -49,5 +50,32 @@ class DirectionsActivity : AppCompatActivity() {
      */
     fun finishActivity(view: View) {
         finish()
+    }
+
+    /**
+     * Called when a Radio button is clicked.
+     */
+    fun onRadioButtonClicked(view: View) {
+        if (view is RadioButton) {
+            val checked = view.isChecked
+
+            when (view.id) {
+                R.id.radio_driving ->
+                    if(checked) {
+                        travelMode = "Driving"
+                        route.set(start, end, travelMode)
+                    }
+                R.id.radio_walking ->
+                    if(checked) {
+                        travelMode = "Walking"
+                        route.set(start, end, travelMode)
+                    }
+                R.id.radio_transit ->
+                    if(checked) {
+                        travelMode = "Transit"
+                        route.set(start, end, travelMode)
+                    }
+            }
+        }
     }
 }

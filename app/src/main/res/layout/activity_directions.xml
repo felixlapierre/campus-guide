@@ -60,17 +60,20 @@
             android:id="@+id/radio_driving"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Driving" />
+            android:text="Driving"
+            android:onClick="onRadioButtonClicked"/>
         <RadioButton
             android:id="@+id/radio_walking"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Walking" />
+            android:text="Walking"
+            android:onClick="onRadioButtonClicked"/>
         <RadioButton
             android:id="@+id/radio_transit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Transit" />
+            android:text="Transit"
+            android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
     <fragment
         android:id="@+id/directions_activity_map"
