@@ -53,25 +53,35 @@
     </LinearLayout>
     <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
+        android:layout_marginStart="30dp"
         android:checkedButton="@id/radio_driving">
         <RadioButton
             android:id="@+id/radio_driving"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/ic_directions_car"
+            android:layout_gravity="center_vertical"
             android:text="Driving"
             android:onClick="onRadioButtonClicked"/>
         <RadioButton
             android:id="@+id/radio_walking"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/ic_directions_walk"
+            android:layout_gravity="center_vertical"
             android:text="Walking"
             android:onClick="onRadioButtonClicked"/>
         <RadioButton
             android:id="@+id/radio_transit"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/ic_directions_transit"
+            android:layout_gravity="center_vertical"
             android:text="Transit"
             android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
