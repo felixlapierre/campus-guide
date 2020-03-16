@@ -11,32 +11,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
-
 import com.example.campusguide.R
 import com.example.campusguide.utils.DisplayMessageErrorListener
-
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.maps.model.LatLng
 
-class ChooseOriginOptions constructor(private val route: Route?) : DialogFragment() {
+class ChooseOriginOptions constructor(private val route: Route?, private val locationSelectedListener: (location: LatLng) -> Unit ) : DialogFragment() {
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        return inflater.inflate(R.layout.choose_origin_options, container, false)
-    }
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.findViewById<Button>(R.id.currentLocation)?.setOnClickListener(View.OnClickListener {
+        val view = inflater.inflate(R.layout.choose_origin_options, container, false)
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+
+        view.findViewById<Button>(R.id.currentLocation)?.setOnClickListener {
             useCurrentLocation()
-        })
+        }
 
-        dialog.findViewById<Button>(R.id.search)?.setOnClickListener(View.OnClickListener {
+        view.findViewById<Button>(R.id.search)?.setOnClickListener {
             searchForLocation()
-        })
+        }
 
-        return dialog
+        return view
     }
 
     /**
@@ -45,45 +44,29 @@ class ChooseOriginOptions constructor(private val route: Route?) : DialogFragmen
     private fun useCurrentLocation() {
         val locationResult = fusedLocationProviderClient.lastLocation
 
-        locationResult.addOnCompleteListener(
-            this.requireActivity(),
-            OnCompleteListener<Location?> { task ->
-                if (task.isSuccessful) {
-                    openDirectionsDialogFragment(
-                        task.result?.latitude.toString() + ", " + task.result?.longitude.toString(),
-                        "Enter end location"
-                    )
-                } else {
-                    Log.d("NullCurrentLocation", "Current location is null")
-                }
-            })
+        locationResult.addOnCompleteListener( this.requireActivity() ) { task ->
+            if (task.isSuccessful) {
+                this.dismiss()
+                locationSelectedListener(LatLng(task.result!!.latitude, task.result!!.longitude));
+            } else {
+                Log.d("NullCurrentLocation", "Current location is null")
+            }
+        }
     }
 
     /**
      * Allows users to manually enter start and end point
      */
     private fun searchForLocation() {
-        openDirectionsDialogFragment(null, "Enter start and end location")
+        //openDirectionsDialogFragment(null, "Enter start and end location")
+        dismiss()
+        locationSelectedListener(LatLng(0.0, 0.0));
     }
 
     /**
      * Opens the GetDirectionsDialogFragment
      */
     private fun openDirectionsDialogFragment(startingPoint: String?, message: String) {
-        val getDirectionsDialogFragment =
-            GetDirectionsDialogFragment(
-                GetDirectionsDialogFragment.DirectionsDialogOptions(
-                    message,
-                    startingPoint,
-                    null,
-                    EmptyDirectionsGuard(
-                        CallbackDirectionsConfirmListener { start, end ->
-                            //Display the directions time
-                            route?.set(start, end)
-                        },
-                        DisplayMessageErrorListener(this.requireActivity()))
-                )
-            )
-        getDirectionsDialogFragment.show(childFragmentManager, "directionsDialog")
+
     }
 }

@@ -2,15 +2,14 @@ package com.example.campusguide
 
 import android.view.View
 import androidx.fragment.app.FragmentManager
-import com.example.campusguide.directions.ChooseDestinationOptions
-import com.example.campusguide.directions.ChooseOriginOptions
-import com.example.campusguide.directions.Route
+import com.example.campusguide.directions.*
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
+import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.gms.maps.SupportMapFragment
 import database.ObjectBox
@@ -53,10 +52,28 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Navigation
         val route = Route(map, activity)
         activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDestinationOptions = ChooseDestinationOptions()
-            chooseDestinationOptions.show(activity.supportFragmentManager, "dialog")
-            val chooseOriginOptions = ChooseOriginOptions(route)
-            chooseOriginOptions.show(activity.supportFragmentManager, "dialog")
+            val chooseDestinationOptions = ChooseDestinationOptions { destination ->
+                val chooseOriginOptions = ChooseOriginOptions(route) { origin ->
+                    val getDirectionsDialogFragment =
+                        GetDirectionsDialogFragment(
+                            GetDirectionsDialogFragment.DirectionsDialogOptions(
+                                "Choose",
+                                origin.toString(),
+                                destination.toString(),
+                                EmptyDirectionsGuard(
+                                    CallbackDirectionsConfirmListener { start, end ->
+                                        //Display the directions time
+                                        route?.set(start, end)
+                                    },
+                                    DisplayMessageErrorListener(activity)
+                                )
+                            )
+                        )
+                    getDirectionsDialogFragment.show(activity.supportFragmentManager, "directionsDialog")
+                }
+                chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
+            }
+            chooseDestinationOptions.show(activity.supportFragmentManager, "chooseDestinationOptions")
         })
     }
 }
