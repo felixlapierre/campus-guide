@@ -16,6 +16,7 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var route: Route
     private lateinit var start: String
     private lateinit var end: String
+    private var travelMode = "Driving"
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,7 +40,7 @@ class DirectionsActivity : AppCompatActivity() {
 
         // Display directions as soon as the activity gets created
         route = Route(map, this)
-        route.set(start, end)
+        route.set(start, end, travelMode)
 
     }
 
