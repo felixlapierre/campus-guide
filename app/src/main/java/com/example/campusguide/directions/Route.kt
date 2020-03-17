@@ -1,7 +1,9 @@
 package com.example.campusguide.directions
 
+import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
@@ -120,6 +122,13 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                             Constants.ZOOM_STREET_LVL
                         )
                     )
+                }
+
+                // Set the duration of the route
+                val radioButtonId = "radio_" + travelMode.toLowerCase()
+                val id = activity.resources.getIdentifier(radioButtonId, "id", activity.packageName)
+                activity.findViewById<RadioButton>(id).apply {
+                    text = response.routes[0].legs[0].duration.text
                 }
             }
         }
