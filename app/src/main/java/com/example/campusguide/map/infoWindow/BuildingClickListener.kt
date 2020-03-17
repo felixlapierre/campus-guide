@@ -41,7 +41,7 @@ class BuildingClickListener(private val context: Context, private val googleMap:
         val info = InfoWindowData()
 
         info.symbol = "B"
-        info.full_name = "Building"
+        info.fullName = "Building"
         info.address = "location" + (location?.latitude) + ", " + (location?.longitude)
         info.services = "some"
         info.events = "Events"

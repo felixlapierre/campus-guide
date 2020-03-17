@@ -8,10 +8,6 @@ import com.google.android.gms.maps.model.Marker
 
 import com.example.campusguide.R
 import com.example.campusguide.map.infoWindow.InfoWindowData
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.Polygon
 
 
 class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter{
@@ -25,18 +21,18 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
             .inflate(R.layout.custom_info_marker, null)
 
         val symbol = view.findViewById<TextView>(R.id.symbol)
-        val full_name = view.findViewById<TextView>(R.id.full_name)
+        val fullName = view.findViewById<TextView>(R.id.fullName)
         val address = view.findViewById<TextView>(R.id.address)
         val services = view.findViewById<TextView>(R.id.services)
         val events = view.findViewById<TextView>(R.id.events)
 
         val infoWindowData = marker.tag as InfoWindowData?
 
-        symbol.setText(infoWindowData?.symbol)
-        full_name.setText(infoWindowData?.full_name)
-        address.setText(infoWindowData?.address)
-        services.setText(infoWindowData?.services)
-        events.setText(infoWindowData?.events)
+        symbol.text = infoWindowData?.symbol
+        fullName.text = infoWindowData?.fullName
+        address.text = infoWindowData?.address
+        services.text = infoWindowData?.services
+        events.text = infoWindowData?.events
 
         return view
     }

@@ -70,7 +70,4 @@ class MapsActivity : AppCompatActivity() {
         val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
         navigateButton.setOnClickListener(listener)
     }
-
-
-
 }
