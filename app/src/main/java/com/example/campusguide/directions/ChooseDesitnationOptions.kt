@@ -1,8 +1,8 @@
 package com.example.campusguide.directions
 
-import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +10,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.maps.model.LatLng
 
-class ChooseDestinationOptions(private val locationSelectedListener: (location: LatLng) -> Unit): DialogFragment() {
+class ChooseDestinationOptions(private val locationSelectedListener: (location: Location) -> Unit): DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -33,18 +31,21 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
     }
 
     private fun useLastEvent(){
+        //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
-        locationSelectedListener(LatLng(0.0, 0.0))
+        locationSelectedListener(Location("Montreal"))
     }
 
     private fun chooseFromMap(){
+        //TODO fill this method once we have the logic to select from the map
         dismiss()
-        locationSelectedListener(LatLng(0.0, 0.0))
+        locationSelectedListener(Location("Montreal"))
     }
 
     private fun searchForLocation(){
+        //TODO fill this method once we have the logic to search for a location
         dismiss()
-        locationSelectedListener(LatLng(0.0, 0.0))
+        locationSelectedListener(Location("Montreal"))
     }
 
 }
