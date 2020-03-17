@@ -36,6 +36,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".search.CustomAutocompleteActivity"
+            android:label="Search"
+            android:theme="@style/Theme.AppCompat.Light"></activity>
+        <activity
             android:name="database.migration.Migrator"
             android:label="Migrator">
             <intent-filter>
