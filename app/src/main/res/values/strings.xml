@@ -4,4 +4,6 @@
     <string name="title_activity_calculator">CalculatorActivity</string>
     <string name="loy_campus">LOY</string>
     <string name="sgw_campus">SGW</string>
+    <string name="Confirm">Confirm</string>
+    <string name="Cancel">Cancel</string>
 </resources>

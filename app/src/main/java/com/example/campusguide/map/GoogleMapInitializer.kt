@@ -2,7 +2,6 @@ package com.example.campusguide.map
 
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
-import com.example.campusguide.CustomInfoWindow
 import com.example.campusguide.R
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -34,10 +33,8 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
 
             map.setContentDescription("Google Maps Ready")
 
-            val mapClickListener = MapClickListener(map)
+            val mapClickListener = MapClickListener(map, activity)
             map.setOnMapClickListener(mapClickListener)
-
-            map.setInfoWindowAdapter(CustomInfoWindow(activity))
         }
     }
 }

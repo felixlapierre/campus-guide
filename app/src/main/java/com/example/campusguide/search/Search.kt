@@ -1,13 +1,21 @@
 package com.example.campusguide.search
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
@@ -29,7 +37,7 @@ class Search constructor(private val activity: FragmentActivity, private val map
     : ConnectionCallbacks,
     OnConnectionFailedListener,
     View.OnClickListener,
-    ActivityResultListener {
+    ActivityResultListener{
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var locationRequest: LocationRequest
 
