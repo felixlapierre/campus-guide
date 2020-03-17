@@ -54,8 +54,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnNavigateListener(View.OnClickListener{
             val chooseDestinationOptions = ChooseDestinationOptions { destination ->
                 val chooseOriginOptions = ChooseOriginOptions(route, permissions, locationProvider) { origin ->
-                    val originLatLng = LatLng(origin.latitude, origin.latitude)
-                    val destinationLatLng = LatLng(origin.longitude, origin.latitude)
+                    val originLatLng = LatLng(origin.latitude, origin.longitude)
+                    val destinationLatLng = LatLng(origin.latitude, origin.longitude)
                     val getDirectionsDialogFragment =
                         GetDirectionsDialogFragment(
                             GetDirectionsDialogFragment.DirectionsDialogOptions(
