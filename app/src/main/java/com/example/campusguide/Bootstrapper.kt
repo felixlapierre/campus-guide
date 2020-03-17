@@ -13,7 +13,6 @@ import com.example.campusguide.utils.permissions.Permissions
 import com.google.maps.model.LatLng
 import database.ObjectBox
 
-
 /**
  * Bootstrapper sets up the application by adding event listeners to the
  * activity and injecting dependencies.
