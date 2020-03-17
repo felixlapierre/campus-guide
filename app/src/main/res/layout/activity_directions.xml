@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="25dp"
         android:checkedButton="@id/radio_driving">
         <RadioButton
             android:id="@+id/radio_driving"

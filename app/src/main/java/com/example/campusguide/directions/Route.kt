@@ -109,6 +109,12 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                  * addPolyline throws an exception if it is not run on the Ui thread.
                  */
                 activity.runOnUiThread {
+                    // Set the duration of the route
+                    val radioButtonId = "radio_" + travelMode.toLowerCase()
+                    val id = activity.resources.getIdentifier(radioButtonId, "id", activity.packageName)
+                    activity.findViewById<RadioButton>(id).apply {
+                        text = response.routes[0].legs[0].duration.text
+                    }
                     val polyOptions = PolylineOptions()
                         .color(COLOR_BLUE_ARGB.toInt())
                         .pattern(PATTERN_POLYGON_ALPHA)
@@ -122,13 +128,6 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                             Constants.ZOOM_STREET_LVL
                         )
                     )
-                }
-
-                // Set the duration of the route
-                val radioButtonId = "radio_" + travelMode.toLowerCase()
-                val id = activity.resources.getIdentifier(radioButtonId, "id", activity.packageName)
-                activity.findViewById<RadioButton>(id).apply {
-                    text = response.routes[0].legs[0].duration.text
                 }
             }
         }
