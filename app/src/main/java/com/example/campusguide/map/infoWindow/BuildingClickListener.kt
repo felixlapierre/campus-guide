@@ -28,8 +28,9 @@ class BuildingClickListener(private val context: Context, private val googleMap:
         //Set Custom InfoWindow Adapter
         googleMap.setInfoWindowAdapter(customInfoWindow)
 
-        // Animating to the currently touched position
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(location))
+        // Animating to the info window
+        val cameraLocation = LatLng((location.latitude)+0.0005, location.longitude)
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(cameraLocation))
 
         val marker = googleMap.addMarker(markerOptions)
         marker.tag = info
