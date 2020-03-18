@@ -8,6 +8,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.DisplayMessageErrorListener
+import com.google.android.gms.maps.model.Marker
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
@@ -16,6 +17,9 @@ const val AUTOCOMPLETE_REQUEST_CODE = 69; //nice
 
 class CustomSearch constructor(private val activity: MapsActivity, private val map: Map) : View.OnClickListener,
     ActivityResultListener {
+
+    private var marker: Marker? = null
+
     override fun onClick(v: View?) {
         val searchIntent = Intent(activity, CustomSearchActivity::class.java)
         activity.startActivityForResult(searchIntent, AUTOCOMPLETE_REQUEST_CODE)
@@ -42,7 +46,8 @@ class CustomSearch constructor(private val activity: MapsActivity, private val m
             val place = response.place
             val location = place.latLng
             if(location != null) {
-                map.addMarker(location, place.name!!)
+                marker?.remove()
+                marker = map.addMarker(location, place.name!!)
                 map.animateCamera(location, Constants.ZOOM_STREET_LVL)
             }
         }.addOnFailureListener { exception ->
