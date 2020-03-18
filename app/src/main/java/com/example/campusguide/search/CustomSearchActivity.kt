@@ -28,6 +28,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         listView.adapter = adapter
 
         searchView.setOnQueryTextListener(this)
+        searchView.requestFocus()
 
         listView.onItemClickListener = this
     }
