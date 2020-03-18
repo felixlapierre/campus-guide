@@ -7,6 +7,7 @@ import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.map.Map
+import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
@@ -45,7 +46,10 @@ class CustomSearch constructor(private val activity: MapsActivity, private val m
                 map.animateCamera(location, Constants.ZOOM_STREET_LVL)
             }
         }.addOnFailureListener { exception ->
-
+            val message = exception.message
+            if(message != null) {
+                DisplayMessageErrorListener(activity).onError(message)
+            }
         }
     }
 }
