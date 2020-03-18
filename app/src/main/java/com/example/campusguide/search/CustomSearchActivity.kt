@@ -13,10 +13,8 @@ import kotlinx.coroutines.launch
 class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
     private lateinit var searchView: SearchView
     private lateinit var listView: ListView
-    private lateinit var adapter: ArrayAdapter<String>
+    private lateinit var adapter: SearchResultAdapter
     private lateinit var searchResultProvider: PlacesApiSearchResultProvider
-    private val searchResults = arrayListOf<String>()
-    private val resultIds = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +23,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         searchResultProvider = PlacesApiSearchResultProvider(this)
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.searchResults)
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, searchResults)
+        adapter = SearchResultAdapter(this)
 
         listView.adapter = adapter
 
@@ -54,19 +52,23 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     private fun doQuery(query: String) {
         GlobalScope.launch {
             val response = searchResultProvider.search(query)
-            searchResults.clear()
+            adapter.clear()
             response.autocompletePredictions.forEach { it ->
-                searchResults.add(it.getPrimaryText(null).toString())
-                resultIds.add(it.placeId)
+                val primaryText = it.getPrimaryText(null).toString()
+                val secondaryText = it.getSecondaryText(null).toString()
+                val id = it.placeId
+                val searchResult = SearchResult(primaryText, secondaryText, id)
+
+                adapter.add(searchResult)
             }
             runOnUiThread{ adapter.notifyDataSetChanged() }
         }
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val selectedResult = resultIds[position]
+        val selectedResult = adapter.getItem(position)
         val result = Intent()
-        result.data = Uri.parse(selectedResult)
+        result.data = Uri.parse(selectedResult.id)
         setResult(RESULT_OK, result)
         finish()
     }
