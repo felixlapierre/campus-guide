@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private lateinit var searchView: SearchView
     private lateinit var listView: ListView
+    private lateinit var adapter: ArrayAdapter<String>
     private lateinit var searchResultProvider: PlacesApiSearchResultProvider
     private val searchResults = arrayListOf<String>()
 
@@ -23,7 +24,9 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         searchResultProvider = PlacesApiSearchResultProvider(this)
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.searchResults)
-        listView.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchResults)
+        adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, searchResults)
+
+        listView.adapter = adapter
 
         searchView.setOnQueryTextListener(this)
     }
@@ -52,6 +55,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
             response.autocompletePredictions.forEach { it ->
                 searchResults.add(it.getPrimaryText(null).toString())
             }
+            runOnUiThread{ adapter.notifyDataSetChanged() }
         }
     }
 }
