@@ -5,16 +5,22 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp">
+    android:layout_margin="16dp"
+    android:background="@color/quantum_white_100">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/locationSearched"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add room number"/>
     </LinearLayout>
 
     <LinearLayout
@@ -25,13 +31,15 @@
             android:id="@+id/cancel_button"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Cancel"/>
+            android:text="Cancel"
+            android:onClick="onCancelTravel"/>
 
         <Button
             android:id="@+id/confirm_button"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:text="Confirm"/>
+            android:text="Confirm"
+            android:onClick="onConfirmTravel"/>
     </LinearLayout>
 
 </LinearLayout>

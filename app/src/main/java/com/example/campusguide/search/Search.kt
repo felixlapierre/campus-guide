@@ -1,22 +1,13 @@
 package com.example.campusguide.search
 
 import android.Manifest
-import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
 import com.example.campusguide.R
@@ -32,8 +23,9 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import kotlinx.android.synthetic.main.activity_maps.*
 
-class Search constructor(private val activity: FragmentActivity, private val map: Map)
+class Search constructor(private val activity: AppCompatActivity, private val map: Map)
     : ConnectionCallbacks,
     OnConnectionFailedListener,
     View.OnClickListener,
@@ -114,8 +106,10 @@ class Search constructor(private val activity: FragmentActivity, private val map
                 val location = place.latLng!!
                 map.addMarker(location, place.name!!)
                 map.animateCamera(location, Constants.ZOOM_STREET_LVL)
-                // TODO: Restore feature to change "campus name" to target of search
-                // campus_name.text = place.name
+
+                activity.campus_name.text = place.name!!
+
+                CurrentTravelPopup(activity, place)
             }
             AutocompleteActivity.RESULT_ERROR -> {
                 print("The Request has run into an error")
