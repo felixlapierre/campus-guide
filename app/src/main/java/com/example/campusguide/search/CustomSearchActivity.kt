@@ -3,6 +3,7 @@ package com.example.campusguide.search
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,9 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_search)
+        
+        // Enables the "Back" button to cancel search
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         searchResultProvider = PlacesApiSearchResultProvider(this)
         searchView = findViewById(R.id.searchView)
@@ -33,10 +37,24 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         listView.onItemClickListener = this
     }
 
+    /**
+     * Called when the back button is pressed; cancels the search.
+     */
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
+    /**
+     * Called when the user clicks the search button
+     */
     override fun onQueryTextSubmit(query: String?): Boolean {
         return queryIfNotNull(query)
     }
 
+    /**
+     * Called whenever the text in the search box changes
+     */
     override fun onQueryTextChange(newText: String?): Boolean {
         return queryIfNotNull(newText)
     }
@@ -66,6 +84,9 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         }
     }
 
+    /**
+     * Called whenever an item in the search result list is clicked
+     */
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
         val selectedResult = adapter.getItem(position)
         val result = Intent()
