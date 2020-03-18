@@ -42,17 +42,6 @@ class GoogleMapInitializer constructor(activity: FragmentActivity,
                 )
             }
 
-
-            val h = LatLng(45.4972695, -73.57894175)
-
-            map.addGroundOverlay(
-                GroundOverlayOptions()
-                    .image(BitmapDescriptorFactory.fromAsset("Hall4.bmp"))
-                    .position(h, 68F, 63F).bearing(124F)
-                    .zIndex(5F)
-                    .visible(true)
-                    )
-
             BuildingHighlights(map).addBuildingHighlights()
             map.setContentDescription("Google Maps Ready")
         }
