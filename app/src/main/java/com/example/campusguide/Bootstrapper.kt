@@ -29,6 +29,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val permissions = Permissions(activity)
 
         // Search
+        //val search = Search(activity, map)
         val search = CustomSearch(activity)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)

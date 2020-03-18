@@ -9,7 +9,7 @@ const val AUTOCOMPLETE_REQUEST_CODE = 69; //nice
 
 class CustomSearch constructor(private val activity: MapsActivity) : View.OnClickListener,  ActivityResultListener{
     override fun onClick(v: View?) {
-        val searchIntent = Intent(activity, CustomAutocompleteActivity::class.java)
+        val searchIntent = Intent(activity, CustomSearchActivity::class.java)
         activity.startActivityForResult(searchIntent, AUTOCOMPLETE_REQUEST_CODE)
     }
 
