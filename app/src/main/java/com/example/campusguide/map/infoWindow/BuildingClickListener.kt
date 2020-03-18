@@ -4,20 +4,18 @@ import CustomInfoWindow
 import android.content.Context
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.Polygon
+import com.google.android.gms.maps.model.*
 
 
 class BuildingClickListener(private val context: Context, private val googleMap: GoogleMap) : GoogleMap.OnPolygonClickListener{
+    private var marker: Marker? = null
 
     fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
         val customInfoWindow = CustomInfoWindow(context)
         googleMap.setInfoWindowAdapter(customInfoWindow)
 
         // Clears any existing markers from the GoogleMap
-        //googleMap.clear()
+        marker?.remove()
 
         // Creating an instance of MarkerOptions to set position
         val markerOptions = MarkerOptions()
@@ -28,13 +26,13 @@ class BuildingClickListener(private val context: Context, private val googleMap:
         //Set Custom InfoWindow Adapter
         googleMap.setInfoWindowAdapter(customInfoWindow)
 
+        marker = googleMap.addMarker(markerOptions)
+        marker?.tag = info
+        marker?.showInfoWindow()
+
         // Animating to the info window
         val cameraLocation = LatLng((location.latitude)+0.0005, location.longitude)
         googleMap.animateCamera(CameraUpdateFactory.newLatLng(cameraLocation))
-
-        val marker = googleMap.addMarker(markerOptions)
-        marker.tag = info
-        marker.showInfoWindow()
     }
 
     override fun onPolygonClick(p0: Polygon?) {
