@@ -30,7 +30,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Search
         //val search = Search(activity, map)
-        val search = CustomSearch(activity)
+        val search = CustomSearch(activity, map)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 

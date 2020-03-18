@@ -30,7 +30,7 @@ class SearchResultAdapter constructor(private val activity: Activity): BaseAdapt
         // This method will be called by the list view
         // but is not necessary for the functionality
         // of the list view to be correct.
-        return 0
+        return position.toLong()
     }
 
     override fun getCount(): Int {
