@@ -7,7 +7,7 @@ import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map: GoogleMapAdapter)
+class ChangeFloorUp constructor(private val map: GoogleMapAdapter)
     : View.OnClickListener {
     private val hallCoordinates = LatLng(45.4972695, -73.57894175)
     private var currentFloor = 8
@@ -27,7 +27,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
             this.started = true
         }
 
-        val updatedFloor = updateFloor(currentFloor)
+        val updatedFloor = updateFloorUp(currentFloor)
 
         floors[currentFloor]?.zIndex = -1f
         floors[updatedFloor]?.zIndex = 5f
@@ -37,7 +37,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
         currentFloor = updatedFloor
     }
 
-    private fun updateFloor(currentFloor: Int): Int {
+    private fun updateFloorUp(currentFloor: Int): Int {
         val updatedFloor = currentFloor+1
 
         if(updatedFloor== 9){

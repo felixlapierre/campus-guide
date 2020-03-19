@@ -48,13 +48,24 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/changeFloor"
+            android:id="@+id/upOneFloor"
             android:contentDescription="changeFloorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="180dp"
+            android:layout_marginRight="24dp"
+            android:src="@drawable/ic_arrow_up_24px"
+            android:layout_gravity="bottom|end"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/white"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/downOneFloor"
+            android:contentDescription="Down One Floor Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="130dp"
             android:layout_marginRight="24dp"
-            android:src="@drawable/ic_up_one_floor"
+            android:src="@drawable/ic_arrow_down_24px"
             android:layout_gravity="bottom|end"
             app:fabSize="mini"
             app:backgroundTint="@android:color/white"/>

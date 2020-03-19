@@ -54,9 +54,14 @@ class MapsActivity : AppCompatActivity() {
         currentLocationButton.setOnClickListener(listener)
     }
 
-    fun setChangeFloorListener(listener: View.OnClickListener){
-        val floorSelector: FloatingActionButton = findViewById(R.id.changeFloor)
-        floorSelector.setOnClickListener(listener);
+    fun setChangeFloorUpListener(listener: View.OnClickListener){
+        val upOneFloorButton: FloatingActionButton = findViewById(R.id.upOneFloor)
+        upOneFloorButton.setOnClickListener(listener);
+    }
+
+    fun setChangeFloorDownListener(listener: View.OnClickListener){
+        val downOneFloorButton: FloatingActionButton = findViewById(R.id.downOneFloor)
+        downOneFloorButton.setOnClickListener(listener);
     }
 
     fun addActivityResultListener(listener: ActivityResultListener) {
