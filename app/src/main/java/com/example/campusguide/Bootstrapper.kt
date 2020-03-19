@@ -1,17 +1,21 @@
 package com.example.campusguide
 
+import android.content.Intent
+import android.location.Geocoder
 import android.view.View
-import com.example.campusguide.directions.*
+import com.example.campusguide.directions.ChooseDestinationOptions
+import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.Search
-import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.maps.model.LatLng
 import database.ObjectBox
+import java.util.*
+
 
 /**
  * Bootstrapper sets up the application by adding event listeners to the
@@ -24,7 +28,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Map
         val map = GoogleMapAdapter()
-        GoogleMapInitializer(activity, map)
+        GoogleMapInitializer(activity, map, "maps_activity_map")
 
         //Permissions
         val permissions = Permissions(activity)
@@ -50,28 +54,16 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setSwitchCampusButtonListener(switchCampus)
 
         // Navigation
-        val route = Route(map, activity)
         activity.setOnNavigateListener(View.OnClickListener{
             val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-                val chooseOriginOptions = ChooseOriginOptions(route, permissions, locationProvider) { origin ->
+                val chooseOriginOptions = ChooseOriginOptions(permissions, locationProvider) { origin ->
                     val originLatLng = LatLng(origin.latitude, origin.longitude)
-                    val destinationLatLng = LatLng(origin.latitude, origin.longitude)
-                    val getDirectionsDialogFragment =
-                        GetDirectionsDialogFragment(
-                            GetDirectionsDialogFragment.DirectionsDialogOptions(
-                                "Confirm start and end location",
-                                originLatLng.toString(),
-                                destinationLatLng.toString(),
-                                EmptyDirectionsGuard(
-                                    CallbackDirectionsConfirmListener { start, end ->
-                                        //Display the directions time
-                                        route?.set(start, end)
-                                    },
-                                    DisplayMessageErrorListener(activity)
-                                )
-                            )
-                        )
-                    getDirectionsDialogFragment.show(activity.supportFragmentManager, "directionsDialog")
+                    val destinationLatLng = LatLng(destination.latitude, destination.longitude)
+                    val intent = Intent(activity, DirectionsActivity::class.java).apply {
+                        putExtra("Origin", originLatLng.toString())
+                        putExtra("Destination", destinationLatLng.toString())
+                    }
+                    activity.startActivity(intent)
                 }
                 chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
             }

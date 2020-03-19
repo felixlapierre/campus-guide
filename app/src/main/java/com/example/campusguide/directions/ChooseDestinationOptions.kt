@@ -10,6 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.PlacesClient
 
 class ChooseDestinationOptions(private val locationSelectedListener: (location: Location) -> Unit): DialogFragment() {
 
@@ -33,19 +37,29 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
     private fun useLastEvent(){
         //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
-        locationSelectedListener(Location("Montreal"))
+        val placesClient = Places.createClient(this.context!!)
+        val location = Location("Montreal")
+        location.latitude = 45.5017
+        location.longitude = 73.5673
+        locationSelectedListener(location)
     }
 
     private fun chooseFromMap(){
         //TODO fill this method once we have the logic to select from the map
         dismiss()
-        locationSelectedListener(Location("Montreal"))
+        val location = Location("Montreal")
+        location.latitude = 45.5017
+        location.longitude = 73.5673
+        locationSelectedListener(location)
     }
 
     private fun searchForLocation(){
         //TODO fill this method once we have the logic to search for a location
         dismiss()
-        locationSelectedListener(Location("Montreal"))
+        val location = Location("Montreal")
+        location.latitude = 45.5017
+        location.longitude = 73.5673
+        locationSelectedListener(location)
     }
 
 }

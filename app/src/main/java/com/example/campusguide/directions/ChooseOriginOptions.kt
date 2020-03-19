@@ -14,7 +14,7 @@ import com.example.campusguide.R
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.utils.permissions.PermissionsSubject
 
-class ChooseOriginOptions(private val route: Route?, private val permission: PermissionsSubject, private val locationProvider: FusedLocationProvider, private val locationSelectedListener: (location: Location) -> Unit ) : DialogFragment() {
+class ChooseOriginOptions(private val permission: PermissionsSubject, private val locationProvider: FusedLocationProvider, private val locationSelectedListener: (location: Location) -> Unit ) : DialogFragment() {
 
     private val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
 
@@ -53,6 +53,9 @@ class ChooseOriginOptions(private val route: Route?, private val permission: Per
     private fun searchForLocation() {
         //TODO fill this method once we have the logic to search for a location
         dismiss()
-        locationSelectedListener(Location("Montreal"))
+        val location = Location("Montreal")
+        location.latitude = 45.5017
+        location.longitude = 73.5673
+        locationSelectedListener(location)
     }
 }
