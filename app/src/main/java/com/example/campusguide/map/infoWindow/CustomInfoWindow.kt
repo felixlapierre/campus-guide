@@ -28,11 +28,11 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
 
         val infoWindowData = marker.tag as InfoWindowData?
 
-        symbol.text = infoWindowData?.symbol
-        fullName.text = infoWindowData?.fullName
-        address.text = infoWindowData?.address
-        services.text = infoWindowData?.services
-        events.text = infoWindowData?.events
+        view.findViewById<TextView>(R.id.symbol).text = infoWindowData?.symbol
+        view.findViewById<TextView>(R.id.fullName).text = infoWindowData?.fullName
+        view.findViewById<TextView>(R.id.address).text = infoWindowData?.address
+        view.findViewById<TextView>(R.id.services).text = infoWindowData?.services
+        view.findViewById<TextView>(R.id.events).text = infoWindowData?.events
 
         return view
     }
