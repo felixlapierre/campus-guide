@@ -51,6 +51,6 @@
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
         android:layout_marginBottom="10dp"
-        android:text="Go Here" />
+        android:text="GO HERE" />
 
 </LinearLayout>
