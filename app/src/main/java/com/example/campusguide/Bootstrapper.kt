@@ -1,7 +1,6 @@
 package com.example.campusguide
 
 import android.content.Intent
-import android.location.Geocoder
 import android.view.View
 import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
@@ -10,12 +9,10 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
-import com.example.campusguide.search.Search
+import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.maps.model.LatLng
 import database.ObjectBox
-import java.util.*
-
 
 /**
  * Bootstrapper sets up the application by adding event listeners to the
@@ -34,7 +31,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val permissions = Permissions(activity)
 
         // Search
-        val search = Search(activity, map)
+        val search = CustomSearch(activity, map)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
