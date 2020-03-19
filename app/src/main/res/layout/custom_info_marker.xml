@@ -7,43 +7,42 @@
         android:id="@+id/symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="20sp"
+        android:textSize="40sp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/colorAccent" />
+        android:textColor="@android:color/black" />
     <TextView
         android:id="@+id/fullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/colorAccent" />
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:textColor="@android:color/black" />
     <TextView
         android:id="@+id/address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@android:color/darker_gray"/>
     <TextView
         android:id="@+id/services"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:textColor="@color/colorAccent"/>
+        android:layout_marginBottom="0dp"
+        android:textColor="@android:color/black"/>
     <TextView
-        android:id="@+id/events"
+        android:id="@+id/servicesList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="10dp"
+        android:textSize="17sp"
+        android:layout_marginTop="0dp"
         android:layout_marginBottom="10dp"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@android:color/black"/>
 
     <Button
         android:id="@+id/btnAddARoom"

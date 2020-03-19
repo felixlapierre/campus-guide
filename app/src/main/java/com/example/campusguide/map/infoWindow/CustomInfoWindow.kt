@@ -24,7 +24,7 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
         val fullName = view.findViewById<TextView>(R.id.fullName)
         val address = view.findViewById<TextView>(R.id.address)
         val services = view.findViewById<TextView>(R.id.services)
-        val events = view.findViewById<TextView>(R.id.events)
+        val servicesList = view.findViewById<TextView>(R.id.servicesList)
 
         val infoWindowData = marker.tag as InfoWindowData?
 
@@ -32,7 +32,7 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
         view.findViewById<TextView>(R.id.fullName).text = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.address).text = infoWindowData?.address
         view.findViewById<TextView>(R.id.services).text = infoWindowData?.services
-        view.findViewById<TextView>(R.id.events).text = infoWindowData?.events
+        view.findViewById<TextView>(R.id.servicesList).text = infoWindowData?.servicesList
 
         return view
     }

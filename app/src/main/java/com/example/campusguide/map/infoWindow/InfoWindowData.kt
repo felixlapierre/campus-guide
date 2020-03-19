@@ -5,5 +5,5 @@ class InfoWindowData {
     var fullName: String? = null
     var address: String? = null
     var services: String? = null
-    var events: String? = null
+    var servicesList: String? = null
 }
