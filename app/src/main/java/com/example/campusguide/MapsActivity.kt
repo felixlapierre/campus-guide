@@ -46,34 +46,8 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         Bootstrapper(this)
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-        navView = findViewById(R.id.nav_view)
-
-        val toggle = ActionBarDrawerToggle(
-            this, drawerLayout, toolbar, 0, 0
-        )
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
-        navView.setNavigationItemSelectedListener(this)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
-        signInButton.setSize(SignInButton.SIZE_STANDARD)
-        fun signIn() {
-            val signInIntent: Intent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-        signInButton.setOnClickListener { view ->
-            when (view.id) {
-                R.id.sign_in_button -> signIn()
-            }
-        }
+        setupDrawer()
+        setupLogin()
     }
 
     override fun onStart(){
@@ -123,6 +97,48 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+    fun onOpenMenu(view: View) { }
+
+    fun setOnNavigateListener(listener: View.OnClickListener) {
+        val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
+        navigateButton.setOnClickListener(listener)
+    }
+
+    // drawer menu
+    private fun setupDrawer(){
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+
+        val toggle = ActionBarDrawerToggle(
+            this, drawerLayout, toolbar, 0, 0
+        )
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+        navView.setNavigationItemSelectedListener(this)
+    }
+
+    // login
+    private fun setupLogin(){
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestEmail()
+            .build()
+        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
+        signInButton.setSize(SignInButton.SIZE_STANDARD)
+        fun signIn() {
+            val signInIntent: Intent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, RC_SIGN_IN)
+        }
+        signInButton.setOnClickListener { view ->
+            when (view.id) {
+                R.id.sign_in_button -> signIn()
+            }
+        }
+    }
+
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
@@ -132,13 +148,6 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
             //updateUI(null)
         }
-    }
-
-    fun onOpenMenu(view: View) { }
-
-    fun setOnNavigateListener(listener: View.OnClickListener) {
-        val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
-        navigateButton.setOnClickListener(listener)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
