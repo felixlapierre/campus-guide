@@ -24,6 +24,7 @@ class BuildingHighlights(private val googleMap: GoogleMap, private val context: 
                 for(hole in outline.holes){
                     polygon.addHole(getLatLngList(hole.points))
                 }
+                polygon.clickable(true)
                 applyPolygonStyle(polygon)
                 googleMap.addPolygon(polygon)
             }
