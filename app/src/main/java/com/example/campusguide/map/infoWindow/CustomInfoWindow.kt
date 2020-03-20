@@ -20,12 +20,6 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
         val view = (context as Activity).layoutInflater
             .inflate(R.layout.custom_info_marker, null)
 
-        val symbol = view.findViewById<TextView>(R.id.symbol)
-        val fullName = view.findViewById<TextView>(R.id.fullName)
-        val address = view.findViewById<TextView>(R.id.address)
-        val services = view.findViewById<TextView>(R.id.services)
-        val servicesList = view.findViewById<TextView>(R.id.servicesList)
-
         val infoWindowData = marker.tag as InfoWindowData?
 
         view.findViewById<TextView>(R.id.symbol).text = infoWindowData?.symbol
