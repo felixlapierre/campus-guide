@@ -24,7 +24,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         // Enables the "Back" button to cancel search
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        searchResultProviders.add(IndoorSearchResultProvider(this, 1))
+        searchResultProviders.add(IndoorSearchResultProvider(this, 3))
         searchResultProviders.add(PlacesApiSearchResultProvider(this, 3))
 
         searchView = findViewById(R.id.searchView)

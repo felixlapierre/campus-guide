@@ -22,15 +22,16 @@ class IndoorSearchResultProvider constructor(private val activity: Activity, pri
     override suspend fun search(query: String): List<SearchResult> {
         if(query.isEmpty())
             return emptyList()
-        
+
         val results: MutableList<SearchResult> = mutableListOf()
         val adjustedQuery = query.toLowerCase()
         buildings.forEach { building ->
             building.rooms.forEach {room ->
                 if(room.name.toLowerCase().startsWith(adjustedQuery)
                     || room.code.startsWith(adjustedQuery)) {
+                    val secondaryText = "${building.name} ${building.code}${room.code}"
                     results.add(SearchResult(
-                        room.name, room.code, room.code
+                        room.name, secondaryText, room.code
                     ))
                     if(results.count() >= count) {
                         return results
