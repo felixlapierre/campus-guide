@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
 import com.example.campusguide.search.indoor.IndoorSearchResultProvider
+import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -25,7 +26,12 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         searchResultProviders.add(IndoorSearchResultProvider(this, 3))
-        searchResultProviders.add(PlacesApiSearchResultProvider(this, 3))
+        searchResultProviders.add(
+            PlacesApiSearchResultProvider(
+                this,
+                3
+            )
+        )
 
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.searchResults)

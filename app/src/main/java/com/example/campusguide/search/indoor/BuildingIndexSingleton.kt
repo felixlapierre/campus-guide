@@ -5,7 +5,17 @@ import com.beust.klaxon.Klaxon
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class BuildingIndexSingleton constructor(activity: Activity){
+/**
+ * Singleton class to hold the index of indoor buildings and their rooms.
+ * Useful, since loading the index of indoor rooms is a long operation -
+ * otherwise the app would have to wait 2-3 seconds whenever it is
+ * used.
+ */
+class BuildingIndexSingleton constructor(activity: Activity): BuildingIndex{
+    /**
+     * Companion object that performs the singleton logic, ensuring
+     * the instance is unique and can be retrieved statically.
+     */
     companion object {
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null
@@ -36,7 +46,11 @@ class BuildingIndexSingleton constructor(activity: Activity){
         }
     }
 
-    fun getBuildings(): List<Building>? {
+    /**
+     * Return the index of buildings. Will return null if the
+     * buildings haven't been loaded yet.
+     */
+    override fun getBuildings(): List<Building>? {
         return buildings
     }
 }

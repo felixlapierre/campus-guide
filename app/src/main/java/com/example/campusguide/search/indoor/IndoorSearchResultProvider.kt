@@ -1,9 +1,14 @@
 package com.example.campusguide.search.indoor
 
 import android.app.Activity
+import com.example.campusguide.Constants
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
 
+/**
+ * Gets search results based on the contents of local JSON files
+ * containing information about indoor rooms in buildings.
+ */
 class IndoorSearchResultProvider constructor(private val activity: Activity, private val count: Int):
     SearchResultProvider {
 
@@ -19,7 +24,8 @@ class IndoorSearchResultProvider constructor(private val activity: Activity, pri
                 if(room.name.toLowerCase().startsWith(adjustedQuery)
                     || room.code.startsWith(adjustedQuery)) {
                     val secondaryText = "${building.name} ${building.code}${room.code}"
-                    val placeId = "indoor_${building.code}_${room.code}"
+                    val prefix = Constants.INDOOR_LOCATION_IDENTIFIER
+                    val placeId = "${prefix}_${building.code}_${room.code}"
                     results.add(SearchResult(
                         room.name, secondaryText, placeId
                     ))

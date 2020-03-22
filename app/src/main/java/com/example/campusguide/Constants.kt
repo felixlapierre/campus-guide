@@ -11,4 +11,6 @@ object Constants {
     const val DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json"
 
     const val LOCATION_MARKER_TITLE = "You are here."
+
+    const val INDOOR_LOCATION_IDENTIFIER = "indoor"
 }

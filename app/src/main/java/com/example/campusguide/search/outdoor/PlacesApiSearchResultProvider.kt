@@ -1,7 +1,9 @@
-package com.example.campusguide.search
+package com.example.campusguide.search.outdoor
 
 import android.app.Activity
 import com.example.campusguide.R
+import com.example.campusguide.search.SearchResult
+import com.example.campusguide.search.SearchResultProvider
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
@@ -11,7 +13,11 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int): SearchResultProvider {
+/**
+ * Gets search results using Google's Places API.
+ */
+class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int):
+    SearchResultProvider {
     private val placesClient: PlacesClient
 
     init {
@@ -43,7 +49,11 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
             val primaryText = it.getPrimaryText(null).toString()
             val secondaryText = it.getSecondaryText(null).toString()
             val id = it.placeId
-            val searchResult = SearchResult(primaryText, secondaryText, id)
+            val searchResult = SearchResult(
+                primaryText,
+                secondaryText,
+                id
+            )
 
             results.add(searchResult)
 
