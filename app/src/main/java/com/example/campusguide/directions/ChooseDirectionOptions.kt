@@ -86,10 +86,10 @@ class ChooseDirectionOptions : DialogFragment() {
         val getDirectionsDialogFragment =
             GetDirectionsDialogFragment(
                 GetDirectionsDialogFragment.DirectionsDialogOptions(
-                    message,
-                    startingPoint,
-                    null,
-                    EmptyDirectionsGuard(
+                    message = message,
+                    start = startingPoint,
+                    end = null,
+                    confirmationListener = EmptyDirectionsGuard(
                         CallbackDirectionsConfirmListener { start, end ->
                             // Start the DirectionsActivity activity
                             val intent = Intent(this.context, DirectionsActivity::class.java).apply {
