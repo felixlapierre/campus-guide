@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.location.Location
@@ -9,9 +10,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
+
 import androidx.fragment.app.DialogFragment
 
+import com.example.campusguide.DirectionsActivity
 import com.example.campusguide.R
 import com.example.campusguide.utils.DisplayMessageErrorListener
 
@@ -19,8 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 
-
-class ChooseDirectionOptions constructor(private val route: Route?) : DialogFragment() {
+class ChooseDirectionOptions : DialogFragment() {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
@@ -90,8 +91,13 @@ class ChooseDirectionOptions constructor(private val route: Route?) : DialogFrag
                     end = null,
                     confirmationListener = EmptyDirectionsGuard(
                         CallbackDirectionsConfirmListener { start, end ->
-                            //Display the directions time
-                            route?.set(start, end)
+                            // Start the DirectionsActivity activity
+                            val intent = Intent(this.context, DirectionsActivity::class.java).apply {
+                                putExtra("Origin", start)
+                                putExtra("Destination", end)
+                            }
+                            startActivity(intent)
+                            this.dismiss()
                         },
                         DisplayMessageErrorListener(this.requireActivity()))
                 )
