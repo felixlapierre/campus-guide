@@ -117,7 +117,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                     map.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
                             routeBounds,
-                            100 // padding around the route in unknown units
+                            100 // padding around the route in pixels
                         )
                     )
                 }
