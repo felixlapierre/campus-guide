@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
+import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -14,7 +15,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     private lateinit var searchView: SearchView
     private lateinit var listView: ListView
     private lateinit var adapter: SearchResultAdapter
-    private lateinit var searchResultProvider: PlacesApiSearchResultProvider
+    private var searchResultProviders: MutableList<SearchResultProvider> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +24,9 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         // Enables the "Back" button to cancel search
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        searchResultProvider = PlacesApiSearchResultProvider(this)
+        searchResultProviders.add(IndoorSearchResultProvider(this, 1))
+        searchResultProviders.add(PlacesApiSearchResultProvider(this, 3))
+
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.searchResults)
         adapter = SearchResultAdapter(this)
@@ -69,10 +72,12 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
 
     private fun doQuery(query: String) {
         GlobalScope.launch {
-            val response = searchResultProvider.search(query)
             adapter.clear()
-            response.forEach { it ->
-                adapter.add(it)
+            searchResultProviders.forEach{ provider ->
+                val results = provider.search(query)
+                results.forEach{ result ->
+                    adapter.add(result)
+                }
             }
             runOnUiThread{ adapter.notifyDataSetChanged() }
         }

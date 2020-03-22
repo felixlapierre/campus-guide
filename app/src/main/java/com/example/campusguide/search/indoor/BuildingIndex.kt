@@ -24,8 +24,8 @@ data class Room (
     val code: String,
 
     @Json(name = "lat")
-    val lat: Double,
+    val lat: String,
 
     @Json(name = "lon")
-    val lon: Double
+    val lon: String
 )

@@ -11,7 +11,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class PlacesApiSearchResultProvider constructor(activity: Activity): SearchResultProvider {
+class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int): SearchResultProvider {
     private val placesClient: PlacesClient
 
     init {
@@ -46,6 +46,10 @@ class PlacesApiSearchResultProvider constructor(activity: Activity): SearchResul
             val searchResult = SearchResult(primaryText, secondaryText, id)
 
             results.add(searchResult)
+
+            if(results.count() >= count) {
+                return results
+            }
         }
 
         return results
