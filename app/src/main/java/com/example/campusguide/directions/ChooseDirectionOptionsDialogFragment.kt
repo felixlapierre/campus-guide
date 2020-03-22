@@ -21,7 +21,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 
-class ChooseDirectionOptions : DialogFragment() {
+class ChooseDirectionOptionsDialogFragment : DialogFragment() {
 
     private lateinit var mFusedLocationProviderClient: FusedLocationProviderClient
 
