@@ -35,7 +35,7 @@ class DirectionsTest {
 
             val directions = Directions(requestDispatcher, responseParser, errorListener)
 
-            val response = directions.getDirections(start, end)
+            val response = directions.getDirections(start, end, "test")
 
             assert(response == null)
             verify(errorListener).onError(Constants.DIRECTIONS_API_NULL_RESPONSE)
@@ -59,7 +59,7 @@ class DirectionsTest {
 
             val directions = Directions(requestDispatcher, responseParser, errorListener)
 
-            val response = directions.getDirections(start, end)
+            val response = directions.getDirections(start, end, "test")
 
             assert(response == googleApiResponse)
             verify(errorListener, never()).onError(any())
