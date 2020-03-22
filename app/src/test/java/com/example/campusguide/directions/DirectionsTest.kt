@@ -24,12 +24,13 @@ class DirectionsTest {
         runBlocking {
             val start = "Concordia Hall Building"
             val end = "Concordia Faubourg Building"
-            val travelMode = "Walking"
+            val travelMode = "walking"
 
             val startEncoded = URLEncoder.encode(start, "UTF-8")
             val endEncoded = URLEncoder.encode(end, "UTF-8")
+            val travelEncoded = URLEncoder.encode(travelMode, "UTF-8")
 
-            val expectedUrl = Constants.DIRECTIONS_API_URL + "?origin=$startEncoded&destination=$endEncoded"
+            val expectedUrl = Constants.DIRECTIONS_API_URL + "?origin=$startEncoded&destination=$endEncoded&mode=$travelEncoded"
 
             whenever(requestDispatcher.sendRequest(expectedUrl)).thenReturn(jsonResponse)
             whenever(responseParser.parse(jsonResponse)).thenReturn(null)
