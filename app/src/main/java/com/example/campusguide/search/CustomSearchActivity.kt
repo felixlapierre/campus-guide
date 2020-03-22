@@ -71,13 +71,8 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         GlobalScope.launch {
             val response = searchResultProvider.search(query)
             adapter.clear()
-            response.autocompletePredictions.forEach { it ->
-                val primaryText = it.getPrimaryText(null).toString()
-                val secondaryText = it.getSecondaryText(null).toString()
-                val id = it.placeId
-                val searchResult = SearchResult(primaryText, secondaryText, id)
-
-                adapter.add(searchResult)
+            response.forEach { it ->
+                adapter.add(it)
             }
             runOnUiThread{ adapter.notifyDataSetChanged() }
         }

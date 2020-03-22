@@ -11,7 +11,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class PlacesApiSearchResultProvider constructor(activity: Activity) {
+class PlacesApiSearchResultProvider constructor(activity: Activity): SearchResultProvider {
     private val placesClient: PlacesClient
 
     init {
@@ -20,7 +20,8 @@ class PlacesApiSearchResultProvider constructor(activity: Activity) {
 
         placesClient = Places.createClient(activity)
     }
-    suspend fun search(query: String) = suspendCoroutine<FindAutocompletePredictionsResponse> { cont ->
+
+    override suspend fun search(query: String) = suspendCoroutine<List<SearchResult>> { cont ->
         val token = AutocompleteSessionToken.newInstance()
 
         val request = FindAutocompletePredictionsRequest.builder()
@@ -29,9 +30,24 @@ class PlacesApiSearchResultProvider constructor(activity: Activity) {
             .build()
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
-            cont.resume(response)
+            cont.resume(toSearchResults(response))
         }.addOnFailureListener{ exception ->
             cont.resumeWithException(exception)
         }
+    }
+
+    private fun toSearchResults(response: FindAutocompletePredictionsResponse): List<SearchResult> {
+        val results: MutableList<SearchResult> = mutableListOf()
+
+        response.autocompletePredictions.forEach { it ->
+            val primaryText = it.getPrimaryText(null).toString()
+            val secondaryText = it.getSecondaryText(null).toString()
+            val id = it.placeId
+            val searchResult = SearchResult(primaryText, secondaryText, id)
+
+            results.add(searchResult)
+        }
+
+        return results
     }
 }
