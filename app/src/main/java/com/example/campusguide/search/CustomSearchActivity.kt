@@ -7,23 +7,32 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.search.indoor.IndoorSearchResultProvider
+import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
+class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    AdapterView.OnItemClickListener {
     private lateinit var searchView: SearchView
     private lateinit var listView: ListView
     private lateinit var adapter: SearchResultAdapter
-    private lateinit var searchResultProvider: PlacesApiSearchResultProvider
+    private var searchResultProviders: MutableList<SearchResultProvider> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_search)
-        
+
         // Enables the "Back" button to cancel search
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        searchResultProvider = PlacesApiSearchResultProvider(this)
+        val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
+        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex))
+        searchResultProviders.add(
+            PlacesApiSearchResultProvider(this)
+        )
+
         searchView = findViewById(R.id.searchView)
         listView = findViewById(R.id.searchResults)
         adapter = SearchResultAdapter(this)
@@ -59,7 +68,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private fun queryIfNotNull(query: String?): Boolean {
-        return if(query  == null) {
+        return if (query == null) {
             false
         } else {
             doQuery(query)
@@ -69,17 +78,14 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
 
     private fun doQuery(query: String) {
         GlobalScope.launch {
-            val response = searchResultProvider.search(query)
             adapter.clear()
-            response.autocompletePredictions.forEach { it ->
-                val primaryText = it.getPrimaryText(null).toString()
-                val secondaryText = it.getSecondaryText(null).toString()
-                val id = it.placeId
-                val searchResult = SearchResult(primaryText, secondaryText, id)
-
-                adapter.add(searchResult)
+            searchResultProviders.forEach { provider ->
+                val results = provider.search(query)
+                results.forEach { result ->
+                    adapter.add(result)
+                }
             }
-            runOnUiThread{ adapter.notifyDataSetChanged() }
+            runOnUiThread { adapter.notifyDataSetChanged() }
         }
     }
 

@@ -11,4 +11,11 @@ object Constants {
     const val DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json"
 
     const val LOCATION_MARKER_TITLE = "You are here."
+
+    const val INDOOR_LOCATION_IDENTIFIER = "indoor"
+
+    const val SEARCH_BOTTOM_BOUND = 45.351240
+    const val SEARCH_LEFT_BOUND = -74.031124
+    const val SEARCH_TOP_BOUND = 45.734999
+    const val SEARCH_RIGHT_BOUND = -73.417826
 }
