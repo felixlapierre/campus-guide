@@ -28,7 +28,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
-        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex, 3))
+        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex))
         searchResultProviders.add(
             PlacesApiSearchResultProvider(this)
         )

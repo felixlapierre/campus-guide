@@ -11,7 +11,7 @@ import com.example.campusguide.search.SearchResultProvider
  */
 class IndoorSearchResultProvider constructor(
     private val index: BuildingIndex,
-    private val count: Int
+    private val count: Int = Int.MAX_VALUE
 ) :
     SearchResultProvider {
 
