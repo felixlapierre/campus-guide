@@ -3,6 +3,7 @@ package com.example.campusguide.search.indoor
 import com.example.campusguide.Constants
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationProvider
+import java.lang.RuntimeException
 
 /**
  * Provides the information of a location that was searched, including latitude
@@ -36,19 +37,25 @@ class IndoorLocationProvider constructor(
          * yet. This shouldn't happen because the index will have been loaded during the search.
          */
         val buildings = index.getBuildings()
-        val targetBuilding = buildings?.find { building -> building.code == buildingCode }
-        if (targetBuilding != null) {
-            val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
-            if (targetRoom != null) {
-                return SearchLocation(
-                    targetRoom.name,
-                    id,
-                    targetRoom.lat.toDouble(),
-                    targetRoom.lon.toDouble()
-                )
-            }
-        }
+            ?: throw IndexNotLoadedException("Building index is not loaded yet")
 
-        throw Exception("Could not find indoor room $id")
+        val targetBuilding = buildings?.find { building -> building.code == buildingCode }
+            ?: throw BuildingNotFoundException("Building code $buildingCode does not correspond to a building in the index")
+
+        val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
+            ?: throw RoomNotFoundException("Room code $roomCode was not found in the index.")
+
+        return SearchLocation(
+            targetRoom.name,
+            id,
+            targetRoom.lat.toDouble(),
+            targetRoom.lon.toDouble()
+        )
     }
 }
+
+class BuildingNotFoundException constructor(message: String) : RuntimeException(message)
+
+class RoomNotFoundException constructor(message: String) : RuntimeException(message)
+
+class IndexNotLoadedException constructor(message: String) : RuntimeException(message)
