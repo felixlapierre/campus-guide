@@ -9,11 +9,11 @@ import com.example.campusguide.search.SearchResultProvider
  * Gets search results based on the contents of local JSON files
  * containing information about indoor rooms in buildings.
  */
-class IndoorSearchResultProvider constructor(private val activity: Activity, private val count: Int):
+class IndoorSearchResultProvider constructor(private val index: BuildingIndex, private val count: Int):
     SearchResultProvider {
 
     override suspend fun search(query: String): List<SearchResult> {
-        val buildings = BuildingIndexSingleton.getInstance(activity).getBuildings()
+        val buildings = index.getBuildings()
         if(query.isEmpty() || buildings == null)
             return emptyList()
 

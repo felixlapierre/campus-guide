@@ -7,12 +7,14 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener, AdapterView.OnItemClickListener {
+class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    AdapterView.OnItemClickListener {
     private lateinit var searchView: SearchView
     private lateinit var listView: ListView
     private lateinit var adapter: SearchResultAdapter
@@ -21,11 +23,12 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_custom_search)
-        
+
         // Enables the "Back" button to cancel search
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        searchResultProviders.add(IndoorSearchResultProvider(this, 3))
+        val buildingIndex = BuildingIndexSingleton.getInstance(this)
+        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex, 3))
         searchResultProviders.add(
             PlacesApiSearchResultProvider(
                 this,
@@ -68,7 +71,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     }
 
     private fun queryIfNotNull(query: String?): Boolean {
-        return if(query  == null) {
+        return if (query == null) {
             false
         } else {
             doQuery(query)
@@ -79,13 +82,13 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
     private fun doQuery(query: String) {
         GlobalScope.launch {
             adapter.clear()
-            searchResultProviders.forEach{ provider ->
+            searchResultProviders.forEach { provider ->
                 val results = provider.search(query)
-                results.forEach{ result ->
+                results.forEach { result ->
                     adapter.add(result)
                 }
             }
-            runOnUiThread{ adapter.notifyDataSetChanged() }
+            runOnUiThread { adapter.notifyDataSetChanged() }
         }
     }
 
