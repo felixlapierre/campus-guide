@@ -1,7 +1,8 @@
 package com.example.campusguide
 
 import android.view.View
-import com.example.campusguide.directions.ChooseDirectionOptions
+import com.example.campusguide.directions.ChooseDirectionOptionsDialogFragment
+import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
@@ -54,8 +55,9 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setSwitchCampusButtonListener(switchCampus)
 
         // Navigation
+        val route = Route(map, activity)
         activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDirectionOptions = ChooseDirectionOptions()
+            val chooseDirectionOptions = ChooseDirectionOptionsDialogFragment()
             chooseDirectionOptions.show(activity.supportFragmentManager, "directionsOptions")
         })
     }
