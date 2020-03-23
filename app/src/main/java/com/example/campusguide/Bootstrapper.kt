@@ -33,7 +33,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Search
         val locationProvider = IndoorLocationProvider(
-            BuildingIndexSingleton.getInstance(activity),
+            BuildingIndexSingleton.getInstance(activity.assets),
             PlacesApiSearchLocationProvider(activity)
         )
         val search = CustomSearch(activity, map, locationProvider)

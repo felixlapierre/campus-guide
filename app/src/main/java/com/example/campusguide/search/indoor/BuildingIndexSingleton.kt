@@ -1,6 +1,6 @@
 package com.example.campusguide.search.indoor
 
-import android.app.Activity
+import android.content.res.AssetManager
 import com.beust.klaxon.Klaxon
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
  * otherwise the app would have to wait 2-3 seconds whenever it is
  * used.
  */
-class BuildingIndexSingleton constructor(activity: Activity): BuildingIndex{
+class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
     /**
      * Companion object that performs the singleton logic, ensuring
      * the instance is unique and can be retrieved statically.
@@ -19,10 +19,10 @@ class BuildingIndexSingleton constructor(activity: Activity): BuildingIndex{
     companion object {
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null
-        fun getInstance(activity: Activity) =
+        fun getInstance(assets: AssetManager) =
             INSTANCE?: synchronized(this) {
                     INSTANCE?: BuildingIndexSingleton(
-                            activity
+                            assets
                         ).also {
                             INSTANCE = it
                         }
@@ -35,8 +35,8 @@ class BuildingIndexSingleton constructor(activity: Activity): BuildingIndex{
         GlobalScope.launch {
             val path = "index"
             val index: MutableList<Building> = mutableListOf()
-            activity.assets.list(path)?.forEach {it ->
-                val contents = activity.assets.open("$path/$it").bufferedReader().use {it.readText()}
+            assets.list(path)?.forEach {it ->
+                val contents = assets.open("$path/$it").bufferedReader().use {it.readText()}
                 val building = Klaxon().parse<Building>(contents)
                 if(building != null)
                     index.add(building)

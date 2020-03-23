@@ -27,7 +27,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         // Enables the "Back" button to cancel search
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val buildingIndex = BuildingIndexSingleton.getInstance(this)
+        val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
         searchResultProviders.add(IndoorSearchResultProvider(buildingIndex, 3))
         searchResultProviders.add(
             PlacesApiSearchResultProvider(
