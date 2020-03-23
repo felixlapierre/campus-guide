@@ -30,10 +30,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
         searchResultProviders.add(IndoorSearchResultProvider(buildingIndex, 3))
         searchResultProviders.add(
-            PlacesApiSearchResultProvider(
-                this,
-                3
-            )
+            PlacesApiSearchResultProvider(this)
         )
 
         searchView = findViewById(R.id.searchView)

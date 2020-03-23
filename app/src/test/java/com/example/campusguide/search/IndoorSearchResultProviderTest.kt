@@ -14,7 +14,7 @@ class IndoorSearchResultProviderTest {
     init {
         val fakeRoomOne = Room("fakeRoomOne", "100.00", "1.0", "2.0")
         val fakeRoomTwo = Room("fakeRoomTwo", "200.00", "3.0", "4.0")
-        val fakeBuilding = Building("fakeBuilding", "bd", "fakeAddress", listOf(fakeRoomOne, fakeRoomTwo))
+        val fakeBuilding = Building("fakeBuilding", "BD", "fakeAddress", listOf(fakeRoomOne, fakeRoomTwo))
         testIndex = mock()
         whenever(testIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
     }
@@ -60,6 +60,13 @@ class IndoorSearchResultProviderTest {
     fun searchExceedsCount() = runBlocking {
         val provider = IndoorSearchResultProvider(testIndex, 1)
         val results = provider.search("fake")
+        assert(results.size == 1)
+    }
+
+    @Test
+    fun searchBuildingAndRoomCodesCombined() = runBlocking {
+        val provider = IndoorSearchResultProvider(testIndex, 3)
+        val results = provider.search("BD-100")
         assert(results.size == 1)
     }
 }

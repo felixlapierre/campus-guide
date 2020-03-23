@@ -16,7 +16,7 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Gets search results using Google's Places API.
  */
-class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int):
+class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int = Int.MAX_VALUE):
     SearchResultProvider {
     private val placesClient: PlacesClient
 
