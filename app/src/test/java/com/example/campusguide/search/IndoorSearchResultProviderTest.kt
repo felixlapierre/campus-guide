@@ -34,4 +34,32 @@ class IndoorSearchResultProviderTest {
         val results = provider.search("someQuery")
         assert(results.isEmpty())
     }
+
+    @Test
+    fun searchByRoomName() = runBlocking {
+        val provider = IndoorSearchResultProvider(testIndex, 3)
+        val results = provider.search("fake")
+        assert(results.size == 2)
+    }
+
+    @Test
+    fun searchByRoomCode() = runBlocking {
+        val provider = IndoorSearchResultProvider(testIndex, 3)
+        val results = provider.search("100.00")
+        assert(results.size == 1)
+    }
+
+    @Test
+    fun searchYieldsNoResults() = runBlocking  {
+        val provider = IndoorSearchResultProvider(testIndex, 3)
+        val results = provider.search("queryNotMatchingAnything")
+        assert(results.isEmpty())
+    }
+
+    @Test
+    fun searchExceedsCount() = runBlocking {
+        val provider = IndoorSearchResultProvider(testIndex, 1)
+        val results = provider.search("fake")
+        assert(results.size == 1)
+    }
 }
