@@ -12,6 +12,21 @@ import kotlinx.coroutines.runBlocking
 class IndoorLocationProviderTest {
     private val indoorPrefix = Constants.INDOOR_LOCATION_IDENTIFIER
 
+    private val fakeIndex: BuildingIndex
+    private val fakeBuilding: Building
+    private val fakeRoom: Room
+
+    init {
+        // Create fake test building data
+        val fakeBuildingCode = "BD"
+        fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
+        fakeBuilding =
+            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
+
+        fakeIndex = mock()
+        whenever(fakeIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
+    }
+
     @Test
     fun testNotIndoorLocation() = runBlocking {
         val id = "some_not_indoor_id"
@@ -29,18 +44,9 @@ class IndoorLocationProviderTest {
 
     @Test
     fun testIndoorLocationFound() = runBlocking {
-        // Create fake test building data
-        val fakeBuildingCode = "bd"
-        val fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
-        val fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
+        val searchId = "${indoorPrefix}_${fakeBuilding.code}_${fakeRoom.code}"
 
-        val fakeBuildingIndex: BuildingIndex = mock()
-        whenever(fakeBuildingIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
-
-        val searchId = "${indoorPrefix}_${fakeBuildingCode}_${fakeRoom.code}"
-
-        val searchLocationProvider = IndoorLocationProvider(fakeBuildingIndex, mock())
+        val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
 
         val searchResult = searchLocationProvider.getLocation(searchId)
 
@@ -53,13 +59,12 @@ class IndoorLocationProviderTest {
     @Test(expected = IndexNotLoadedException::class)
     fun testIndexNotLoaded() = runBlocking<Unit> {
         // Create fake test building data
-
-        val fakeBuildingIndex: BuildingIndex = mock()
-        whenever(fakeBuildingIndex.getBuildings()).thenReturn(null)
+        val fakeUnloadedIndex: BuildingIndex = mock()
+        whenever(fakeUnloadedIndex.getBuildings()).thenReturn(null)
 
         val searchId = "${indoorPrefix}_someBuildingCode_someRoomCode"
 
-        val searchLocationProvider = IndoorLocationProvider(fakeBuildingIndex, mock())
+        val searchLocationProvider = IndoorLocationProvider(fakeUnloadedIndex, mock())
 
         searchLocationProvider.getLocation(searchId)
     }
@@ -67,18 +72,10 @@ class IndoorLocationProviderTest {
     @Test(expected = BuildingNotFoundException::class)
     fun testBuildingNotFound() = runBlocking<Unit> {
         // Create fake test building data
-        val fakeBuildingCode = "bd"
-        val fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
-        val fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
-
-        val fakeBuildingIndex: BuildingIndex = mock()
-        whenever(fakeBuildingIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
-
         val nonexistentBuildingCode = "ab"
         val searchId = "${indoorPrefix}_${nonexistentBuildingCode}_${fakeRoom.code}"
 
-        val searchLocationProvider = IndoorLocationProvider(fakeBuildingIndex, mock())
+        val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
 
         searchLocationProvider.getLocation(searchId)
     }
@@ -86,18 +83,10 @@ class IndoorLocationProviderTest {
     @Test(expected = RoomNotFoundException::class)
     fun testRoomNotFound() = runBlocking<Unit> {
         // Create fake test building data
-        val fakeBuildingCode = "bd"
-        val fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
-        val fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
-
-        val fakeBuildingIndex: BuildingIndex = mock()
-        whenever(fakeBuildingIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
-
         val nonexistentRoomCode = "489.00"
-        val searchId = "${indoorPrefix}_${fakeBuildingCode}_$nonexistentRoomCode"
+        val searchId = "${indoorPrefix}_${fakeBuilding.code}_$nonexistentRoomCode"
 
-        val searchLocationProvider = IndoorLocationProvider(fakeBuildingIndex, mock())
+        val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
 
         searchLocationProvider.getLocation(searchId)
     }
