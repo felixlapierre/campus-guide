@@ -1,11 +1,14 @@
 package com.example.campusguide.search.outdoor
 
 import android.app.Activity
+import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -30,8 +33,14 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
     override suspend fun search(query: String) = suspendCoroutine<List<SearchResult>> { cont ->
         val token = AutocompleteSessionToken.newInstance()
 
+        val searchBounds = RectangularBounds.newInstance(
+            LatLng(Constants.SEARCH_BOTTOM_BOUND, Constants.SEARCH_LEFT_BOUND),
+            LatLng(Constants.SEARCH_TOP_BOUND, Constants.SEARCH_RIGHT_BOUND)
+        )
+
         val request = FindAutocompletePredictionsRequest.builder()
             .setSessionToken(token)
+            .setLocationRestriction(searchBounds)
             .setQuery(query)
             .build()
 
