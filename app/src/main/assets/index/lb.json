@@ -80,6 +80,90 @@
       "code": "285.00",
       "lat": "45.497111",
       "lon": "-73.578065"
+    },
+    {
+      "name": "Haiti Presentation Practice Room",
+      "code": "311.00",
+      "lat": "45.496756",
+      "lon": "-73.578401"
+    },
+    {
+      "name": "Visualization Studio",
+      "code": "314.00",
+      "lat": "45.496712",
+      "lon": "-73.578158"
+    },
+    {
+      "name": "Australia Presentation Practice Room",
+      "code": "316.00",
+      "lat": "45.496723",
+      "lon": "-73.578455"
+    },
+    {
+      "name": "Multifunctional Room",
+      "code": "322.00",
+      "lat": "45.496661",
+      "lon": "-73.578188"
+    },
+    {
+      "name": "Syria Presentation Practice Room",
+      "code": "327.00",
+      "lat": "45.496573",
+      "lon": "-73.577927"
+    },
+    {
+      "name": "Zimbabwe Presentation Practice Room",
+      "code": "328.00",
+      "lat": "45.496531",
+      "lon": "-73.577982"
+    },
+    {
+      "name": "Office of the University Librarian",
+      "code": "331.00",
+      "lat": "45.496462",
+      "lon": "-73.577841"
+    },
+    {
+      "name": "India Reading Room",
+      "code": "345.00",
+      "lat": "45.496787",
+      "lon": "-73.577422"
+    },
+    {
+      "name": "Netherlands Group Study Room",
+      "code": "351.00",
+      "lat": "45.496778",
+      "lon": "-73.577665"
+    },
+    {
+      "name": "Kenya Group Study Room",
+      "code": "353.00",
+      "lat": "45.496785",
+      "lon": "-73.577791"
+    },
+    {
+      "name": "Vietnam Group Study Room",
+      "code": "359.00",
+      "lat": "45.496948",
+      "lon": "-73.578042"
+    },
+    {
+      "name": "Friends of the Library Room",
+      "code": "261.00",
+      "lat": "45.497053",
+      "lon": "-73.577675"
+    },
+    {
+      "name": "Seminar Room",
+      "code": "362.00",
+      "lat": "45.496972",
+      "lon": "-73.577759"
+    },
+    {
+      "name": "France Reading Room",
+      "code": "385.00",
+      "lat": "45.497111",
+      "lon": "-73.578065"
     }
   ]
 }
