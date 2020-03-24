@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/popupwindow"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
-    android:background="@color/quantum_white_100">
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/custom_triangular_shape">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/primaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:id="@+id/locationSearched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Location"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add room number"/>
-    </LinearLayout>
+        android:text="Location"/>
 
-    <LinearLayout
-        android:layout_height="wrap_content"
+    <TextView
+        android:id="@+id/secondaryText"
         android:layout_width="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Cancel"
-            android:onClick="onCancelTravel"/>
+        android:layout_height="wrap_content"
+        android:text="Location"/>
 
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="Confirm"
-            android:onClick="onConfirmTravel"/>
-    </LinearLayout>
-
+    <Button
+        android:id="@+id/goHere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:layout_marginBottom="20dp"/>
 </LinearLayout>
