@@ -10,7 +10,10 @@ object Constants {
     const val DIRECTIONS_API_NULL_RESPONSE = "Could not get a response from the Google Directions API"
     const val DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json"
 
-    const val CALENDAR_LIST_API_URL = "https://www.googleapis.com/calendar/v3/users/me/calendarList"
-
     const val LOCATION_MARKER_TITLE = "You are here."
+
+    const val PROJECTION_ID_INDEX: Int = 0
+    const val PROJECTION_ACCOUNT_NAME_INDEX: Int = 1
+    const val PROJECTION_DISPLAY_NAME_INDEX: Int = 2
+    const val PROJECTION_OWNER_ACCOUNT_INDEX: Int = 3
 }
