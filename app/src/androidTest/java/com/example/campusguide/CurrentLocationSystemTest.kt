@@ -21,7 +21,7 @@ private const val TIMEOUT = 5000L
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
-class CurrentLocationAcceptanceTest {
+class CurrentLocationSystemTest {
 
     private lateinit var device: UiDevice
 

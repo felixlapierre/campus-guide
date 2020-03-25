@@ -20,7 +20,7 @@ private const val TIMEOUT = 5000L
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
-class SwitchCampusAcceptanceTest {
+class SwitchCampusSystemTest {
 
     private lateinit var device: UiDevice
 
