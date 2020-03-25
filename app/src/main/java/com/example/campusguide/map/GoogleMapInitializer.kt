@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Picture
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -12,7 +13,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.android.synthetic.main.activity_maps.*
 
-class GoogleMapInitializer constructor(activity: FragmentActivity,
+class GoogleMapInitializer constructor(private val activity: FragmentActivity,
                                        private val wrapper: GoogleMapAdapter,
                                        private val mapId: String): OnMapReadyCallback {
     init {
@@ -41,9 +42,11 @@ class GoogleMapInitializer constructor(activity: FragmentActivity,
                     )
                 )
             }
-
-            BuildingHighlights(map).addBuildingHighlights()
+            BuildingHighlights(map, activity).addBuildingHighlights()
+            map.setOnPolygonClickListener(BuildingClickListener(activity, map))
             map.setContentDescription("Google Maps Ready")
         }
     }
+
+
 }

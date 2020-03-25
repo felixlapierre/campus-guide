@@ -16,8 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".DirectionsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -34,7 +33,12 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        <activity android:name=".search.CustomSearchActivity"
+            android:label="Search">
+        </activity>
+
         <activity
             android:name="database.migration.Migrator"
             android:label="Migrator">
