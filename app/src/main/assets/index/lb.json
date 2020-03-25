@@ -165,5 +165,77 @@
       "lat": "45.497111",
       "lon": "-73.578065"
     }
+  ],
+  "nodes": [
+    {
+      "type": "basic",
+      "code": "2_near_printers",
+      "x": "0.375",
+      "y": "0.195",
+      "edges": ["2_near_tech", "2_near_top_stairs"]
+    },
+    {
+      "type": "basic",
+      "code": "2_near_top_stairs",
+      "x": "0.468",
+      "y": "0.195",
+      "edges": ["2_top_stairs"]
+    },
+    {
+      "type": "stairs",
+      "code": "2_top_stairs",
+      "x": "0.468",
+      "y": "0.133",
+      "edges": [""]
+    },
+    {
+      "type": "basic",
+      "code": "2_near_tech",
+      "x": "0.191",
+      "y": "0.193",
+      "edges": ["2_tech_mens", "211.00", "2_tech_ne"]
+    },
+    {
+      "type": "bathroom",
+      "code": "2_tech_mens",
+      "x": "0.188",
+      "y": "0.266",
+      "edges": ["2_near_tech", "2_tech_woms"]
+    },
+    {
+      "type": "bathroom",
+      "code": "2_tech_woms",
+      "x": "0.191",
+      "y": "0.329",
+      "edges": [""]
+    },
+    {
+      "type": "stairs",
+      "code": "2_stair_NW",
+      "x": "0.123",
+      "y": "0.316",
+      "edges": ["3_stair_NW"]
+    },
+    {
+      "type": "basic",
+      "code": "2_tech_ne",
+      "x": "0.191",
+      "y": "0.129",
+      "edges": ["205.00", "2_tech_nw"]
+    },
+    {
+      "type": "basic",
+      "code": "2_tech_nw",
+      "x": "0.038",
+      "y": "0.129",
+      "edges": ["207.00"]
+    },
+    {
+      "type": "basic",
+      "code": "2_tech_sw",
+      "x": "0.038",
+      "y": "0.254",
+      "edges": ["209.01", "2_tech_mens"]
+    }
   ]
 }
