@@ -10,10 +10,11 @@ import kotlinx.coroutines.launch
 class CustomSearch constructor(
     private val activity: Activity,
     private val locationProvider: SearchLocationProvider,
-    private val locationListener: SearchLocationListener,
     private val myRequestCode: Int
 ) : View.OnClickListener,
     ActivityResultListener {
+    var locationListener: SearchLocationListener? = null
+
     override fun onClick(v: View?) {
         openCustomSearchActivity()
     }
@@ -32,7 +33,15 @@ class CustomSearch constructor(
         if (id != null) {
             GlobalScope.launch {
                 val location = locationProvider.getLocation(id)
-                locationListener.onLocation(location)
+                locationListener?.onLocation(location)
+            }
+        }
+    }
+
+    fun setLocationListener(callback: (SearchLocation) -> Unit) {
+        locationListener = object: SearchLocationListener {
+            override fun onLocation(location: SearchLocation) {
+                callback(location)
             }
         }
     }

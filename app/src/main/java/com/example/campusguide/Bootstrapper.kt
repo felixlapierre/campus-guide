@@ -43,9 +43,9 @@ class Bootstrapper constructor(activity: MapsActivity) {
             CustomSearch(
                 activity,
                 searchLocationProvider,
-                SearchLocationMarker(activity, map),
                 Constants.REGULAR_SEARCH_REQUEST_CODE
             )
+        search.locationListener = SearchLocationMarker(activity, map)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 

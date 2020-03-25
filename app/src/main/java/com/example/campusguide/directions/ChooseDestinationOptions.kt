@@ -69,14 +69,16 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
             BuildingIndexSingleton.getInstance(act.assets),
             PlacesApiSearchLocationProvider(activity!!)
         )
-        val search = CustomSearch(act, provider, object: SearchLocationListener {
-            override fun onLocation(searchLocation: SearchLocation) {
-                val location = Location(searchLocation.name)
-                location.latitude = searchLocation.lat
-                location.longitude = searchLocation.lon
-                locationSelectedListener(location)
-            }
-        }, Constants.DESTINATION_SEARCH_REQUEST_CODE)
+        val search = CustomSearch(act, provider, Constants.DESTINATION_SEARCH_REQUEST_CODE)
+
+        search.setLocationListener {searchLocation ->
+            val location = Location(searchLocation.name)
+            location.latitude = searchLocation.lat
+            location.longitude = searchLocation.lon
+            locationSelectedListener(location)
+            act.removeActivityResultListener(search)
+        }
+
         act.addActivityResultListener(search)
         search.openCustomSearchActivity()
     }

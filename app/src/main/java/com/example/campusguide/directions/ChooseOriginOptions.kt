@@ -70,22 +70,23 @@ class ChooseOriginOptions(
      * Allows users to manually enter start and end point
      */
     private fun searchForLocation() {
-        //TODO fill this method once we have the logic to search for a location
         dismiss()
+
         // Build the CustomSearch
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(act.assets),
             PlacesApiSearchLocationProvider(activity!!)
         )
-        val search = CustomSearch(act, provider, object: SearchLocationListener {
-            override fun onLocation(searchLocation: SearchLocation) {
-                val location = Location(searchLocation.name)
-                location.latitude = searchLocation.lat
-                location.longitude = searchLocation.lon
-                locationSelectedListener(location)
-            }
-        }, Constants.ORIGIN_SEARCH_REQUEST_CODE)
+        val search = CustomSearch(act, provider, Constants.ORIGIN_SEARCH_REQUEST_CODE)
+
+        search.setLocationListener {searchLocation ->
+            val location = Location(searchLocation.name)
+            location.latitude = searchLocation.lat
+            location.longitude = searchLocation.lon
+            locationSelectedListener(location)
+            act.removeActivityResultListener(search)
+        }
         act.addActivityResultListener(search)
         search.openCustomSearchActivity()
     }
