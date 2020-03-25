@@ -19,18 +19,19 @@ class Calendar constructor (activity: MapsActivity){
     )
     private val  contentResolver = activity.applicationContext.contentResolver
     private val uri: Uri = CalendarContract.Calendars.CONTENT_URI
+    private val email: String = activity.getUserEmail()
 
     // query to get calendars
     @SuppressLint("MissingPermission") // TODO: crying
-    private fun getCalendars(email: String) {
-        val selection: String = "(" +
-                "(${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
+    private fun getCalendars() {
+        val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
+                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?) AND (" +
                 "${CalendarContract.Calendars.OWNER_ACCOUNT} = ?))"
 
-        val selectionArgs: Array<String> = arrayOf(email, email)
+        val selectionArgs: Array<String> = arrayOf(email, "com.example", email)
 
         val cur: Cursor? = contentResolver.query(
-            uri, VALUES_TO_QUERY, null, null, null)
+            uri, VALUES_TO_QUERY, selection, selectionArgs, null)
 
         // save calendar names and IDs
         if (cur != null) {

@@ -36,6 +36,8 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val RC_SIGN_IN = 1
     private val TAG = "MapsActivity"
 
+    private var userEmail: String? = null
+
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
@@ -53,7 +55,14 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onStart(){
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
+        if (account != null){
+            userEmail = account.email
+        }
         //updateUI(account)
+    }
+
+    fun getUserEmail(): String {
+        return userEmail.toString()
     }
 
     fun getCampusNameTextView(): TextView {
