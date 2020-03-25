@@ -3,29 +3,27 @@ package com.example.campusguide
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.widget.CompoundButton
 import android.widget.TextView
-import android.widget.ToggleButton
-import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.utils.permissions.Permissions
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_maps.*
-import android.view.MenuItem
 import android.widget.Toast
+import android.widget.ToggleButton
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-
+import kotlinx.android.synthetic.main.activity_maps.*
 
 
 class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -36,6 +34,7 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private val RC_SIGN_IN = 1
     private val TAG = "MapsActivity"
 
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
     private var userEmail: String? = null
 
     private lateinit var toolbar: Toolbar
@@ -52,15 +51,16 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupLogin()
     }
 
-    override fun onStart(){
+    // TODO: Put into Login class?
+    override fun onStart() {
         super.onStart()
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        if (account != null){
-            userEmail = account.email
+        if (account != null) {
+            updateUI(account)
         }
-        //updateUI(account)
     }
 
+    // TODO: Put into Login class?
     fun getUserEmail(): String {
         return userEmail.toString()
     }
@@ -104,17 +104,23 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         activityResultListeners.forEach { listener ->
             listener.onActivityResult(requestCode, resultCode, data)
         }
+        // TODO: Connect with future Login class
+        if (requestCode == RC_SIGN_IN) {
+            // The Task returned from this call is always completed, no need to attach
+            // a listener.
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            handleSignInResult(task)
+        }
     }
-
-    fun onOpenMenu(view: View) { }
 
     fun setOnNavigateListener(listener: View.OnClickListener) {
         val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
         navigateButton.setOnClickListener(listener)
     }
 
+    // TODO: Setup Drawer class?
     // drawer menu
-    private fun setupDrawer(){
+    private fun setupDrawer() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -129,53 +135,61 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navView.setNavigationItemSelectedListener(this)
     }
 
-    // login
-    private fun setupLogin(){
+    // TODO: Put into Login class
+    private fun setupLogin() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .build()
-        val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        val signInButton = findViewById<SignInButton>(R.id.sign_in_button)
-        signInButton.setSize(SignInButton.SIZE_STANDARD)
-        fun signIn() {
-            val signInIntent: Intent = mGoogleSignInClient.signInIntent
-            startActivityForResult(signInIntent, RC_SIGN_IN)
-        }
-        signInButton.setOnClickListener { view ->
-            when (view.id) {
-                R.id.sign_in_button -> signIn()
-            }
-        }
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
     }
 
+    // TODO: Put into Login class
+    private fun signIn(mGoogleSignInClient: GoogleSignInClient) {
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+
+    // TODO: Put into Login class
     private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val account = completedTask.getResult(ApiException::class.java)
             // Signed in successfully, show authenticated UI.
-            //updateUI(account)
+            if (account != null) {
+                updateUI(account)
+            }
         } catch (e: ApiException) {
             Log.w(TAG, "signInResult:failed code=" + e.statusCode)
-            //updateUI(null)
         }
     }
 
+    // TODO: Put into Login class
+    private fun signOut() {
+        mGoogleSignInClient.signOut()
+        userEmail = null
+        val loginMenuItem = navView.menu.findItem(R.id.login_button)
+        loginMenuItem.title = "Choose Account"
+    }
+
+    // TODO: Put into Login class
+    private fun updateUI(account: GoogleSignInAccount) {
+        userEmail = account.email
+        Toast.makeText(this, "Logged into $userEmail", Toast.LENGTH_LONG).show()
+        val loginMenuItem = navView.menu.findItem(R.id.login_button)
+        loginMenuItem.title = "Log Out of $userEmail"
+    }
+
+    // TODO: Put into Drawer class
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.nav_profile -> {
-//                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_messages -> {
-//                Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_friends -> {
-//                Toast.makeText(this, "Friends clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_update -> {
-//                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_logout -> {
-//                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
-//            }
+            R.id.login_button -> {
+                if (item.title == "Choose Account"){
+                    signIn(mGoogleSignInClient)
+                }
+                else if (item.title == "Log Out of $userEmail"){
+                    Toast.makeText(this, "Logged Out", Toast.LENGTH_LONG).show()
+                    signOut()
+                }
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
