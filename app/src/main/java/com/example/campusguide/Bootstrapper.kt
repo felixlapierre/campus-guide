@@ -40,7 +40,12 @@ class Bootstrapper constructor(activity: MapsActivity) {
             PlacesApiSearchLocationProvider(activity)
         )
         val search =
-            CustomSearch(activity, searchLocationProvider, SearchLocationMarker(activity, map))
+            CustomSearch(
+                activity,
+                searchLocationProvider,
+                SearchLocationMarker(activity, map),
+                Constants.REGULAR_SEARCH_REQUEST_CODE
+            )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
