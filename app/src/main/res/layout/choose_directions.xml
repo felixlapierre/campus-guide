@@ -30,6 +30,7 @@
         android:id="@+id/searchForLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search for Location" />
+        android:text="Search for Location"
+        android:contentDescription="searchForLocation"/>
 
 </LinearLayout>

@@ -24,6 +24,7 @@ class DirectionsSystemTest {
 
     private lateinit var device: UiDevice
     private val concordiaUniversityAddress = "1455 De Maisonneuve"
+    private val mcgillUniversityAddress = "845 Sherbrooke West"
     private val travelModes = arrayOf("driving", "walking", "transit")
 
     @Before
@@ -103,8 +104,68 @@ class DirectionsSystemTest {
         val markerEnd: UiObject = device.findObject(UiSelector().descriptionContains("Destination"))
         device.wait(Until.hasObject(By.desc("Start")), TIMEOUT)
 
-        assertEquals("$concordiaUniversityAddress. Destination.", markerEnd.contentDescription)
         assertEquals("$currentLocation. Start.", markerStart.contentDescription)
+        assertEquals("$concordiaUniversityAddress. Destination.", markerEnd.contentDescription)
+        assertThat(travelModeButton.text, not("-"))
+    }
+
+    @Test
+    fun getDirectionsToConcordiaFromMcGill() {
+
+        // Wait until the map of MapsActivity is loaded
+        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
+
+        // Click the Navigate button
+        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
+        if(navigateButton.exists() && navigateButton.isEnabled) {
+            navigateButton.click()
+        }
+
+        // Wait until the Choose Directions dialog appears
+        device.wait(Until.hasObject(By.desc("chooseDirections")), TIMEOUT)
+
+        // Click on the Search for Location option
+        val searchForLocationOption: UiObject = device.findObject(UiSelector().descriptionContains("searchForLocation"))
+        if(searchForLocationOption.exists() && searchForLocationOption.isEnabled) {
+            searchForLocationOption.click()
+        }
+
+        // Wait until the Get Directions dialog appears
+        device.wait(Until.hasObject(By.desc("directionsDialogLayout")), TIMEOUT)
+
+        // Set the origin to Concordia University's address
+        val startLocationTextField: UiObject = device.findObject(UiSelector().descriptionContains("startLocationTextInput"))
+        startLocationTextField.text = concordiaUniversityAddress
+
+        // Set the destination to McGill University's address
+        val endLocationTextField: UiObject = device.findObject(UiSelector().descriptionContains("endLocationTextInput"))
+        endLocationTextField.text = mcgillUniversityAddress
+
+        // Click on the Go Button
+        val goButton: UiObject = device.findObject(UiSelector().text("GO"))
+        if(goButton.exists() && goButton.isEnabled) {
+            goButton.click()
+        }
+
+        // Wait until the map of DirectionsActivity is loaded
+        device.wait(Until.hasObject(By.desc("directions_activity_map ready")), TIMEOUT)
+
+        // Pick a random travel mode
+        val travelMode = travelModes.random()
+
+        // Click on the travel mode button
+        val travelModeButton: UiObject = device.findObject(UiSelector().descriptionContains(travelMode))
+        if (travelModeButton.exists() && travelModeButton.isEnabled) {
+            travelModeButton.click()
+        }
+
+        // Wait until route is displayed
+        val markerStart: UiObject = device.findObject(UiSelector().descriptionContains("Start"))
+        val markerEnd: UiObject = device.findObject(UiSelector().descriptionContains("Destination"))
+        device.wait(Until.hasObject(By.desc("Start")), TIMEOUT)
+
+        assertEquals("$concordiaUniversityAddress. Start.", markerStart.contentDescription)
+        assertEquals("$mcgillUniversityAddress. Destination.", markerEnd.contentDescription)
         assertThat(travelModeButton.text, not("-"))
     }
 
