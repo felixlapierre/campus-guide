@@ -23,12 +23,12 @@ class Calendar constructor (activity: MapsActivity){
 
     // query to get calendars
     @SuppressLint("MissingPermission") // TODO: crying
-    private fun getCalendars() {
+    fun getCalendars():ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
                 "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?) AND (" +
                 "${CalendarContract.Calendars.OWNER_ACCOUNT} = ?))"
 
-        val selectionArgs: Array<String> = arrayOf(email, "com.example", email)
+        val selectionArgs: Array<String> = arrayOf(email, "com.google", email)
 
         val cur: Cursor? = contentResolver.query(
             uri, VALUES_TO_QUERY, selection, selectionArgs, null)
@@ -42,6 +42,8 @@ class Calendar constructor (activity: MapsActivity){
                 calendarsList.add(calDataPair)
             }
         }
+
+        return calendarsList
     }
 
     // TODO: not sure if keep private for here on out

@@ -17,6 +17,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.campusguide.calendar.Calendar
+import com.example.campusguide.calendar.ChooseCalendar
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -161,20 +163,14 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.calendar -> {
+//                Toast.makeText(this, "Calendar Clicked!", Toast.LENGTH_SHORT).show()
+                val calendar = Calendar(this)
+                val chooseDirectionOptions = ChooseCalendar(this, calendar.getCalendars())
+                chooseDirectionOptions.show(this.supportFragmentManager, "calendarList")
+            }
 //            R.id.nav_profile -> {
 //                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_messages -> {
-//                Toast.makeText(this, "Messages clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_friends -> {
-//                Toast.makeText(this, "Friends clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_update -> {
-//                Toast.makeText(this, "Update clicked", Toast.LENGTH_SHORT).show()
-//            }
-//            R.id.nav_logout -> {
-//                Toast.makeText(this, "Sign out clicked", Toast.LENGTH_SHORT).show()
 //            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
