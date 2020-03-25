@@ -1,6 +1,7 @@
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 
 import com.google.android.gms.maps.GoogleMap
@@ -10,7 +11,8 @@ import com.example.campusguide.R
 import com.example.campusguide.map.infoWindow.InfoWindowData
 
 
-class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter{
+class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter, View.OnClickListener{
+    private var infoWindowData: InfoWindowData? = null
 
     override fun getInfoWindow(marker: Marker): View? {
         return null
@@ -20,14 +22,19 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
         val view = (context as Activity).layoutInflater
             .inflate(R.layout.custom_info_marker, null)
 
-        val infoWindowData = marker.tag as InfoWindowData?
+        infoWindowData = marker.tag as InfoWindowData?
 
         view.findViewById<TextView>(R.id.symbol).text = infoWindowData?.symbol
         view.findViewById<TextView>(R.id.fullName).text = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.address).text = infoWindowData?.address
         view.findViewById<TextView>(R.id.services).text = infoWindowData?.services
         view.findViewById<TextView>(R.id.servicesList).text = infoWindowData?.servicesList
+        view.findViewById<Button>(R.id.btnGoHere).setOnClickListener(this)
 
         return view
+    }
+
+    override fun onClick(v: View?) {
+
     }
 }
