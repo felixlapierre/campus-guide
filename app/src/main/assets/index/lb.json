@@ -305,7 +305,7 @@
       "code": "2_hall_top",
       "x": "0.570",
       "y": "0.194",
-      "edges": ["285.00", "259.00", "257.00","2_ne_corner"]
+      "edges": ["285.00", "259.00", "257.00","2_ne_corner", "2_near_top_stairs"]
     },
     {
       "type": "basic",
@@ -362,6 +362,160 @@
       "x": "0.824",
       "y": "0.537",
       "edges": ["2_se_corner", "261.00"]
+    },
+    {
+      "type": "basic",
+      "code": "3_near_printers",
+      "x": "0.375",
+      "y": "0.195",
+      "edges": ["3_near_top_stairs"]
+    },
+    {
+      "type": "basic",
+      "code": "3_near_top_stairs",
+      "x": "0.468",
+      "y": "0.195",
+      "edges": ["3_top_stairs"]
+    },
+    {
+      "type": "stairs",
+      "code": "3_top_stairs",
+      "x": "0.468",
+      "y": "0.133",
+      "edges": [""]
+    },
+    {
+      "type": "stairs",
+      "code": "3_stair_NW",
+      "x": "0.123",
+      "y": "0.316",
+      "edges": [""]
+    },
+    {
+      "type": "elevators",
+      "code": "3_near_elevators",
+      "x": "0.375",
+      "y": "0.578",
+      "edges": ["3_near_printers"]
+    },
+    {
+      "type": "basic",
+      "code": "3_sw_intersect",
+      "x": "0.375",
+      "y": "0.676",
+      "edges": ["3_near_elevators", "3_near_331"]
+    },
+    {
+      "type": "basic",
+      "code": "3_near_231",
+      "x": "0.375",
+      "y": "0.852",
+      "edges": ["331.00", "3_stairs_SSW"]
+    },
+    {
+      "type": "stairs",
+      "code": "3_stairs_SSW",
+      "x": "0.292",
+      "y": "0.905",
+      "edges": []
+    },
+    {
+      "type": "basic",
+      "code": "3_near_bot_stairs",
+      "x": "0.464",
+      "y": "0.675",
+      "edges": ["3_bot_stairs"]
+    },
+    {
+      "type": "stairs",
+      "code": "3_bot_stairs",
+      "x": "0.464",
+      "y": "0.737",
+      "edges": [""]
+    },
+    {
+      "type": "basic",
+      "code": "3_hall_bottom",
+      "x": "0.570",
+      "y": "0.670",
+      "edges": ["345.00", "351.00", "353.00", "3_hall_top", "3_se_corner"]
+    },
+    {
+      "type": "basic",
+      "code": "3_hall_top",
+      "x": "0.570",
+      "y": "0.194",
+      "edges": ["385.00", "359.00","3_ne_corner", "3_near_top_stairs"]
+    },
+    {
+      "type": "basic",
+      "code": "3_ne_corner",
+      "x": "0.815",
+      "y": "0.194",
+      "edges": ["385.00", "3_men_east","3_stairs_ne", "3_east_hall_top"]
+    },
+    {
+      "type": "bathroom",
+      "code": "3_mens_east",
+      "x": "0.886",
+      "y": "0.209",
+      "edges": []
+    },
+    {
+      "type": "stairs",
+      "code": "3_stairs_ne",
+      "x": "0.847",
+      "y": "0.277",
+      "edges": []
+    },
+    {
+      "type": "basic",
+      "code": "3_se_corner",
+      "x": "0.816",
+      "y": "0.674",
+      "edges": ["345.00", "3_stairs_se", "3_women_e"]
+    },
+    {
+      "type": "bathroom",
+      "code": "3_women_e",
+      "x": "0.852",
+      "y": "0.658",
+      "edges": []
+    },
+    {
+      "type": "stairs",
+      "code": "3_stairs_se",
+      "x": "0.847",
+      "y": "0.592",
+      "edges": []
+    },
+    {
+      "type": "basic",
+      "code": "3_east_hall_top",
+      "x": "0.824",
+      "y": "0.330",
+      "edges": ["361.00", "362.00"]
+    },
+    {
+      "type": "basic",
+      "code": "3_east_hall_bottom",
+      "x": "0.824",
+      "y": "0.537",
+      "edges": ["3_se_corner", "361.00", "362.00"]
+    },
+    {
+      "type": "basic",
+      "code": "3_east_stacks_bottom",
+      "x": "0.765",
+      "y": "0.560",
+      "edges": ["3_east_hall_bottom", "3_east_stacks_top"]
+    },
+    {
+      "type": "basic",
+      "code": "3_east_stacks_top",
+      "x": "0.765",
+      "y": "0.560",
+      "edges": ["3_east_hall_top"]
     }
   ]
 }
