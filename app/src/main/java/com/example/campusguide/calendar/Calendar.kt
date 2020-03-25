@@ -9,7 +9,7 @@ import android.database.Cursor
 
 
 class Calendar constructor (activity: MapsActivity){
-    private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf<Pair<Long, String>>()
+    private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
     private lateinit var selectedCalendar: Pair<Long, String>
     private val VALUES_TO_QUERY: Array<String> = arrayOf(
         CalendarContract.Calendars._ID, // long type
