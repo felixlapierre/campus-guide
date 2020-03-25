@@ -15,12 +15,15 @@ class IndoorLocationProvider constructor(
     private val next: SearchLocationProvider
 ) : SearchLocationProvider {
     override suspend fun getLocation(id: String): SearchLocation {
-        val locationInfo = id.split("_")
-        val isIndoor = locationInfo[0] == Constants.INDOOR_LOCATION_IDENTIFIER
-        val buildingCode = locationInfo[1]
-        val roomCode = locationInfo[2]
+        val isIndoor = id.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
 
-        if (isIndoor) {
+        if(isIndoor) {
+            val locationInfo = id.split("_")
+            if(locationInfo.size != 3) {
+                throw IdFormatException("Id $id is an indoor identifier that does not have the format indoor_buildingcode_roomcode")
+            }
+            val buildingCode = locationInfo[1]
+            val roomCode = locationInfo[2]
             return getIndoorLocation(buildingCode, roomCode, id)
         } else {
             return next.getLocation(id)
@@ -59,3 +62,5 @@ class BuildingNotFoundException constructor(message: String) : RuntimeException(
 class RoomNotFoundException constructor(message: String) : RuntimeException(message)
 
 class IndexNotLoadedException constructor(message: String) : RuntimeException(message)
+
+class IdFormatException constructor(message: String) : RuntimeException(message)
