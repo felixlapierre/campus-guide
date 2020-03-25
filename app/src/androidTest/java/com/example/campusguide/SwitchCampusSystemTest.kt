@@ -50,7 +50,7 @@ class SwitchCampusSystemTest {
     fun clickSwitchCampusButtonOnce() {
 
         // Wait until the map is loaded
-        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
 
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
@@ -70,7 +70,7 @@ class SwitchCampusSystemTest {
     fun clickSwitchCampusButtonTwice() {
 
         // Wait until the map is loaded
-        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
 
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 

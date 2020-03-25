@@ -4,13 +4,15 @@
     android:id="@+id/chooseDirections"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:contentDescription="chooseDirections">
 
     <Button
         android:id="@+id/useCurrentLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Use Current Location" />
+        android:text="Use Current Location"
+        android:contentDescription="useCurrentLocation"/>
 
     <Button
         android:id="@+id/button"

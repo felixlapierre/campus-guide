@@ -50,7 +50,7 @@ class CurrentLocationSystemTest {
     fun clickCurrentLocationButton() {
 
         // Wait until the map is loaded
-        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
 
 
         val currentLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("currentLocationButton"))
