@@ -71,7 +71,7 @@ class ChooseOriginOptions(
      */
     private fun searchForLocation() {
         //TODO fill this method once we have the logic to search for a location
-
+        dismiss()
         // Build the CustomSearch
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(
@@ -80,7 +80,6 @@ class ChooseOriginOptions(
         )
         val search = CustomSearch(act, provider, object: SearchLocationListener {
             override fun onLocation(searchLocation: SearchLocation) {
-                dismiss()
                 val location = Location(searchLocation.name)
                 location.latitude = searchLocation.lat
                 location.longitude = searchLocation.lon
