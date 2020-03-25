@@ -236,6 +236,132 @@
       "x": "0.038",
       "y": "0.254",
       "edges": ["209.01", "2_tech_mens"]
+    },
+    {
+      "type": "basic",
+      "code": "2_entryway",
+      "x": "0.355",
+      "y": "0.442",
+      "edges": ["2_near_printers"]
+    },
+    {
+      "type": "stairs",
+      "code": "2_entry_stairs",
+      "x": "0.203",
+      "y": "0.429",
+      "edges": [""]
+    },
+    {
+      "type": "elevators",
+      "code": "2_near_elevators",
+      "x": "0.375",
+      "y": "0.578",
+      "edges": ["2_entryway"]
+    },
+    {
+      "type": "basic",
+      "code": "2_sw_intersect",
+      "x": "0.375",
+      "y": "0.676",
+      "edges": ["2_near_elevators", "2_near_231"]
+    },
+    {
+      "type": "basic",
+      "code": "2_near_231",
+      "x": "0.375",
+      "y": "0.852",
+      "edges": ["231.00", "2_stairs_SSW"]
+    },
+    {
+      "type": "stairs",
+      "code": "2_stairs_SSW",
+      "x": "0.292",
+      "y": "0.905",
+      "edges": []
+    },
+    {
+      "type": "basic",
+      "code": "2_near_bot_stairs",
+      "x": "0.464",
+      "y": "0.675",
+      "edges": ["2_bot_stairs"]
+    },
+    {
+      "type": "stairs",
+      "code": "2_bot_stairs",
+      "x": "0.464",
+      "y": "0.737",
+      "edges": ["3_bot_stairs"]
+    },
+    {
+      "type": "basic",
+      "code": "2_hall_bottom",
+      "x": "0.570",
+      "y": "0.670",
+      "edges": ["245.00", "251.00", "2_hall_top", "2_se_corner"]
+    },
+    {
+      "type": "basic",
+      "code": "2_hall_top",
+      "x": "0.570",
+      "y": "0.194",
+      "edges": ["285.00", "259.00", "257.00","2_ne_corner"]
+    },
+    {
+      "type": "basic",
+      "code": "2_ne_corner",
+      "x": "0.815",
+      "y": "0.194",
+      "edges": ["285.00", "2_se_corner", "2_men_east","2_stairs_ne", "2_east_hall_top"]
+    },
+    {
+      "type": "bathroom",
+      "code": "2_mens_east",
+      "x": "0.886",
+      "y": "0.209",
+      "edges": []
+    },
+    {
+      "type": "stairs",
+      "code": "2_stairs_ne",
+      "x": "0.847",
+      "y": "0.277",
+      "edges": ["3_stairs_ne"]
+    },
+    {
+      "type": "basic",
+      "code": "2_se_corner",
+      "x": "0.816",
+      "y": "0.674",
+      "edges": ["245.00", "2_stairs_se", "2_women_e"]
+    },
+    {
+      "type": "bathroom",
+      "code": "2_women_e",
+      "x": "0.852",
+      "y": "0.658",
+      "edges": []
+    },
+    {
+      "type": "stairs",
+      "code": "2_stairs_se",
+      "x": "0.847",
+      "y": "0.592",
+      "edges": []
+    },
+    {
+      "type": "basic",
+      "code": "2_east_hall_top",
+      "x": "0.824",
+      "y": "0.330",
+      "edges": ["2_east_hall_bottom", "261.00"]
+    },
+    {
+      "type": "basic",
+      "code": "2_east_hall_bottom",
+      "x": "0.824",
+      "y": "0.537",
+      "edges": ["2_se_corner", "261.00"]
     }
   ]
 }
