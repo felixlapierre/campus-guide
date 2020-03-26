@@ -7,6 +7,7 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.map.ShowFloorPlan
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
@@ -54,15 +55,15 @@ class MapsActivity : AppCompatActivity() {
         currentLocationButton.setOnClickListener(listener)
     }
 
-    fun setChangeFloorUpListener(listener: View.OnClickListener){
-        val upOneFloorButton: FloatingActionButton = findViewById(R.id.upOneFloor)
-        upOneFloorButton.setOnClickListener(listener);
+    fun setShowFloorPlanListener(listener: ShowFloorPlan){
+        val showFloorPlanButton: FloatingActionButton = findViewById(R.id.showFloorPlan)
+        showFloorPlanButton.setOnClickListener(listener)
+        listener.setUp(R.id.upOneFloor, R.id.downOneFloor)
+        listener.floorUpButton = findViewById(R.id.upOneFloor)
+        listener.floorDownButton = findViewById(R.id.downOneFloor)
+
     }
 
-    fun setChangeFloorDownListener(listener: View.OnClickListener){
-        val downOneFloorButton: FloatingActionButton = findViewById(R.id.downOneFloor)
-        downOneFloorButton.setOnClickListener(listener);
-    }
 
     fun addActivityResultListener(listener: ActivityResultListener) {
         activityResultListeners.add(listener)

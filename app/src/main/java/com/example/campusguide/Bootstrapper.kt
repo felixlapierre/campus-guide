@@ -6,9 +6,9 @@ import com.example.campusguide.directions.Route
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
-import com.example.campusguide.map.ChangeFloorUp
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.ShowFloorPlan
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -48,9 +48,9 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnCenterLocationListener(centerLocation)
 
-        // Change Floor
-        val changeFloor = ChangeFloorUp(map)
-        activity.setChangeFloorUpListener(changeFloor)
+        //Show Floor Plan
+        val showFloorPlan = ShowFloorPlan(map)
+        activity.setShowFloorPlanListener(showFloorPlan)
 
         // Switch Campus
         val switchCampus = SwitchCampus(
