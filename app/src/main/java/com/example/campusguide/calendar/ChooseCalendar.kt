@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.MapsActivity
@@ -18,7 +19,8 @@ import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.utils.DisplayMessageErrorListener
 
-class ChooseCalendar constructor(activity: MapsActivity, private val calendars: ArrayList<Pair<Long, String>>) : DialogFragment() {
+//, private val calendars: ArrayList<Pair<Long, String>>
+class ChooseCalendar constructor(activity: MapsActivity) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
@@ -29,20 +31,16 @@ class ChooseCalendar constructor(activity: MapsActivity, private val calendars: 
         builder.setView(view)
         builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         val chooseCalendarLayout = view.findViewById<LinearLayout>(R.id.chooseCalendarLayout)
-        val newCal = RadioButton(activity?.applicationContext)
+        val radioGroup = view.findViewById<RadioGroup>(R.id.calendarGroup)
 
-        for(i in 1..3) {
-            newCal.setText(i)
-            newCal.layoutParams = layoutParams
-            chooseCalendarLayout.addView(newCal)
+        for(i in 1..4) {
+            val newCal = RadioButton(activity?.applicationContext)
+            newCal.text = i.toString()
+            radioGroup.addView(newCal)
         }
 
         return builder.create()
     }
 
-    fun openChooseCalendarDialogFragment() {
-
-    }
 }

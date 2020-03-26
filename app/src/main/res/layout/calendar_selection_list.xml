@@ -8,13 +8,9 @@
     tools:visibility="visible">
 
     <RadioGroup
+        android:id="@+id/calendarGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Test" />
 
     </RadioGroup>
 

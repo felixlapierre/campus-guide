@@ -22,7 +22,6 @@ class Calendar constructor (activity: MapsActivity){
     private val email: String = activity.getUserEmail()
 
     // query to get calendars
-    @SuppressLint("MissingPermission") // TODO: crying
     fun getCalendars():ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
                 "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?) AND (" +

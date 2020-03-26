@@ -184,10 +184,9 @@ class MapsActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.calendar -> {
-//                Toast.makeText(this, "Calendar Clicked!", Toast.LENGTH_SHORT).show()
-                val calendar = Calendar(this)
-                val chooseDirectionOptions = ChooseCalendar(this, calendar.getCalendars())
-                chooseDirectionOptions.show(this.supportFragmentManager, "calendarList")
+//                val calendar = Calendar(this) , calendar.getCalendars()
+                val chooseCalendar = ChooseCalendar(this)
+                chooseCalendar.show(this.supportFragmentManager, "calendarList")
             }
 //            R.id.nav_profile -> {
 //                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
