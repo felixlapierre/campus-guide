@@ -10,10 +10,10 @@ data class Node(
     val code: String,
 
     @Json(name = "x")
-    val x: Double,
+    var x: Double,
 
     @Json(name = "y")
-    val y: Double,
+    var y: Double,
 
     @Json(name = "edges")
     val edges: MutableList<String>,
