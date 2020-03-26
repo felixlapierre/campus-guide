@@ -21,7 +21,7 @@ class IndoorLocationProviderTest {
         val fakeBuildingCode = "BD"
         fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
         fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
+            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom), emptyList())
 
         fakeIndex = mock()
         whenever(fakeIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
