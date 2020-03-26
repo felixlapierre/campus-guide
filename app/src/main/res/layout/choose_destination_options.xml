@@ -14,7 +14,7 @@
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_insert_invitation_off_white_24dp"
-        android:text="@string/choose_direction_calendar"
+        android:text="@string/choose_direction_calendar_next"
         android:textColor="#F0F0F0" />
 
     <Button

@@ -22,7 +22,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         val view = inflater.inflate(R.layout.choose_destination_options, container, false)
 
         view.findViewById<Button>(R.id.calendar).setOnClickListener {
-            useLastEvent()
+            useNextEvent()
         }
         view.findViewById<Button>(R.id.fromMap).setOnClickListener {
             chooseFromMap()
@@ -34,7 +34,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         return view
     }
 
-    private fun useLastEvent(){
+    private fun useNextEvent(){
         //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
         val location = Location("Montreal")
