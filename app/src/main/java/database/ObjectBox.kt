@@ -13,7 +13,7 @@ object ObjectBox {
 
     fun init(context: Context) {
         boxStore = MyObjectBox.builder()
-            .initialDbFile(DatabaseStreamFactory(context.assets.open(DB_DIRECTORY_NAME+"/"+DB_FILE_NAME)))
+            .initialDbFile(DatabaseStreamFactory(context.assets.open("${DB_DIRECTORY_NAME}/${DB_FILE_NAME}")))
             .androidContext(context.applicationContext)
             .build()
     }
