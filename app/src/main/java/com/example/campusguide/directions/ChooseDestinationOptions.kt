@@ -37,10 +37,9 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
     private fun useLastEvent(){
         //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
-        val placesClient = Places.createClient(this.context!!)
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 
@@ -49,7 +48,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         dismiss()
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 
@@ -58,7 +57,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         dismiss()
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 

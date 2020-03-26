@@ -2,6 +2,7 @@ package com.example.campusguide.map
 
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -33,7 +34,10 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
                 )
             }
             BuildingHighlights(map, activity).addBuildingHighlights()
+            map.setOnPolygonClickListener(BuildingClickListener(activity, map))
             map.setContentDescription("Google Maps Ready")
         }
     }
+
+
 }

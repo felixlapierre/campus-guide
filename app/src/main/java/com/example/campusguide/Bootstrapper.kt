@@ -10,6 +10,9 @@ import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.CustomSearch
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.search.indoor.IndoorLocationProvider
+import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.maps.model.LatLng
 import database.ObjectBox
@@ -31,15 +34,19 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val permissions = Permissions(activity)
 
         // Search
-        val search = CustomSearch(activity, map)
+        val indoorLocationProvider = IndoorLocationProvider(
+            BuildingIndexSingleton.getInstance(activity.assets),
+            PlacesApiSearchLocationProvider(activity)
+        )
+        val search = CustomSearch(activity, map, indoorLocationProvider)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
         // Center on Location
-        val locationProvider = FusedLocationProvider(activity)
+        val fusedLocationProvider = FusedLocationProvider(activity)
         val centerLocation = CenterLocationListener(map,
             permissions,
-            locationProvider
+            fusedLocationProvider
         )
         activity.setOnCenterLocationListener(centerLocation)
 
@@ -53,7 +60,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Navigation
         activity.setOnNavigateListener(View.OnClickListener{
             val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-                val chooseOriginOptions = ChooseOriginOptions(permissions, locationProvider) { origin ->
+                val chooseOriginOptions = ChooseOriginOptions(permissions, fusedLocationProvider) { origin ->
                     val originLatLng = LatLng(origin.latitude, origin.longitude)
                     val destinationLatLng = LatLng(destination.latitude, destination.longitude)
                     val intent = Intent(activity, DirectionsActivity::class.java).apply {

@@ -55,7 +55,7 @@ class ChooseOriginOptions(private val permission: PermissionsSubject, private va
         dismiss()
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 }
