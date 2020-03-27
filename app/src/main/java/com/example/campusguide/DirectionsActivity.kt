@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.Route
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.google.maps.model.TravelMode
 
 class DirectionsActivity : AppCompatActivity() {
 
@@ -17,7 +18,8 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var route: Route
     private lateinit var start: String
     private lateinit var end: String
-    private var travelMode = "Driving"
+    private var travelMode: TravelMode = TravelMode.WALKING
+    private var takingShuttle: Boolean = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -62,20 +64,25 @@ class DirectionsActivity : AppCompatActivity() {
             when (view.id) {
                 R.id.radio_driving ->
                     if(checked) {
-                        travelMode = "Driving"
+                        travelMode = TravelMode.DRIVING
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_walking ->
                     if(checked) {
-                        travelMode = "Walking"
+                        travelMode = TravelMode.WALKING
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_transit ->
                     if(checked) {
-                        travelMode = "Transit"
+                        travelMode = TravelMode.TRANSIT
                         route.set(start, end, travelMode)
                     }
             }
         }
+    }
+
+    private fun setDirections(route: Route, travelMode: TravelMode) {
+        this.travelMode = travelMode
+        route.set(start, end, travelMode.toString())
     }
 }

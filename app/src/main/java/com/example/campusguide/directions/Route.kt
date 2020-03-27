@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.PatternItem
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.maps.model.TravelMode
 
 /**
  * Represents a route between two coordinates on the map.
@@ -48,6 +49,22 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         }
         output = output.trim()
         return output
+    }
+
+    fun set(start: String, end: String, travelMode: TravelMode) {
+        val travelModeString: String = when (travelMode){
+            TravelMode.WALKING ->
+                "Walking";
+            TravelMode.DRIVING ->
+                "Driving";
+            TravelMode.TRANSIT ->
+                "Transit";
+            TravelMode.BICYCLING ->
+                "Bicycling";
+            TravelMode.UNKNOWN ->
+                "Unknown";
+        }
+        this.set(start, end, travelModeString);
     }
 
     fun set(start: String, end: String, travelMode: String) {
