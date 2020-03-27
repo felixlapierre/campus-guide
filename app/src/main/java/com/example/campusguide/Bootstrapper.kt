@@ -9,6 +9,7 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.SearchLocationMarker
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -34,19 +35,26 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val permissions = Permissions(activity)
 
         // Search
-        val indoorLocationProvider = IndoorLocationProvider(
+        val searchLocationProvider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(activity.assets),
             PlacesApiSearchLocationProvider(activity)
         )
-        val search = CustomSearch(activity, map, indoorLocationProvider)
+        val search =
+            CustomSearch(
+                activity,
+                searchLocationProvider,
+                Constants.REGULAR_SEARCH_REQUEST_CODE
+            )
+        search.locationListener = SearchLocationMarker(activity, map)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
         // Center on Location
-        val fusedLocationProvider = FusedLocationProvider(activity)
-        val centerLocation = CenterLocationListener(map,
+        val locationProvider = FusedLocationProvider(activity)
+        val centerLocation = CenterLocationListener(
+            map,
             permissions,
-            fusedLocationProvider
+            locationProvider
         )
         activity.setOnCenterLocationListener(centerLocation)
 
@@ -58,20 +66,24 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setSwitchCampusButtonListener(switchCampus)
 
         // Navigation
-        activity.setOnNavigateListener(View.OnClickListener{
+        activity.setOnNavigateListener(View.OnClickListener {
             val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-                val chooseOriginOptions = ChooseOriginOptions(permissions, fusedLocationProvider) { origin ->
-                    val originLatLng = LatLng(origin.latitude, origin.longitude)
-                    val destinationLatLng = LatLng(destination.latitude, destination.longitude)
-                    val intent = Intent(activity, DirectionsActivity::class.java).apply {
-                        putExtra("Origin", originLatLng.toString())
-                        putExtra("Destination", destinationLatLng.toString())
+                val chooseOriginOptions =
+                    ChooseOriginOptions(permissions, locationProvider) { origin ->
+                        val originLatLng = LatLng(origin.latitude, origin.longitude)
+                        val destinationLatLng = LatLng(destination.latitude, destination.longitude)
+                        val intent = Intent(activity, DirectionsActivity::class.java).apply {
+                            putExtra("Origin", originLatLng.toString())
+                            putExtra("Destination", destinationLatLng.toString())
+                        }
+                        activity.startActivity(intent)
                     }
-                    activity.startActivity(intent)
-                }
                 chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
             }
-            chooseDestinationOptions.show(activity.supportFragmentManager, "chooseDestinationOptions")
+            chooseDestinationOptions.show(
+                activity.supportFragmentManager,
+                "chooseDestinationOptions"
+            )
         })
     }
 }
