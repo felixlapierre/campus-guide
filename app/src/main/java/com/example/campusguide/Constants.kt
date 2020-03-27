@@ -12,8 +12,10 @@ object Constants {
 
     const val LOCATION_MARKER_TITLE = "You are here."
 
-    const val PROJECTION_ID_INDEX: Int = 0
-    const val PROJECTION_ACCOUNT_NAME_INDEX: Int = 1
-    const val PROJECTION_DISPLAY_NAME_INDEX: Int = 2
-    const val PROJECTION_OWNER_ACCOUNT_INDEX: Int = 3
+    const val INDOOR_LOCATION_IDENTIFIER = "indoor"
+
+    const val SEARCH_BOTTOM_BOUND = 45.351240
+    const val SEARCH_LEFT_BOUND = -74.031124
+    const val SEARCH_TOP_BOUND = 45.734999
+    const val SEARCH_RIGHT_BOUND = -73.417826
 }

@@ -1,109 +1,86 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    >
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        tools:context=".MainActivity"
-        >
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:orientation="horizontal"
-                    android:background="@color/colorPrimary">
-                    <TextView
-                        android:id="@+id/campus_name"
-                        android:layout_width="0dp"
-                        android:layout_weight=".80"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp"
-                        android:paddingLeft="16dp"
-                        android:text="SGW Campus"/>
-                    <ImageButton
-                        android:layout_width="0dp"
-                        android:layout_weight=".15"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_search_location"
-                        android:onClick="onSearchCalled"
-                        android:paddingRight="16dp"
-                        android:layout_gravity="center_vertical"
-                        style="?android:attr/borderlessButtonStyle"/>
-                </LinearLayout>
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary">
+        <ImageButton
+            android:id="@+id/hamburger_menu"
+            android:layout_width="24dp"
             android:layout_height="match_parent"
-            tools:layout="@layout/activity_maps"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/currentLocationButton"
-                android:contentDescription="currentLocationButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="88dp"
-                android:layout_marginRight="24dp"
-                android:layout_gravity="bottom|end"
-                app:srcCompat="@drawable/ic_my_location"
-                app:fabSize="mini"
-                app:backgroundTint="@android:color/white"/>
-            <androidx.appcompat.widget.AppCompatToggleButton
-                android:id="@+id/switchCampusButton"
-                android:contentDescription="switchCampusButton"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_gravity="bottom|end"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:textAllCaps="true"
-                android:textColor="#FFFFFF"
-                android:textOff="@string/loy_campus"
-                android:textOn="@string/sgw_campus"
-                android:background="@drawable/ic_switch_campus_button"
-                android:textStyle="bold" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/navigateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:layout_margin="8dp"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_compass_outline"
-                app:maxImageSize="36dp"
-                app:fabSize="normal"
-                app:backgroundTint="@android:color/white"/>
-        </fragment>
+            android:layout_weight=".10"
+            android:onClick="onOpenMenu"
+            android:paddingLeft="16dp"
+            android:src="@drawable/ic_hamburger_menu"
+            style="?android:attr/borderlessButtonStyle"/>
+        <TextView
+            android:id="@+id/campus_name"
+            android:layout_width="0dp"
+            android:layout_weight=".80"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:paddingLeft="16dp"
+            android:text="SGW Campus"/>
+        <ImageButton
+            android:layout_width="0dp"
+            android:layout_weight=".15"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search_location"
+            android:onClick="onSearchCalled"
+            android:paddingRight="16dp"
+            android:layout_gravity="center_vertical"
+            style="?android:attr/borderlessButtonStyle"/>
     </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/maps_activity_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="false"
-        app:menu="@menu/options_menu">
-    </com.google.android.material.navigation.NavigationView>
-</androidx.drawerlayout.widget.DrawerLayout>
+        tools:layout="@layout/activity_maps"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/currentLocationButton"
+            android:contentDescription="currentLocationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="88dp"
+            android:layout_marginRight="24dp"
+            android:layout_gravity="bottom|end"
+            app:srcCompat="@drawable/ic_my_location"
+            app:fabSize="mini"
+            app:backgroundTint="@android:color/white"/>
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/switchCampusButton"
+            android:contentDescription="switchCampusButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textOff="@string/loy_campus"
+            android:textOn="@string/sgw_campus"
+            android:background="@drawable/ic_switch_campus_button"
+            android:textStyle="bold" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/navigateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_margin="8dp"
+            android:scaleType="center"
+            app:srcCompat="@drawable/ic_compass_outline"
+            app:maxImageSize="36dp"
+            app:fabSize="normal"
+            app:backgroundTint="@android:color/white"/>
+    </fragment>
+</LinearLayout>
