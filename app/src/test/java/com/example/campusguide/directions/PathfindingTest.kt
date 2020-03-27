@@ -1,6 +1,7 @@
 package com.example.campusguide.directions
 
 import com.example.campusguide.directions.indoor.Graph
+import com.example.campusguide.directions.indoor.PathNotFoundException
 import com.example.campusguide.directions.indoor.Pathfinding
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
@@ -37,5 +38,11 @@ class PathfindingTest {
         val pathfinder = Pathfinding(graph)
         val path = pathfinder.findRoom("1_nodeA", "103.00")
         Assert.assertArrayEquals(arrayOf("1_nodeA", "1_nodeB", "1_nodeC", "103.00"), path.toTypedArray())
+    }
+
+    @Test(expected = PathNotFoundException::class)
+    fun testPathNotFound() {
+        val pathfinder = Pathfinding(graph)
+        val path = pathfinder.findRoom("1_nodeC", "nonexistent")
     }
 }
