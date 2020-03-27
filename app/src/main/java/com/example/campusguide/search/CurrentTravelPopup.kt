@@ -3,10 +3,12 @@ package com.example.campusguide.search
 import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
-import com.google.android.libraries.places.api.model.Place
+import com.example.campusguide.directions.DirectionsFlow
+import com.google.maps.model.LatLng
 import kotlinx.android.synthetic.main.confirm_window.view.*
 
 class CurrentTravelPopup {
@@ -14,7 +16,7 @@ class CurrentTravelPopup {
     private var activity: AppCompatActivity
     private var popup: PopupWindow
 
-    constructor(activity: AppCompatActivity, place: SearchLocation){
+    constructor(activity: AppCompatActivity, place: SearchLocation, directions: DirectionsFlow){
         this.activity = activity
         popup = PopupWindow(activity)
         popup.setBackgroundDrawable(activity.resources.getDrawable(R.drawable.custom_triangular_shape))
@@ -25,6 +27,12 @@ class CurrentTravelPopup {
 
         view = activity.layoutInflater.inflate(R.layout.confirm_window, null)
         popup.contentView = view
+
+        val confirmButton: Button? = view.findViewById(R.id.goHere)
+        confirmButton?.setOnClickListener { _ ->
+            popup.dismiss()
+            directions.startFlow(null, LatLng(place.lat, place.lon).toString())
+        }
 
         popup.showAtLocation(
             activity.findViewById(android.R.id.content),
