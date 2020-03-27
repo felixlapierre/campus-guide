@@ -90,4 +90,13 @@ class IndoorLocationProviderTest {
 
         searchLocationProvider.getLocation(searchId)
     }
+
+    @Test(expected = IdFormatException::class)
+    fun testIdBadFormat() = runBlocking<Unit> {
+        val badId = "${indoorPrefix}_${fakeBuilding.code}"
+
+        val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
+
+        searchLocationProvider.getLocation(badId)
+    }
 }

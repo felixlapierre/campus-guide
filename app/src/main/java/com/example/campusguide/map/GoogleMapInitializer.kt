@@ -10,9 +10,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 
-class GoogleMapInitializer constructor(private val activity: FragmentActivity,
-                                       private val wrapper: GoogleMapAdapter,
-                                       private val mapId: String): OnMapReadyCallback {
+class GoogleMapInitializer constructor(private val activity: FragmentActivity, private val wrapper: GoogleMapAdapter, private val mapId: String): OnMapReadyCallback {
     init {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         val id = activity.resources.getIdentifier(mapId, "id", activity.packageName)
