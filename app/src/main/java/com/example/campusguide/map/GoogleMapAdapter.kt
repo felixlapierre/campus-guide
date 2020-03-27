@@ -37,4 +37,8 @@ class GoogleMapAdapter : Map {
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
     }
+
+    override fun setInfoWindowAdapter(adapter: GoogleMap.InfoWindowAdapter) {
+        adapted.setInfoWindowAdapter(adapter)
+    }
 }

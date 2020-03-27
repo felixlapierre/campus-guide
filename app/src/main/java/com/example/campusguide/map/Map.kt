@@ -1,6 +1,7 @@
 package com.example.campusguide.map
 
 import com.google.android.gms.maps.CameraUpdate
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
 interface Map {
@@ -9,4 +10,5 @@ interface Map {
     fun animateCamera(position: LatLng, zoom: Float)
     fun moveCamera(newLatLngZoom: CameraUpdate?)
     fun addPolyline(polyOptions: PolylineOptions?): Polyline?
+    fun setInfoWindowAdapter(adapter: GoogleMap.InfoWindowAdapter)
 }
