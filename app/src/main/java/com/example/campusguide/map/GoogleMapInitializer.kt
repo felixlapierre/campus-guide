@@ -36,6 +36,9 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
             BuildingHighlights(map, activity).addBuildingHighlights()
             map.setOnPolygonClickListener(BuildingClickListener(activity, map))
             map.setContentDescription("Google Maps Ready")
+
+            val mapClickListener = MapClickListener(map, activity)
+            map.setOnMapClickListener(mapClickListener)
         }
     }
 

@@ -37,4 +37,8 @@ class GoogleMapAdapter : Map {
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
     }
+
+    override fun setOnMapClickListener(mapClickListener: MapClickListener) {
+        return adapted.setOnMapClickListener(mapClickListener)
+    }
 }
