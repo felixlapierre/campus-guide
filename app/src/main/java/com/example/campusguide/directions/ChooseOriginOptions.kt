@@ -71,7 +71,6 @@ class ChooseOriginOptions(
      */
     private fun searchForLocation() {
         dismiss()
-
         // Build the CustomSearch
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(

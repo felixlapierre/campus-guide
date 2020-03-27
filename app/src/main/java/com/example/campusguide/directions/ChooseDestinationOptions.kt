@@ -30,7 +30,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         val view = inflater.inflate(R.layout.choose_destination_options, container, false)
 
         view.findViewById<Button>(R.id.calendar).setOnClickListener {
-            useLastEvent()
+            useNextEvent()
         }
         view.findViewById<Button>(R.id.fromMap).setOnClickListener {
             chooseFromMap()
@@ -42,12 +42,12 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         return view
     }
 
-    private fun useLastEvent(){
+    private fun useNextEvent(){
         //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 
@@ -56,12 +56,11 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         dismiss()
         val location = Location("Montreal")
         location.latitude = 45.5017
-        location.longitude = 73.5673
+        location.longitude = -73.5673
         locationSelectedListener(location)
     }
 
     private fun searchForLocation(){
-        //TODO fill this method once we have the logic to search for a location
         dismiss()
         // Build the CustomSearch
         val act = activity as MapsActivity
@@ -82,5 +81,4 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         act.addActivityResultListener(search)
         search.openCustomSearchActivity()
     }
-
 }

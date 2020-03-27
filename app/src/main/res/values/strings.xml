@@ -4,7 +4,8 @@
     <string name="title_activity_calculator">CalculatorActivity</string>
     <string name="loy_campus">LOY</string>
     <string name="sgw_campus">SGW</string>
-    <string name="choose_direction_calendar">use last event</string>
+    <string name="choose_direction_calendar_last">use last event</string>
+    <string name="choose_direction_calendar_next">use next event</string>
     <string name="choose_direction_map">choose from map</string>
     <string name="choose_direction_search">search for location</string>
     <string name="choose_direction_current">use current location</string>
