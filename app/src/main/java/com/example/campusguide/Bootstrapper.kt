@@ -1,15 +1,18 @@
 package com.example.campusguide
 
+import CustomInfoWindow
 import android.content.Intent
 import android.view.View
 import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.SearchLocationMarker
+import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -27,12 +30,22 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
-        // Map
-        val map = GoogleMapAdapter()
-        GoogleMapInitializer(activity, map, "maps_activity_map")
-
         //Permissions
         val permissions = Permissions(activity)
+        val locationProvider = FusedLocationProvider(activity)
+
+        // Directions
+        val directions = DirectionsFlow(activity, permissions, locationProvider)
+
+        // Map
+        val map = GoogleMapAdapter()
+        val buildingClickListener = BuildingClickListener(
+            map,
+            BuildingIndexSingleton.getInstance(activity.assets),
+            CustomInfoWindow(activity),
+            directions
+        )
+        GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener)
 
         // Search
         val searchLocationProvider = IndoorLocationProvider(
@@ -50,7 +63,6 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.addActivityResultListener(search)
 
         // Center on Location
-        val locationProvider = FusedLocationProvider(activity)
         val centerLocation = CenterLocationListener(
             map,
             permissions,

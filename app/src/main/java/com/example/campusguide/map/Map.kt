@@ -11,4 +11,5 @@ interface Map {
     fun moveCamera(newLatLngZoom: CameraUpdate?)
     fun addPolyline(polyOptions: PolylineOptions?): Polyline?
     fun setInfoWindowAdapter(adapter: GoogleMap.InfoWindowAdapter)
+    fun setInfoWindowClickListener(listener: GoogleMap.OnInfoWindowClickListener)
 }
