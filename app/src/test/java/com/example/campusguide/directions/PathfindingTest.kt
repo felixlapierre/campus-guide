@@ -1,6 +1,7 @@
 package com.example.campusguide.directions
 
 import com.example.campusguide.directions.indoor.Graph
+import com.example.campusguide.directions.indoor.NonexistentLocationException
 import com.example.campusguide.directions.indoor.PathNotFoundException
 import com.example.campusguide.directions.indoor.Pathfinding
 import com.example.campusguide.search.indoor.Building
@@ -43,6 +44,12 @@ class PathfindingTest {
     @Test(expected = PathNotFoundException::class)
     fun testPathNotFound() {
         val pathfinder = Pathfinding(graph)
-        val path = pathfinder.findRoom("1_nodeC", "nonexistent")
+        pathfinder.findRoom("1_nodeC", "nonexistent")
+    }
+
+    @Test(expected = NonexistentLocationException::class)
+    fun testStartLocationDoesNotExist() {
+        val pathfinder = Pathfinding(graph)
+        pathfinder.findRoom("nonexistent", "100.00")
     }
 }

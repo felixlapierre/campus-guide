@@ -14,6 +14,10 @@ class Pathfinding constructor(private val graph: Graph) {
     // Priority queue requires api version 24 for some reason
     @RequiresApi(Build.VERSION_CODES.N)
     fun findRoom(start: String, target: String): List<String> {
+        if(graph.get(start) == null) {
+            throw NonexistentLocationException("Location $start was not found in the graph")
+        }
+
         val open = PriorityQueue<String>() { s1, s2 ->
             return@PriorityQueue calculatePriority(s1, s2, target)
         }
@@ -96,3 +100,5 @@ class Pathfinding constructor(private val graph: Graph) {
 }
 
 class PathNotFoundException(message: String) : RuntimeException(message)
+
+class NonexistentLocationException(message: String) : RuntimeException(message)
