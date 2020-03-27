@@ -1,6 +1,5 @@
 package com.example.campusguide.calendar
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.Constants
