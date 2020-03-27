@@ -14,7 +14,7 @@ class CurrentTravelPopup {
     private var activity: AppCompatActivity
     private var popup: PopupWindow
 
-    constructor(activity: AppCompatActivity, place: Place){
+    constructor(activity: AppCompatActivity, place: SearchLocation){
         this.activity = activity
         popup = PopupWindow(activity)
         popup.setBackgroundDrawable(activity.resources.getDrawable(R.drawable.custom_triangular_shape))
@@ -32,7 +32,7 @@ class CurrentTravelPopup {
             20,
             20)
 
-        view.primaryText.text = place.name!!
-        view.secondaryText.text = place.address
+        view.primaryText.text = place.name
+        view.secondaryText.text = place.secondaryText
     }
 }
