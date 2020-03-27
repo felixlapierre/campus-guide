@@ -1,11 +1,16 @@
 package com.example.campusguide.directions.indoor
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.google.maps.model.LatLng
 
 class Graph constructor(building: Building) {
     private val map: MutableMap<String, Node> = mutableMapOf()
+    private val lbtopleft: LatLng = LatLng(45.496682, -73.578693)
+    private val lbtopright: LatLng = LatLng(45.497308, -73.578065)
+    private val lbbotleft: LatLng = LatLng(45.496270, -73.577757)
 
     init {
         // Add all rooms to the map
@@ -39,9 +44,9 @@ class Graph constructor(building: Building) {
         return map[code]
     }
 
-    private val lbtopleft = LatLng(45.496682, -73.578693)
-    private val lbtopright = LatLng(45.497308, -73.578065)
-    private val lbbotleft = LatLng(45.496270, -73.577757)
+    fun forEach(action: (String) -> Unit) {
+        map.keys.forEach(action)
+    }
 
     fun toLatLng(x: Double, y: Double): LatLng {
         val intermediate = add(lbtopleft, lbtopright, x)
