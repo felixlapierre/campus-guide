@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chooseDestination"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableLeft="@drawable/ic_insert_invitation_off_white_24dp"
+        android:text="@string/choose_direction_calendar_next"
+        android:textColor="#F0F0F0" />
+
+    <Button
+        android:id="@+id/fromMap"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableLeft="@drawable/ic_touch_app_off_white_24dp"
+        android:text="@string/choose_direction_map"
+        android:textColor="#F0F0F0" />
+
+    <Button
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:drawableLeft="@drawable/ic_search_off_white_24dp"
+        android:text="@string/choose_direction_search"
+        android:textColor="#F0F0F0" />
+
+</LinearLayout>
