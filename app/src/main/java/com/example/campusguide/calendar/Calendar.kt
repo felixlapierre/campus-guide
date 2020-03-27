@@ -8,7 +8,7 @@ import com.example.campusguide.MapsActivity
 import android.database.Cursor
 
 
-class Calendar constructor (activity: MapsActivity){
+class Calendar constructor (activity: MapsActivity, login: Login) {
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
     private lateinit var selectedCalendar: Pair<Long, String>
     private val VALUES_TO_QUERY: Array<String> = arrayOf(
@@ -19,7 +19,7 @@ class Calendar constructor (activity: MapsActivity){
     )
     private val  contentResolver = activity.applicationContext.contentResolver
     private val uri: Uri = CalendarContract.Calendars.CONTENT_URI
-    private val email: String = activity.getUserEmail()
+    private val email: String = login.getUserEmail()
 
     // query to get calendars
     fun getCalendars():ArrayList<Pair<Long, String>> {
