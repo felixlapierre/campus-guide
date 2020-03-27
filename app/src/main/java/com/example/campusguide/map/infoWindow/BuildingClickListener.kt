@@ -4,16 +4,13 @@ import CustomInfoWindow
 import android.content.Context
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
-import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndex
-import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.PolygonUtils
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.*
 
 
-class BuildingClickListener(private val context: Context, private val map: Map, private val index: BuildingIndex) : GoogleMap.OnPolygonClickListener{
+class BuildingClickListener(private val context: Context, private val map: Map, private val index: BuildingIndex, private val customInfoWindow: GoogleMap.InfoWindowAdapter) : GoogleMap.OnPolygonClickListener{
     private var marker: Marker? = null
 
     override fun onPolygonClick(p0: Polygon?) {
@@ -42,7 +39,6 @@ class BuildingClickListener(private val context: Context, private val map: Map, 
     }
 
     private fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
-        val customInfoWindow = CustomInfoWindow(context)
         map.setInfoWindowAdapter(customInfoWindow)
 
         // Clears any existing markers from the GoogleMap

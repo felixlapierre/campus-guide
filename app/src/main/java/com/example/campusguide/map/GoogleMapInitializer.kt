@@ -1,5 +1,6 @@
 package com.example.campusguide.map
 
+import CustomInfoWindow
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.map.infoWindow.BuildingClickListener
@@ -43,7 +44,8 @@ class GoogleMapInitializer constructor(
                 BuildingClickListener(
                     activity,
                     wrapper,
-                    BuildingIndexSingleton.getInstance(activity.assets)
+                    BuildingIndexSingleton.getInstance(activity.assets),
+                    CustomInfoWindow(activity)
                 )
             )
             map.setContentDescription("Google Maps Ready")

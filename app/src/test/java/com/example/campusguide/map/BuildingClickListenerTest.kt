@@ -21,7 +21,7 @@ class BuildingClickListenerTest {
 
         whenever(index.getBuildingAtCoordinates(coords)).thenReturn(null)
 
-        val listener = BuildingClickListener(mock(), mock(), index)
+        val listener = BuildingClickListener(mock(), mock(), index, mock())
 
         val info = listener.determineBuilding(coords)
 
@@ -45,7 +45,7 @@ class BuildingClickListenerTest {
 
         whenever(index.getBuildingAtCoordinates(coords)).thenReturn(building)
 
-        val listener = BuildingClickListener(mock(), mock(), index)
+        val listener = BuildingClickListener(mock(), mock(), index, mock())
 
         val info = listener.determineBuilding(coords)
 
