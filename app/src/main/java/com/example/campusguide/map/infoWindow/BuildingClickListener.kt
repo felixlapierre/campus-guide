@@ -31,7 +31,7 @@ class BuildingClickListener(private val map: Map, private val index: BuildingInd
         if(building == null) {
             info.symbol = "B"
             info.fullName = "Building"
-            info.address = "location" + (location?.latitude) + ", " + (location?.longitude)
+            info.address = "123 address"
             info.servicesList = "-service1\n-service2"
         } else {
             info.symbol = building.code
