@@ -73,6 +73,8 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         return calendarsList
     }
 
+    // TODO: Store the selected calendar locally to prevent user
+    //  from having to select calendar each time the app is started
     fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
         for(pair in calendarsList) {
@@ -82,7 +84,12 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
-    // TODO: WIP
+    fun setCalendarMenuItemName(calName: String){
+        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
+        navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
+    }
+
+    // TODO: WIP for UC-16
     @SuppressLint("MissingPermission")
     private fun setTodaysEvents() {
         // get calendar's events
@@ -110,7 +117,7 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
-    // TODO: autocomplete destination
+    // TODO: WIP for UC-16, autocomplete destination
     private fun getNextEventLocation() {
 
         var nextEventLocation = ""
@@ -137,7 +144,7 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
-    // TODO: WIP
+    // TODO: WIP for UC-16
     private fun getLastEventLocation() {
 
         var lastEventLocation = ""
@@ -167,16 +174,10 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
-    // TODO: WIP, check in with Felix('s code)
+    // TODO: WIP for UC-16, check in with Felix('s code)
     private fun parseLocation(location: String): String {
         val parsedLocation = ""
 
         return parsedLocation
-    }
-
-    // TODO: WIP
-    fun setCalendarMenuItemName(calName: String){
-        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
-        navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
     }
 }

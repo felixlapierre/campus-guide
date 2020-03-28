@@ -25,6 +25,7 @@ class ChooseCalendarDialogFragment constructor(
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.calendar_selection_list, null)
 
+        // Set title of dialog box
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
             .setTitle("Choose your calendar")
 
@@ -33,19 +34,22 @@ class ChooseCalendarDialogFragment constructor(
 
         val radioGroup = view.findViewById<RadioGroup>(R.id.calendarGroup)
 
+        // Create radio button options for each calendar found on the logged in account
         for(pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
             newCal.text = pair.second
-
             radioGroup.addView(newCal)
         }
 
         builder.setPositiveButton("OK") { dialog, id ->
+            // Find which calendar was selected
             val checkedId = radioGroup.checkedRadioButtonId
             val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
             val selectedText = radioButton.text.toString()
+            // Return selected calendar
             calendar.setSelectedCalendar(selectedText)
             Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
+            // Change menu item title for Calendar to include selected calendar
             calendar.setCalendarMenuItemName(selectedText)
         }.setNegativeButton("Cancel", null)
 
