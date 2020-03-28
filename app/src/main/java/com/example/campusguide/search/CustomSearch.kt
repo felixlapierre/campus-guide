@@ -4,14 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.example.campusguide.ActivityResultListener
-<<<<<<< HEAD
-import com.example.campusguide.Constants
-import com.example.campusguide.MapsActivity
-import com.example.campusguide.map.Map
-import com.example.campusguide.map.Marker
-import com.google.android.gms.maps.model.LatLng
-=======
->>>>>>> 43f12d8f913805e6155cad077fe5c9bcf0d926d5
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
