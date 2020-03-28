@@ -1,5 +1,6 @@
 package com.example.campusguide.calendar
 
+import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
@@ -18,7 +19,7 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
 
     private val  contentResolver = activity.applicationContext.contentResolver
 
-    // calendar variables --------------------------------------------------------------------------
+    // calendar variables
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
     private lateinit var selectedCalendar: Pair<Long, String> // calendar ID and name str
     private val CALENDAR_VALUES_TO_QUERY: Array<String> = arrayOf(
@@ -31,7 +32,7 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
     private val calendarUri: Uri = CalendarContract.Calendars.CONTENT_URI
     private val email: String = userEmail
 
-    // event variables -----------------------------------------------------------------------------
+    // event variables
     private val EVENT_VALUES_TO_QUERY: Array<String> = arrayOf(
         CalendarContract.Events.CALENDAR_ID, // long
         CalendarContract.Events.DTSTART, // start in UTC milliseconds since the epoch
@@ -40,8 +41,8 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
     private val eventUri: Uri = CalendarContract.Events.CONTENT_URI
     private val todaysEvents: ArrayList<Pair<Long, String>> = arrayListOf() // event time & location str
 
-    // METHODS -------------------------------------------------------------------------------------
-    // TODO: permissions
+    // METHODS
+    @SuppressLint("MissingPermission")
     fun getCalendars():ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
                 "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?))"
@@ -81,6 +82,8 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
+    // TODO: WIP
+    @SuppressLint("MissingPermission")
     private fun setTodaysEvents() {
         // get calendar's events
         val selection: String = "(${CalendarContract.Events.CALENDAR_ID} = ?)"
@@ -105,7 +108,6 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         for(pair in calendarEvents){
 
         }
-
     }
 
     // TODO: autocomplete destination
@@ -135,6 +137,7 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         }
     }
 
+    // TODO: WIP
     private fun getLastEventLocation() {
 
         var lastEventLocation = ""
@@ -153,25 +156,25 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
                     eventsBeforeNow.add(event)
                 }
             }
-
             // keep location specifically
             lastEventLocation = eventsBeforeNow[-1].second
 
             if(lastEventLocation == ""){
                 // something
             }
-            // autocomplete destination
 
+            // autocomplete destination
         }
     }
 
-    // TODO: check in with felix('s code)
+    // TODO: WIP, check in with Felix('s code)
     private fun parseLocation(location: String): String {
         val parsedLocation = ""
 
         return parsedLocation
     }
 
+    // TODO: WIP
     fun setCalendarMenuItemName(calName: String){
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"

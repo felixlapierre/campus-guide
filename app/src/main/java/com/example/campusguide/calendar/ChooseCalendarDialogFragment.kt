@@ -11,6 +11,11 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
 
+/**
+ * An Android fragment that contains a dialog window prompting the user to
+ * select the calendar they would like to use for event location parsing.
+ */
+
 class ChooseCalendarDialogFragment constructor(
     private val calendar: Calendar,
     private val calendarsList: ArrayList<Pair<Long, String>>

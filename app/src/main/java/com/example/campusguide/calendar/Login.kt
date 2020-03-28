@@ -19,6 +19,11 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
 
+/**
+ * Class for handling login.
+ * Asks for calendar permissions when first logging in.
+ */
+
 class Login constructor(
     private val activity: MapsActivity,
     private val permissions: PermissionsSubject
@@ -35,7 +40,7 @@ class Login constructor(
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private var userEmail: String? = null
 
-    private fun getPermissions() {
+    private fun getCalendarPermissions() {
         if (ActivityCompat.checkSelfPermission(
                 activity,
                 Manifest.permission.READ_CALENDAR
@@ -91,20 +96,25 @@ class Login constructor(
     fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
         activity.startActivityForResult(signInIntent, RC_SIGN_IN)
-        getPermissions()
+        // Ask for calendar permissions
+        getCalendarPermissions()
     }
 
     fun signOut() {
         mGoogleSignInClient.signOut()
         userEmail = null
         Toast.makeText(activity, "Logged Out", Toast.LENGTH_LONG).show()
+        // Change menu item title for Login asking to login to an account
         getNavView().menu.findItem(R.id.login_button).title = "Login to an Account"
+        // Disable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = false
     }
 
     private fun updateUI() {
         Toast.makeText(activity, "Logged into $userEmail", Toast.LENGTH_LONG).show()
+        // Change menu item title for Login to include logged in email
         getNavView().menu.findItem(R.id.login_button).title = "Log Out of $userEmail"
+        // Enable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = true
     }
 
