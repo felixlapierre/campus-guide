@@ -58,6 +58,10 @@ class MapsActivity : AppCompatActivity() {
         activityResultListeners.add(listener)
     }
 
+    fun removeActivityResultListener(listener: ActivityResultListener) {
+        activityResultListeners.remove(listener)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         activityResultListeners.forEach { listener ->
