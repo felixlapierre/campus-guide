@@ -11,7 +11,6 @@ import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
-
 class MapsActivity : AppCompatActivity() {
     var permissions: Permissions? = null
     private lateinit var onSearchListener: View.OnClickListener

@@ -44,7 +44,7 @@ class ChooseCalendarDialogFragment constructor(
         return builder.create()
     }
 
-    private fun fillRadioGroup(radioGroup: RadioGroup){
+    private fun fillRadioGroup(radioGroup: RadioGroup) {
         // Create radio button options for each calendar found on the logged in account
         for(pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
@@ -53,7 +53,7 @@ class ChooseCalendarDialogFragment constructor(
         }
     }
 
-    private fun handleOkSelected(radioGroup: RadioGroup){
+    private fun handleOkSelected(radioGroup: RadioGroup) {
         // Find which calendar was selected
         val checkedId = radioGroup.checkedRadioButtonId
         val radioButton = radioGroup.findViewById<RadioButton>(checkedId)

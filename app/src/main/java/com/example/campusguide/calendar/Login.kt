@@ -51,10 +51,8 @@ class Login constructor(
         }
     }
 
-    override fun onPermissionGranted(permission: String) {
-        if(permission == calendarPermission) {
+    override fun onPermissionGranted() {
             updateUI()
-        }
     }
 
     fun onCreate() {
