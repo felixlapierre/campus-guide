@@ -38,25 +38,13 @@ class Permissions constructor(private val activity: Activity): PermissionsSubjec
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        /*if(requestCode == Constants.PERMISSION_REQUEST_CODE) {
+        if(requestCode == Constants.PERMISSION_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 observers.forEach { observer ->
                     observer.onPermissionGranted()
                 }
             }
             return
-        }*/
-        when(requestCode) {
-            Constants.PERMISSION_REQUEST_CODE -> {
-                if((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // observers should not be empty
-                    observers.first().onPermissionGranted() 
-                }
-                return
-            }
-            else -> {
-                // Ignore
-            }
         }
     }
 }
