@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationView
  * Performs all queries and saves information related to calendars and events.
  */
 
-class Calendar constructor (val activity: MapsActivity, userEmail: String) {
+class Calendar constructor(val activity: MapsActivity, userEmail: String) {
 
     private val CALENDAR_VALUES_TO_QUERY: Array<String> = arrayOf(
         CalendarContract.Calendars._ID,
@@ -27,7 +27,7 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
     private val PROJECTION_DISPLAY_NAME_INDEX: Int = 2
     private val PROJECTION_OWNER_ACCOUNT_INDEX: Int = 3
 
-    private val  contentResolver = activity.applicationContext.contentResolver
+    private val contentResolver = activity.applicationContext.contentResolver
     private val calendarUri: Uri = CalendarContract.Calendars.CONTENT_URI
 
     private val email: String = userEmail
@@ -35,7 +35,7 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
     private lateinit var selectedCalendar: Pair<Long, String>
 
     @SuppressLint("MissingPermission")
-    fun getCalendars():ArrayList<Pair<Long, String>> {
+    fun getCalendars(): ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
                 "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?))"
 
@@ -43,7 +43,8 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
 
         // cursor to iterate through query's response
         val cur: Cursor? = contentResolver.query(
-            calendarUri, CALENDAR_VALUES_TO_QUERY, selection, selectionArgs, null)
+            calendarUri, CALENDAR_VALUES_TO_QUERY, selection, selectionArgs, null
+        )
 
         // save calendar names and IDs
         setSortedCalendarsList(cur)
@@ -52,6 +53,17 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
     }
 
     private fun setSortedCalendarsList(cur: Cursor?) {
+        var sortedList =
+            getUnsortedCalendarsList(cur).sortedWith(
+                compareBy { it.second.toLowerCase() })
+
+        // sorted list is List type -> put elements in our arrayList through iteration
+        for (pair in sortedList) {
+            calendarsList.add(pair)
+        }
+    }
+
+    private fun getUnsortedCalendarsList(cur: Cursor?): ArrayList<Pair<Long, String>> {
         var calendars = arrayListOf<Pair<Long, String>>()
         if (cur != null) {
             while (cur.moveToNext()) {
@@ -62,17 +74,10 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
                 calendars.add(calDataPair)
             }
         }
-
-        var sortedList = calendars.sortedWith(
-            compareBy {it.second.toLowerCase()})
-
-        // sorted list is List type -> put elements in our arrayList through iteration
-        for(pair in sortedList){
-            calendarsList.add(pair)
-        }
+        return calendars
     }
 
-    fun getSelectedCalendar(): Pair<Long, String>{
+    fun getSelectedCalendar(): Pair<Long, String> {
         return selectedCalendar
     }
 
@@ -80,14 +85,14 @@ class Calendar constructor (val activity: MapsActivity, userEmail: String) {
     //  from having to select calendar each time the app is started
     fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
-        for(pair in calendarsList) {
+        for (pair in calendarsList) {
             if (pair.second == calName) {
                 selectedCalendar = pair
             }
         }
     }
 
-    fun setCalendarMenuItemName(calName: String){
+    fun setCalendarMenuItemName(calName: String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
     }
