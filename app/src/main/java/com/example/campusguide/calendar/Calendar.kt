@@ -1,13 +1,14 @@
 package com.example.campusguide.calendar
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import android.database.Cursor
 
+class Calendar constructor (val activity: MapsActivity, private val userEmail: String) {
 
-class Calendar constructor (activity: MapsActivity, login: Login) {
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
     private lateinit var selectedCalendar: Pair<Long, String>
     private val VALUES_TO_QUERY: Array<String> = arrayOf(
@@ -18,46 +19,46 @@ class Calendar constructor (activity: MapsActivity, login: Login) {
     )
     private val  contentResolver = activity.applicationContext.contentResolver
     private val uri: Uri = CalendarContract.Calendars.CONTENT_URI
-    private val email: String = login.getUserEmail()
 
     // query to get calendars
+    @SuppressLint("MissingPermission")
     fun getCalendars():ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
-                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?) AND (" +
-                "${CalendarContract.Calendars.OWNER_ACCOUNT} = ?))"
+                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?))"
 
-        val selectionArgs: Array<String> = arrayOf(email, "com.google", email)
+        val selectionArgs: Array<String> = arrayOf(userEmail, "com.google")
 
         val cur: Cursor? = contentResolver.query(
             uri, VALUES_TO_QUERY, selection, selectionArgs, null)
 
         // save calendar names and IDs
         if (cur != null) {
-            while(cur.moveToNext()) {
+            while (cur.moveToNext()) {
                 val calID: Long = cur.getLong(Constants.PROJECTION_ID_INDEX)
-                val calDisplayName: String = cur.getString(Constants.PROJECTION_DISPLAY_NAME_INDEX)
+                val calDisplayName: String =
+                    cur.getString(Constants.PROJECTION_DISPLAY_NAME_INDEX)
                 val calDataPair = Pair(calID, calDisplayName)
                 calendarsList.add(calDataPair)
             }
         }
-
         return calendarsList
     }
 
     // TODO: not sure if keep private for here on out
     //  (need to set listeners and shit???)
-    private fun displayCalendarNames(){
+    private fun displayCalendarNames() {
         for(pair in calendarsList){
             // display pair.second (the name) for selection
         }
     }
 
-    private fun selectCal(calName: String){
+    private fun selectCal(calName: String) : Long {
         // find ID for selected calendar
         for(pair in calendarsList){
             if (pair.second == calName)
                 selectedCalendar = pair
         }
+        return selectedCalendar.first
     }
 
     // TODO: autocomplete destination
