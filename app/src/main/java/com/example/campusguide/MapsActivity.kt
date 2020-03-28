@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_maps.*
 class MapsActivity : AppCompatActivity() {
     private val permissions = Permissions(this)
     private lateinit var onSearchListener: View.OnClickListener
-    private lateinit var calendarListener: View.OnClickListener
     private val activityResultListeners: MutableList<ActivityResultListener> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
