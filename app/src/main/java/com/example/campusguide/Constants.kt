@@ -24,10 +24,7 @@ object Constants {
 
     const val PROJECTION_ID_INDEX: Int = 0
     const val PROJECTION_DISPLAY_NAME_INDEX: Int = 2
-<<<<<<< HEAD
     const val PROJECTION_OWNER_ACCOUNT_INDEX: Int = 3
-=======
->>>>>>> 027e2cdfb8dfec706c83399620ecedcd55783c6d
 
     const val PROJECTION_EVENT_CALENDAR_INDEX: Int = 0
     const val PROJECTION_EVENT_START_TIME_INDEX: Int = 1
