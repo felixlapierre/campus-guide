@@ -33,6 +33,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         //Permissions
         val permissions = Permissions(activity)
+        activity.permissions = permissions
 
         // Search
         val searchLocationProvider = IndoorLocationProvider(
