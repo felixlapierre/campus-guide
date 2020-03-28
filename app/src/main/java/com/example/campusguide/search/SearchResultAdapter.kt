@@ -8,9 +8,15 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.campusguide.R
 
+/**
+ * An Android Adapter class that provides views for elements in a list of SearchResults.
+ */
 class SearchResultAdapter constructor(private val activity: Activity): BaseAdapter() {
     private val results: ArrayList<SearchResult> = arrayListOf()
 
+    /**
+     * Get the view for the list element at position.
+     */
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val inflater = LayoutInflater.from(activity)
         val row = inflater.inflate(R.layout.search_result_item, parent, false)
