@@ -1,5 +1,6 @@
 package com.example.campusguide.calendar
 
+import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
@@ -26,6 +27,8 @@ class Events constructor(
     private val todaysEvents: ArrayList<Pair<Long, String>> =
         arrayListOf() // event time & location str
 
+    // TODO: WIP for UC-16
+    @SuppressLint("MissingPermission")
     private fun setTodaysEvents() {
         // get calendar's events
         val selection: String = "(${CalendarContract.Events.CALENDAR_ID} = ?)"
@@ -54,7 +57,7 @@ class Events constructor(
 
     }
 
-    // TODO: autocomplete destination
+    // TODO: WIP for UC-16, autocomplete destination
     fun getNextEventLocation() {
 
         var nextEventLocation = ""
@@ -82,6 +85,7 @@ class Events constructor(
         }
     }
 
+    // TODO: WIP for UC-16
     fun getLastEventLocation() {
 
         var lastEventLocation = ""
@@ -115,7 +119,7 @@ class Events constructor(
         }
     }
 
-    // TODO: check in with felix('s code)
+    // TODO: WIP for UC-16, check in with Felix('s code)
     private fun parseLocation(location: String): String {
         val parsedLocation = ""
 
