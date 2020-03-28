@@ -42,7 +42,6 @@ class GoogleMapInitializer constructor(
             BuildingHighlights(map, activity).addBuildingHighlights()
             map.setOnPolygonClickListener(
                 BuildingClickListener(
-                    activity,
                     wrapper,
                     BuildingIndexSingleton.getInstance(activity.assets),
                     CustomInfoWindow(activity)

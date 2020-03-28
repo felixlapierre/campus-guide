@@ -7,8 +7,8 @@ import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.map.Map
+import com.example.campusguide.map.Marker
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

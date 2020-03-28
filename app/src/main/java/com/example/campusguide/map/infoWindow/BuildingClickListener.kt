@@ -1,26 +1,31 @@
 package com.example.campusguide.map.infoWindow
 
-import CustomInfoWindow
-import android.content.Context
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
+import com.example.campusguide.map.Marker
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.utils.PolygonUtils
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polygon
 
 
-class BuildingClickListener(private val context: Context, private val map: Map, private val index: BuildingIndex, private val customInfoWindow: GoogleMap.InfoWindowAdapter) : GoogleMap.OnPolygonClickListener{
+class BuildingClickListener(private val map: Map, private val index: BuildingIndex, private val customInfoWindow: GoogleMap.InfoWindowAdapter) : GoogleMap.OnPolygonClickListener{
     private var marker: Marker? = null
 
     override fun onPolygonClick(p0: Polygon?) {
-        val location = PolygonUtils().getPolygonCenterPoint(p0?.points as ArrayList<LatLng>)
+        polygonClick(p0?.points as ArrayList<LatLng>)
+    }
+
+    fun polygonClick(points: ArrayList<LatLng>) {
+        val location = PolygonUtils().getPolygonCenterPoint(points)
         val info = determineBuilding(location)
 
         buildingInfoWindow(location!!, info)
     }
 
-    fun determineBuilding(location: LatLng?): InfoWindowData {
+    private fun determineBuilding(location: LatLng?): InfoWindowData {
         val info = InfoWindowData()
         var building = location?.let { index.getBuildingAtCoordinates(it) }
         if(building == null) {
@@ -51,7 +56,7 @@ class BuildingClickListener(private val context: Context, private val map: Map, 
         markerOptions.position(location)
 
         marker = map.addMarker(markerOptions)
-        marker?.tag = info
+        marker?.setTag(info)
         marker?.showInfoWindow()
 
         // Animating to the info window
