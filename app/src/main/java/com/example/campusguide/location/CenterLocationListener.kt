@@ -18,6 +18,7 @@ class CenterLocationListener constructor(
     PermissionGrantedObserver {
     init {
         permissions.addObserver(this)
+        print("DEBUG: "+ permissions.seeObservers())
     }
 
     private val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
@@ -32,9 +33,8 @@ class CenterLocationListener constructor(
         }
     }
 
-    override fun onPermissionGranted(permission: String) {
-        if(permission == locationPermission)
-            goToCurrentLocation()
+    override fun onPermissionGranted() {
+        goToCurrentLocation()
     }
 
     /**

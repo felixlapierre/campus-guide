@@ -7,10 +7,15 @@ import com.example.campusguide.Constants
 
 class Permissions constructor(private val activity: Activity): PermissionsSubject {
 
-    private val observers: MutableList<PermissionGrantedObserver> = mutableListOf()
+    //private val observers: MutableList<PermissionGrantedObserver> = mutableListOf()
+    private val observers = mutableListOf<PermissionGrantedObserver>()
 
     override fun addObserver(observer: PermissionGrantedObserver) {
         observers.add(observer)
+    }
+
+    override fun seeObservers(): MutableList<PermissionGrantedObserver> {
+        return observers
     }
 
     override fun havePermission(permission: String): Boolean {
@@ -33,13 +38,24 @@ class Permissions constructor(private val activity: Activity): PermissionsSubjec
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode != Constants.PERMISSION_REQUEST_CODE)
-            return
-        for (i in 0..permissions.size) {
-            if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+        /*if(requestCode == Constants.PERMISSION_REQUEST_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 observers.forEach { observer ->
-                    observer.onPermissionGranted(permissions[i])
+                    observer.onPermissionGranted()
                 }
+            }
+            return
+        }*/
+        when(requestCode) {
+            Constants.PERMISSION_REQUEST_CODE -> {
+                if((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // observers should not be empty
+                    observers.first().onPermissionGranted() 
+                }
+                return
+            }
+            else -> {
+                // Ignore
             }
         }
     }
