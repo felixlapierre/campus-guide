@@ -4,49 +4,52 @@ import android.app.Activity
 import android.content.Intent
 import android.view.View
 import com.example.campusguide.ActivityResultListener
+<<<<<<< HEAD
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.google.android.gms.maps.model.LatLng
+=======
+>>>>>>> 43f12d8f913805e6155cad077fe5c9bcf0d926d5
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-const val AUTOCOMPLETE_REQUEST_CODE = 69; //nice
-
 class CustomSearch constructor(
-    private val activity: MapsActivity,
-    private val map: Map,
-    private val locationProvider: SearchLocationProvider
+    private val activity: Activity,
+    private val locationProvider: SearchLocationProvider,
+    private val myRequestCode: Int
 ) : View.OnClickListener,
     ActivityResultListener {
-
-    private var marker: Marker? = null
+    var locationListener: SearchLocationListener? = null
 
     override fun onClick(v: View?) {
+        openCustomSearchActivity()
+    }
+
+    fun openCustomSearchActivity() {
         val searchIntent = Intent(activity, CustomSearchActivity::class.java)
-        activity.startActivityForResult(searchIntent, AUTOCOMPLETE_REQUEST_CODE)
+        activity.startActivityForResult(searchIntent, myRequestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode != AUTOCOMPLETE_REQUEST_CODE || resultCode != Activity.RESULT_OK) {
+        if (requestCode != myRequestCode || resultCode != Activity.RESULT_OK) {
             return
         }
 
         val id = data?.data?.toString()
         if (id != null) {
-            getLocationFromId(id)
+            GlobalScope.launch {
+                val location = locationProvider.getLocation(id)
+                locationListener?.onLocation(location)
+            }
         }
     }
 
-    private fun getLocationFromId(locationId: String) {
-        GlobalScope.launch {
-            val searchLocation = locationProvider.getLocation(locationId)
-            val latlng = LatLng(searchLocation.lat, searchLocation.lon)
-            activity.runOnUiThread {
-                marker?.remove()
-                marker = map.addMarker(latlng, searchLocation.name)
-                map.animateCamera(latlng, Constants.ZOOM_STREET_LVL)
+    fun setLocationListener(callback: (SearchLocation) -> Unit) {
+        locationListener = object: SearchLocationListener {
+            override fun onLocation(location: SearchLocation) {
+                callback(location)
             }
         }
     }

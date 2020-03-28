@@ -1,18 +1,21 @@
 package com.example.campusguide
 
+import android.content.Intent
 import android.view.View
-import com.example.campusguide.directions.ChooseDirectionOptionsDialogFragment
-import com.example.campusguide.directions.Route
+import com.example.campusguide.directions.ChooseDestinationOptions
+import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.SearchLocationMarker
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.utils.permissions.Permissions
+import com.google.maps.model.LatLng
 import database.ObjectBox
 
 /**
@@ -32,18 +35,26 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val permissions = Permissions(activity)
 
         // Search
-        val locationProvider = IndoorLocationProvider(
+        val searchLocationProvider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(activity.assets),
             PlacesApiSearchLocationProvider(activity)
         )
-        val search = CustomSearch(activity, map, locationProvider)
+        val search =
+            CustomSearch(
+                activity,
+                searchLocationProvider,
+                Constants.REGULAR_SEARCH_REQUEST_CODE
+            )
+        search.locationListener = SearchLocationMarker(activity, map)
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
         // Center on Location
-        val centerLocation = CenterLocationListener(map,
+        val locationProvider = FusedLocationProvider(activity)
+        val centerLocation = CenterLocationListener(
+            map,
             permissions,
-            FusedLocationProvider(activity)
+            locationProvider
         )
         activity.setOnCenterLocationListener(centerLocation)
 
@@ -55,10 +66,24 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setSwitchCampusButtonListener(switchCampus)
 
         // Navigation
-        val route = Route(map, activity)
-        activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDirectionOptions = ChooseDirectionOptionsDialogFragment()
-            chooseDirectionOptions.show(activity.supportFragmentManager, "directionsOptions")
+        activity.setOnNavigateListener(View.OnClickListener {
+            val chooseDestinationOptions = ChooseDestinationOptions { destination ->
+                val chooseOriginOptions =
+                    ChooseOriginOptions(permissions, locationProvider) { origin ->
+                        val originLatLng = LatLng(origin.latitude, origin.longitude)
+                        val destinationLatLng = LatLng(destination.latitude, destination.longitude)
+                        val intent = Intent(activity, DirectionsActivity::class.java).apply {
+                            putExtra("Origin", originLatLng.toString())
+                            putExtra("Destination", destinationLatLng.toString())
+                        }
+                        activity.startActivity(intent)
+                    }
+                chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
+            }
+            chooseDestinationOptions.show(
+                activity.supportFragmentManager,
+                "chooseDestinationOptions"
+            )
         })
     }
 }
