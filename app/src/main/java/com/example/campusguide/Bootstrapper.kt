@@ -71,6 +71,5 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Drawer
         val drawer = Drawer(activity, login)
         drawer.setupDrawer()
-
     }
 }

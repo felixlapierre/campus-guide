@@ -6,15 +6,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.example.campusguide.calendar.Calendar
-import com.example.campusguide.calendar.ChooseCalendar
+import com.example.campusguide.calendar.ChooseCalendarDialogFragment
 import com.example.campusguide.calendar.Login
 import com.google.android.material.navigation.NavigationView
 
 class Drawer constructor (
     private val activity: MapsActivity,
     private val login: Login
-) :
-    NavigationView.OnNavigationItemSelectedListener {
+) : NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var toolbar: Toolbar
     private lateinit var drawerLayout: DrawerLayout
@@ -41,7 +40,7 @@ class Drawer constructor (
             R.id.calendar -> {
                 val calendar = Calendar(activity, userEmail)
                 val calendarsList = calendar.getCalendars()
-                val chooseCalendar = ChooseCalendar(calendarsList)
+                val chooseCalendar = ChooseCalendarDialogFragment(calendar, calendarsList)
                 chooseCalendar.show(activity.supportFragmentManager, "calendarList")
             }
             R.id.login_button -> {

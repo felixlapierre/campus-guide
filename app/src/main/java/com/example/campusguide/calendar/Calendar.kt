@@ -6,23 +6,30 @@ import android.provider.CalendarContract
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import android.database.Cursor
+import com.example.campusguide.R
+import com.google.android.material.navigation.NavigationView
 
+/**
+ * Class for handling the user's calendars.
+ * Performs all queries and saves information related to calendars and events.
+ */
 class Calendar constructor (val activity: MapsActivity, private val userEmail: String) {
 
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
-    private lateinit var selectedCalendar: Pair<Long, String>
     private val VALUES_TO_QUERY: Array<String> = arrayOf(
         CalendarContract.Calendars._ID, // long type
         CalendarContract.Calendars.ACCOUNT_NAME,
         CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, // string type
         CalendarContract.Calendars.OWNER_ACCOUNT
     )
-    private val  contentResolver = activity.applicationContext.contentResolver
+    private lateinit var selectedCalendar: Pair<Long, String>
+
+    private val contentResolver = activity.applicationContext.contentResolver
     private val uri: Uri = CalendarContract.Calendars.CONTENT_URI
 
     // query to get calendars
     @SuppressLint("MissingPermission")
-    fun getCalendars():ArrayList<Pair<Long, String>> {
+    fun getCalendars(): ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
                 "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?))"
 
@@ -44,47 +51,13 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         return calendarsList
     }
 
-    // TODO: not sure if keep private for here on out
-    //  (need to set listeners and shit???)
-    private fun displayCalendarNames() {
-        for(pair in calendarsList){
-            // display pair.second (the name) for selection
-        }
-    }
-
-    private fun selectCal(calName: String) : Long {
+    fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
-        for(pair in calendarsList){
-            if (pair.second == calName)
+        for(pair in calendarsList) {
+            if (pair.second == calName) {
                 selectedCalendar = pair
+            }
         }
-        return selectedCalendar.first
-    }
-
-    // TODO: autocomplete destination
-    private fun getNextEventLocation() {
-        // get current time
-
-        // get next event based on current time
-
-        // keep location specifically
-
-        // autocomplete destination
-
-        // if no event fount --> do SOMETHING
-    }
-
-    private fun getLastEventLocation() {
-        // get current time
-
-        // get last event based on current time
-        // -> current
-
-        // keep location specifically
-
-        // autocomplete destination
-
-        // if no event fount --> do SOMETHING
     }
 
     // TODO: check in with felix('s code)
@@ -94,4 +67,8 @@ class Calendar constructor (val activity: MapsActivity, private val userEmail: S
         return parsedLocation
     }
 
+    fun setCalendarMenuItemName(calName: String){
+        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
+        navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
+    }
 }
