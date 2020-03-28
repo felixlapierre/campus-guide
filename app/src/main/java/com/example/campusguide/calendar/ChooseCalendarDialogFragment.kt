@@ -10,7 +10,6 @@ import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.R
-import com.google.android.material.navigation.NavigationView
 
 class ChooseCalendarDialogFragment constructor(
     private val calendar: Calendar,
