@@ -8,7 +8,7 @@
     android:background="@drawable/custom_triangular_shape">
 
     <TextView
-        android:id="@+id/primaryText"
+        android:id="@+id/locationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Location"/>
@@ -23,6 +23,5 @@
         android:id="@+id/goHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Confirm"
-        android:layout_marginBottom="20dp"/>
+        android:text="Confirm"/>
 </LinearLayout>

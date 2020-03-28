@@ -57,7 +57,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
             )
         search.locationListener = PopupSearchLocationListener(
             activity,
-            DirectionsFlow(activity, permissions, locationProvider)
+            DirectionsFlow(activity, permissions, locationProvider),
+            map
         )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)

@@ -41,4 +41,14 @@ class GoogleMapAdapter : Map {
     override fun setOnMapClickListener(mapClickListener: MapClickListener) {
         return adapted.setOnMapClickListener(mapClickListener)
     }
+
+    override fun setInfoWindowAdapter(infoWindowAdapter: GoogleMap.InfoWindowAdapter) {
+        adapted.setInfoWindowAdapter(infoWindowAdapter)
+    }
+
+    override fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener) {
+        adapted.setOnInfoWindowClickListener(infoWindowClickListener)
+    }
+
+
 }

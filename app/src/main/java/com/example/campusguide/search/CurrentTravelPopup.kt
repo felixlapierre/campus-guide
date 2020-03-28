@@ -40,7 +40,7 @@ class CurrentTravelPopup {
             20,
             20)
 
-        view.primaryText.text = place.name
+        view.locationName.text = place.name
         view.secondaryText.text = place.secondaryText
     }
 }
