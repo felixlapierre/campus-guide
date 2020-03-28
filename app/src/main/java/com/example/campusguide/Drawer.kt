@@ -38,21 +38,29 @@ class Drawer constructor (
         val userEmail = login.getUserEmail()
         when (item.itemId) {
             R.id.calendar -> {
-                val calendar = Calendar(activity, userEmail)
-                val calendarsList = calendar.getCalendars()
-                val chooseCalendar = ChooseCalendarDialogFragment(calendar, calendarsList)
-                chooseCalendar.show(activity.supportFragmentManager, "calendarList")
+                handleCalendarSelect(userEmail)
             }
             R.id.login_button -> {
-                if (item.title == "Login to an Account") {
-                    login.signIn()
-                }
-                else if (item.title == "Log Out of $userEmail") {
-                    login.signOut()
-                }
+                handleLoginSelect(item, userEmail)
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    private fun handleCalendarSelect(userEmail: String){
+        val calendar = Calendar(activity, userEmail)
+        val calendarsList = calendar.getCalendars()
+        val chooseCalendar = ChooseCalendarDialogFragment(calendar, calendarsList)
+        chooseCalendar.show(activity.supportFragmentManager, "calendarList")
+    }
+
+    private fun handleLoginSelect(item: MenuItem, userEmail: String){
+        if (item.title == "Login to an Account") {
+            login.signIn()
+        }
+        else if (item.title == "Log Out of $userEmail") {
+            login.signOut()
+        }
     }
 }

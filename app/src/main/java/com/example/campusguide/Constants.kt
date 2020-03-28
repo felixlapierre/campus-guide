@@ -22,11 +22,6 @@ object Constants {
     const val SEARCH_TOP_BOUND = 45.734999
     const val SEARCH_RIGHT_BOUND = -73.417826
 
-    const val PROJECTION_ID_INDEX: Int = 0
-    const val PROJECTION_DISPLAY_NAME_INDEX: Int = 2
-    const val PROJECTION_OWNER_ACCOUNT_INDEX: Int = 3
-
-    const val PROJECTION_EVENT_CALENDAR_INDEX: Int = 0
-    const val PROJECTION_EVENT_START_TIME_INDEX: Int = 1
-    const val PROJECTION_EVENT_LOCATION_INDEX: Int = 2
+    const val CONFIRM_CHOICE = "CONFIRM"
+    const val CANCEL_CHOICE = "Cancel"
 }
