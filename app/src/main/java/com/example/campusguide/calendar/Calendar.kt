@@ -1,44 +1,69 @@
 package com.example.campusguide.calendar
 
+import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
-import android.database.Cursor
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class Calendar constructor (activity: MapsActivity, login: Login) {
+/**
+ * Class for handling the user's calendars.
+ * Performs all queries and saves information related to calendars and events.
+ */
+class Calendar constructor (activity: MapsActivity, userEmail: String) {
+
+    private val  contentResolver = activity.applicationContext.contentResolver
+
+    // calendar variables --------------------------------------------------------------------------
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
-    private lateinit var selectedCalendar: Pair<Long, String>
-    private val VALUES_TO_QUERY: Array<String> = arrayOf(
+    private lateinit var selectedCalendar: Pair<Long, String> // calendar ID and name str
+    private val CALENDAR_VALUES_TO_QUERY: Array<String> = arrayOf(
         CalendarContract.Calendars._ID, // long type
         CalendarContract.Calendars.ACCOUNT_NAME,
         CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, // string type
         CalendarContract.Calendars.OWNER_ACCOUNT
     )
-    private val  contentResolver = activity.applicationContext.contentResolver
-    private val uri: Uri = CalendarContract.Calendars.CONTENT_URI
-    private val email: String = login.getUserEmail()
+    private val calendarUri: Uri = CalendarContract.Calendars.CONTENT_URI
+    private val email: String = userEmail
 
-    // query to get calendars
+    // event variables -----------------------------------------------------------------------------
+    private val EVENT_VALUES_TO_QUERY: Array<String> = arrayOf(
+        CalendarContract.Events.CALENDAR_ID, // long
+        CalendarContract.Events.DTSTART, // start in UTC milliseconds since the epoch
+        CalendarContract.Events.EVENT_LOCATION // string
+    )
+    private val eventUri: Uri = CalendarContract.Events.CONTENT_URI
+    private val todaysEvents: ArrayList<Pair<Long, String>> = arrayListOf() // event time & location str
+
+    // METHODS -------------------------------------------------------------------------------------
+    // TODO: permissions
     fun getCalendars():ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
-                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?) AND (" +
-                "${CalendarContract.Calendars.OWNER_ACCOUNT} = ?))"
+                "${CalendarContract.Calendars.ACCOUNT_TYPE} = ?))"
 
-        val selectionArgs: Array<String> = arrayOf(email, "com.google", email)
+        val selectionArgs: Array<String> = arrayOf(email, "com.google")
 
         val cur: Cursor? = contentResolver.query(
-            uri, VALUES_TO_QUERY, selection, selectionArgs, null)
+            calendarUri, CALENDAR_VALUES_TO_QUERY, selection, selectionArgs, null)
 
         // save calendar names and IDs
+        var calendars = arrayListOf<Pair<Long, String>>()
         if (cur != null) {
             while(cur.moveToNext()) {
                 val calID: Long = cur.getLong(Constants.PROJECTION_ID_INDEX)
                 val calDisplayName: String = cur.getString(Constants.PROJECTION_DISPLAY_NAME_INDEX)
                 val calDataPair = Pair(calID, calDisplayName)
-                calendarsList.add(calDataPair)
+                calendars.add(calDataPair)
             }
+        }
+
+        var sortedList = calendars.sortedWith(compareBy {it.second.toLowerCase()})
+
+        for(pair in sortedList){
+            calendarsList.add(pair)
         }
 
         return calendarsList
@@ -46,13 +71,7 @@ class Calendar constructor (activity: MapsActivity, login: Login) {
 
     // TODO: not sure if keep private for here on out
     //  (need to set listeners and shit???)
-    private fun displayCalendarNames(){
-        for(pair in calendarsList){
-            // display pair.second (the name) for selection
-        }
-    }
-
-    private fun selectCal(calName: String){
+    private fun selectCalendar(calName: String){
         // find ID for selected calendar
         for(pair in calendarsList){
             if (pair.second == calName)
@@ -60,30 +79,88 @@ class Calendar constructor (activity: MapsActivity, login: Login) {
         }
     }
 
+    private fun setTodaysEvents() {
+        // get calendar's events
+        val selection: String = "(${CalendarContract.Events.CALENDAR_ID} = ?)"
+        val selectionArgs: Array<String> = arrayOf(selectedCalendar.first.toString())
+
+        val cur: Cursor? = contentResolver.query(
+            eventUri, EVENT_VALUES_TO_QUERY, selection, selectionArgs, null)
+
+        val calendarEvents: ArrayList<Pair<Long, String>> = arrayListOf()
+
+        if(cur != null) {
+            while(cur.moveToNext()){
+                val eventTime = cur.getLong(Constants.PROJECTION_EVENT_START_TIME_INDEX)
+                val eventLocation = cur.getString(Constants.PROJECTION_EVENT_LOCATION_INDEX)
+                val eventPair = Pair(eventTime, eventLocation)
+                calendarEvents.add(eventPair)
+            }
+        }
+
+        // narrow down to today & make sure it's sorted chronologically
+        val now = System.currentTimeMillis()
+        for(pair in calendarEvents){
+
+        }
+
+    }
+
     // TODO: autocomplete destination
     private fun getNextEventLocation() {
-        // get current time
 
-        // get next event based on current time
+        var nextEventLocation = ""
 
-        // keep location specifically
+        if(todaysEvents.isEmpty()){
+            setTodaysEvents()
+        } else {
+            // get current time
+            val now = System.currentTimeMillis()
 
-        // autocomplete destination
+            // get next event based on current time
+            for(event in todaysEvents){
+                if(event.first > now){
+                    nextEventLocation = event.second
+                    break
+                }
+            }
 
-        // if no event fount --> do SOMETHING
+            if(nextEventLocation == ""){
+                // something
+            }
+
+            // autocomplete destination
+        }
     }
 
     private fun getLastEventLocation() {
-        // get current time
 
-        // get last event based on current time
-        // -> current
+        var lastEventLocation = ""
 
-        // keep location specifically
+        if(todaysEvents.isEmpty()){
+            setTodaysEvents()
+        } else {
+            // get current time
+            val now = System.currentTimeMillis()
 
-        // autocomplete destination
+            // get last event based on current time
+            // -> current
+            var eventsBeforeNow: ArrayList<Pair<Long, String>> = arrayListOf()
+            for(event in todaysEvents){
+                if(event.first < now){
+                    eventsBeforeNow.add(event)
+                }
+            }
 
-        // if no event fount --> do SOMETHING
+            // keep location specifically
+            lastEventLocation = eventsBeforeNow[-1].second
+
+            if(lastEventLocation == ""){
+                // something
+            }
+            // autocomplete destination
+
+        }
     }
 
     // TODO: check in with felix('s code)

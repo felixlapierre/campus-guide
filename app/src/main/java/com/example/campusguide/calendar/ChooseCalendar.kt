@@ -12,15 +12,16 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.MapsActivity
 
 import com.example.campusguide.R
 import com.example.campusguide.utils.DisplayMessageErrorListener
 
-//, private val calendars: ArrayList<Pair<Long, String>>
-class ChooseCalendar constructor(activity: MapsActivity) : DialogFragment() {
+class ChooseCalendar constructor(activity: MapsActivity, calendars: ArrayList<Pair<Long, String>>) : DialogFragment() {
+
+    private var activity = activity
+    private var calendarsList = calendars
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
@@ -31,12 +32,12 @@ class ChooseCalendar constructor(activity: MapsActivity) : DialogFragment() {
         builder.setView(view)
         builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val chooseCalendarLayout = view.findViewById<LinearLayout>(R.id.chooseCalendarLayout)
         val radioGroup = view.findViewById<RadioGroup>(R.id.calendarGroup)
 
-        for(i in 1..4) {
+
+        for(pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
-            newCal.text = i.toString()
+            newCal.text = pair.second
             radioGroup.addView(newCal)
         }
 

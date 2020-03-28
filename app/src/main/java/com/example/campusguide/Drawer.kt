@@ -6,6 +6,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.example.campusguide.calendar.Calendar
 import com.example.campusguide.calendar.ChooseCalendar
 import com.example.campusguide.calendar.Login
 import com.google.android.material.navigation.NavigationView
@@ -36,13 +37,14 @@ class Drawer constructor(private val activity: MapsActivity, private val login: 
         val userEmail = login.getUserEmail()
         when (item.itemId) {
             R.id.calendar -> {
-//                val calendar = Calendar(this) , calendar.getCalendars()
-                val chooseCalendar = ChooseCalendar(activity)
+                // TODO: request permissions here
+
+                // then do calendar stuff
+                val calendar: Calendar = Calendar(activity, userEmail)
+                val calendarsList = calendar.getCalendars()
+                val chooseCalendar = ChooseCalendar(activity, calendarsList)
                 chooseCalendar.show(activity.supportFragmentManager, "calendarList")
             }
-//            R.id.nav_profile -> {
-//                Toast.makeText(this, "Profile clicked", Toast.LENGTH_SHORT).show()
-//            }
             R.id.login_button -> {
                 if (item.title == "Login to an Account") {
                     login.signIn()
