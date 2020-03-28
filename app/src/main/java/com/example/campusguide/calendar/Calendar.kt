@@ -5,15 +5,16 @@ import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
-import java.util.*
 import kotlin.collections.ArrayList
-
+import com.example.campusguide.R
+import com.google.android.material.navigation.NavigationView
 
 /**
  * Class for handling the user's calendars.
  * Performs all queries and saves information related to calendars and events.
  */
-class Calendar constructor (activity: MapsActivity, userEmail: String) {
+
+class Calendar constructor (val activity: MapsActivity, private val userEmail: String) {
 
     private val  contentResolver = activity.applicationContext.contentResolver
 
@@ -26,6 +27,7 @@ class Calendar constructor (activity: MapsActivity, userEmail: String) {
         CalendarContract.Calendars.CALENDAR_DISPLAY_NAME, // string type
         CalendarContract.Calendars.OWNER_ACCOUNT
     )
+
     private val calendarUri: Uri = CalendarContract.Calendars.CONTENT_URI
     private val email: String = userEmail
 
@@ -52,9 +54,10 @@ class Calendar constructor (activity: MapsActivity, userEmail: String) {
         // save calendar names and IDs
         var calendars = arrayListOf<Pair<Long, String>>()
         if (cur != null) {
-            while(cur.moveToNext()) {
+            while (cur.moveToNext()) {
                 val calID: Long = cur.getLong(Constants.PROJECTION_ID_INDEX)
-                val calDisplayName: String = cur.getString(Constants.PROJECTION_DISPLAY_NAME_INDEX)
+                val calDisplayName: String =
+                    cur.getString(Constants.PROJECTION_DISPLAY_NAME_INDEX)
                 val calDataPair = Pair(calID, calDisplayName)
                 calendars.add(calDataPair)
             }
@@ -69,13 +72,12 @@ class Calendar constructor (activity: MapsActivity, userEmail: String) {
         return calendarsList
     }
 
-    // TODO: not sure if keep private for here on out
-    //  (need to set listeners and shit???)
-    private fun selectCalendar(calName: String){
+    fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
-        for(pair in calendarsList){
-            if (pair.second == calName)
+        for(pair in calendarsList) {
+            if (pair.second == calName) {
                 selectedCalendar = pair
+            }
         }
     }
 
@@ -170,4 +172,8 @@ class Calendar constructor (activity: MapsActivity, userEmail: String) {
         return parsedLocation
     }
 
+    fun setCalendarMenuItemName(calName: String){
+        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
+        navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
+    }
 }

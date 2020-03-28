@@ -1,7 +1,9 @@
 package com.example.campusguide.directions
 
+import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
@@ -48,7 +50,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         return output
     }
 
-    fun set(start: String, end: String) {
+    fun set(start: String, end: String, travelMode: String) {
         polyline?.remove()
         begin?.remove()
         dest?.remove()
@@ -67,7 +69,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
 
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
-            val response = directions.getDirections(start, end)
+            val response = directions.getDirections(start, end, travelMode)
             if (response != null) {
                 val startPoint = MarkerOptions().position(
                     LatLng(
@@ -107,6 +109,12 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                  * addPolyline throws an exception if it is not run on the Ui thread.
                  */
                 activity.runOnUiThread {
+                    // Set the duration of the route
+                    val radioButtonId = "radio_" + travelMode.toLowerCase()
+                    val id = activity.resources.getIdentifier(radioButtonId, "id", activity.packageName)
+                    activity.findViewById<RadioButton>(id).apply {
+                        text = response.routes[0].legs[0].duration.text
+                    }
                     val polyOptions = PolylineOptions()
                         .color(COLOR_BLUE_ARGB.toInt())
                         .pattern(PATTERN_POLYGON_ALPHA)
@@ -115,9 +123,9 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                     begin = map.addMarker(startPoint)
                     dest = map.addMarker(endPoint)
                     map.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                            routeBounds.center,
-                            Constants.ZOOM_STREET_LVL
+                        CameraUpdateFactory.newLatLngBounds(
+                            routeBounds,
+                            100 // padding around the route in pixels
                         )
                     )
                 }
