@@ -18,7 +18,6 @@ class CenterLocationListener constructor(
     PermissionGrantedObserver {
     init {
         permissions.addObserver(this)
-        print("DEBUG: "+ permissions.seeObservers())
     }
 
     private val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
