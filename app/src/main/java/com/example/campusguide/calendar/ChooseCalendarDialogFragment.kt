@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -34,25 +35,33 @@ class ChooseCalendarDialogFragment constructor(
 
         val radioGroup = view.findViewById<RadioGroup>(R.id.calendarGroup)
 
+        fillRadioGroup(radioGroup)
+
+        builder.setPositiveButton("OK") { dialog, id ->
+            handleOkSelected(radioGroup)
+        }.setNegativeButton("Cancel", null)
+
+        return builder.create()
+    }
+
+    private fun fillRadioGroup(radioGroup: RadioGroup){
         // Create radio button options for each calendar found on the logged in account
         for(pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
             newCal.text = pair.second
             radioGroup.addView(newCal)
         }
+    }
 
-        builder.setPositiveButton("OK") { dialog, id ->
-            // Find which calendar was selected
-            val checkedId = radioGroup.checkedRadioButtonId
-            val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
-            val selectedText = radioButton.text.toString()
-            // Return selected calendar
-            calendar.setSelectedCalendar(selectedText)
-            Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
-            // Change menu item title for Calendar to include selected calendar
-            calendar.setCalendarMenuItemName(selectedText)
-        }.setNegativeButton("Cancel", null)
-
-        return builder.create()
+    private fun handleOkSelected(radioGroup: RadioGroup){
+        // Find which calendar was selected
+        val checkedId = radioGroup.checkedRadioButtonId
+        val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
+        val selectedText = radioButton.text.toString()
+        // Return selected calendar
+        calendar.setSelectedCalendar(selectedText)
+        Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
+        // Change menu item title for Calendar to include selected calendar
+        calendar.setCalendarMenuItemName(selectedText)
     }
 }
