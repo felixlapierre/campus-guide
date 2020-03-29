@@ -3,7 +3,6 @@ package com.example.campusguide
 import com.example.campusguide.directions.CallbackDirectionsConfirmTest
 import com.example.campusguide.directions.DirectionsTest
 import com.example.campusguide.directions.EmptyDirectionsGuardTest
-import com.example.campusguide.directions.RouteTest
 import com.example.campusguide.location.CenterLocationListenerTest
 import com.example.campusguide.location.SwitchCampusTest
 import com.example.campusguide.search.BuildingIndexSingletonTest
@@ -29,8 +28,7 @@ import org.junit.runners.Suite
     SwitchCampusTest::class,
     IndoorSearchResultProviderTest::class,
     IndoorLocationProviderTest::class,
-    BuildingIndexSingletonTest::class,
-    RouteTest::class
+    BuildingIndexSingletonTest::class
 )
 
 class RunAllTestSuite
