@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 private const val TIMEOUT = 5000L
 
@@ -35,7 +36,7 @@ class DirectionsSystemTest {
     fun getDirectionsToConcordiaFromCurrentLocation() {
 
         // Wait until the map of MapsActivity is loaded
-        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Click the Navigate button
         val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
@@ -77,7 +78,7 @@ class DirectionsSystemTest {
         }
 
         // Wait until the map of DirectionsActivity is loaded
-        device.wait(Until.hasObject(By.desc("directions_activity_map ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
         val travelMode = travelModes.random()
@@ -102,7 +103,7 @@ class DirectionsSystemTest {
     fun getDirectionsToConcordiaFromMcgill() {
 
         // Wait until the map of MapsActivity is loaded
-        device.wait(Until.hasObject(By.desc("maps_activity_map ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Click the Navigate button
         val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
@@ -155,7 +156,7 @@ class DirectionsSystemTest {
         }
 
         // Wait until the map of DirectionsActivity is loaded
-        device.wait(Until.hasObject(By.desc("directions_activity_map ready")), TIMEOUT)
+        device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
         val travelMode = travelModes.random()
