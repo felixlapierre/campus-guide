@@ -3,7 +3,11 @@ package com.example.campusguide.map
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.MarkerOptions
 
 class GoogleMapAdapter : Map {
     lateinit var adapted: GoogleMap
@@ -14,11 +18,11 @@ class GoogleMapAdapter : Map {
             .title(title)
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
 
-        return adapted.addMarker(opts)
+        return GoogleMapMarker(adapted.addMarker(opts))
     }
 
     override fun addMarker(opts: MarkerOptions): Marker? {
-        return adapted.addMarker(opts)
+        return GoogleMapMarker(adapted.addMarker(opts))
     }
 
     override fun animateCamera(position: LatLng, zoom: Float) {
@@ -36,5 +40,9 @@ class GoogleMapAdapter : Map {
 
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
+    }
+
+    override fun setInfoWindowAdapter(adapter: GoogleMap.InfoWindowAdapter) {
+        adapted.setInfoWindowAdapter(adapter)
     }
 }
