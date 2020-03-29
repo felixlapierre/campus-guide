@@ -37,7 +37,7 @@ class Permissions constructor(private val activity: Activity): PermissionsSubjec
             Constants.PERMISSION_REQUEST_CODE -> {
                 if((grantResults.isNotEmpty()) && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     observers.forEach { observer ->
-                        observer.onPermissionGranted()
+                        observer.onPermissionGranted(permissions)
                     }
                 }
                 return

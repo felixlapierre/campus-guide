@@ -50,6 +50,14 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener)
 
+        // Center on Location
+        val centerLocation = CenterLocationListener(
+            map,
+            permissions,
+            locationProvider
+        )
+        activity.setOnCenterLocationListener(centerLocation)
+
         // Search
         val searchLocationProvider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(activity.assets),
