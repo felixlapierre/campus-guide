@@ -6,14 +6,22 @@ import com.example.campusguide.map.Map
 import com.google.android.gms.maps.model.LatLng
 import org.junit.Test
 import com.nhaarman.mockitokotlin2.*
+import org.junit.Before
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class SwitchCampusTest {
 
-    val mockMap : Map = mock()
-    val mockCampusName : TextView = mock()
+    private lateinit var mockMap : Map
+    private lateinit var mockCampusName : TextView
+
+    @Before
+    fun createMocks() {
+        mockMap = mock()
+        mockCampusName = mock()
+    }
+
 
     @Test
     fun testSwitchCampusLoyola() {
