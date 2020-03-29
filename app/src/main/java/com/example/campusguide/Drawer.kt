@@ -61,6 +61,7 @@ class Drawer constructor (
         }
         else if (item.title == "Log Out of $userEmail") {
             login.signOut()
+            Calendar(activity, userEmail).unsetCalendar()
         }
     }
 }

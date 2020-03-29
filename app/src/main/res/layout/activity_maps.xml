@@ -92,6 +92,7 @@
                 android:layout_gravity="left|bottom"
                 android:layout_margin="8dp"
                 android:scaleType="center"
+
                 android:contentDescription="navigateButton"
                 app:srcCompat="@drawable/ic_compass_outline"
                 app:maxImageSize="36dp"

@@ -8,6 +8,10 @@ import com.example.campusguide.MapsActivity
 import kotlin.collections.ArrayList
 import com.example.campusguide.R
 import com.google.android.material.navigation.NavigationView
+import database.ObjectBox
+import database.entity.Calendar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 /**
  * Class for handling the user's calendars.
@@ -31,8 +35,8 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
 
     private val email: String = userEmail
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
-    private lateinit var selectedCalendar: Pair<Long, String>
 
+    // permissions checked elsewhere - suppressing to get rid of IDE's complaints
     @SuppressLint("MissingPermission")
     fun getCalendars(): ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +
@@ -76,17 +80,11 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
         return calendars
     }
 
-    fun getSelectedCalendar(): Pair<Long, String> {
-        return selectedCalendar
-    }
-
-    // TODO: Store the selected calendar locally to prevent user
-    //  from having to select calendar each time the app is started
     fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
         for (pair in calendarsList) {
             if (pair.second == calName) {
-                selectedCalendar = pair
+                putCalendarInDB(pair)
             }
         }
     }
@@ -94,5 +92,21 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
     fun setCalendarMenuItemName(calName: String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
+    }
+
+    fun unsetCalendar(){
+        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
+        navView.menu.findItem(R.id.calendar).title = "Calendar"
+        val calendar: Box<database.entity.Calendar> = ObjectBox.boxStore.boxFor()
+        calendar.removeAll()
+    }
+
+    private fun putCalendarInDB(pair: Pair<Long, String>) {
+        // make sure there are no other calendars in the DB
+        val calendar: Box<database.entity.Calendar> = ObjectBox.boxStore.boxFor()
+        calendar.removeAll()
+
+        val c = Calendar(id = pair.first, name = pair.second)
+        calendar.put(c)
     }
 }

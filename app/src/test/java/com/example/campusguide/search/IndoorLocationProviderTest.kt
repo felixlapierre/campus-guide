@@ -56,8 +56,9 @@ class IndoorLocationProviderTest {
 
         val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
 
-        val searchResult = searchLocationProvider.getLocation(searchId)
-
+        var searchResult = searchLocationProvider.getLocation(searchId)
+        assert(searchResult != null)
+        searchResult = searchResult as SearchLocation
         assert(searchResult.id == searchId)
         assert(searchResult.name == fakeRoom.name)
         assert(searchResult.lat == fakeRoom.lat.toDouble())
