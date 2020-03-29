@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:visibility="visible">
+    android:visibility="visible"
+    android:contentDescription="chooseOriginOptionsLayout">
 
     <Button
         android:id="@+id/currentLocation"
@@ -15,7 +16,8 @@
         android:backgroundTint="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_pin_drop_off_white_24dp"
         android:text="@string/choose_direction_current"
-        android:textColor="#F0F0F0" />
+        android:textColor="#F0F0F0"
+        android:contentDescription="useCurrentLocationButton"/>
 
     <Button
         android:id="@+id/calendar"
@@ -45,6 +47,6 @@
         android:backgroundTint="@color/colorPrimary"
         android:drawableLeft="@drawable/ic_search_off_white_24dp"
         android:text="@string/choose_direction_search"
-        android:textColor="#F0F0F0" />
+        android:textColor="#F0F0F0"/>
 
 </LinearLayout>
