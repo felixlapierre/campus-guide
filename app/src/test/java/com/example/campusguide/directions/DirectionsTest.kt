@@ -36,7 +36,6 @@ class DirectionsTest {
             whenever(responseParser.parse(jsonResponse)).thenReturn(null)
 
             val directions = Directions(requestDispatcher, responseParser, errorListener)
-
             val response = directions.getDirections(start, end, travelMode)
 
             assert(response == null)
