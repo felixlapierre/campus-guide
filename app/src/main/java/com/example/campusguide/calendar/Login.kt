@@ -50,7 +50,6 @@ class Login constructor(
         }
     }
 
-
     override fun onPermissionGranted(permissions: Array<out String>) {
         if(permissions.contains(calendarPermission)) {
             updateUI()
