@@ -55,12 +55,14 @@ class ChooseCalendarDialogFragment constructor(
     private fun handleOkSelected(radioGroup: RadioGroup) {
         // Find which calendar was selected
         val checkedId = radioGroup.checkedRadioButtonId
-        val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
-        val selectedText = radioButton.text.toString()
-        // Return selected calendar
-        calendar.setSelectedCalendar(selectedText)
-        Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
-        // Change menu item title for Calendar to include selected calendar
-        calendar.setCalendarMenuItemName(selectedText)
+        if (checkedId != -1) {
+            val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
+            val selectedText = radioButton.text.toString()
+            // Return selected calendar
+            calendar.setSelectedCalendar(selectedText)
+            Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
+            // Change menu item title for Calendar to include selected calendar
+            calendar.setCalendarMenuItemName(selectedText)
+        }
     }
 }
