@@ -2,9 +2,8 @@ package com.example.campusguide.directions
 
 import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
-import com.example.campusguide.Constants
-import com.example.campusguide.R
 import com.example.campusguide.map.Map
+import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
@@ -13,11 +12,6 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import com.google.android.gms.maps.model.Dash
-import com.google.android.gms.maps.model.PatternItem
-import com.google.android.gms.maps.model.Gap
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.LatLngBounds
 
 /**
  * Represents a route between two coordinates on the map.

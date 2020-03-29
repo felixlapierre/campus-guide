@@ -5,7 +5,6 @@ import com.example.campusguide.Constants
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationListener
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 
 class SearchLocationMarker constructor(private val activity: Activity, private val map: Map): SearchLocationListener {
     private var marker: Marker? = null

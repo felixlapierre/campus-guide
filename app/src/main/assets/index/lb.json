@@ -1,7 +1,10 @@
 {
-  "name": "Webster Library",
+  "name": "Pavillion J.W. McConnell Bldg",
   "code": "LB",
-  "address": "Pavillion J.W. McConnell Bldg, 1400 Maisonneuve Blvd W, Montreal, Quebec H3G 1M8",
+  "address": "1400 Maisonneuve Blvd W, Montreal, Quebec H3G 1M8",
+  "services": "-R. Howard Webster Library\n-Birks Student Center\n-Campus Stores\n-4TH SPACE",
+  "lat": "45.496758",
+  "lon": "-73.57793649999999",
   "rooms": [
     {
       "name": "Consultation Room",
