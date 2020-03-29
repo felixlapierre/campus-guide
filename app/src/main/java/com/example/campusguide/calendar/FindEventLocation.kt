@@ -1,6 +1,5 @@
 package com.example.campusguide.calendar
 
-import android.app.Activity
 import android.location.Location
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.search.SearchResult
