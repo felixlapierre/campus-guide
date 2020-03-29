@@ -3,6 +3,7 @@ package com.example.campusguide.map
 import CustomInfoWindow
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.BuildingHighlights
@@ -15,7 +16,8 @@ import com.google.android.gms.maps.model.LatLng
 class GoogleMapInitializer constructor(
     private val activity: FragmentActivity,
     private val wrapper: GoogleMapAdapter,
-    private val mapId: String
+    private val mapId: String,
+    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null
 ) : OnMapReadyCallback {
     init {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
@@ -40,13 +42,10 @@ class GoogleMapInitializer constructor(
                 )
             }
             BuildingHighlights(map, activity).addBuildingHighlights()
-            map.setOnPolygonClickListener(
-                BuildingClickListener(
-                    wrapper,
-                    BuildingIndexSingleton.getInstance(activity.assets),
-                    CustomInfoWindow(activity)
-                )
-            )
+
+            if(onPolygonClickListener != null) {
+                map.setOnPolygonClickListener(onPolygonClickListener)
+            }
             map.setContentDescription("Google Maps Ready")
         }
     }

@@ -28,7 +28,7 @@ class BuildingClickListenerTest {
 
     @Test
     fun testBuildingFound() {
-        val listener = BuildingClickListener(map, index, mock())
+        val listener = BuildingClickListener(map, index, mock(), null)
 
         val marker : Marker = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
@@ -42,7 +42,7 @@ class BuildingClickListenerTest {
 
     @Test
     fun testBuildingNotFound() {
-        val listener = BuildingClickListener(map, index, mock())
+        val listener = BuildingClickListener(map, index, mock(), null)
 
         val marker : Marker = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
