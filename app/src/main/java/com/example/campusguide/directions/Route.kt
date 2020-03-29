@@ -2,11 +2,10 @@ package com.example.campusguide.directions
 
 import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
-import com.example.campusguide.Constants
-import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
+import com.example.campusguide.utils.Helper
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.*
@@ -39,16 +38,16 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
     private val startString: String = "Start"
     private val destString: String = "Destination"
 
-    private fun capitalizeWords(location: String): String
-    {
-        val words = location.split(" ").toMutableList()
-        var output = ""
-        for (word in words) {
-            output += word.capitalize() + " "
-        }
-        output = output.trim()
-        return output
-    }
+//    private fun capitalizeWords(location: String): String
+//    {
+//        val words = location.split(" ").toMutableList()
+//        var output = ""
+//        for (word in words) {
+//            output += word.capitalize() + " "
+//        }
+//        output = output.trim()
+//        return output
+//    }
 
     fun set(start: String, end: String, travelMode: String) {
         polyline?.remove()
@@ -76,13 +75,13 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                         response.routes[0].legs[0].startLocation.lat.toDouble(),
                         response.routes[0].legs[0].startLocation.lng.toDouble()
                     )
-                ).title(capitalizeWords(start)).snippet(startString)
+                ).title(Helper.capitalizeWords(start)).snippet(startString)
                 val endPoint = MarkerOptions().position(
                     LatLng(
                         response.routes[0].legs[0].endLocation.lat.toDouble(),
                         response.routes[0].legs[0].endLocation.lng.toDouble()
                     )
-                ).title(capitalizeWords(end)).snippet(destString)
+                ).title(Helper.capitalizeWords(end)).snippet(destString)
                 val routeBounds = LatLngBounds(
                     LatLng(
                         response.routes[0].bounds.southwest.lat.toDouble(),
