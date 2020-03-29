@@ -51,7 +51,7 @@ class BuildingClickListener(
 
     private fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
         map.setInfoWindowAdapter(customInfoWindow)
-        map.setInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
+        map.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
             directions?.startFlow(null, info.fullName)
         })
 

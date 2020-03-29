@@ -42,11 +42,11 @@ class GoogleMapAdapter : Map {
         return adapted.addPolyline(polyOptions)
     }
 
-    override fun setInfoWindowAdapter(adapter: GoogleMap.InfoWindowAdapter) {
-        adapted.setInfoWindowAdapter(adapter)
+    override fun setInfoWindowAdapter(infoWindowAdapter: GoogleMap.InfoWindowAdapter) {
+        adapted.setInfoWindowAdapter(infoWindowAdapter)
     }
 
-    override fun setInfoWindowClickListener(listener: GoogleMap.OnInfoWindowClickListener) {
-        adapted.setOnInfoWindowClickListener(listener)
+    override fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener) {
+        adapted.setOnInfoWindowClickListener(infoWindowClickListener)
     }
 }

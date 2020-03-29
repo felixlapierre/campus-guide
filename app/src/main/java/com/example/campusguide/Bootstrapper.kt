@@ -12,9 +12,9 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
-import com.example.campusguide.map.SearchLocationMarker
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
+import com.example.campusguide.search.PopupSearchLocationListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
@@ -61,17 +61,14 @@ class Bootstrapper constructor(activity: MapsActivity) {
                 searchLocationProvider,
                 Constants.REGULAR_SEARCH_REQUEST_CODE
             )
-        search.locationListener = SearchLocationMarker(activity, map)
+
+        search.locationListener = PopupSearchLocationListener(
+            activity,
+            DirectionsFlow(activity, permissions, locationProvider),
+            map
+        )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
-
-        // Center on Location
-        val centerLocation = CenterLocationListener(
-            map,
-            permissions,
-            locationProvider
-        )
-        activity.setOnCenterLocationListener(centerLocation)
 
         // Switch Campus
         val switchCampus = SwitchCampus(

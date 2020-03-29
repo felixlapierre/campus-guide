@@ -38,7 +38,7 @@ class IndoorLocationProviderTest {
     @Test
     fun testNotIndoorLocation() = runBlocking {
         val id = "some_not_indoor_id"
-        val expected = SearchLocation("someName", "someId", 1.0, 2.0)
+        val expected = SearchLocation("someName", "secondaryText", "someId", 1.0, 2.0)
 
         val buildingIndex: BuildingIndex = mock()
         val nextInChain: SearchLocationProvider = mock()
