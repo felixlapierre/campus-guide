@@ -6,6 +6,8 @@ import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
+import java.util.*
+import kotlin.collections.ArrayList
 
 class Events constructor(
     val activity: MapsActivity,
@@ -50,73 +52,77 @@ class Events constructor(
         }
 
         // narrow down to today & make sure it's sorted chronologically
-        val now = System.currentTimeMillis()
+        val unsortedEvents: ArrayList<Pair<Long, String>> = arrayListOf()
         for (pair in calendarEvents) {
+            if(pair.first > getDayStart() && pair.first < getDayEnd()){
+                unsortedEvents.add(pair)
+            }
+        }
 
+        val sortedList = unsortedEvents.sortedWith(compareBy { it.second.toLowerCase() })
+
+        for (pair in sortedList){
+            todaysEvents.add(pair)
         }
 
     }
 
     // TODO: WIP for UC-16, autocomplete destination
-    fun getNextEventLocation() {
+    fun getNextEventLocation(): String {
 
         var nextEventLocation = ""
 
         if (todaysEvents.isEmpty()) {
             setTodaysEvents()
-        } else {
-            // get current time
-            val now = System.currentTimeMillis()
-
-            // get next event based on current time
-            for (event in todaysEvents) {
-                if (event.first > now) {
-                    nextEventLocation = event.second
-                    break
-                }
-            }
-
-            if (nextEventLocation == "") {
-                // something
-            }
-
-            // autocomplete destination
-//            return nextEventLocation
         }
+        // get current time
+        val now = System.currentTimeMillis()
+
+        // get next event based on current time
+        for (event in todaysEvents) {
+            if (event.first > now) {
+                nextEventLocation = event.second
+                break
+            }
+        }
+
+        if (nextEventLocation == "") {
+            // something
+        }
+
+        return nextEventLocation
     }
 
     // TODO: WIP for UC-16
-    fun getLastEventLocation() {
+    fun getLastEventLocation(): String {
 
         var lastEventLocation = ""
 
         if (todaysEvents.isEmpty()) {
             setTodaysEvents()
-        } else {
-            // get current time
-            val now = System.currentTimeMillis()
-
-//            val date = Date(now)
-
-            // get last event based on current time
-            // -> current
-            var eventsBeforeNow: ArrayList<Pair<Long, String>> = arrayListOf()
-            for (event in todaysEvents) {
-                if (event.first < now) {
-                    eventsBeforeNow.add(event)
-                }
-            }
-
-            // keep location specifically
-            lastEventLocation = eventsBeforeNow[-1].second
-
-            if (lastEventLocation == "") {
-                // something
-            }
-            // autocomplete destination
-
-//            return lastEventLocation
         }
+
+        // get current time
+        val now = System.currentTimeMillis()
+
+        // get last event based on current time
+        // -> current
+        var eventsBeforeNow: ArrayList<Pair<Long, String>> = arrayListOf()
+        for (event in todaysEvents) {
+            if (event.first < now) {
+                eventsBeforeNow.add(event)
+            }
+        }
+
+        // keep location specifically
+        val lastEventIndex = eventsBeforeNow.size - 1
+        lastEventLocation = eventsBeforeNow[lastEventIndex].second
+
+        if (lastEventLocation == "") {
+            // something
+        }
+
+        return lastEventLocation
     }
 
     // TODO: WIP for UC-16, check in with Felix('s code)
@@ -124,6 +130,24 @@ class Events constructor(
         val parsedLocation = ""
 
         return parsedLocation
+    }
+
+    private fun getDayStart(): Long {
+        val dayStart = Date()
+        dayStart.hours = 0
+        dayStart.minutes = 0
+        dayStart.seconds = 0
+
+        return dayStart.time
+    }
+
+    private fun getDayEnd(): Long {
+        val dayEnd = Date()
+        dayEnd.hours = 23
+        dayEnd.minutes = 59
+        dayEnd.seconds = 59
+
+        return dayEnd.time
     }
 
 }
