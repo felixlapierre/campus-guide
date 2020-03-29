@@ -114,12 +114,12 @@ class Events constructor(
             }
         }
 
-        // keep location specifically
-        val lastEventIndex = eventsBeforeNow.size - 1
-        lastEventLocation = eventsBeforeNow[lastEventIndex].second
+        if(eventsBeforeNow.size == 0){
+            // handle no events
 
-        if (lastEventLocation == "") {
-            // something
+        } else {
+            // keep location specifically
+            lastEventLocation = eventsBeforeNow[eventsBeforeNow.size - 1].second
         }
 
         return lastEventLocation
