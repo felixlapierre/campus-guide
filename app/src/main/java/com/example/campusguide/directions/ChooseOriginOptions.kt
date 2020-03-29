@@ -55,6 +55,10 @@ class ChooseOriginOptions(
             searchForLocation()
         }
 
+        view.findViewById<Button>(R.id.calendar)?.setOnClickListener {
+            useLastEventLocation()
+        }
+
         return view
     }
 
