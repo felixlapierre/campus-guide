@@ -14,7 +14,15 @@ class IndoorSearchResultProviderTest {
     init {
         val fakeRoomOne = Room("fakeRoomOne", "100.00", "1.0", "2.0")
         val fakeRoomTwo = Room("fakeRoomTwo", "200.00", "3.0", "4.0")
-        val fakeBuilding = Building("fakeBuilding", "BD", "fakeAddress", listOf(fakeRoomOne, fakeRoomTwo))
+        val fakeBuilding = Building(
+            "fakeBuilding",
+            "BD",
+            "fakeAddress",
+            "fakeServices",
+            "1.0",
+            "1.0",
+            listOf(fakeRoomOne, fakeRoomTwo)
+        )
         testIndex = mock()
         whenever(testIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
     }
@@ -50,7 +58,7 @@ class IndoorSearchResultProviderTest {
     }
 
     @Test
-    fun searchYieldsNoResults() = runBlocking  {
+    fun searchYieldsNoResults() = runBlocking {
         val provider = IndoorSearchResultProvider(testIndex, 3)
         val results = provider.search("queryNotMatchingAnything")
         assert(results.isEmpty())

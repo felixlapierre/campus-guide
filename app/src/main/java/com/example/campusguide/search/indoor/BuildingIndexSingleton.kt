@@ -2,6 +2,7 @@ package com.example.campusguide.search.indoor
 
 import android.content.res.AssetManager
 import com.beust.klaxon.Klaxon
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -52,5 +53,13 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
      */
     override fun getBuildings(): List<Building>? {
         return buildings
+    }
+
+    override fun getBuildingAtCoordinates(coordinates: LatLng): Building? {
+        return buildings?.find { building ->
+            val lat = building.lat.toDouble()
+            val lon = building.lon.toDouble()
+            coordinates.latitude == lat && coordinates.longitude == lon
+        }
     }
 }
