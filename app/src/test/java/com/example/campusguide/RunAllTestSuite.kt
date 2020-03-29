@@ -10,7 +10,6 @@ import com.example.campusguide.search.BuildingIndexSingletonTest
 import com.example.campusguide.search.IndoorLocationProviderTest
 import com.example.campusguide.search.IndoorSearchResultProviderTest
 import com.example.campusguide.search.SearchResultAdapterTest
-import com.example.campusguide.utils.BuildingHighlightsTest
 import com.example.campusguide.utils.DatabaseTest
 import com.example.campusguide.utils.HelperTest
 import com.example.campusguide.utils.MessageDialogFragmentTest
@@ -36,7 +35,6 @@ import org.junit.runners.Suite
     BuildingIndexSingletonTest::class,
     SearchResultAdapterTest::class,
     HelperTest::class,
-    BuildingHighlightsTest::class,
     PolygonUtilsTest::class,
     BuildingClickListenerTest::class
 )
