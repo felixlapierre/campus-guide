@@ -1,8 +1,10 @@
 package com.example.campusguide.map
 
+import CustomInfoWindow
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.map.infoWindow.BuildingClickListener
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -10,7 +12,11 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 
-class GoogleMapInitializer constructor(private val activity: FragmentActivity, private val wrapper: GoogleMapAdapter, private val mapId: String): OnMapReadyCallback {
+class GoogleMapInitializer constructor(
+    private val activity: FragmentActivity,
+    private val wrapper: GoogleMapAdapter,
+    private val mapId: String
+) : OnMapReadyCallback {
     init {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         val id = activity.resources.getIdentifier(mapId, "id", activity.packageName)
@@ -19,12 +25,12 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
     }
 
     override fun onMapReady(map: GoogleMap?) {
-        if(map != null) {
+        if (map != null) {
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
 
             // Center the map on Hall building
-            if(mapId == "maps_activity_map") {
+            if (mapId == "maps_activity_map") {
                 val hall = LatLng(45.497290, -73.578824)
                 map.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -34,11 +40,14 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity, p
                 )
             }
             BuildingHighlights(map, activity).addBuildingHighlights()
-            map.setOnPolygonClickListener(BuildingClickListener(activity, map))
+            map.setOnPolygonClickListener(
+                BuildingClickListener(
+                    wrapper,
+                    BuildingIndexSingleton.getInstance(activity.assets),
+                    CustomInfoWindow(activity)
+                )
+            )
             map.setContentDescription("Google Maps Ready")
-
-            val mapClickListener = MapClickListener(map, activity)
-            map.setOnMapClickListener(mapClickListener)
         }
     }
 
