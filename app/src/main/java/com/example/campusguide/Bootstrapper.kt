@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import CustomInfoWindow
 import android.content.Intent
 import android.view.View
 import com.example.campusguide.calendar.Login
@@ -11,6 +12,7 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.PopupSearchLocationListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
@@ -29,22 +31,24 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
-        // Map
-        val map = GoogleMapAdapter()
-        GoogleMapInitializer(activity, map, "maps_activity_map")
-
         //Permissions
         val permissions = Permissions(activity)
         activity.permissions = permissions
 
-        // Center on Location
         val locationProvider = FusedLocationProvider(activity)
-        val centerLocation = CenterLocationListener(
+
+        // Directions
+        val directions = DirectionsFlow(activity, permissions, locationProvider)
+
+        // Map
+        val map = GoogleMapAdapter()
+        val buildingClickListener = BuildingClickListener(
             map,
-            permissions,
-            locationProvider
+            BuildingIndexSingleton.getInstance(activity.assets),
+            CustomInfoWindow(activity),
+            directions
         )
-        activity.setOnCenterLocationListener(centerLocation)
+        GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener)
 
         // Search
         val searchLocationProvider = IndoorLocationProvider(
