@@ -8,10 +8,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
+import com.example.campusguide.calendar.Events
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationListener
@@ -22,6 +24,10 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.PlacesClient
+import database.ObjectBox
+import database.entity.Calendar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 class ChooseDestinationOptions(private val locationSelectedListener: (location: Location) -> Unit): DialogFragment() {
 
@@ -45,10 +51,16 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
     private fun useNextEvent(){
         //TODO fill this method once we have the logic to use a calendar Event
         dismiss()
-        val location = Location("Montreal")
-        location.latitude = 45.5017
-        location.longitude = -73.5673
-        locationSelectedListener(location)
+        val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
+        val mycal = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
+
+        var nextLocation = Events(activity as MapsActivity, mycal).getNextEventLocation()
+
+        Toast.makeText(activity, "Next loc: $nextLocation", Toast.LENGTH_LONG).show()
+//        val location = Location("Montreal")
+//        location.latitude = 45.5017
+//        location.longitude = -73.5673
+//        locationSelectedListener(location)
     }
 
     private fun chooseFromMap(){

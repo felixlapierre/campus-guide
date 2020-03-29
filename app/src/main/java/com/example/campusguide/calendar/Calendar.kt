@@ -9,6 +9,10 @@ import com.example.campusguide.MapsActivity
 import kotlin.collections.ArrayList
 import com.example.campusguide.R
 import com.google.android.material.navigation.NavigationView
+import database.ObjectBox
+import database.entity.Calendar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 /**
  * Class for handling the user's calendars.
@@ -88,6 +92,7 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
         for (pair in calendarsList) {
             if (pair.second == calName) {
                 selectedCalendar = pair
+                putCalendarInDB(pair)
             }
         }
     }
@@ -95,5 +100,14 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
     fun setCalendarMenuItemName(calName: String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
+    }
+
+    private fun putCalendarInDB(pair: Pair<Long, String>) {
+        // make sure there are no other calendars in the DB
+        val calendar: Box<database.entity.Calendar> = ObjectBox.boxStore.boxFor()
+        calendar.removeAll()
+
+        val c = Calendar(id = pair.first, name = pair.second)
+        calendar.put(c)
     }
 }

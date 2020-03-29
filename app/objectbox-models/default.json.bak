@@ -140,9 +140,28 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "6:5829974302711028652",
+      "lastPropertyId": "4:1730212868662427391",
+      "name": "Calendar",
+      "properties": [
+        {
+          "id": "3:911557238292356570",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "4:1730212868662427391",
+          "name": "name",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "5:376825112130238433",
+  "lastEntityId": "6:5829974302711028652",
   "lastIndexId": "5:8246044350848783847",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
@@ -150,7 +169,10 @@
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    8795019710687960813,
+    3590432315654405596
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
