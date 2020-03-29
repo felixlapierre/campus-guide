@@ -36,6 +36,7 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
     private val email: String = userEmail
     private var calendarsList: ArrayList<Pair<Long, String>> = arrayListOf()
 
+    // permissions checked elsewhere - suppressing to get rid of IDE's complaints
     @SuppressLint("MissingPermission")
     fun getCalendars(): ArrayList<Pair<Long, String>> {
         val selection: String = "((${CalendarContract.Calendars.ACCOUNT_NAME} = ?) AND (" +

@@ -29,7 +29,7 @@ class Events constructor(
     private val todaysEvents: ArrayList<Pair<Long, String>> =
         arrayListOf() // event time & location str
 
-    // TODO: WIP for UC-16
+    // permissions checked elsewhere - suppressing to get rid of IDE's complaints
     @SuppressLint("MissingPermission")
     private fun setTodaysEvents() {
         // get calendar's events
@@ -67,7 +67,6 @@ class Events constructor(
 
     }
 
-    // TODO: WIP for UC-16, autocomplete destination
     fun getNextEventLocation(): String? {
 
         var nextEventLocation: String? = null
@@ -88,8 +87,7 @@ class Events constructor(
 
         return nextEventLocation
     }
-
-    // TODO: WIP for UC-16
+    
     fun getLastEventLocation(): String? {
 
         var lastEventLocation: String? = null
