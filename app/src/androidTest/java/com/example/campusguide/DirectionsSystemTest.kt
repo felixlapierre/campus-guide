@@ -81,7 +81,8 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
-        val travelMode = travelModes.random()
+        //val travelMode = travelModes.random()
+        val travelMode = "walking"
 
         // Click on the travel mode button
         val travelModeButton: UiObject = device.findObject(UiSelector().descriptionContains(travelMode))
@@ -159,7 +160,8 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
-        val travelMode = travelModes.random()
+        //val travelMode = travelModes.random()
+        val travelMode = "walking"
 
         // Click on the travel mode button
         val travelModeButton: UiObject = device.findObject(UiSelector().descriptionContains(travelMode))
