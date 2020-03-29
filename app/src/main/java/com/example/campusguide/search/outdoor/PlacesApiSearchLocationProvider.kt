@@ -25,6 +25,7 @@ class PlacesApiSearchLocationProvider constructor(private val activity: Fragment
             if(latlng != null && name != null) {
                 val location = SearchLocation(
                     name,
+                    place.address!!,
                     id,
                     latlng.latitude,
                     latlng.longitude

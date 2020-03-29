@@ -66,7 +66,8 @@
             android:layout_gravity="center_vertical"
             android:text="-"
             android:paddingStart="10dp"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:contentDescription="drivingRadioButton"/>
         <RadioButton
             android:id="@+id/radio_walking"
             android:layout_width="0dp"
@@ -76,7 +77,8 @@
             android:layout_gravity="center_vertical"
             android:text="-"
             android:paddingStart="10dp"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:contentDescription="walkingRadioButton"/>
         <RadioButton
             android:id="@+id/radio_transit"
             android:layout_width="0dp"
@@ -86,7 +88,8 @@
             android:layout_gravity="center_vertical"
             android:text="-"
             android:paddingStart="10dp"
-            android:onClick="onRadioButtonClicked"/>
+            android:onClick="onRadioButtonClicked"
+            android:contentDescription="transitRadioButton"/>
     </RadioGroup>
     <fragment
         android:id="@+id/directions_activity_map"

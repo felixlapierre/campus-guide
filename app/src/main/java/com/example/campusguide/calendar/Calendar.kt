@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
-import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import kotlin.collections.ArrayList
 import com.example.campusguide.R
@@ -80,8 +79,6 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
         return calendars
     }
 
-    // TODO: Store the selected calendar locally to prevent user
-    //  from having to select calendar each time the app is started
     fun setSelectedCalendar(calName: String) {
         // find ID for selected calendar
         for (pair in calendarsList) {

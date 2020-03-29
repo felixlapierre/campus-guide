@@ -21,7 +21,15 @@ class IndoorLocationProviderTest {
         val fakeBuildingCode = "BD"
         fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
         fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
+            Building(
+                "someBuildingName",
+                fakeBuildingCode,
+                "someAddress",
+                "someServices",
+                "1.0",
+                "1.0",
+                listOf(fakeRoom)
+            )
 
         fakeIndex = mock()
         whenever(fakeIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
@@ -30,7 +38,7 @@ class IndoorLocationProviderTest {
     @Test
     fun testNotIndoorLocation() = runBlocking {
         val id = "some_not_indoor_id"
-        val expected = SearchLocation("someName", "someId", 1.0, 2.0)
+        val expected = SearchLocation("someName", "secondaryText", "someId", 1.0, 2.0)
 
         val buildingIndex: BuildingIndex = mock()
         val nextInChain: SearchLocationProvider = mock()

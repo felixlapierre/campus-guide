@@ -46,13 +46,13 @@ class Login constructor(
                 Manifest.permission.READ_CALENDAR
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Make sure app doesn't crash after giving permissions
             permissions.requestPermission(calendarPermission)
         }
     }
 
-    override fun onPermissionGranted(permission: String) {
-        if(permission == calendarPermission) {
+
+    override fun onPermissionGranted(permissions: Array<out String>) {
+        if(permissions.contains(calendarPermission)) {
             updateUI()
         }
     }

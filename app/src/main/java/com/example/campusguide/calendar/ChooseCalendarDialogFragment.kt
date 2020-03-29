@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -44,7 +43,7 @@ class ChooseCalendarDialogFragment constructor(
         return builder.create()
     }
 
-    private fun fillRadioGroup(radioGroup: RadioGroup){
+    private fun fillRadioGroup(radioGroup: RadioGroup) {
         // Create radio button options for each calendar found on the logged in account
         for(pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
@@ -53,15 +52,17 @@ class ChooseCalendarDialogFragment constructor(
         }
     }
 
-    private fun handleOkSelected(radioGroup: RadioGroup){
+    private fun handleOkSelected(radioGroup: RadioGroup) {
         // Find which calendar was selected
         val checkedId = radioGroup.checkedRadioButtonId
-        val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
-        val selectedText = radioButton.text.toString()
-        // Return selected calendar
-        calendar.setSelectedCalendar(selectedText)
-        Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
-        // Change menu item title for Calendar to include selected calendar
-        calendar.setCalendarMenuItemName(selectedText)
+        if (checkedId != -1) {
+            val radioButton = radioGroup.findViewById<RadioButton>(checkedId)
+            val selectedText = radioButton.text.toString()
+            // Return selected calendar
+            calendar.setSelectedCalendar(selectedText)
+            Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
+            // Change menu item title for Calendar to include selected calendar
+            calendar.setCalendarMenuItemName(selectedText)
+        }
     }
 }

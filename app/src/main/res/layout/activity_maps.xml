@@ -92,10 +92,12 @@
                 android:layout_gravity="left|bottom"
                 android:layout_margin="8dp"
                 android:scaleType="center"
+
+                android:contentDescription="navigateButton"
                 app:srcCompat="@drawable/ic_compass_outline"
                 app:maxImageSize="36dp"
                 app:fabSize="normal"
-                app:backgroundTint="@android:color/white"/>
+                app:backgroundTint="@android:color/white" />
         </fragment>
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView

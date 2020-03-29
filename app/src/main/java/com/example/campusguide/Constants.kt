@@ -24,4 +24,7 @@ object Constants {
 
     const val CONFIRM_CHOICE = "CONFIRM"
     const val CANCEL_CHOICE = "Cancel"
+
+    const val MAPS_ACTIVITY_CONTENT_DESCRIPTION = "maps_activity_map ready"
+    const val DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION = "directions_activity_map ready"
 }

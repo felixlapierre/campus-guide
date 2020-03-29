@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:contentDescription="directionsDialogLayout"
     tools:visibility="visible">
 
     <EditText
@@ -17,7 +18,8 @@
         android:layout_marginBottom="4dp"
         android:hint="Start Location"
         android:inputType="text"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:contentDescription="startLocationTextInput"/>
 
     <EditText
         android:id="@+id/endLocationTextInput"
@@ -30,6 +32,7 @@
         android:fontFamily="sans-serif"
         android:hint="End Location"
         android:inputType="text"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:contentDescription="endLocationTextInput"/>
 
 </LinearLayout>
