@@ -4,51 +4,53 @@ import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.google.android.gms.maps.model.LatLng
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class BuildingClickListenerTest {
+    lateinit var index: BuildingIndex
+    lateinit var map: Map
+    lateinit var points: ArrayList<LatLng>
 
-    @Test
-    fun testBuildingNotFound() {
-        val index: BuildingIndex = mock()
-
-        val coords = LatLng(1.0, 1.0)
-
-        whenever(index.getBuildingAtCoordinates(coords)).thenReturn(null)
-
-        val listener = BuildingClickListener(mock(), mock(), index, mock())
-
-        val info = listener.determineBuilding(coords)
-
-        assert(info.symbol == "B")
+    @Before
+    fun setUp() {
+        index = mock()
+        map = mock()
+        points = arrayListOf(LatLng(1.0, 1.0), LatLng(1.0, 2.0), LatLng(2.0, 1.0), LatLng(2.0, 2.0))
     }
 
     @Test
     fun testBuildingFound() {
-        val index: BuildingIndex = mock()
+        val listener = BuildingClickListener(map, index, mock(), null)
 
-        val coords = LatLng(1.0, 1.0)
-        val building = Building(
-            "someName",
-            "someCode",
-            "someAddress",
-            "someServices",
-            "1.0",
-            "1.0",
-            emptyList()
-        )
+        val marker : Marker = mock()
+        whenever(map.addMarker(any())).thenReturn(marker)
+        whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(Building("Hall", "address", "Code", "services", "", "", mock()))
 
-        whenever(index.getBuildingAtCoordinates(coords)).thenReturn(building)
+        listener.polygonClick(points)
 
-        val listener = BuildingClickListener(mock(), mock(), index, mock())
+        verify(marker).setTag(any())
+        verify(marker).showInfoWindow()
+    }
 
-        val info = listener.determineBuilding(coords)
+    @Test
+    fun testBuildingNotFound() {
+        val listener = BuildingClickListener(map, index, mock(), null)
 
-        assert(info.symbol == building.code)
+        val marker : Marker = mock()
+        whenever(map.addMarker(any())).thenReturn(marker)
+        whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(null)
+
+        listener.polygonClick(points)
+
+        verify(marker).setTag(any())
+        verify(marker).showInfoWindow()
     }
 }

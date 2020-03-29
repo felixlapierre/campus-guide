@@ -3,6 +3,7 @@ package com.example.campusguide
 import CustomInfoWindow
 import android.content.Intent
 import android.view.View
+import com.example.campusguide.calendar.Login
 import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.DirectionsFlow
@@ -32,6 +33,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         //Permissions
         val permissions = Permissions(activity)
+        activity.permissions = permissions
+
         val locationProvider = FusedLocationProvider(activity)
 
         // Directions
@@ -97,5 +100,15 @@ class Bootstrapper constructor(activity: MapsActivity) {
                 "chooseDestinationOptions"
             )
         })
+
+        // Login
+        val login = Login(activity, permissions)
+        login.onCreate()
+        login.onStart()
+        activity.addActivityResultListener(login)
+
+        // Drawer
+        val drawer = Drawer(activity, login)
+        drawer.setupDrawer()
     }
 }
