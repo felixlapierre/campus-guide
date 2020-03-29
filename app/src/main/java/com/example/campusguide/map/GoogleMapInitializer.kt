@@ -46,7 +46,7 @@ class GoogleMapInitializer constructor(
             if(onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
             }
-            map.setContentDescription("Google Maps Ready")
+            map.setContentDescription("$mapId ready")
         }
     }
 
