@@ -1,8 +1,5 @@
 package com.example.campusguide
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
@@ -10,7 +7,6 @@ import androidx.test.uiautomator.*
 import com.example.campusguide.utils.LocalResources
 import database.ObjectBox
 import junit.framework.Assert.assertEquals
-import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -22,28 +18,11 @@ private const val TIMEOUT = 5000L
 @SdkSuppress(minSdkVersion = 18)
 class SwitchCampusSystemTest {
 
-    private lateinit var device: UiDevice
+    private var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     @Before
-    fun startMainActivityFromHomeScreen() {
-
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
-        device.pressHome()
-
-        val launcherPackage: String = device.launcherPackageName
-        assertThat(launcherPackage, notNullValue())
-        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)),
-            TIMEOUT
-        )
-
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage("com.example.campusguide")
-        context.startActivity(intent)
-
-        device.wait(Until.hasObject(By.pkg("com.example.campusguide").depth(0)),
-            TIMEOUT
-        )
+    fun setUp() {
+        SystemTestUtils.startActivityFromHomeScreen(device, TIMEOUT)
     }
 
     @Test

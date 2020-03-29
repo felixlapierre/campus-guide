@@ -1,7 +1,5 @@
 package com.example.campusguide
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
@@ -22,32 +20,15 @@ private const val TIMEOUT = 5000L
 @SdkSuppress(minSdkVersion = 18)
 class DirectionsSystemTest {
 
-    private lateinit var device: UiDevice
+    private val device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     private val travelModes = arrayOf("driving", "walking", "transit")
 
     @get:Rule
-    var permissionRule: GrantPermissionRule? = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    var permissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
     @Before
-    fun startMainActivityFromHomeScreen() {
-
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
-        device.pressHome()
-
-        val launcherPackage: String = device.launcherPackageName
-        assertThat(launcherPackage, notNullValue())
-        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)),
-            TIMEOUT
-        )
-
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage("com.example.campusguide")
-        context.startActivity(intent)
-
-        device.wait(Until.hasObject(By.pkg("com.example.campusguide").depth(0)),
-            TIMEOUT
-        )
+    fun setUp() {
+        SystemTestUtils.startActivityFromHomeScreen(device, TIMEOUT)
     }
 
     @Test
