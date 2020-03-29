@@ -68,9 +68,9 @@ class Events constructor(
     }
 
     // TODO: WIP for UC-16, autocomplete destination
-    fun getNextEventLocation(): String {
+    fun getNextEventLocation(): String? {
 
-        var nextEventLocation = ""
+        var nextEventLocation: String? = null
 
         if (todaysEvents.isEmpty()) {
             setTodaysEvents()
@@ -86,17 +86,13 @@ class Events constructor(
             }
         }
 
-        if (nextEventLocation == "") {
-            // something
-        }
-
         return nextEventLocation
     }
 
     // TODO: WIP for UC-16
-    fun getLastEventLocation(): String {
+    fun getLastEventLocation(): String? {
 
-        var lastEventLocation = ""
+        var lastEventLocation: String? = null
 
         if (todaysEvents.isEmpty()) {
             setTodaysEvents()
@@ -114,22 +110,12 @@ class Events constructor(
             }
         }
 
-        if(eventsBeforeNow.size == 0){
-            // handle no events
-
-        } else {
+        if(eventsBeforeNow.isNotEmpty()) {
             // keep location specifically
             lastEventLocation = eventsBeforeNow[eventsBeforeNow.size - 1].second
         }
 
         return lastEventLocation
-    }
-
-    // TODO: WIP for UC-16, check in with Felix('s code)
-    private fun parseLocation(location: String): String {
-        val parsedLocation = ""
-
-        return parsedLocation
     }
 
     private fun getDayStart(): Long {

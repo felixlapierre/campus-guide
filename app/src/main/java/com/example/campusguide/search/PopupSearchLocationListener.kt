@@ -13,7 +13,8 @@ import com.google.android.gms.maps.model.MarkerOptions
 class PopupSearchLocationListener constructor(private val activity: AppCompatActivity, private val directions: DirectionsFlow, private val map: GoogleMapAdapter): SearchLocationListener {
     private var marker: com.example.campusguide.map.Marker? = null
 
-    override fun onLocation(location: SearchLocation) {
+    override fun onLocation(location: SearchLocation?) {
+        if(location == null) return
         activity.runOnUiThread {
             val travelWindow = TravelWindow(activity)
             map.setInfoWindowAdapter(travelWindow)
