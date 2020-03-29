@@ -32,8 +32,10 @@ class CenterLocationListener constructor(
         }
     }
 
-    override fun onPermissionGranted() {
-        goToCurrentLocation()
+    override fun onPermissionGranted(permissions: Array<out String>) {
+        if(permissions.contains(locationPermission)) {
+            goToCurrentLocation()
+        }
     }
 
     /**
