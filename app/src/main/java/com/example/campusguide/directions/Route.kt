@@ -2,8 +2,6 @@ package com.example.campusguide.directions
 
 import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
-import com.example.campusguide.Constants
-import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
@@ -19,6 +17,7 @@ import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.maps.model.TravelMode
+import kotlin.reflect.jvm.internal.impl.metadata.ProtoBuf
 
 /**
  * Represents a route between two coordinates on the map.
@@ -51,7 +50,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         return output
     }
 
-    fun set(start: String, end: String, travelMode: TravelMode) {
+   fun set(start: String, end: String, travelMode: TravelMode, optionalCallback: (() -> Unit)? = null) {
         val travelModeString: String = when (travelMode){
             TravelMode.WALKING ->
                 "Walking";
@@ -64,10 +63,11 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
             TravelMode.UNKNOWN ->
                 "Unknown";
         }
-        this.set(start, end, travelModeString);
+        this.set(start, end, travelModeString, optionalCallback);
     }
 
-    fun set(start: String, end: String, travelMode: String) {
+    // TODO: Make the Route.set method waay smaller by extracting functionality and moving responsibilities to proper classes
+    fun set(start: String, end: String, travelMode: String, optionalCallback: (() -> Unit)? = null) {
         polyline?.remove()
         begin?.remove()
         dest?.remove()
@@ -88,18 +88,23 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         GlobalScope.launch {
             val response = directions.getDirections(start, end, travelMode)
             if (response != null) {
-                val startPoint = MarkerOptions().position(
-                    LatLng(
-                        response.routes[0].legs[0].startLocation.lat.toDouble(),
-                        response.routes[0].legs[0].startLocation.lng.toDouble()
-                    )
+
+                val startPoint = LatLng(
+                    response.routes[0].legs[0].startLocation.lat.toDouble(),
+                    response.routes[0].legs[0].startLocation.lng.toDouble()
+                )
+                val startPointMarkerOptions = MarkerOptions().position(
+                    startPoint
                 ).title(capitalizeWords(start)).snippet(startString)
-                val endPoint = MarkerOptions().position(
-                    LatLng(
-                        response.routes[0].legs[0].endLocation.lat.toDouble(),
-                        response.routes[0].legs[0].endLocation.lng.toDouble()
-                    )
+
+                val endPoint = LatLng(
+                    response.routes[0].legs[0].endLocation.lat.toDouble(),
+                    response.routes[0].legs[0].endLocation.lng.toDouble()
+                )
+                val endPointMarkerOptions = MarkerOptions().position(
+                    endPoint
                 ).title(capitalizeWords(end)).snippet(destString)
+
                 val routeBounds = LatLngBounds(
                     LatLng(
                         response.routes[0].bounds.southwest.lat.toDouble(),
@@ -137,8 +142,8 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                         .pattern(PATTERN_POLYGON_ALPHA)
                         .addAll(decodedAsGoodLatLng)
                     polyline = map.addPolyline(polyOptions)
-                    begin = map.addMarker(startPoint)
-                    dest = map.addMarker(endPoint)
+                    begin = map.addMarker(startPointMarkerOptions)
+                    dest = map.addMarker(endPointMarkerOptions)
                     map.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
                             routeBounds,

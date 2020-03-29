@@ -93,5 +93,20 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DirectionsActivity"/>
+        tools:context=".DirectionsActivity">
+        <androidx.appcompat.widget.AppCompatToggleButton
+            android:id="@+id/switchCampusButton"
+            android:contentDescription="switchCampusButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textOff="@string/loy_campus"
+            android:textOn="@string/sgw_campus"
+            android:background="@drawable/ic_switch_campus_button"
+            android:textStyle="bold" />
+    </fragment>
 </LinearLayout>
