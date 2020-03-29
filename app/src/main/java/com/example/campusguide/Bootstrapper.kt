@@ -2,6 +2,7 @@ package com.example.campusguide
 
 import android.content.Intent
 import android.view.View
+import com.example.campusguide.calendar.Login
 import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.location.CenterLocationListener
@@ -86,5 +87,15 @@ class Bootstrapper constructor(activity: MapsActivity) {
                 "chooseDestinationOptions"
             )
         })
+
+        // Login
+        val login = Login(activity, permissions)
+        login.onCreate()
+        login.onStart()
+        activity.addActivityResultListener(login)
+
+        // Drawer
+        val drawer = Drawer(activity, login)
+        drawer.setupDrawer()
     }
 }

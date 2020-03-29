@@ -68,8 +68,6 @@ class MapsActivity : AppCompatActivity() {
         }
     }
 
-    fun onOpenMenu(view: View) { }
-
     fun setOnNavigateListener(listener: View.OnClickListener) {
         val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
         navigateButton.setOnClickListener(listener)

@@ -21,4 +21,7 @@ object Constants {
     const val SEARCH_LEFT_BOUND = -74.031124
     const val SEARCH_TOP_BOUND = 45.734999
     const val SEARCH_RIGHT_BOUND = -73.417826
+
+    const val CONFIRM_CHOICE = "CONFIRM"
+    const val CANCEL_CHOICE = "Cancel"
 }
