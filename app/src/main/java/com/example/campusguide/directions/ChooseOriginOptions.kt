@@ -10,10 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
+import com.example.campusguide.calendar.Events
+import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocation
@@ -23,6 +27,12 @@ import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.utils.permissions.PermissionsSubject
+import database.ObjectBox
+import database.entity.Calendar
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.lang.NullPointerException
 
 class ChooseOriginOptions(
@@ -47,6 +57,10 @@ class ChooseOriginOptions(
 
         view.findViewById<Button>(R.id.search)?.setOnClickListener {
             searchForLocation()
+        }
+
+        view.findViewById<Button>(R.id.calendar)?.setOnClickListener {
+            useLastEventLocation()
         }
 
         return view
@@ -80,13 +94,26 @@ class ChooseOriginOptions(
         val search = CustomSearch(act, provider, Constants.ORIGIN_SEARCH_REQUEST_CODE)
 
         search.setLocationListener {searchLocation ->
-            val location = Location(searchLocation.name)
-            location.latitude = searchLocation.lat
-            location.longitude = searchLocation.lon
-            locationSelectedListener(location)
+            if(searchLocation != null) {
+                val location = Location(searchLocation.name)
+                location.latitude = searchLocation.lat
+                location.longitude = searchLocation.lon
+                locationSelectedListener(location)
+            }
             act.removeActivityResultListener(search)
         }
         act.addActivityResultListener(search)
         search.openCustomSearchActivity()
+    }
+
+    private fun useLastEventLocation(){
+        val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
+        val mycal = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
+
+        var lastLocation = Events(activity as MapsActivity, mycal).getLastEventLocation()
+
+        GlobalScope.launch {
+            FindEventLocation(activity as FragmentActivity, locationSelectedListener).getLocationOfEvent(lastLocation)
+        }
     }
 }

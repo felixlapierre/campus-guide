@@ -5,5 +5,5 @@ package com.example.campusguide.search
  * using the ID of the search result.
  */
 interface SearchLocationProvider {
-    suspend fun getLocation(id: String): SearchLocation
+    suspend fun getLocation(id: String): SearchLocation?
 }

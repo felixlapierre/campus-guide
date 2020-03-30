@@ -15,7 +15,16 @@ class GraphTest {
     fun testEdgesAreSymmetric() {
         val rooms: List<Room> = listOf(Room("room1", "100.00", "1.0", "1.0"))
         val nodes: List<Node> = listOf(Node("basic", "1_node", 0.5, 0.5, mutableListOf("100.00")))
-        val building = Building("someBuilding", "BD", "someAddress", rooms, nodes)
+        val building = Building(
+            "someBuilding",
+            "BD",
+            "someAddress",
+            "someServices",
+            "1.0",
+            "2.0",
+            rooms,
+            nodes
+        )
 
         val graph = Graph(building)
 

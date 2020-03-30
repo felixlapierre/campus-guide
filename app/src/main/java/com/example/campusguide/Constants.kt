@@ -21,4 +21,10 @@ object Constants {
     const val SEARCH_LEFT_BOUND = -74.031124
     const val SEARCH_TOP_BOUND = 45.734999
     const val SEARCH_RIGHT_BOUND = -73.417826
+
+    const val CONFIRM_CHOICE = "CONFIRM"
+    const val CANCEL_CHOICE = "Cancel"
+
+    const val MAPS_ACTIVITY_CONTENT_DESCRIPTION = "maps_activity_map ready"
+    const val DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION = "directions_activity_map ready"
 }

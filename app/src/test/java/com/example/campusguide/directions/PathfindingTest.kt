@@ -30,7 +30,7 @@ class PathfindingTest {
             Node("nodeB", "1_nodeB", 0.625, 0.665, mutableListOf("1_nodeC", "102.00")),
             Node("nodeC", "1_nodeC", 0.725, 0.665, mutableListOf("103.00"))
         )
-        val building = Building("someName", "someCode", "someAddress", rooms, nodes)
+        val building = Building("someName", "someCode", "someAddress", "someServices", "1.0", "2.0", rooms, nodes)
         graph = Graph(building)
     }
 

@@ -12,9 +12,9 @@ import java.lang.RuntimeException
  */
 class IndoorLocationProvider constructor(
     private val index: BuildingIndex,
-    private val next: SearchLocationProvider
+    private val next: SearchLocationProvider?
 ) : SearchLocationProvider {
-    override suspend fun getLocation(id: String): SearchLocation {
+    override suspend fun getLocation(id: String): SearchLocation? {
         val isIndoor = id.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
 
         if(isIndoor) {
@@ -26,7 +26,7 @@ class IndoorLocationProvider constructor(
             val roomCode = locationInfo[2]
             return getIndoorLocation(buildingCode, roomCode, id)
         } else {
-            return next.getLocation(id)
+            return next?.getLocation(id)
         }
     }
 
@@ -50,6 +50,7 @@ class IndoorLocationProvider constructor(
 
         return SearchLocation(
             targetRoom.name,
+            targetBuilding.name,
             id,
             targetRoom.lat.toDouble(),
             targetRoom.lon.toDouble()

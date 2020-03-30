@@ -1,18 +1,59 @@
 package com.example.campusguide.map.infoWindow
 
-import CustomInfoWindow
-import android.content.Context
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.example.campusguide.Constants
+import com.example.campusguide.directions.DirectionsFlow
+import com.example.campusguide.map.Map
+import com.example.campusguide.map.Marker
+import com.example.campusguide.search.indoor.BuildingIndex
+import com.example.campusguide.utils.PolygonUtils
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polygon
 
 
-class BuildingClickListener(private val context: Context, private val googleMap: GoogleMap) : GoogleMap.OnPolygonClickListener{
+class BuildingClickListener(
+    private val map: Map,
+    private val index: BuildingIndex,
+    private val customInfoWindow: GoogleMap.InfoWindowAdapter,
+    private val directions: DirectionsFlow?
+) : GoogleMap.OnPolygonClickListener {
     private var marker: Marker? = null
 
-    fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
-        val customInfoWindow = CustomInfoWindow(context)
-        googleMap.setInfoWindowAdapter(customInfoWindow)
+    override fun onPolygonClick(p0: Polygon?) {
+        polygonClick(p0?.points as ArrayList<LatLng>)
+    }
+
+    fun polygonClick(points: ArrayList<LatLng>) {
+        val location = PolygonUtils().getPolygonCenterPoint(points)
+        val info = determineBuilding(location)
+
+        buildingInfoWindow(location!!, info)
+    }
+
+    private fun determineBuilding(location: LatLng?): InfoWindowData {
+        val info = InfoWindowData()
+        var building = location?.let { index.getBuildingAtCoordinates(it) }
+        if (building == null) {
+            info.symbol = "B"
+            info.fullName = "Building"
+            info.address = "123 address"
+            info.servicesList = "-service1\n-service2"
+        } else {
+            info.symbol = building.code
+            info.fullName = building.name
+            info.address = building.address
+            info.servicesList = building.services
+        }
+        info.services = "Services:"
+        return info
+    }
+
+    private fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
+        map.setInfoWindowAdapter(customInfoWindow)
+        map.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
+            directions?.startFlow(null, info.fullName)
+        })
 
         // Clears any existing markers from the GoogleMap
         marker?.remove()
@@ -23,64 +64,12 @@ class BuildingClickListener(private val context: Context, private val googleMap:
         // Setting position on the MarkerOptions
         markerOptions.position(location)
 
-        //Set Custom InfoWindow Adapter
-        googleMap.setInfoWindowAdapter(customInfoWindow)
-
-        marker = googleMap.addMarker(markerOptions)
-        marker?.tag = info
+        marker = map.addMarker(markerOptions)
+        marker?.setTag(info)
         marker?.showInfoWindow()
 
         // Animating to the info window
-        val cameraLocation = LatLng((location.latitude)+0.00055, location.longitude)
-        googleMap.animateCamera(CameraUpdateFactory.newLatLng(cameraLocation))
+        val cameraLocation = LatLng((location.latitude) + 0.00055, location.longitude)
+        map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
-
-    override fun onPolygonClick(p0: Polygon?) {
-        val location = getPolygonCenterPoint(p0?.points as ArrayList<LatLng>)
-        val info = determineBuilding(location)
-
-        buildingInfoWindow(location!!, info)
-    }
-
-    private fun getPolygonCenterPoint(polygonPointsList: ArrayList<LatLng>): LatLng? {
-        var centerLatLng: LatLng? = null
-        val builder: LatLngBounds.Builder = LatLngBounds.Builder()
-        for (i in 0 until polygonPointsList.size) {
-            builder.include(polygonPointsList[i])
-        }
-        val bounds: LatLngBounds = builder.build()
-        centerLatLng = bounds.center
-        return centerLatLng
-    }
-
-    private fun determineBuilding(location: LatLng?): InfoWindowData {
-        val info = InfoWindowData()
-        if(location == LatLng(45.49727, -73.5789415)){
-            info.symbol = "H"
-            info.fullName = "Henry F. Hall Building"
-            info.address = "1455 Blvd de Maisonneuve O, Montreal, QC"
-            info.services = "Services:"
-            info.servicesList = "-Concordia Student Union\n-Engineering and Computer Science Society\n-Student Success Center"
-        } else if(location == LatLng(45.496758, -73.57793649999999)){
-            info.symbol = "LB"
-            info.fullName = "J.W McConnell Building"
-            info.address = "1400 Blvd de Maisonneuve O, Montreal, QC"
-            info.services = "Services:"
-            info.servicesList = "-R. Howard Webster Library\n-Birks Student Center\n-Campus Stores\n-4TH SPACE"
-        } else if(location == LatLng(45.495548299999996, -73.57818470000001)) {
-            info.symbol = "EV"
-            info.fullName = "Engineering, Computer Science and Visual Arts Integrated Complex"
-            info.address = "1515 St Catherine W., Montreal, QC"
-            info.services = "Services:"
-            info.servicesList = "-Le Gym\n-FOFA Gallery"
-        } else {
-            info.symbol = "B"
-            info.fullName = "Building"
-            info.address = "location" + (location?.latitude) + ", " + (location?.longitude)
-            info.services = "Services:"
-            info.servicesList = "-service1\n-service2"
-        }
-        return info
-    }
-
 }

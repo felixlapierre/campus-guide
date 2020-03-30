@@ -8,11 +8,13 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.permissions.Permissions
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity() {
-    private val permissions = Permissions(this)
+    var permissions: Permissions? = null
     private lateinit var onSearchListener: View.OnClickListener
     private val activityResultListeners: MutableList<ActivityResultListener> = mutableListOf()
 
@@ -37,7 +39,7 @@ class MapsActivity : AppCompatActivity() {
         requestedPermissions: Array<out String>,
         grantResults: IntArray
     ) {
-        permissions.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
+        permissions?.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
     }
 
     fun setOnSearchClickedListener(listener: View.OnClickListener) {
@@ -67,8 +69,6 @@ class MapsActivity : AppCompatActivity() {
             listener.onActivityResult(requestCode, resultCode, data)
         }
     }
-
-    fun onOpenMenu(view: View) { }
 
     fun setOnNavigateListener(listener: View.OnClickListener) {
         val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
