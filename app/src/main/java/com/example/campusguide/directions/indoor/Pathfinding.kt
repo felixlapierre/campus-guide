@@ -12,15 +12,13 @@ class Pathfinding constructor(private val graph: Graph) {
     val nodeData: MutableMap<String, NodeData> = mutableMapOf()
 
     // Priority queue requires api version 24 for some reason
-    @RequiresApi(Build.VERSION_CODES.N)
     fun findRoom(start: String, target: String): List<String> {
         if(graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
 
-        val open = PriorityQueue<String>() { s1, s2 ->
-            return@PriorityQueue calculatePriority(s1, s2, target)
-        }
+        // TODO: Determine a way to use a priority queue here instead
+        val open = ArrayDeque<String>()
 
         openSet = open
         open.add(start)

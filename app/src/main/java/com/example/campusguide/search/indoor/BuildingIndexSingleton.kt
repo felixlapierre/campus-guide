@@ -64,4 +64,14 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
             coordinates.latitude == lat && coordinates.longitude == lon
         }
     }
+
+    override fun findBuildingByCode(code: String): Building? {
+        return getBuildings()?.find { building ->
+            building.code == code
+        }
+    }
+
+    override fun getAddressOfBuilding(code: String): String? {
+        return findBuildingByCode(code)?.address
+    }
 }
