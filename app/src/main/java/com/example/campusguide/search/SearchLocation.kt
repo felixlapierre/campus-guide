@@ -2,7 +2,7 @@ package com.example.campusguide.search
 
 import com.example.campusguide.location.Location
 
-class SearchLocation constructor(
+open class SearchLocation constructor(
     name: String,
     lat: Double,
     lon: Double,

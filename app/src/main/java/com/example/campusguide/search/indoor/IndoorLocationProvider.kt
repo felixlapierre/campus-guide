@@ -48,7 +48,7 @@ class IndoorLocationProvider constructor(
         val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
             ?: throw RoomNotFoundException("Room code $roomCode was not found in the index.")
 
-        return SearchLocation(
+        return IndoorLocation(
             targetRoom.name,
             targetRoom.lat.toDouble(),
             targetRoom.lon.toDouble(),
