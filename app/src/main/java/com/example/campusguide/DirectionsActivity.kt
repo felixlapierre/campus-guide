@@ -30,13 +30,15 @@ class DirectionsActivity : AppCompatActivity() {
         // Extract origin and destination from the intent
         start = intent.getStringExtra("OriginEncoded")!!
         end = intent.getStringExtra("DestinationEncoded")!!
+        val startName = intent.getStringExtra("OriginName")!!
+        val endName = intent.getStringExtra("DestinationName")!!
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
-            text = start
+            text = startName
         }
         findViewById<TextView>(R.id.destination).apply {
-            text = end
+            text = endName
         }
 
         // Display driving directions by default as soon as the activity gets created
