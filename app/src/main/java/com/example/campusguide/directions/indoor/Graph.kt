@@ -23,9 +23,11 @@ class Graph constructor(building: Building) {
         building.nodes.forEach {node ->
             val floor = node.code[0].toInt()
             node.floor = floor
-            val latlng = toLatLng(node.x, node.y)
-            node.x = latlng.lng
-            node.y = latlng.lat
+            if(node.x < 1 && node.y < 1) {
+                val latlng = toLatLng(node.x, node.y)
+                node.x = latlng.lng
+                node.y = latlng.lat
+            }
             map[node.code] = node
         }
 
