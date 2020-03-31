@@ -171,6 +171,13 @@
   ],
   "nodes": [
     {
+      "type": "stairs",
+      "code": "2_entry_stairs",
+      "x": 0.203,
+      "y": 0.429,
+      "edges": [""]
+    },
+    {
       "type": "basic",
       "code": "2_near_printers",
       "x": 0.375,
@@ -246,13 +253,6 @@
       "x": 0.355,
       "y": 0.442,
       "edges": ["2_near_printers"]
-    },
-    {
-      "type": "stairs",
-      "code": "2_entry_stairs",
-      "x": 0.203,
-      "y": 0.429,
-      "edges": [""]
     },
     {
       "type": "elevators",

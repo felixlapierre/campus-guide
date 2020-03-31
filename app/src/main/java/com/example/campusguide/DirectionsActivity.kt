@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.Route
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 
 class DirectionsActivity : AppCompatActivity() {
 
@@ -41,6 +42,9 @@ class DirectionsActivity : AppCompatActivity() {
             text = endName
         }
 
+        start = getAddressOfIndoorLocation(start)
+        end = getAddressOfIndoorLocation(end)
+
         // Display driving directions by default as soon as the activity gets created
         route = Route(map, this)
         route.set(start, end, travelMode)
@@ -63,21 +67,36 @@ class DirectionsActivity : AppCompatActivity() {
 
             when (view.id) {
                 R.id.radio_driving ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Driving"
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_walking ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Walking"
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_transit ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Transit"
                         route.set(start, end, travelMode)
                     }
             }
+        }
+    }
+
+    private fun isIndoorLocation(encodedLocation: String): Boolean {
+        return encodedLocation.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
+    }
+
+    private fun getAddressOfIndoorLocation(encodedLocation: String): String {
+        if (isIndoorLocation(encodedLocation)) {
+            val splitLocation = encodedLocation.split("_")
+            return BuildingIndexSingleton.getInstance(this.assets).getBuildings()?.find { building ->
+                building.code == splitLocation[1]
+            }?.address ?: encodedLocation
+        } else {
+            return encodedLocation
         }
     }
 }
