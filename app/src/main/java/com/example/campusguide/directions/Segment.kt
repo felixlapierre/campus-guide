@@ -10,5 +10,6 @@ import com.example.campusguide.map.Map
 interface Segment {
     fun setNext(next: IndoorSegment)
     fun setNext(next: OutdoorSegment)
+    fun appendTo(segment: Segment)
     fun display(map: Map)
 }

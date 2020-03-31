@@ -42,6 +42,10 @@ class IndoorSegment constructor(start: String, private val args: SegmentArgs) :
         this.next = segmentFromMyBuildingToOutdoorSegment
     }
 
+    override fun appendTo(segment: Segment) {
+        segment.setNext(this)
+    }
+
     override fun display(map: Map) {
         route.display(map)
         next?.display(map)

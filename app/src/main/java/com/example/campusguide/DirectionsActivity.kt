@@ -1,24 +1,33 @@
 package com.example.campusguide
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 
 import com.example.campusguide.directions.Route
+import com.example.campusguide.directions.Segment
+import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorRoute
+import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.indoor.Pathfinding
+import com.example.campusguide.directions.outdoor.OutdoorDirections
+import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.utils.DisplayMessageErrorListener
+import com.example.campusguide.utils.request.ApiKeyRequestDecorator
+import com.example.campusguide.utils.request.VolleyRequestDispatcher
 
 class DirectionsActivity : AppCompatActivity() {
 
     private lateinit var map: GoogleMapAdapter
     private lateinit var route: Route
-    private val indoorRoutes: MutableList<IndoorRoute> = mutableListOf()
     private lateinit var start: String
     private lateinit var end: String
     private var travelMode = "Driving"
@@ -45,8 +54,29 @@ class DirectionsActivity : AppCompatActivity() {
             text = endName
         }
 
-        route = Route(map, this)
-        route.set(start, end, travelMode)
+        val errorListener = DisplayMessageErrorListener(this);
+        val directions = OutdoorDirections(
+            ApiKeyRequestDecorator(
+                this,
+                VolleyRequestDispatcher(
+                    this,
+                    errorListener
+                )
+            ),
+            KlaxonDirectionsAPIResponseParser(),
+            errorListener
+        )
+        val segmentArgs =
+            SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
+
+        val firstSegment = createSegment(start, segmentArgs)
+        val secondSegment = createSegment(end, segmentArgs)
+        secondSegment.appendTo(firstSegment)
+
+        firstSegment.display(map)
+
+        // route = Route(map, this)
+        // route.set(start, end, travelMode)
     }
 
     /**
@@ -85,5 +115,12 @@ class DirectionsActivity : AppCompatActivity() {
 
     private fun isIndoorLocation(encodedLocation: String): Boolean {
         return encodedLocation.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
+    }
+
+    private fun createSegment(location: String, args: SegmentArgs): Segment {
+        return if (isIndoorLocation(location)) IndoorSegment(location, args) else OutdoorSegment(
+            location,
+            args
+        )
     }
 }

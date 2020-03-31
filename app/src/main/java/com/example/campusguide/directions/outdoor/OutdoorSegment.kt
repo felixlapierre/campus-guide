@@ -32,6 +32,10 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         this.next = next
     }
 
+    override fun appendTo(segment: Segment) {
+        segment.setNext(this)
+    }
+
     override fun display(map: Map) {
         GlobalScope.launch {
             if(routingTask?.await() != null) {
