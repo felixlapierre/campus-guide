@@ -87,23 +87,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Navigation
         activity.setOnNavigateListener(View.OnClickListener {
-            val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-                val chooseOriginOptions =
-                    ChooseOriginOptions(permissions, locationProvider) { origin ->
-                        val originLatLng = LatLng(origin.lat, origin.lon)
-                        val destinationLatLng = LatLng(destination.lat, destination.lon)
-                        val intent = Intent(activity, DirectionsActivity::class.java).apply {
-                            putExtra("Origin", originLatLng.toString())
-                            putExtra("Destination", destinationLatLng.toString())
-                        }
-                        activity.startActivity(intent)
-                    }
-                chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
-            }
-            chooseDestinationOptions.show(
-                activity.supportFragmentManager,
-                "chooseDestinationOptions"
-            )
+            directions.startFlow(null, null)
         })
 
         // Login
