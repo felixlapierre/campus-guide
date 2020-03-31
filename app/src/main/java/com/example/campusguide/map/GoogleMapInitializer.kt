@@ -32,7 +32,7 @@ class GoogleMapInitializer constructor(
             map.uiSettings.isMyLocationButtonEnabled = false
 
             // Center the map on Hall building
-            if (mapId == "maps_activity_map") {
+            //if (mapId == "maps_activity_map") {
                 val hall = LatLng(45.497290, -73.578824)
                 map.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
@@ -40,7 +40,7 @@ class GoogleMapInitializer constructor(
                         Constants.ZOOM_STREET_LVL
                     )
                 )
-            }
+            //}
             BuildingHighlights(map, activity).addBuildingHighlights()
 
             if(onPolygonClickListener != null) {

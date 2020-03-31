@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import android.app.Activity
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -46,9 +47,9 @@ class IndoorSegment constructor(start: String, private val args: SegmentArgs) :
         segment.setNext(this)
     }
 
-    override fun display(map: Map) {
+    override fun display(map: Map, activity: Activity) {
         route.display(map)
-        next?.display(map)
+        next?.display(map, activity)
     }
 
     fun getBuilding(): Building {

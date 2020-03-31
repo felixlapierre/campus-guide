@@ -73,7 +73,9 @@ class DirectionsActivity : AppCompatActivity() {
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
 
-        firstSegment.display(map)
+        runOnUiThread {
+            firstSegment.display(map, this)
+        }
 
         // route = Route(map, this)
         // route.set(start, end, travelMode)

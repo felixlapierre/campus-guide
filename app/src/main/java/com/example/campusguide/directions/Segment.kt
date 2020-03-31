@@ -1,5 +1,6 @@
 package com.example.campusguide.directions
 
+import android.app.Activity
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.Map
@@ -11,5 +12,5 @@ interface Segment {
     fun setNext(next: IndoorSegment)
     fun setNext(next: OutdoorSegment)
     fun appendTo(segment: Segment)
-    fun display(map: Map)
+    fun display(map: Map, activity: Activity)
 }

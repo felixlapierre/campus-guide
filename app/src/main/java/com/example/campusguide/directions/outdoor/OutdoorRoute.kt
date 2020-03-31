@@ -4,6 +4,7 @@ import com.example.campusguide.map.Map
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import com.google.maps.internal.PolylineEncoding
 
 class OutdoorRoute constructor(private val directions: OutdoorDirections) {
     private var polylineOptions: PolylineOptions? = null
@@ -13,14 +14,12 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
         val response = directions.getDirections(start, end, travelMode)
 
         if(response != null) {
-            val firstRoute = response.routes[0]
-            val listOfPoints = firstRoute.legs.map { leg ->
-                LatLng(leg.startLocation.lat.toDouble(), leg.startLocation.lng.toDouble())
-            }.toMutableList()
-            val lastLocation = firstRoute.legs.get(firstRoute.legs.size - 1).endLocation
-            listOfPoints.add(LatLng(lastLocation.lat.toDouble(), lastLocation.lng.toDouble()))
+            val line = response.routes[0].overviewPolyline.points
+            val decoded = PolylineEncoding.decode(line).map {
+                LatLng(it.lat, it.lng)
+            }
 
-            polylineOptions = PolylineOptions().addAll(listOfPoints)
+            polylineOptions = PolylineOptions().addAll(decoded)
         }
     }
 
