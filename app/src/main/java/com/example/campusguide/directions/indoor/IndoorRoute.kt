@@ -32,7 +32,7 @@ class IndoorRoute constructor(private val index: BuildingIndex) {
 
         return pathfinder.findRoom(startRoomCode, endRoomCode).map { room ->
             val node = graph.get(room)
-            LatLng(node!!.x, node!!.y)
+            LatLng(node!!.y, node!!.x)
         }
     }
 
