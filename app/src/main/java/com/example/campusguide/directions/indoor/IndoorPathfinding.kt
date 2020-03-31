@@ -64,7 +64,8 @@ class Pathfinding constructor(private val graph: Graph) {
         val currNode = graph.get(curr)!!
         val currData = nodeData[curr]!!
         currNode.edges.forEach {
-            val neighbor = graph.get(it)!!
+            val neighbor = graph.get(it)
+                ?: throw RuntimeException("Could not find room: $it")
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)

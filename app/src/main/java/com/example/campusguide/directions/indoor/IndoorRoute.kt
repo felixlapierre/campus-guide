@@ -38,7 +38,8 @@ class IndoorRoute constructor(private val index: BuildingIndex) {
 
     fun display(map: Map) {
         polyline?.remove()
-        polyline = map.addPolyline(polylineOptions)
+        if(polylineOptions != null)
+            polyline = map.addPolyline(polylineOptions)
     }
 
     fun clear() {

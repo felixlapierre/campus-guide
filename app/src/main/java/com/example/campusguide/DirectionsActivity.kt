@@ -38,7 +38,7 @@ class DirectionsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_directions)
 
         map = GoogleMapAdapter()
-        GoogleMapInitializer(this, map, "directions_activity_map")
+        val initializer = GoogleMapInitializer(this, map, "directions_activity_map")
 
         // Extract origin and destination from the intent
         start = intent.getStringExtra("OriginEncoded")!!
@@ -73,8 +73,10 @@ class DirectionsActivity : AppCompatActivity() {
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
 
-        runOnUiThread {
-            firstSegment.display(map, this)
+        initializer.setOnMapReadyListener {
+            runOnUiThread {
+                firstSegment.display(map, this)
+            }
         }
 
         // route = Route(map, this)

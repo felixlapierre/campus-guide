@@ -20,7 +20,7 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         routingTask = GlobalScope.async {
             route.set(start, next.getBuilding().address, args.travelMode)
         }
-        val nextSegment = IndoorSegment(next.getBuilding().nodes[0].code, args)
+        val nextSegment = IndoorSegment(next.getBuilding().code, next.getBuilding().nodes[0].code, args)
         nextSegment.setNext(next)
         this.next = nextSegment
     }
