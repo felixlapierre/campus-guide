@@ -1,7 +1,7 @@
 package com.example.campusguide.calendar
 
-import android.location.Location
 import androidx.fragment.app.FragmentActivity
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
@@ -49,10 +49,6 @@ class FindEventLocation constructor(
                 searchResult = outdoorResults[0]
         }
         if (searchResult == null) return null
-        val searchLocation = locationProvider.getLocation(searchResult.id) ?: return null
-        val result = Location("event")
-        result.latitude = searchLocation.lat
-        result.longitude = searchLocation.lon
-        return result
+        return locationProvider.getLocation(searchResult.id) ?: return null
     }
 }

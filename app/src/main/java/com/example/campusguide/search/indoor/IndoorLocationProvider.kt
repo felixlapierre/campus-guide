@@ -50,10 +50,10 @@ class IndoorLocationProvider constructor(
 
         return SearchLocation(
             targetRoom.name,
-            targetBuilding.name,
-            id,
             targetRoom.lat.toDouble(),
-            targetRoom.lon.toDouble()
+            targetRoom.lon.toDouble(),
+            id,
+            targetBuilding.name
         )
     }
 }

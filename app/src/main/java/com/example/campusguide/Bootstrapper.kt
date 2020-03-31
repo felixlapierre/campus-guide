@@ -90,8 +90,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
             val chooseDestinationOptions = ChooseDestinationOptions { destination ->
                 val chooseOriginOptions =
                     ChooseOriginOptions(permissions, locationProvider) { origin ->
-                        val originLatLng = LatLng(origin.latitude, origin.longitude)
-                        val destinationLatLng = LatLng(destination.latitude, destination.longitude)
+                        val originLatLng = LatLng(origin.lat, origin.lon)
+                        val destinationLatLng = LatLng(destination.lat, destination.lon)
                         val intent = Intent(activity, DirectionsActivity::class.java).apply {
                             putExtra("Origin", originLatLng.toString())
                             putExtra("Destination", destinationLatLng.toString())

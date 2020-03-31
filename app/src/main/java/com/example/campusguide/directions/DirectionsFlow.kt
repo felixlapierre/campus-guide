@@ -27,7 +27,7 @@ class DirectionsFlow constructor(private val activity: AppCompatActivity, privat
 
     private suspend fun getDestination() = suspendCoroutine<String> { cont ->
         val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-            val destinationLatLng = LatLng(destination.latitude, destination.longitude)
+            val destinationLatLng = LatLng(destination.lat, destination.lon)
             cont.resume(destinationLatLng.toString())
         }
         chooseDestinationOptions.show(
@@ -38,7 +38,7 @@ class DirectionsFlow constructor(private val activity: AppCompatActivity, privat
 
     private suspend fun getOrigin() = suspendCoroutine<String> { cont ->
         val chooseOriginOptions = ChooseOriginOptions(permissions, locationProvider) { origin ->
-            val originLatLng = LatLng(origin.latitude, origin.longitude)
+            val originLatLng = LatLng(origin.lat, origin.lon)
             cont.resume(originLatLng.toString())
         }
         chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")

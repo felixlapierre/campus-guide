@@ -3,7 +3,6 @@ package com.example.campusguide.directions
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +15,7 @@ import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.calendar.Events
 import com.example.campusguide.calendar.FindEventLocation
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -62,9 +62,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
     private fun chooseFromMap(){
         //TODO fill this method once we have the logic to select from the map
         dismiss()
-        val location = Location("Montreal")
-        location.latitude = 45.5017
-        location.longitude = -73.5673
+        val location = Location("Montreal", 45.5017, -73.5673)
         locationSelectedListener(location)
     }
 
@@ -80,10 +78,7 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
 
         search.setLocationListener {searchLocation ->
             if(searchLocation != null) {
-                val location = Location(searchLocation.name)
-                location.latitude = searchLocation.lat
-                location.longitude = searchLocation.lon
-                locationSelectedListener(location)
+                locationSelectedListener(searchLocation)
             }
             act.removeActivityResultListener(search)
         }
