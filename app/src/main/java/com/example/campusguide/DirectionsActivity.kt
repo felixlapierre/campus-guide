@@ -28,8 +28,8 @@ class DirectionsActivity : AppCompatActivity() {
         GoogleMapInitializer(this, map, "directions_activity_map")
 
         // Extract origin and destination from the intent
-        start = intent.getStringExtra("Origin")!!
-        end = intent.getStringExtra("Destination")!!
+        start = intent.getStringExtra("OriginEncoded")!!
+        end = intent.getStringExtra("DestinationEncoded")!!
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
