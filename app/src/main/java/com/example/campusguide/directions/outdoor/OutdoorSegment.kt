@@ -39,6 +39,9 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     }
 
     override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>>{ cont ->
+        if(next == null) {
+            cont.resume(emptyList())
+        }
         GlobalScope.launch {
             if (routingTask?.await() != null) {
                 val result = mutableListOf<LatLng>()

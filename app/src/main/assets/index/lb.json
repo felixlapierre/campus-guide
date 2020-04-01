@@ -152,7 +152,7 @@
     },
     {
       "name": "Friends of the Library Room",
-      "code": "261.00",
+      "code": "361.00",
       "lat": "45.497053",
       "lon": "-73.577675"
     },
@@ -410,7 +410,7 @@
     },
     {
       "type": "basic",
-      "code": "3_near_231",
+      "code": "3_near_331",
       "x": 0.375,
       "y": 0.852,
       "edges": ["331.00", "3_stairs_SSW"]
