@@ -41,16 +41,17 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     abstract fun visit(node: Node)
     abstract fun getResults(): List<String>
 
-    fun calculatePriority(s1: String, s2: String, target: String): Int {
-        val node1 = graph.get(s1)
-        val node2 = graph.get(s2)
-        val targetNode = graph.get(target)
-
-        val comparison = approximateDistance(node1, targetNode) - approximateDistance(node2, targetNode)
-        if(comparison < 0) return -1
-        else if(comparison > 0) return 1
-        else return 0
-    }
+    //TODO: Reinstate priority queue mechanism
+//    fun calculatePriority(s1: String, s2: String, target: String): Int {
+//        val node1 = graph.get(s1)
+//        val node2 = graph.get(s2)
+//        val targetNode = graph.get(target)
+//
+//        val comparison = approximateDistance(node1, targetNode) - approximateDistance(node2, targetNode)
+//        if(comparison < 0) return -1
+//        else if(comparison > 0) return 1
+//        else return 0
+//    }
 
     private fun approximateDistance(node1: Node?, node2: Node?): Double {
         if(node1 == null || node2 == null)

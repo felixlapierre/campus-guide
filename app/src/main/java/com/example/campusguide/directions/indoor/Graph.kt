@@ -1,7 +1,5 @@
 package com.example.campusguide.directions.indoor
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.google.maps.model.LatLng
