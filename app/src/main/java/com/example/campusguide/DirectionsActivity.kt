@@ -67,11 +67,11 @@ class DirectionsActivity : AppCompatActivity() {
         val segmentArgs =
             SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
 
-        val firstSegment = createSegment(start, segmentArgs)
-        val secondSegment = createSegment(end, segmentArgs)
-        secondSegment.appendTo(firstSegment)
+        val head = createSegment(start, segmentArgs)
+        val lastSegment = createSegment(end, segmentArgs)
+        lastSegment.appendTo(head)
 
-        val path = PathPolyline(startName, endName, firstSegment)
+        val path = PathPolyline(startName, endName, head)
 
         initializer.setOnMapReadyListener {
             GlobalScope.launch {
