@@ -101,7 +101,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     private fun getCoordinatesOfNode(code: String): LatLng {
         val node = graph.get(code)
-        return LatLng(node!!.x, node!!.y)
+        return LatLng(node!!.y, node!!.x)
     }
 
     data class NodeData(
