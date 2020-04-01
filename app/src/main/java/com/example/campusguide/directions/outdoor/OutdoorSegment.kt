@@ -1,14 +1,15 @@
 package com.example.campusguide.directions.outdoor
 
-import android.app.Activity
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
-import com.example.campusguide.map.Map
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class OutdoorSegment(private val start: String, private val args: SegmentArgs) : Segment {
     private val route = OutdoorRoute(args.outdoorDirections)
@@ -37,19 +38,14 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         segment.setNext(this)
     }
 
-    override fun display(map: Map, activity: Activity) {
-        /**
-         * We must wait for the route to have been received from the google API before
-         * displaying the route, so we start a coroutine to wait for the routing task. Once the
-         * task is done we must return to the UI thread to display map elements.
-         */
+    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>>{ cont ->
         GlobalScope.launch {
             if (routingTask?.await() != null) {
-                activity.runOnUiThread {
-                    route.display(map)
-                }
+                val result = mutableListOf<LatLng>()
+                result.addAll(route.getLine())
+                result.addAll(next?.toListOfCoordinates() ?: emptyList())
+                cont.resume(result)
             }
         }
-        next?.display(map, activity)
     }
 }

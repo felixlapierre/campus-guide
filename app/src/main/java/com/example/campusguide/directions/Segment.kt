@@ -1,9 +1,8 @@
 package com.example.campusguide.directions
 
-import android.app.Activity
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorSegment
-import com.example.campusguide.map.Map
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Represents a segment of a route.
@@ -12,5 +11,5 @@ interface Segment {
     fun setNext(next: IndoorSegment)
     fun setNext(next: OutdoorSegment)
     fun appendTo(segment: Segment)
-    fun display(map: Map, activity: Activity)
+    suspend fun toListOfCoordinates(): List<LatLng>
 }

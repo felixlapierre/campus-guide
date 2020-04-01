@@ -7,13 +7,10 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Polyline
 
 class IndoorRoute constructor(private val index: BuildingIndex) {
-    private var polyline: Polyline? = null
-    private var polylineOptions: PolylineOptions? = null
+    private var line: List<LatLng> = emptyList()
 
     fun set(buildingCode: String, startRoomCode: String, endRoomCode: String) {
-        val path = getPath(buildingCode, startRoomCode, endRoomCode)
-        polylineOptions = PolylineOptions()
-            .addAll(path)
+        line = getPath(buildingCode, startRoomCode, endRoomCode)
     }
 
     private fun getPath(
@@ -36,13 +33,7 @@ class IndoorRoute constructor(private val index: BuildingIndex) {
         }
     }
 
-    fun display(map: Map) {
-        polyline?.remove()
-        if(polylineOptions != null)
-            polyline = map.addPolyline(polylineOptions)
-    }
-
-    fun clear() {
-        polyline?.remove()
+    fun getLine(): List<LatLng> {
+        return line
     }
 }

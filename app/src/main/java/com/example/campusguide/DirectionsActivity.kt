@@ -23,6 +23,10 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity() {
 
@@ -31,6 +35,7 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var start: String
     private lateinit var end: String
     private var travelMode = "Driving"
+    private var line: Polyline? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -73,14 +78,16 @@ class DirectionsActivity : AppCompatActivity() {
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
 
-        initializer.setOnMapReadyListener {
-            runOnUiThread {
-                firstSegment.display(map, this)
+
+        GlobalScope.launch {
+            val path = firstSegment.toListOfCoordinates()
+            initializer.setOnMapReadyListener {
+                runOnUiThread {
+                    line?.remove()
+                    line = map.addPolyline(PolylineOptions().addAll(path))
+                }
             }
         }
-
-        // route = Route(map, this)
-        // route.set(start, end, travelMode)
     }
 
     /**
