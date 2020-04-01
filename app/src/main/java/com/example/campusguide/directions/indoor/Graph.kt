@@ -1,7 +1,5 @@
 package com.example.campusguide.directions.indoor
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.google.maps.model.LatLng
@@ -16,7 +14,7 @@ class Graph constructor(building: Building) {
         // Add all rooms to the map
         building.rooms.forEach {room ->
             val floor = room.code[0].toInt()
-            map[room.code] = Node(room.code, "Room", room.lon.toDouble(), room.lat.toDouble(), mutableListOf(), floor)
+            map[room.code] = Node("Room", room.code, room.lon.toDouble(), room.lat.toDouble(), mutableListOf(), floor)
         }
 
         // Add all nodes to the map
