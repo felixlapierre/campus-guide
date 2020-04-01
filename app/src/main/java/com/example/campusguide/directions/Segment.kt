@@ -12,4 +12,5 @@ interface Segment {
     fun setNext(next: OutdoorSegment)
     fun appendTo(segment: Segment)
     suspend fun toListOfCoordinates(): List<LatLng>
+    fun getDuration(): Int
 }

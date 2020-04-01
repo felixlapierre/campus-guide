@@ -62,4 +62,9 @@ class IndoorSegment constructor(
         else
             emptyList()
     }
+
+    override fun getDuration(): Int {
+        //TODO: Estimate duration of indoor path segments
+        return 0
+    }
 }

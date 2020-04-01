@@ -51,4 +51,8 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
             }
         }
     }
+
+    override fun getDuration(): Int {
+        return route.duration
+    }
 }

@@ -78,6 +78,11 @@ class DirectionsActivity : AppCompatActivity() {
                 path.waitUntilCreated()
                 runOnUiThread {
                     map.addPath(path)
+                    val radioButtonId = "radio_" + travelMode.toLowerCase()
+                    val id = resources.getIdentifier(radioButtonId, "id", packageName)
+                    findViewById<RadioButton>(id).apply {
+                        text = "${head.getDuration()} min"
+                    }
                 }
             }
         }
