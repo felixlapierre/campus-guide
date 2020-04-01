@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 
 class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
     lateinit var target: String
-    var complete = false
+    private var complete = false
 
     override fun findRoom(start: String, target: String): List<List<LatLng>> {
         this.target = target

@@ -27,18 +27,13 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         }
         nodeData[start]!!.cheapest = 0.0
 
-        while(open.isNotEmpty()) {
-            if(open.first() == target) {
-                val returned: MutableList<List<LatLng>> = mutableListOf()
-                getResults().forEach { result ->
-                    returned.add(reconstructPath(start, result))
-                }
-                return returned
-            }
+        while(!isComplete() && open.isNotEmpty()) {
             iterate(target)
         }
 
-        throw PathNotFoundException("Could not find a path from $start to $target")
+        return getResults().map {
+            reconstructPath(it)
+        }
     }
 
     abstract fun isComplete(): Boolean
@@ -73,11 +68,12 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         val currData = nodeData[curr]!!
         currNode.edges.forEach {
             val neighbor = graph.get(it)
-                ?: throw RuntimeException("Could not find room: $it")
+                ?: throw NonexistentLocationException("Could not find room: $it")
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)
-            if(length < neighborData.cheapest) {
+            if(canVisit(neighbor) && length < neighborData.cheapest) {
+                visit(neighbor)
                 neighborData.cameFrom = curr
                 neighborData.cheapest = length
                 neighborData.estimated = neighborData.cheapest + approximateDistance(neighbor, graph.get(target))
@@ -89,7 +85,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     }
 
-    private fun reconstructPath(start: String, end: String): List<LatLng> {
+    private fun reconstructPath(end: String): List<LatLng> {
         var current = end;
         val totalPath: MutableList<LatLng> = mutableListOf(getCoordinatesOfNode(end))
         while(nodeData[current]!!.cameFrom != null) {
@@ -100,7 +96,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     }
 
     private fun getCoordinatesOfNode(code: String): LatLng {
-        val node = graph.get(code)
+        val node = graph.get(code) ?: throw NonexistentLocationException("Could not find room: $code")
         return LatLng(node!!.y, node!!.x)
     }
 
@@ -110,7 +106,5 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         var estimated: Double = Double.MAX_VALUE
     )
 }
-
-class PathNotFoundException(message: String) : RuntimeException(message)
 
 class NonexistentLocationException(message: String) : RuntimeException(message)
