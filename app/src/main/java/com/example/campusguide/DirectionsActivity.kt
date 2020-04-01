@@ -18,15 +18,18 @@ import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.model.Polyline
+import com.google.maps.model.TravelMode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity() {
 
     private lateinit var map: GoogleMapAdapter
-    private lateinit var route: Route
+//    private lateinit var route: Route
     private lateinit var start: String
     private lateinit var end: String
+    private lateinit var startName: String
+    private lateinit var endName: String
     private var travelMode = "Driving"
     private var line: Polyline? = null
 
@@ -41,8 +44,8 @@ class DirectionsActivity : AppCompatActivity() {
         // Extract origin and destination from the intent
         start = intent.getStringExtra("OriginEncoded")!!
         end = intent.getStringExtra("DestinationEncoded")!!
-        val startName = intent.getStringExtra("OriginName")!!
-        val endName = intent.getStringExtra("DestinationName")!!
+        startName = intent.getStringExtra("OriginName")!!
+        endName = intent.getStringExtra("DestinationName")!!
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
@@ -51,35 +54,9 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
-
-        val errorListener = DisplayMessageErrorListener(this);
-        val directions = OutdoorDirections(
-            ApiKeyRequestDecorator(
-                this,
-                VolleyRequestDispatcher(
-                    this,
-                    errorListener
-                )
-            ),
-            KlaxonDirectionsAPIResponseParser(),
-            errorListener
-        )
-        val segmentArgs =
-            SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
-
-        val firstSegment = createSegment(start, segmentArgs)
-        val secondSegment = createSegment(end, segmentArgs)
-        secondSegment.appendTo(firstSegment)
-
-        val path = PathPolyline(startName, endName, firstSegment)
-
+        val path = createPath(startName, endName, travelMode)
         initializer.setOnMapReadyListener {
-            GlobalScope.launch {
-                path.waitUntilCreated()
-                runOnUiThread {
-                    map.addPath(path)
-                }
-            }
+            setPathOnMapAsync(path)
         }
     }
 
@@ -101,17 +78,20 @@ class DirectionsActivity : AppCompatActivity() {
                 R.id.radio_driving ->
                     if (checked) {
                         travelMode = "Driving"
-                        route.set(start, end, travelMode)
+                        val path = createPath(startName, endName, travelMode)
+                        setPathOnMapAsync(path)
                     }
                 R.id.radio_walking ->
                     if (checked) {
                         travelMode = "Walking"
-                        route.set(start, end, travelMode)
+                        val path = createPath(startName, endName, travelMode)
+                        setPathOnMapAsync(path)
                     }
                 R.id.radio_transit ->
                     if (checked) {
                         travelMode = "Transit"
-                        route.set(start, end, travelMode)
+                        val path = createPath(startName, endName, travelMode)
+                        setPathOnMapAsync(path)
                     }
             }
         }
@@ -126,5 +106,37 @@ class DirectionsActivity : AppCompatActivity() {
             location,
             args
         )
+    }
+
+    private fun setPathOnMapAsync(path: PathPolyline) {
+        GlobalScope.launch {
+            path.waitUntilCreated()
+            runOnUiThread {
+                map.addPath(path)
+            }
+        }
+    }
+
+    private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
+        val errorListener = DisplayMessageErrorListener(this);
+        val directions = OutdoorDirections(
+            ApiKeyRequestDecorator(
+                this,
+                VolleyRequestDispatcher(
+                    this,
+                    errorListener
+                )
+            ),
+            KlaxonDirectionsAPIResponseParser(),
+            errorListener
+        )
+        val segmentArgs =
+            SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
+
+        val firstSegment = createSegment(start, segmentArgs)
+        val secondSegment = createSegment(end, segmentArgs)
+        secondSegment.appendTo(firstSegment)
+
+        return PathPolyline(startName, endName, firstSegment)
     }
 }
