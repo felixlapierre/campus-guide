@@ -1,6 +1,5 @@
 package com.example.campusguide
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
@@ -9,9 +8,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.*
 
-import com.example.campusguide.directions.indoor.IndoorRoute
 import com.example.campusguide.directions.indoor.IndoorSegment
-import com.example.campusguide.directions.indoor.Pathfinding
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
@@ -21,7 +18,6 @@ import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

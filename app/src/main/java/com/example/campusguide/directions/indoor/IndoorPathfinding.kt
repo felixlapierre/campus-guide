@@ -1,18 +1,16 @@
 package com.example.campusguide.directions.indoor
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.example.campusguide.search.indoor.Node
 import java.lang.RuntimeException
 import java.util.*
 import kotlin.math.sqrt
 
-class Pathfinding constructor(private val graph: Graph) {
+abstract class IndoorPathfinding constructor(private val graph: Graph) {
     lateinit var openSet: Queue<String>
     val nodeData: MutableMap<String, NodeData> = mutableMapOf()
 
     // Priority queue requires api version 24 for some reason
-    fun findRoom(start: String, target: String): List<String> {
+    open fun findRoom(start: String, target: String): List<List<String>> {
         if(graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
@@ -30,13 +28,22 @@ class Pathfinding constructor(private val graph: Graph) {
 
         while(open.isNotEmpty()) {
             if(open.first() == target) {
-                return reconstructPath(start, target)
+                val returned: MutableList<List<String>> = mutableListOf()
+                getResults().forEach { result ->
+                    returned.add(reconstructPath(start, result))
+                }
+                return returned
             }
             iterate(target)
         }
 
         throw PathNotFoundException("Could not find a path from $start to $target")
     }
+
+    abstract fun isComplete(): Boolean
+    abstract fun canVisit(node: Node): Boolean
+    abstract fun visit(node: Node)
+    abstract fun getResults(): List<String>
 
     fun calculatePriority(s1: String, s2: String, target: String): Int {
         val node1 = graph.get(s1)
@@ -49,7 +56,7 @@ class Pathfinding constructor(private val graph: Graph) {
         else return 0
     }
 
-    fun approximateDistance(node1: Node?, node2: Node?): Double {
+    private fun approximateDistance(node1: Node?, node2: Node?): Double {
         if(node1 == null || node2 == null)
             return Double.MAX_VALUE
         val deltaX = node2.x - node1.x

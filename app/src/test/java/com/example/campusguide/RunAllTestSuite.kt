@@ -33,7 +33,7 @@ import org.junit.runners.Suite
     IndoorLocationProviderTest::class,
     BuildingIndexSingletonTest::class,
     GraphTest::class,
-    PathfindingTest::class,
+    IndoorPathfindingTest::class,
     SearchResultAdapterTest::class,
     HelperTest::class,
     PolygonUtilsTest::class,

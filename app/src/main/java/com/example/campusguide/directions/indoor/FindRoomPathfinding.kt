@@ -1,0 +1,30 @@
+package com.example.campusguide.directions.indoor
+
+import com.example.campusguide.search.indoor.Node
+
+class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
+    lateinit var target: String
+    var complete = false
+
+    override fun findRoom(start: String, target: String): List<List<String>> {
+        this.target = target
+        return super.findRoom(start, target)
+    }
+
+    override fun isComplete(): Boolean {
+        return complete
+    }
+
+    override fun canVisit(node: Node): Boolean {
+        return true
+    }
+
+    override fun visit(node: Node) {
+        if(node.code == target)
+            complete = true
+    }
+
+    override fun getResults(): List<String> {
+        return listOf(target)
+    }
+}
