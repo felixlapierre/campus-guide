@@ -1,5 +1,6 @@
 package com.example.campusguide.map
 
+import com.example.campusguide.directions.PathPolyline
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -48,5 +49,11 @@ class GoogleMapAdapter : Map {
 
     override fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener) {
         adapted.setOnInfoWindowClickListener(infoWindowClickListener)
+    }
+
+    override fun addPath(path: PathPolyline) {
+        addPolyline(path.polyline)
+        addMarker(path.startMarker)
+        addMarker(path.endMarker)
     }
 }

@@ -7,11 +7,8 @@ import android.widget.RadioButton
 import android.widget.TextView
 
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
+import com.example.campusguide.directions.*
 
-import com.example.campusguide.directions.Route
-import com.example.campusguide.directions.Segment
-import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorRoute
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.indoor.Pathfinding
@@ -78,13 +75,13 @@ class DirectionsActivity : AppCompatActivity() {
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
 
+        val path = PathPolyline(startName, endName, firstSegment)
 
-        GlobalScope.launch {
-            val path = firstSegment.toListOfCoordinates()
-            initializer.setOnMapReadyListener {
+        initializer.setOnMapReadyListener {
+            GlobalScope.launch {
+                path.waitUntilCreated()
                 runOnUiThread {
-                    line?.remove()
-                    line = map.addPolyline(PolylineOptions().addAll(path))
+                    map.addPath(path)
                 }
             }
         }
