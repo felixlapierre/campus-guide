@@ -1,6 +1,7 @@
 package com.example.campusguide.directions.indoor
 
 import com.example.campusguide.search.indoor.Node
+import com.google.android.gms.maps.model.LatLng
 import java.lang.RuntimeException
 import java.util.*
 import kotlin.math.sqrt
@@ -10,7 +11,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     val nodeData: MutableMap<String, NodeData> = mutableMapOf()
 
     // Priority queue requires api version 24 for some reason
-    open fun findRoom(start: String, target: String): List<List<String>> {
+    open fun findRoom(start: String, target: String): List<List<LatLng>> {
         if(graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
@@ -28,7 +29,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
         while(open.isNotEmpty()) {
             if(open.first() == target) {
-                val returned: MutableList<List<String>> = mutableListOf()
+                val returned: MutableList<List<LatLng>> = mutableListOf()
                 getResults().forEach { result ->
                     returned.add(reconstructPath(start, result))
                 }
@@ -88,14 +89,19 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     }
 
-    private fun reconstructPath(start: String, end: String): List<String> {
+    private fun reconstructPath(start: String, end: String): List<LatLng> {
         var current = end;
-        val totalPath: MutableList<String> = mutableListOf(end)
+        val totalPath: MutableList<LatLng> = mutableListOf(getCoordinatesOfNode(end))
         while(nodeData[current]!!.cameFrom != null) {
             current = nodeData[current]!!.cameFrom!!
-            totalPath.add(0, current)
+            totalPath.add(0, getCoordinatesOfNode(current))
         }
         return totalPath
+    }
+
+    private fun getCoordinatesOfNode(code: String): LatLng {
+        val node = graph.get(code)
+        return LatLng(node!!.x, node!!.y)
     }
 
     data class NodeData(

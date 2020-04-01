@@ -12,7 +12,8 @@ class IndoorSegment constructor(
     private val args: SegmentArgs
 ) :
     Segment {
-    private val route = IndoorRoute(args.buildingIndex)
+    private val pathfinding: IndoorPathfinding
+    private var endRoomCode: String? = null
     private var next: Segment? = null
     private val building: Building = args.buildingIndex.findBuildingByCode(buildingCode)
         ?: throw RuntimeException("Cannot create IndoorSegment: building $buildingCode not found.")
@@ -22,13 +23,16 @@ class IndoorSegment constructor(
         startEncoded.split("_")[2],
         args
     )
+    init {
+        pathfinding = FindRoomPathfinding(Graph(building))
+    }
 
     override fun setNext(next: IndoorSegment) {
         if (next.buildingCode == buildingCode) {
             this.next = next
-            route.set(buildingCode, startRoomCode, next.startRoomCode)
+            endRoomCode = next.startRoomCode
         } else {
-            route.set(buildingCode, startRoomCode, building.nodes[0].code)
+            endRoomCode = building.nodes[0].code
             val segmentFromMyBuildingToTheirs =
                 OutdoorSegment(building.address, args)
             segmentFromMyBuildingToTheirs.setNext(next)
@@ -37,7 +41,7 @@ class IndoorSegment constructor(
     }
 
     override fun setNext(next: OutdoorSegment) {
-        route.set(buildingCode, startRoomCode, building.nodes[0].code)
+        endRoomCode = building.nodes[0].code
         val segmentFromMyBuildingToOutdoorSegment =
             OutdoorSegment(building.address, args)
         segmentFromMyBuildingToOutdoorSegment.setNext(next)
@@ -53,9 +57,9 @@ class IndoorSegment constructor(
     }
 
     override suspend fun toListOfCoordinates(): List<LatLng> {
-        val result = mutableListOf<LatLng>()
-        result.addAll(route.getLine())
-        result.addAll(next?.toListOfCoordinates() ?: listOf())
-        return result
+        return if(endRoomCode != null)
+            pathfinding.findRoom(startRoomCode, endRoomCode!!)[0]
+        else
+            emptyList()
     }
 }
