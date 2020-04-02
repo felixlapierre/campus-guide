@@ -36,7 +36,7 @@ class ChooseCalendarDialogFragment constructor(
 
         fillRadioGroup(radioGroup)
 
-        builder.setPositiveButton("OK") { dialog, id ->
+        builder.setPositiveButton("OK") { _, _ ->
             handleOkSelected(radioGroup)
         }.setNegativeButton("Cancel", null)
 

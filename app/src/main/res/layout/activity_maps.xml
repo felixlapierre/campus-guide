@@ -58,6 +58,7 @@
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             tools:layout="@layout/activity_maps"
             xmlns:app="http://schemas.android.com/apk/res-auto">
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -85,20 +86,16 @@
                 android:textOn="@string/sgw_campus"
                 android:background="@drawable/ic_switch_campus_button"
                 android:textStyle="bold" />
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/navigateButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left|bottom"
-                android:layout_margin="8dp"
-                android:scaleType="center"
-
-                android:contentDescription="navigateButton"
-                app:srcCompat="@drawable/ic_compass_outline"
-                app:maxImageSize="36dp"
-                app:fabSize="normal"
-                app:backgroundTint="@android:color/white" />
         </fragment>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:itemIconTint="@color/white"
+            app:itemTextColor="@color/white"
+            app:menu="@menu/menu_bottom_nav" />
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
