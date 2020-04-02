@@ -23,28 +23,7 @@ class BottomNavigation constructor (
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.directions -> {
-                    val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-                        val chooseOriginOptions =
-                            ChooseOriginOptions(permissions, locationProvider) { origin ->
-                                val originLatLng = LatLng(origin.latitude, origin.longitude)
-                                val destinationLatLng =
-                                    LatLng(destination.latitude, destination.longitude)
-                                val intent =
-                                    Intent(activity, DirectionsActivity::class.java).apply {
-                                        putExtra("Origin", originLatLng.toString())
-                                        putExtra("Destination", destinationLatLng.toString())
-                                    }
-                                activity.startActivity(intent)
-                            }
-                        chooseOriginOptions.show(
-                            activity.supportFragmentManager,
-                            "chooseOriginOptions"
-                        )
-                    }
-                    chooseDestinationOptions.show(
-                        activity.supportFragmentManager,
-                        "chooseDestinationOptions"
-                    )
+                    startNavigation()
                 }
                 R.id.campus_map -> {
                     val hall = com.google.android.gms.maps.model.LatLng(45.495792, -73.578096)
@@ -56,5 +35,30 @@ class BottomNavigation constructor (
             }
             return@setOnNavigationItemSelectedListener true
         }
+    }
+
+    private fun startNavigation() {
+        val chooseDestinationOptions = ChooseDestinationOptions { destination ->
+            val chooseOriginOptions =
+                ChooseOriginOptions(permissions, locationProvider) { origin ->
+                    val originLatLng = LatLng(origin.latitude, origin.longitude)
+                    val destinationLatLng =
+                        LatLng(destination.latitude, destination.longitude)
+                    val intent =
+                        Intent(activity, DirectionsActivity::class.java).apply {
+                            putExtra("Origin", originLatLng.toString())
+                            putExtra("Destination", destinationLatLng.toString())
+                        }
+                    activity.startActivity(intent)
+                }
+            chooseOriginOptions.show(
+                activity.supportFragmentManager,
+                "chooseOriginOptions"
+            )
+        }
+        chooseDestinationOptions.show(
+            activity.supportFragmentManager,
+            "chooseDestinationOptions"
+        )
     }
 }
