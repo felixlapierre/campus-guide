@@ -37,7 +37,9 @@ class BottomNavigation constructor (
     }
 
     private fun centerCameraSGW(){
-        val hall = com.google.android.gms.maps.model.LatLng(45.495792, -73.578096)
+        val hall = com.google.android.gms.maps.model.LatLng(
+            45.495792, -73.578096
+        )
         map.animateCamera(hall, Constants.ZOOM_STREET_LVL)
     }
 
