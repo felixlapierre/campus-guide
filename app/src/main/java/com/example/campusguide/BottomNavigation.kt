@@ -26,8 +26,7 @@ class BottomNavigation constructor (
                     startNavigation()
                 }
                 R.id.campus_map -> {
-                    val hall = com.google.android.gms.maps.model.LatLng(45.495792, -73.578096)
-                    map.animateCamera(hall, Constants.ZOOM_STREET_LVL)
+                    centerCameraSGW()
                 }
                 R.id.poi -> {
                     // points of interest view
@@ -35,6 +34,11 @@ class BottomNavigation constructor (
             }
             return@setOnNavigationItemSelectedListener true
         }
+    }
+
+    private fun centerCameraSGW(){
+        val hall = com.google.android.gms.maps.model.LatLng(45.495792, -73.578096)
+        map.animateCamera(hall, Constants.ZOOM_STREET_LVL)
     }
 
     private fun startNavigation() {
