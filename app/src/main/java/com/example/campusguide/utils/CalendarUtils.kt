@@ -17,6 +17,12 @@ class CalendarUtils constructor(private val activity: MapsActivity) {
 
     fun getCalendarNameFromDB() : String {
         val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
-        return calendarBox.all[0].name
+        lateinit var calName : String
+        calName = if (!calendarBox.isEmpty) {
+            calendarBox.all[0].name
+        } else {
+            ""
+        }
+        return calName
     }
 }
