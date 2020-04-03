@@ -18,6 +18,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
+import database.ObjectBox
+import io.objectbox.Box
+import io.objectbox.kotlin.boxFor
 
 /**
  * Class for handling login.
@@ -115,6 +118,7 @@ class Login constructor(
         getNavView().menu.findItem(R.id.login_button).title = "Log Out of $userEmail"
         // Enable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = true
+        getCalendarFromDB()
     }
 
     fun getUserEmail(): String {
@@ -123,5 +127,15 @@ class Login constructor(
 
     private fun getNavView(): NavigationView {
         return activity.findViewById(R.id.nav_view)
+    }
+
+    private fun getCalendarFromDB() {
+        val calendarBox: Box<database.entity.Calendar> = ObjectBox.boxStore.boxFor()
+        val calendarName = calendarBox.all[0].name
+        if (calendarName != "")
+        {
+            val navView = activity.findViewById<NavigationView>(R.id.nav_view)
+            navView.menu.findItem(R.id.calendar).title = "Calendar: $calendarName"
+        }
     }
 }
