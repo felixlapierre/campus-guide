@@ -27,4 +27,13 @@ object Constants {
 
     const val MAPS_ACTIVITY_CONTENT_DESCRIPTION = "maps_activity_map ready"
     const val DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION = "directions_activity_map ready"
+
+    val SGW_COORDINATES = com.google.android.gms.maps.model.LatLng(
+        45.495792, -73.578096
+    )
+
+    val LOY_COORDINATES = com.google.android.gms.maps.model.LatLng(
+        45.458153, -73.640490
+    )
+
 }

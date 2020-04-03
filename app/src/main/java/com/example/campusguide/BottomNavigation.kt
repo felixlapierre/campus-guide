@@ -15,20 +15,22 @@ class BottomNavigation constructor (
     private val permissions: Permissions,
     private val locationProvider: FusedLocationProvider) {
 
-    private lateinit var bottomNavigationView : BottomNavigationView
+    private var bottomNavigationView : BottomNavigationView =
+        activity.findViewById(R.id.bottom_navigation)
 
-    fun setupBottomNavigation() {
-        bottomNavigationView = activity.findViewById(R.id.bottom_navigation)
+    init {
         bottomNavigationView.selectedItemId = R.id.campus_map
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.directions -> {
+                    // TODO: Use DirectionsFlow class instead
                     startNavigation()
                 }
                 R.id.campus_map -> {
                     centerCameraSGW()
                 }
                 R.id.poi -> {
+                    // TODO: Switch to POI list view as part of UC-47
                     // points of interest view
                 }
             }
@@ -37,10 +39,7 @@ class BottomNavigation constructor (
     }
 
     private fun centerCameraSGW(){
-        val hall = com.google.android.gms.maps.model.LatLng(
-            45.495792, -73.578096
-        )
-        map.animateCamera(hall, Constants.ZOOM_STREET_LVL)
+        map.animateCamera(Constants.SGW_COORDINATES, Constants.ZOOM_STREET_LVL)
     }
 
     private fun startNavigation() {

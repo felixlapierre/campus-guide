@@ -31,12 +31,11 @@ class GoogleMapInitializer constructor(
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
 
-            // Center the map on Hall building
+            // Center the map on SGW Campus
             if (mapId == "maps_activity_map") {
-                val hall = LatLng(45.497290, -73.578824)
                 map.animateCamera(
                     CameraUpdateFactory.newLatLngZoom(
-                        hall,
+                        Constants.SGW_COORDINATES,
                         Constants.ZOOM_STREET_LVL
                     )
                 )
