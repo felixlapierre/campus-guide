@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
+import com.example.campusguide.utils.CalendarUtils
 
 /**
  * An Android fragment that contains a dialog window prompting the user to
@@ -64,7 +65,8 @@ class ChooseCalendarDialogFragment constructor(
             calendar.setSelectedCalendar(selectedText)
             Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
             // Change menu item title for Calendar to include selected calendar
-            activity.setCalendarMenuItemName(selectedText)
+            val calendarUtils = CalendarUtils(activity)
+            calendarUtils.setCalendarMenuItemName(selectedText)
         }
     }
 }
