@@ -89,11 +89,6 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
         }
     }
 
-    fun setCalendarMenuItemName(calName: String) {
-        val navView = activity.findViewById<NavigationView>(R.id.nav_view)
-        navView.menu.findItem(R.id.calendar).title = "Calendar: $calName"
-    }
-
     fun unsetCalendar(){
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar"

@@ -134,8 +134,7 @@ class Login constructor(
         val calendarName = calendarBox.all[0].name
         if (calendarName != "")
         {
-            val navView = activity.findViewById<NavigationView>(R.id.nav_view)
-            navView.menu.findItem(R.id.calendar).title = "Calendar: $calendarName"
+            activity.setCalendarMenuItemName(calendarName)
         }
     }
 }

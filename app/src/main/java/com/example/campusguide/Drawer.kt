@@ -47,7 +47,7 @@ class Drawer constructor (
     private fun handleCalendarSelect(userEmail: String){
         val calendar = Calendar(activity, userEmail)
         val calendarsList = calendar.getCalendars()
-        val chooseCalendar = ChooseCalendarDialogFragment(calendar, calendarsList)
+        val chooseCalendar = ChooseCalendarDialogFragment(activity, calendar, calendarsList)
         chooseCalendar.show(activity.supportFragmentManager, "calendarList")
     }
 

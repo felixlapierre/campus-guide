@@ -9,6 +9,7 @@ import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity() {
@@ -25,6 +26,11 @@ class MapsActivity : AppCompatActivity() {
 
     fun getCampusNameTextView(): TextView {
         return campus_name
+    }
+
+    fun setCalendarMenuItemName(calendarName : String){
+        val navView = findViewById<NavigationView>(R.id.nav_view)
+        navView.menu.findItem(R.id.calendar).title = "Calendar: $calendarName"
     }
 
     fun setSwitchCampusButtonListener(listener: CompoundButton.OnCheckedChangeListener) {
