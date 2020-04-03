@@ -9,11 +9,6 @@ import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.navigation.NavigationView
-import database.ObjectBox
-import database.entity.Calendar
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
 import kotlinx.android.synthetic.main.activity_maps.*
 
 class MapsActivity : AppCompatActivity() {
