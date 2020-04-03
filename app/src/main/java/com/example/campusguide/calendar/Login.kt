@@ -117,11 +117,7 @@ class Login constructor(
         // Enable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = true
         // Set Calendar menu item title to pre-selected Calendar if found in DB
-        val calendarUtils = CalendarUtils(activity)
-        val calName = calendarUtils.getCalendarNameFromDB()
-        if (calName != ""){
-            calendarUtils.setCalendarMenuItemName(calName)
-        }
+        setCalendarMenuItemNameFromDB()
     }
 
     fun getUserEmail(): String {
@@ -130,5 +126,13 @@ class Login constructor(
 
     private fun getNavView(): NavigationView {
         return activity.findViewById(R.id.nav_view)
+    }
+
+    private fun setCalendarMenuItemNameFromDB(){
+        val calendarUtils = CalendarUtils(activity)
+        val calName = calendarUtils.getCalendarNameFromDB()
+        if (calName != ""){
+            calendarUtils.setCalendarMenuItemName(calName)
+        }
     }
 }
