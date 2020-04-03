@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
-import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import java.util.*
 import kotlin.collections.ArrayList

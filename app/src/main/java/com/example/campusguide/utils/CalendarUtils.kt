@@ -8,9 +8,9 @@ import database.entity.Calendar
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 
-class CalendarUtils constructor(private val activity: MapsActivity){
+class CalendarUtils constructor(private val activity: MapsActivity) {
 
-    fun setCalendarMenuItemName(calendarName : String){
+    fun setCalendarMenuItemName(calendarName : String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calendarName"
     }

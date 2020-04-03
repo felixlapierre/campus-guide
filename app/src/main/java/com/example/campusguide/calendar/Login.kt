@@ -128,7 +128,7 @@ class Login constructor(
         return activity.findViewById(R.id.nav_view)
     }
 
-    private fun setCalendarMenuItemNameFromDB(){
+    private fun setCalendarMenuItemNameFromDB() {
         val calendarUtils = CalendarUtils(activity)
         val calName = calendarUtils.getCalendarNameFromDB()
         if (calName != ""){
