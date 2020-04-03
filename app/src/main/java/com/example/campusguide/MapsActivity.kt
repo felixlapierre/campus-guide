@@ -8,8 +8,6 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.utils.permissions.Permissions
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
@@ -68,10 +66,5 @@ class MapsActivity : AppCompatActivity() {
         activityResultListeners.forEach { listener ->
             listener.onActivityResult(requestCode, resultCode, data)
         }
-    }
-
-    fun setOnNavigateListener(listener: View.OnClickListener) {
-        val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
-        navigateButton.setOnClickListener(listener)
     }
 }
