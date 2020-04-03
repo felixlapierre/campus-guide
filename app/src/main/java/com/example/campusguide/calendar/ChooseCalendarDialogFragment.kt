@@ -24,6 +24,8 @@ class ChooseCalendarDialogFragment constructor(
     private val calendarsList: ArrayList<Pair<Long, String>>
 ) : DialogFragment() {
 
+    private val calendarUtils = CalendarUtils(activity)
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.calendar_selection_list, null)
@@ -65,7 +67,6 @@ class ChooseCalendarDialogFragment constructor(
             calendar.setSelectedCalendar(selectedText)
             Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
             // Change menu item title for Calendar to include selected calendar
-            val calendarUtils = CalendarUtils(activity)
             calendarUtils.setCalendarMenuItemName(selectedText)
         }
     }
