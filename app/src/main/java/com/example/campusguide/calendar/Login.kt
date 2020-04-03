@@ -19,9 +19,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.android.material.navigation.NavigationView
-import database.ObjectBox
-import io.objectbox.Box
-import io.objectbox.kotlin.boxFor
 
 /**
  * Class for handling login.
