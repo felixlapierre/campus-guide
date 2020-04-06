@@ -52,8 +52,7 @@ class GoogleMapAdapter : Map {
     }
 
     override fun addPath(path: PathPolyline) {
-        addPolyline(path.polyline)
-        addMarker(path.startMarker)
-        addMarker(path.endMarker)
+        path.removeFromMap()
+        path.addToMap(this)
     }
 }
