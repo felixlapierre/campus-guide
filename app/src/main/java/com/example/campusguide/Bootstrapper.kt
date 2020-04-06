@@ -1,11 +1,7 @@
 package com.example.campusguide
 
 import CustomInfoWindow
-import android.content.Intent
-import android.view.View
 import com.example.campusguide.calendar.Login
-import com.example.campusguide.directions.ChooseDestinationOptions
-import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
@@ -19,7 +15,6 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.utils.permissions.Permissions
-import com.google.maps.model.LatLng
 import database.ObjectBox
 
 /**
@@ -85,11 +80,6 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setSwitchCampusButtonListener(switchCampus)
 
-        // Navigation
-        activity.setOnNavigateListener(View.OnClickListener {
-            directions.startFlow(null, null)
-        })
-
         // Login
         val login = Login(activity, permissions)
         login.onCreate()
@@ -98,6 +88,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Drawer
         val drawer = Drawer(activity, login)
-        drawer.setupDrawer()
+
+        // Bottom Navigation
+        val bottomNavigation = BottomNavigation(activity, map, directions)
     }
 }

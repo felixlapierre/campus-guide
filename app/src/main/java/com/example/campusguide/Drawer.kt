@@ -15,16 +15,12 @@ class Drawer constructor (
     private val login: Login
 ) : NavigationView.OnNavigationItemSelectedListener {
 
-    private lateinit var toolbar: Toolbar
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var navView: NavigationView
+    private var toolbar: Toolbar = activity.findViewById(R.id.toolbar)
+    private var drawerLayout: DrawerLayout = activity.findViewById(R.id.drawer_layout)
+    private var navView: NavigationView = activity.findViewById(R.id.nav_view)
 
-    fun setupDrawer() {
-        toolbar = activity.findViewById(R.id.toolbar)
+    init {
         activity.setSupportActionBar(toolbar)
-
-        drawerLayout = activity.findViewById(R.id.drawer_layout)
-        navView = activity.findViewById(R.id.nav_view)
 
         val toggle = ActionBarDrawerToggle(
             activity, drawerLayout, toolbar, 0, 0
@@ -51,7 +47,7 @@ class Drawer constructor (
     private fun handleCalendarSelect(userEmail: String){
         val calendar = Calendar(activity, userEmail)
         val calendarsList = calendar.getCalendars()
-        val chooseCalendar = ChooseCalendarDialogFragment(calendar, calendarsList)
+        val chooseCalendar = ChooseCalendarDialogFragment(activity, calendar, calendarsList)
         chooseCalendar.show(activity.supportFragmentManager, "calendarList")
     }
 
