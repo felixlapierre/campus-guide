@@ -115,7 +115,7 @@ class DirectionsActivity : AppCompatActivity() {
                 val radioButtonId = "radio_" + travelMode.toLowerCase()
                 val id = resources.getIdentifier(radioButtonId, "id", packageName)
                 findViewById<RadioButton>(id).apply {
-                    text = "${path.segment.getDuration()} min"
+                    text = "${path.segment.getDuration() / 60} min"
                 }
             }
         }
