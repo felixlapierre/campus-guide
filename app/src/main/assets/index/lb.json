@@ -252,7 +252,7 @@
       "code": "2_entryway",
       "x": 0.355,
       "y": 0.442,
-      "edges": ["2_near_printers", "2_entry_stairs"]
+      "edges": ["2_near_printers", "2_entry_stairs", "201.01"]
     },
     {
       "type": "elevators",
