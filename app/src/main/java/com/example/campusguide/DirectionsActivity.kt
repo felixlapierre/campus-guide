@@ -101,10 +101,9 @@ class DirectionsActivity : AppCompatActivity() {
     }
 
     private fun createSegment(location: String, args: SegmentArgs): Segment {
-        return if (isIndoorLocation(location)) IndoorSegment(location, args) else OutdoorSegment(
-            location,
-            args
-        )
+        return if (isIndoorLocation(location))
+            IndoorSegment(location, args)
+        else OutdoorSegment(location, args)
     }
 
     private fun setPathOnMapAsync(path: PathPolyline) {
@@ -122,7 +121,7 @@ class DirectionsActivity : AppCompatActivity() {
     }
 
     private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
-        if(::path.isInitialized) {
+        if (::path.isInitialized) {
             path.removeFromMap()
         }
         val errorListener = DisplayMessageErrorListener(this);

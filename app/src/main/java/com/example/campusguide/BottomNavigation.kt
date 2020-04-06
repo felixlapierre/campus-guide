@@ -44,6 +44,6 @@ class BottomNavigation constructor (
     }
 
     private fun startNavigation() {
-        directions.startFlow(null, null)
+        directions.startFlow()
     }
 }
