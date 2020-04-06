@@ -4,11 +4,7 @@ import com.example.campusguide.directions.PathPolyline
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Polyline
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 
 class GoogleMapAdapter : Map {
     lateinit var adapted: GoogleMap
@@ -39,6 +35,15 @@ class GoogleMapAdapter : Map {
         return adapted.moveCamera(update)
     }
 
+    override fun moveCamera(bounds: LatLngBounds) {
+        adapted.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                100 // padding around the route in pixels
+            )
+        )
+    }
+
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
     }
@@ -54,5 +59,6 @@ class GoogleMapAdapter : Map {
     override fun addPath(path: PathPolyline) {
         path.removeFromMap()
         path.addToMap(this)
+        moveCamera(path.getPathBounds())
     }
 }

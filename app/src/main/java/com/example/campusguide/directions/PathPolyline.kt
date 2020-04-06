@@ -18,6 +18,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         val colorBlueArgb = 0xff0000ff
     }
 
+    private lateinit var path: List<LatLng>
     private val polylineOptions: PolylineOptions
     private var polyline: Polyline? = null
 
@@ -35,7 +36,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         endMarkerOptions = MarkerOptions()
 
         deferred = GlobalScope.async {
-            val path = segment.toListOfCoordinates()
+            path = segment.toListOfCoordinates()
             polylineOptions.addAll(path)
                 .color(style.colorBlueArgb.toInt())
                 .pattern(style.patternPolygonAlpha)
@@ -67,5 +68,24 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
 
     suspend fun waitUntilCreated() {
         deferred.await()
+    }
+
+    fun getPathBounds() : LatLngBounds {
+        var north: Double = path[0].latitude
+        var south: Double = path[1].latitude
+        var east: Double = path[0].longitude
+        var west: Double = path[1].longitude
+
+        path.forEach {point ->
+            north = Math.max(north, point.latitude)
+            south = Math.min(south, point.latitude)
+            east = Math.max(east, point.longitude)
+            west = Math.min(west, point.longitude)
+        }
+
+        val southwest = LatLng(south, west)
+        val northeast = LatLng(north, east)
+
+        return LatLngBounds(southwest, northeast)
     }
 }
