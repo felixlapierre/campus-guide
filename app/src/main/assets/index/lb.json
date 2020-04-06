@@ -392,6 +392,55 @@
       "code": "3_stair_NW",
       "x": 0.123,
       "y": 0.316,
+      "edges": ["3_num_15"]
+    },
+    {
+      "type": "basic",
+      "code": "3_num_15",
+      "x": 0.253,
+      "y": 0.285,
+      "edges": ["3_hallway_15", "322.00", "314.00"]
+    },
+    {
+      "type": "basic",
+      "code": "3_hallway_15",
+      "x": 0.253,
+      "y": 0.196,
+      "edges": ["3_near_printers", "3_num_15", "311.00", "3_east_hallway_top"]
+    },
+    {
+      "type": "basic",
+      "code": "3_east_hallway_top",
+      "x": 0.029,
+      "y": 0.196,
+      "edges": ["316.00", "3_east_hallway_bot"]
+    },
+    {
+      "type": "basic",
+      "code": "3_east_hallway_bot",
+      "x": 0.029,
+      "y": 0.696,
+      "edges": ["328.00", "3_sw_hallway"]
+    },
+    {
+      "type": "stairs",
+      "code": "3_sw_hallway",
+      "x": 0.204,
+      "y": 0.696,
+      "edges": ["3_sw_intersect", "327.00", "3_mens_east", "3_allgender_east"]
+    },
+    {
+      "type": "bathroom",
+      "code": "3_mens_east",
+      "x": 0.258,
+      "y": 0.579,
+      "edges": []
+    },
+    {
+      "type": "bathroom",
+      "code": "3_allgender_east",
+      "x": 0.258,
+      "y": 0.623,
       "edges": []
     },
     {
