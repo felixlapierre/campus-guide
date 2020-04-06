@@ -19,6 +19,9 @@ class GoogleMapInitializer constructor(
     private val mapId: String,
     private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null
 ) : OnMapReadyCallback {
+    private var onMapReadyListener: (() -> Unit)? = null
+    private var googleMap: GoogleMap? = null
+
     init {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         val id = activity.resources.getIdentifier(mapId, "id", activity.packageName)
@@ -28,26 +31,32 @@ class GoogleMapInitializer constructor(
 
     override fun onMapReady(map: GoogleMap?) {
         if (map != null) {
+            googleMap = map
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
 
             // Center the map on SGW Campus
-            if (mapId == "maps_activity_map") {
-                map.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        Constants.SGW_COORDINATES,
-                        Constants.ZOOM_STREET_LVL
-                    )
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    Constants.SGW_COORDINATES,
+                    Constants.ZOOM_STREET_LVL
                 )
-            }
+            )
             BuildingHighlights(map, activity).addBuildingHighlights()
 
             if(onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
             }
             map.setContentDescription("$mapId ready")
+
+            onMapReadyListener?.invoke()
         }
     }
 
-
+    fun setOnMapReadyListener(callback: () -> Unit) {
+        if(googleMap != null)
+            callback()
+        else
+            onMapReadyListener = callback
+    }
 }

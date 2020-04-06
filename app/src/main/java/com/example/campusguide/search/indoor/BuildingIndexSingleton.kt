@@ -32,6 +32,8 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
 
     private var buildings: List<Building>? = null
 
+    var onLoaded: ((List<Building>) -> Unit)? = null
+
     init {
         GlobalScope.launch {
             val path = "index"
@@ -42,7 +44,7 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
                 if(building != null)
                     index.add(building)
             }
-
+            onLoaded?.invoke(index)
             buildings = index
         }
     }
@@ -61,5 +63,15 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
             val lon = building.lon.toDouble()
             coordinates.latitude == lat && coordinates.longitude == lon
         }
+    }
+
+    override fun findBuildingByCode(code: String): Building? {
+        return getBuildings()?.find { building ->
+            building.code == code
+        }
+    }
+
+    override fun getAddressOfBuilding(code: String): String? {
+        return findBuildingByCode(code)?.address
     }
 }

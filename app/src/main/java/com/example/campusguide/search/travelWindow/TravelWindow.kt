@@ -22,6 +22,7 @@ class TravelWindow (private val context: Context) : GoogleMap.InfoWindowAdapter{
 
         val infoWindowData = marker.tag as InfoWindowData?
 
+        marker.title = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.locationName).text = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.secondaryText).text = infoWindowData?.address
 

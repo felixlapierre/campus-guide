@@ -30,9 +30,20 @@ class BuildingClickListenerTest {
     fun testBuildingFound() {
         val listener = BuildingClickListener(map, index, mock(), null)
 
-        val marker : Marker = mock()
+        val marker: Marker = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
-        whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(Building("Hall", "address", "Code", "services", "", "", mock()))
+        whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(
+            Building(
+                "Hall",
+                "address",
+                "Code",
+                "services",
+                "",
+                "",
+                listOf(),
+                listOf()
+            )
+        )
 
         listener.polygonClick(points)
 
@@ -44,7 +55,7 @@ class BuildingClickListenerTest {
     fun testBuildingNotFound() {
         val listener = BuildingClickListener(map, index, mock(), null)
 
-        val marker : Marker = mock()
+        val marker: Marker = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
         whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(null)
 

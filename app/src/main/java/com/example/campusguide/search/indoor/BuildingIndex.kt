@@ -9,4 +9,6 @@ import com.google.android.gms.maps.model.LatLng
 interface BuildingIndex {
     fun getBuildings(): List<Building>?
     fun getBuildingAtCoordinates(coordinates: LatLng): Building?
+    fun findBuildingByCode(code: String): Building?
+    fun getAddressOfBuilding(code: String): String?
 }

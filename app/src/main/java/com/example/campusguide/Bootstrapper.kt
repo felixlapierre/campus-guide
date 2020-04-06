@@ -90,6 +90,6 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val drawer = Drawer(activity, login)
 
         // Bottom Navigation
-        val bottomNavigation = BottomNavigation(activity, map, permissions, locationProvider)
+        val bottomNavigation = BottomNavigation(activity, map, directions)
     }
 }

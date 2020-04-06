@@ -2,6 +2,7 @@ package com.example.campusguide.map.infoWindow
 
 import com.example.campusguide.Constants
 import com.example.campusguide.directions.DirectionsFlow
+import com.example.campusguide.location.Location
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.search.indoor.BuildingIndex
@@ -25,15 +26,15 @@ class BuildingClickListener(
     }
 
     fun polygonClick(points: ArrayList<LatLng>) {
-        val location = PolygonUtils().getPolygonCenterPoint(points)
-        val info = determineBuilding(location)
+        val coordinates = PolygonUtils().getPolygonCenterPoint(points)
+        val info = determineBuilding(coordinates)
 
-        buildingInfoWindow(location!!, info)
+        buildingInfoWindow(coordinates!!, info)
     }
 
-    private fun determineBuilding(location: LatLng?): InfoWindowData {
+    private fun determineBuilding(coordinates: LatLng?): InfoWindowData {
         val info = InfoWindowData()
-        var building = location?.let { index.getBuildingAtCoordinates(it) }
+        var building = coordinates?.let { index.getBuildingAtCoordinates(it) }
         if (building == null) {
             info.symbol = "B"
             info.fullName = "Building"
@@ -49,10 +50,11 @@ class BuildingClickListener(
         return info
     }
 
-    private fun buildingInfoWindow(location: LatLng, info: InfoWindowData) {
+    private fun buildingInfoWindow(coordinates: LatLng, info: InfoWindowData) {
         map.setInfoWindowAdapter(customInfoWindow)
         map.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
-            directions?.startFlow(null, info.fullName)
+            val location = Location(info.fullName!!, coordinates.latitude, coordinates.longitude)
+            directions?.startFlow(null, location)
         })
 
         // Clears any existing markers from the GoogleMap
@@ -62,14 +64,14 @@ class BuildingClickListener(
         val markerOptions = MarkerOptions()
 
         // Setting position on the MarkerOptions
-        markerOptions.position(location)
+        markerOptions.position(coordinates)
 
         marker = map.addMarker(markerOptions)
         marker?.setTag(info)
         marker?.showInfoWindow()
 
         // Animating to the info window
-        val cameraLocation = LatLng((location.latitude) + 0.00055, location.longitude)
+        val cameraLocation = LatLng((coordinates.latitude) + 0.00055, coordinates.longitude)
         map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
 }

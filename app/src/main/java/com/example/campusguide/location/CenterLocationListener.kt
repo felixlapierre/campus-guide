@@ -1,7 +1,6 @@
 package com.example.campusguide.location
 
 import android.Manifest
-import android.location.Location
 import android.view.View
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
@@ -48,7 +47,7 @@ class CenterLocationListener constructor(
     }
 
     private fun animateCurrentLocation(location: Location) {
-        val currentLatLng = LatLng(location.latitude, location.longitude)
+        val currentLatLng = LatLng(location.lat, location.lon)
         map.addMarker(currentLatLng, Constants.LOCATION_MARKER_TITLE)
         map.animateCamera(currentLatLng,
             Constants.ZOOM_STREET_LVL

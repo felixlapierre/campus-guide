@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
+import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
@@ -40,7 +41,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         dest?.remove()
 
         val errorListener = DisplayMessageErrorListener(activity);
-        val directions = Directions(
+        val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 activity,
                 VolleyRequestDispatcher(
@@ -49,7 +50,8 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
                 )
             ),
             KlaxonDirectionsAPIResponseParser(),
-            errorListener)
+            errorListener
+        )
 
         //Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
