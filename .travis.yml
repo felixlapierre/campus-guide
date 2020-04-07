@@ -1,0 +1,9 @@
+language: android
+dist: trusty
+branches:
+    only:
+    - master
+jobs:
+    include:
+        - stage: lint
+            script: ./gradlew ktlintCheck
