@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/directions"
+        android:icon="@drawable/ic_directions"
+        android:title="@string/directions" />
+    <item
+        android:id="@+id/campus_map"
+        android:icon="@drawable/ic_map"
+        android:title="@string/campus_map" />
+    <item
+        android:id="@+id/poi"
+        android:icon="@drawable/ic_flag"
+        android:title="@string/poi" />
+
+</menu>

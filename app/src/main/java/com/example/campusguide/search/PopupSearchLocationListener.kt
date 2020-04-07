@@ -18,7 +18,7 @@ class PopupSearchLocationListener constructor(private val activity: AppCompatAct
         activity.runOnUiThread {
             val travelWindow = TravelWindow(activity)
             map.setInfoWindowAdapter(travelWindow)
-            map.setOnInfoWindowClickListener(TravelWindowClickListener(directions))
+            map.setOnInfoWindowClickListener(TravelWindowClickListener(directions, location))
 
             val infoWindowData = InfoWindowData()
             infoWindowData.fullName = location.name

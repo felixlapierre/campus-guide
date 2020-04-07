@@ -22,5 +22,8 @@ data class Building(
     val lon: String,
 
     @Json(name = "rooms")
-    val rooms: List<Room>
+    val rooms: List<Room>,
+
+    @Json(name = "nodes")
+    val nodes: List<Node>
 )

@@ -1,6 +1,7 @@
 package com.example.campusguide.directions
 
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.utils.ErrorListener
 import com.example.campusguide.utils.request.RequestDispatcher
 import com.nhaarman.mockitokotlin2.*
@@ -35,7 +36,12 @@ class DirectionsTest {
             whenever(requestDispatcher.sendRequest(expectedUrl)).thenReturn(jsonResponse)
             whenever(responseParser.parse(jsonResponse)).thenReturn(null)
 
-            val directions = Directions(requestDispatcher, responseParser, errorListener)
+            val directions =
+                OutdoorDirections(
+                    requestDispatcher,
+                    responseParser,
+                    errorListener
+                )
             val response = directions.getDirections(start, end, travelMode)
 
             assert(response == null)
@@ -60,7 +66,12 @@ class DirectionsTest {
             whenever(requestDispatcher.sendRequest(expectedUrl)).thenReturn(jsonResponse)
             whenever(responseParser.parse(jsonResponse)).thenReturn(googleApiResponse)
 
-            val directions = Directions(requestDispatcher, responseParser, errorListener)
+            val directions =
+                OutdoorDirections(
+                    requestDispatcher,
+                    responseParser,
+                    errorListener
+                )
 
             val response = directions.getDirections(start, end, travelMode)
 

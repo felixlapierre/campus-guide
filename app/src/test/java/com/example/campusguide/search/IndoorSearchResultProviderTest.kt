@@ -21,7 +21,8 @@ class IndoorSearchResultProviderTest {
             "fakeServices",
             "1.0",
             "1.0",
-            listOf(fakeRoomOne, fakeRoomTwo)
+            listOf(fakeRoomOne, fakeRoomTwo),
+            listOf()
         )
         testIndex = mock()
         whenever(testIndex.getBuildings()).thenReturn(listOf(fakeBuilding))

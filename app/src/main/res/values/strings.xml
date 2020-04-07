@@ -11,4 +11,7 @@
     <string name="choose_direction_current">use current location</string>
     <string name="Confirm">Confirm</string>
     <string name="Cancel">Cancel</string>
+    <string name="directions">Directions</string>
+    <string name="campus_map">Campus Map</string>
+    <string name="poi">Points of Interest</string>
 </resources>
