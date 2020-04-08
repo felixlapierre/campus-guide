@@ -1,9 +1,10 @@
 language: android
+os: linux
 dist: trusty
 branches:
-    only:
+  only:
     - master
 jobs:
-    include:
-        - stage: lint
-            script: ./gradlew ktlintCheck
+  include:
+    - stage: lint
+      script: ./gradlew ktlintCheck
