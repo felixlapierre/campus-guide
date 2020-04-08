@@ -72,9 +72,9 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
 
     fun getPathBounds() : LatLngBounds {
         var north: Double = path[0].latitude
-        var south: Double = path[1].latitude
+        var south: Double = path[0].latitude
         var east: Double = path[0].longitude
-        var west: Double = path[1].longitude
+        var west: Double = path[0].longitude
 
         path.forEach {point ->
             north = Math.max(north, point.latitude)
