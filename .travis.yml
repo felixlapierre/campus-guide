@@ -7,4 +7,4 @@ branches:
 jobs:
   include:
     - stage: lint
-      script: ./gradlew ktlintCheck
+      script: script: git update-index --chmod=+x gradlew && ./gradlew ktlintCheck
