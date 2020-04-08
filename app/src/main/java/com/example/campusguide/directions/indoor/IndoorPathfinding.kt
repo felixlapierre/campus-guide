@@ -109,3 +109,5 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 }
 
 class NonexistentLocationException(message: String) : RuntimeException(message)
+
+class PathNotFoundException(message: String) : RuntimeException(message)
