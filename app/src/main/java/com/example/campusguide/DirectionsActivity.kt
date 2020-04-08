@@ -17,8 +17,6 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.android.gms.maps.model.Polyline
-import com.google.maps.model.TravelMode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -124,7 +122,7 @@ class DirectionsActivity : AppCompatActivity() {
         if (::path.isInitialized) {
             path.removeFromMap()
         }
-        val errorListener = DisplayMessageErrorListener(this);
+        val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,
