@@ -8,7 +8,7 @@ open class SearchLocation constructor(
     lon: Double,
     val id: String,
     val secondaryText: String
-): Location(name, lat, lon) {
+) : Location(name, lat, lon) {
     override fun encodeForDirections(): String {
         return "$lat, $lon"
     }

@@ -3,7 +3,11 @@ package com.example.campusguide
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.*
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
+import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.Until
 import com.example.campusguide.utils.LocalResources
 import database.ObjectBox
 import junit.framework.Assert.assertEquals
@@ -34,7 +38,7 @@ class SwitchCampusSystemTest {
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
         // Click the Switch Campus Button
-        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
+        if (switchCampusButton.exists() && switchCampusButton.isEnabled) {
             switchCampusButton.click()
         }
 
@@ -54,7 +58,7 @@ class SwitchCampusSystemTest {
         val switchCampusButton: UiObject = device.findObject(UiSelector().descriptionContains("switchCampusButton"))
 
         // Click the Switch Campus button twice
-        if(switchCampusButton.exists() && switchCampusButton.isEnabled) {
+        if (switchCampusButton.exists() && switchCampusButton.isEnabled) {
             switchCampusButton.click()
             switchCampusButton.click()
         }

@@ -11,7 +11,7 @@ import com.example.campusguide.R
 /**
  * An Android Adapter class that provides views for elements in a list of SearchResults.
  */
-class SearchResultAdapter constructor(private val activity: Activity): BaseAdapter() {
+class SearchResultAdapter constructor(private val activity: Activity) : BaseAdapter() {
     private val results: ArrayList<SearchResult> = arrayListOf()
 
     /**

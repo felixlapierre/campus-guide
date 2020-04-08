@@ -12,16 +12,16 @@ class Graph constructor(building: Building) {
 
     init {
         // Add all rooms to the map
-        building.rooms.forEach {room ->
+        building.rooms.forEach { room ->
             val floor = room.code[0].toInt()
             map[room.code] = Node("Room", room.code, room.lon.toDouble(), room.lat.toDouble(), mutableListOf(), floor)
         }
 
         // Add all nodes to the map
-        building.nodes.forEach {node ->
+        building.nodes.forEach { node ->
             val floor = node.code[0].toInt()
             node.floor = floor
-            if(node.x < 1 && node.y < 1) {
+            if (node.x < 1 && node.y < 1) {
                 val latlng = toLatLng(node.x, node.y)
                 node.x = latlng.lng
                 node.y = latlng.lat
@@ -30,10 +30,10 @@ class Graph constructor(building: Building) {
         }
 
         // Ensure symmetry of all edges
-        building.nodes.forEach {node ->
+        building.nodes.forEach { node ->
             node.edges.forEach { edge ->
                 val target = map[edge]
-                if(target != null && !target.edges.contains(node.code)) {
+                if (target != null && !target.edges.contains(node.code)) {
                     target.edges.add(node.code)
                 }
             }

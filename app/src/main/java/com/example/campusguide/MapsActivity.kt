@@ -20,8 +20,6 @@ class MapsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_maps)
 
-
-        
         Bootstrapper(this)
     }
 

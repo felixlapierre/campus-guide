@@ -3,7 +3,8 @@ package com.example.campusguide.directions.indoor
 import com.example.campusguide.search.indoor.Node
 import com.google.android.gms.maps.model.LatLng
 import java.lang.RuntimeException
-import java.util.*
+import java.util.ArrayDeque
+import java.util.Queue
 import kotlin.math.sqrt
 
 abstract class IndoorPathfinding constructor(private val graph: Graph) {
@@ -12,7 +13,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     // Priority queue requires api version 24 for some reason
     open fun findRoom(start: String, target: String): List<List<LatLng>> {
-        if(graph.get(start) == null) {
+        if (graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
 
@@ -22,12 +23,12 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         openSet = open
         open.add(start)
         nodeData.clear()
-        graph.forEach {code ->
+        graph.forEach { code ->
             nodeData[code] = NodeData()
         }
         nodeData[start]!!.cheapest = 0.0
 
-        while(!isComplete() && open.isNotEmpty()) {
+        while (!isComplete() && open.isNotEmpty()) {
             iterate(target)
         }
 
@@ -41,7 +42,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     abstract fun visit(node: Node)
     abstract fun getResults(): List<String>
 
-    //TODO: Reinstate priority queue mechanism
+    // TODO: Reinstate priority queue mechanism
 //    fun calculatePriority(s1: String, s2: String, target: String): Int {
 //        val node1 = graph.get(s1)
 //        val node2 = graph.get(s2)
@@ -54,7 +55,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 //    }
 
     private fun approximateDistance(node1: Node?, node2: Node?): Double {
-        if(node1 == null || node2 == null)
+        if (node1 == null || node2 == null)
             return Double.MAX_VALUE
         val deltaX = node2.x - node1.x
         val deltaY = node2.y - node1.y
@@ -73,23 +74,22 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)
-            if(canVisit(neighbor) && length < neighborData.cheapest) {
+            if (canVisit(neighbor) && length < neighborData.cheapest) {
                 visit(neighbor)
                 neighborData.cameFrom = curr
                 neighborData.cheapest = length
                 neighborData.estimated = neighborData.cheapest + approximateDistance(neighbor, graph.get(target))
-                if(!openSet.contains(it)) {
+                if (!openSet.contains(it)) {
                     openSet.add(it)
                 }
             }
         }
-
     }
 
     private fun reconstructPath(end: String): List<LatLng> {
-        var current = end;
+        var current = end
         val totalPath: MutableList<LatLng> = mutableListOf(getCoordinatesOfNode(end))
-        while(nodeData[current]!!.cameFrom != null) {
+        while (nodeData[current]!!.cameFrom != null) {
             current = nodeData[current]!!.cameFrom!!
             totalPath.add(0, getCoordinatesOfNode(current))
         }

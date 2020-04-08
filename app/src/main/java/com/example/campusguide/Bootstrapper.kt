@@ -26,7 +26,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
-        //Permissions
+        // Permissions
         val permissions = Permissions(activity)
         activity.permissions = permissions
 

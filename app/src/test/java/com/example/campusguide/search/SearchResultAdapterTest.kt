@@ -1,26 +1,20 @@
 package com.example.campusguide.search
 
-import android.app.Activity
-import com.example.campusguide.search.indoor.BuildingNotFoundException
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import org.junit.Rule
+import java.lang.IndexOutOfBoundsException
 import org.junit.Test
-import org.junit.rules.ExpectedException
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.lang.IndexOutOfBoundsException
 
 @RunWith(JUnit4::class)
 class SearchResultAdapterTest {
 
     @Test
     fun testAddClearGetItemGetCount() {
-        val one : SearchResult = SearchResult("primary", "secondary", "one")
-        val two : SearchResult = SearchResult("primary", "secondary", "two")
-        val three : SearchResult = SearchResult("primary", "secondary", "three")
+        val one: SearchResult = SearchResult("primary", "secondary", "one")
+        val two: SearchResult = SearchResult("primary", "secondary", "two")
+        val three: SearchResult = SearchResult("primary", "secondary", "three")
 
         val listener = SearchResultAdapter(mock())
 
@@ -46,8 +40,8 @@ class SearchResultAdapterTest {
     @Test
     fun testGetItemId() {
         val listener = SearchResultAdapter(mock())
-        val num : Int = 5
-        val test : Long = listener.getItemId(5)
+        val num: Int = 5
+        val test: Long = listener.getItemId(5)
         assert(test == num.toLong())
     }
 }

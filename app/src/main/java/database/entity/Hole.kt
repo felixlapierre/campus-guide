@@ -7,9 +7,9 @@ import io.objectbox.relation.ToMany
 import io.objectbox.relation.ToOne
 
 @Entity
-data class Hole (
+data class Hole(
     @Id var id: Long = 0
-){
+) {
     lateinit var outline: ToOne<Outline>
     @Backlink(to = "hole")
     lateinit var points: ToMany<Point>
