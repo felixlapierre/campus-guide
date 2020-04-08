@@ -10,5 +10,7 @@ branches:
     - master
 jobs:
   include:
-    - stageg: lint
+    - stage: build
+      script: ./gradlew build
+    - stage: lint
       script: ./gradlew ktlintCheck
