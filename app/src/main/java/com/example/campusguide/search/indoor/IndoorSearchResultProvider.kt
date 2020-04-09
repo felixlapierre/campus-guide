@@ -38,7 +38,7 @@ class IndoorSearchResultProvider constructor(
                 }
             }
         }
-
+        println("--------------------------IndoorResults: "+ results)
         return results;
     }
 

@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
+import com.example.campusguide.search.amenities.AmenitiesSearchResultProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
@@ -28,7 +29,12 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
-        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex))
+        searchResultProviders.add(
+            AmenitiesSearchResultProvider()
+        )
+        searchResultProviders.add(
+            IndoorSearchResultProvider(buildingIndex)
+        )
         searchResultProviders.add(
             PlacesApiSearchResultProvider(this)
         )
@@ -80,6 +86,7 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         GlobalScope.launch {
             adapter.clear()
             searchResultProviders.forEach { provider ->
+                println("22---------------provider: " + provider.javaClass)
                 val results = provider.search(query)
                 results.forEach { result ->
                     adapter.add(result)
