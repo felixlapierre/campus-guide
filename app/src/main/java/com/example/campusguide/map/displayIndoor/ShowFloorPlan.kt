@@ -1,6 +1,7 @@
-package com.example.campusguide.map
+package com.example.campusguide.map.displayIndoor
 
 import android.view.View
+import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -14,13 +15,14 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
 
     fun setUp(upButtonId: Int,downButtonId :Int){
         changeFloor.setIds(upButtonId, downButtonId)
-
     }
 
     override fun onClick(v: View?) {
         isClicked = !isClicked
 
         if (isClicked){
+
+            changeFloor.displayCurrentFloor()
 
            // val building = map.getCameraTarget()
             if (floorUpButton != null) {
@@ -34,6 +36,7 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
             }
         }
         else{
+            changeFloor.hideCurrentFloor()
             if (floorUpButton != null) {
                 floorUpButton.hide()
             }
@@ -45,6 +48,7 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
     }
     private fun getBuilding(coordinates:LatLng){
         //TODO: get building at point
+
     }
 
 }

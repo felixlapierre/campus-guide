@@ -1,6 +1,7 @@
-package com.example.campusguide.map
+package com.example.campusguide.map.displayIndoor
 
 import android.view.View
+import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.GroundOverlay
 import com.google.android.gms.maps.model.GroundOverlayOptions
@@ -32,12 +33,11 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
             )
             this.started = true
         }
+
         if (v?.id == upButtonId){
             val updatedFloor = updateFloorUp(currentFloor)
-
             floors[currentFloor]?.zIndex = -1f
             floors[updatedFloor]?.zIndex = 5f
-
 
             map.animateCamera(hallCoordinates,map.adapted.cameraPosition.zoom)
             currentFloor = updatedFloor
@@ -48,13 +48,20 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
             floors[currentFloor]?.zIndex = -1f
             floors[updatedFloor]?.zIndex = 5f
 
-
             map.animateCamera(hallCoordinates,map.adapted.cameraPosition.zoom)
             currentFloor = updatedFloor
         }
 
     }
 
+    fun displayCurrentFloor(){
+        floors[currentFloor]?.zIndex = 5f
+        return
+    }
+    fun hideCurrentFloor(){
+        floors[currentFloor]?.zIndex = -1f
+        return
+    }
     private fun updateFloorUp(currentFloor: Int): Int {
         if(currentFloor== 8){
             return 8;
