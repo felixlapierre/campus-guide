@@ -97,25 +97,19 @@ class DirectionsActivity : AppCompatActivity() {
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
-                        if (::currentPath.isInitialized) {
-                            currentPath.removeFromMap()
-                        }
+                        removePreviousPath()
                         currentPath = paths.getValue("driving")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_walking ->
                     if (checked) {
-                        if (::currentPath.isInitialized) {
-                            currentPath.removeFromMap()
-                        }
+                        removePreviousPath()
                         currentPath = paths.getValue("walking")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_transit ->
                     if (checked) {
-                        if (::currentPath.isInitialized) {
-                            currentPath.removeFromMap()
-                        }
+                        removePreviousPath()
                         currentPath = paths.getValue("transit")
                         setPathOnMapAsync(currentPath)
                     }
@@ -163,5 +157,11 @@ class DirectionsActivity : AppCompatActivity() {
         secondSegment.appendTo(firstSegment)
 
         return PathPolyline(startName, endName, firstSegment)
+    }
+
+    private fun removePreviousPath() {
+        if (::currentPath.isInitialized) {
+            currentPath.removeFromMap()
+        }
     }
 }
