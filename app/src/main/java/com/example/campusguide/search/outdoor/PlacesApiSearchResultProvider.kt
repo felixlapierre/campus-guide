@@ -1,14 +1,19 @@
 package com.example.campusguide.search.outdoor
 
 import android.app.Activity
+import android.util.Log
 import com.example.campusguide.Constants
 import com.example.campusguide.R
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
+import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -72,5 +77,25 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
         }
 
         return results
+    }
+
+    fun searchNearbyPlaces(currentLocation : Location) {
+        val searchBounds = RectangularBounds.newInstance(
+            LatLng(currentLocation.lat - 2, currentLocation.lon - 2),
+            LatLng(currentLocation.lat + 2, currentLocation.lon + 2)
+        )
+
+        val request = FindAutocompletePredictionsRequest.builder()
+            .setQuery("restaurant")
+            .setTypeFilter(TypeFilter.ESTABLISHMENT)
+            .setLocationRestriction(searchBounds)
+            .setTypeFilter(TypeFilter.ADDRESS)
+            .build()
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
+            val predictions = response.autocompletePredictions
+            Log.d("predictions", predictions.toString())
+        }
+
     }
 }
