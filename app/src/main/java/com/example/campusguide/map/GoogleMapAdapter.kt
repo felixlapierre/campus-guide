@@ -37,4 +37,12 @@ class GoogleMapAdapter : Map {
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
     }
+
+    fun getCameraZoom(): Float {
+        return adapted.cameraPosition.zoom
+    }
+
+    fun getCameraLocation(): LatLng{
+        return adapted.cameraPosition.target
+    }
 }

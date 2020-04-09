@@ -7,8 +7,9 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.map.ShowFloorPlan
+import com.example.campusguide.map.displayIndoor.ShowFloorPlan
 import com.example.campusguide.utils.permissions.Permissions
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
 
@@ -48,6 +49,10 @@ class MapsActivity : AppCompatActivity() {
 
     fun onSearchCalled(view: View) {
         onSearchListener.onClick(view)
+    }
+
+    fun setOnZoomListener(listener : GoogleMap.OnCameraMoveListener){
+
     }
 
     fun setOnCenterLocationListener(listener: View.OnClickListener) {
