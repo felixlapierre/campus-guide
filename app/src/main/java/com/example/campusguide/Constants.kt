@@ -16,6 +16,7 @@ object Constants {
     const val LOCATION_MARKER_TITLE = "You are here."
 
     const val INDOOR_LOCATION_IDENTIFIER = "indoor"
+    const val AMENITIES_LOCATION_IDENTIFIER = "amenities"
 
     const val SEARCH_BOTTOM_BOUND = 45.351240
     const val SEARCH_LEFT_BOUND = -74.031124
