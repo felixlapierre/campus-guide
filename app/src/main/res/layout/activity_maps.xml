@@ -93,8 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
-            app:itemIconTint="@color/white"
-            app:itemTextColor="@color/white"
+            app:itemIconTint="@android:color/white"
+            app:itemTextColor="@android:color/white"
             app:menu="@menu/menu_bottom_nav" />
     </LinearLayout>
     <com.google.android.material.navigation.NavigationView
