@@ -3,6 +3,7 @@ package com.example.campusguide.calendar
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchResult
+import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -20,7 +21,9 @@ class FindEventLocation constructor(
     private val outdoorSearch = PlacesApiSearchResultProvider(activity)
     private val locationProvider = IndoorLocationProvider(
         buildingIndex,
-        PlacesApiSearchLocationProvider(activity)
+        AmenitiesLocationProvider(
+            PlacesApiSearchLocationProvider(activity)
+        )
     )
 
     suspend fun getLocationOfEvent(eventLocation: String?) {

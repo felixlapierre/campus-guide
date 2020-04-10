@@ -1,7 +1,6 @@
 package com.example.campusguide.directions
 
 import android.Manifest
-import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
@@ -20,11 +18,9 @@ import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
-import com.example.campusguide.search.SearchLocation
-import com.example.campusguide.search.SearchLocationListener
+import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
-import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import database.ObjectBox
@@ -33,7 +29,6 @@ import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.NullPointerException
 
 class ChooseOriginOptions(
     private val permission: PermissionsSubject,
@@ -89,7 +84,9 @@ class ChooseOriginOptions(
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(act.assets),
-            PlacesApiSearchLocationProvider(activity!!)
+            AmenitiesLocationProvider(
+                PlacesApiSearchLocationProvider(activity!!)
+            )
         )
         val search = CustomSearch(act, provider, Constants.ORIGIN_SEARCH_REQUEST_CODE)
 

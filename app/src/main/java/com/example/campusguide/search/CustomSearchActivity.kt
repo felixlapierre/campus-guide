@@ -86,7 +86,6 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         GlobalScope.launch {
             adapter.clear()
             searchResultProviders.forEach { provider ->
-                println("22---------------provider: " + provider.javaClass)
                 val results = provider.search(query)
                 results.forEach { result ->
                     adapter.add(result)

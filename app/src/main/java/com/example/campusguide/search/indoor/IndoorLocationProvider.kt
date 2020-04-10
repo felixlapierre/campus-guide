@@ -16,6 +16,7 @@ class IndoorLocationProvider constructor(
 ) : SearchLocationProvider {
     override suspend fun getLocation(id: String): SearchLocation? {
         val isIndoor = id.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
+        println("-------------------------is indoor: " + isIndoor)
 
         if(isIndoor) {
             val locationInfo = id.split("_")
@@ -26,6 +27,7 @@ class IndoorLocationProvider constructor(
             val roomCode = locationInfo[2]
             return getIndoorLocation(buildingCode, roomCode, id)
         } else {
+            println("-------------------------not an indoorlocation")
             return next?.getLocation(id)
         }
     }

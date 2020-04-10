@@ -1,6 +1,5 @@
 package com.example.campusguide.directions
 
-import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
@@ -17,10 +15,10 @@ import com.example.campusguide.calendar.Events
 import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
+import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
-import com.example.campusguide.utils.DisplayMessageErrorListener
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
@@ -72,7 +70,9 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(act.assets),
-            PlacesApiSearchLocationProvider(activity!!)
+            AmenitiesLocationProvider(
+                PlacesApiSearchLocationProvider(activity!!)
+            )
         )
         val search = CustomSearch(act, provider, Constants.DESTINATION_SEARCH_REQUEST_CODE)
 
