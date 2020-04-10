@@ -1,14 +1,8 @@
 package com.example.campusguide
 
-import android.content.Intent
-import com.example.campusguide.directions.ChooseDestinationOptions
-import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
-import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.maps.model.LatLng
 
 class BottomNavigation constructor (
     private val activity: MapsActivity,
