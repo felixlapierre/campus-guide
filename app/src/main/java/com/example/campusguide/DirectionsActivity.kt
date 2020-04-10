@@ -124,7 +124,7 @@ class DirectionsActivity : AppCompatActivity() {
         if (::path.isInitialized) {
             path.removeFromMap()
         }
-        val errorListener = DisplayMessageErrorListener(this);
+        val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,

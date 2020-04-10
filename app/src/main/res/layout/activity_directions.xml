@@ -91,10 +91,42 @@
             android:onClick="onRadioButtonClicked"
             android:contentDescription="transitRadioButton"/>
     </RadioGroup>
+
     <fragment
         android:id="@+id/directions_activity_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".DirectionsActivity"/>
+        android:layout_height="493dp"
+        tools:context=".DirectionsActivity" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="4 min"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="(350 m)"></TextView>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="via Blvd Maisonneuve 0 and Rue Guy">
+    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"></Button>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps and More"></Button>
+    </LinearLayout>
 </LinearLayout>
