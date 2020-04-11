@@ -18,7 +18,6 @@ import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
-import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
@@ -84,9 +83,7 @@ class ChooseOriginOptions(
         val act = activity as MapsActivity
         val provider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(act.assets),
-            AmenitiesLocationProvider(
-                PlacesApiSearchLocationProvider(activity!!)
-            )
+            PlacesApiSearchLocationProvider(activity!!)
         )
         val search = CustomSearch(act, provider, Constants.ORIGIN_SEARCH_REQUEST_CODE)
 

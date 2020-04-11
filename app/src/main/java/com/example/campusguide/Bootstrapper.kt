@@ -58,7 +58,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         val searchLocationProvider = IndoorLocationProvider(
                 BuildingIndexSingleton.getInstance(activity.assets),
                 AmenitiesLocationProvider(
-                    PlacesApiSearchLocationProvider(activity)
+                    PlacesApiSearchLocationProvider(activity),
+                    permissions,
+                    activity,
+                    locationProvider
                 )
         )
         println("------------------searchlocationprovider: " + searchLocationProvider.javaClass)

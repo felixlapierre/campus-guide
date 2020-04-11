@@ -1,26 +1,45 @@
 package com.example.campusguide.search.amenities
 
+import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.ChooseOriginOptions
+import com.example.campusguide.location.FusedLocationProvider
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationProvider
+import com.example.campusguide.utils.permissions.Permissions
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class AmenitiesLocationProvider constructor(
-    private val next: SearchLocationProvider?
+    private val next: SearchLocationProvider?,
+    private val permissions: Permissions,
+    private val activity: AppCompatActivity,
+    private val locationProvider: FusedLocationProvider
 ) : SearchLocationProvider {
     override suspend fun getLocation(id: String): SearchLocation? {
         val isAmenities = id.startsWith(Constants.AMENITIES_LOCATION_IDENTIFIER)
         println("-------------------------id: " + id)
         println("-------------------------is amenities: " + isAmenities)
 
-        return if(isAmenities) {
+        if(isAmenities) {
             println("-------------------------WOW amenities!")
-            getAmenities()
+            val origin = getOrigin()
+
+            return getAmenities()
         } else {
-            next?.getLocation(id)
+            return next?.getLocation(id)
         }
     }
 
+    private suspend fun getOrigin() = suspendCoroutine<Location> { cont ->
+        val chooseOriginOptions = ChooseOriginOptions(permissions, locationProvider) { origin ->
+            cont.resume(origin)
+        }
+        chooseOriginOptions.show(activity.supportFragmentManager, "chooseOriginOptions")
+    }
+
     private fun getAmenities(): SearchLocation {
-        return SearchLocation("name", 11.11, 22.22, "amenities_bathroom", "secondary text")
+        return SearchLocation("name", 41.11, 75.22, "amenities_bathroom", "secondary text")
     }
 }
