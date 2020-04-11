@@ -4,7 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Location
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +18,7 @@ import com.example.campusguide.R
 import com.example.campusguide.calendar.Events
 import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.FusedLocationProvider
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationListener
@@ -95,10 +95,7 @@ class ChooseOriginOptions(
 
         search.setLocationListener {searchLocation ->
             if(searchLocation != null) {
-                val location = Location(searchLocation.name)
-                location.latitude = searchLocation.lat
-                location.longitude = searchLocation.lon
-                locationSelectedListener(location)
+                locationSelectedListener(searchLocation)
             }
             act.removeActivityResultListener(search)
         }

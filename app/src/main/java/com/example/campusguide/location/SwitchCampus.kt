@@ -15,12 +15,12 @@ class SwitchCampus constructor(private val map: Map, private val campusName: Tex
 
     private fun switchCampus(isAtDowntownCampus: Boolean) {
         if(isAtDowntownCampus){
-            map.animateCamera(Constants.SGW_COORDINATES,
+            map.animateCamera(Constants.LOY_COORDINATES,
                 Constants.ZOOM_STREET_LVL
             )
             campusName.text = Constants.LOYOLA_CAMPUS
         } else {
-            map.animateCamera(Constants.LOY_COORDINATES,
+            map.animateCamera(Constants.SGW_COORDINATES,
                 Constants.ZOOM_STREET_LVL
             )
             campusName.text = Constants.SGW_CAMPUS

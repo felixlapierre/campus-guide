@@ -3,6 +3,7 @@ package com.example.campusguide
 import android.content.Intent
 import com.example.campusguide.directions.ChooseDestinationOptions
 import com.example.campusguide.directions.ChooseOriginOptions
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.utils.permissions.Permissions
@@ -12,8 +13,8 @@ import com.google.maps.model.LatLng
 class BottomNavigation constructor (
     private val activity: MapsActivity,
     private val map: GoogleMapAdapter,
-    private val permissions: Permissions,
-    private val locationProvider: FusedLocationProvider) {
+    private val directions: DirectionsFlow
+) {
 
     private var bottomNavigationView : BottomNavigationView =
         activity.findViewById(R.id.bottom_navigation)
@@ -43,27 +44,6 @@ class BottomNavigation constructor (
     }
 
     private fun startNavigation() {
-        val chooseDestinationOptions = ChooseDestinationOptions { destination ->
-            val chooseOriginOptions =
-                ChooseOriginOptions(permissions, locationProvider) { origin ->
-                    val originLatLng = LatLng(origin.latitude, origin.longitude)
-                    val destinationLatLng =
-                        LatLng(destination.latitude, destination.longitude)
-                    val intent =
-                        Intent(activity, DirectionsActivity::class.java).apply {
-                            putExtra("Origin", originLatLng.toString())
-                            putExtra("Destination", destinationLatLng.toString())
-                        }
-                    activity.startActivity(intent)
-                }
-            chooseOriginOptions.show(
-                activity.supportFragmentManager,
-                "chooseOriginOptions"
-            )
-        }
-        chooseDestinationOptions.show(
-            activity.supportFragmentManager,
-            "chooseDestinationOptions"
-        )
+        directions.startFlow()
     }
 }

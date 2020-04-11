@@ -9,7 +9,9 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
+import com.example.campusguide.utils.CalendarUtils
 
 /**
  * An Android fragment that contains a dialog window prompting the user to
@@ -17,9 +19,12 @@ import com.example.campusguide.R
  */
 
 class ChooseCalendarDialogFragment constructor(
+    private val activity: MapsActivity,
     private val calendar: Calendar,
     private val calendarsList: ArrayList<Pair<Long, String>>
 ) : DialogFragment() {
+
+    private val calendarUtils = CalendarUtils(activity)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
@@ -62,7 +67,7 @@ class ChooseCalendarDialogFragment constructor(
             calendar.setSelectedCalendar(selectedText)
             Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
             // Change menu item title for Calendar to include selected calendar
-            calendar.setCalendarMenuItemName(selectedText)
+            calendarUtils.setCalendarMenuItemName(selectedText)
         }
     }
 }

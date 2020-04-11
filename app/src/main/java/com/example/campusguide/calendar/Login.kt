@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import com.example.campusguide.ActivityResultListener
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
+import com.example.campusguide.utils.CalendarUtils
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -115,6 +116,8 @@ class Login constructor(
         getNavView().menu.findItem(R.id.login_button).title = "Log Out of $userEmail"
         // Enable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = true
+        // Set Calendar menu item title to pre-selected Calendar if found in DB
+        setCalendarMenuItemNameFromDB()
     }
 
     fun getUserEmail(): String {
@@ -123,5 +126,13 @@ class Login constructor(
 
     private fun getNavView(): NavigationView {
         return activity.findViewById(R.id.nav_view)
+    }
+
+    private fun setCalendarMenuItemNameFromDB() {
+        val calendarUtils = CalendarUtils(activity)
+        val calName = calendarUtils.getCalendarNameFromDB()
+        if (calName != ""){
+            calendarUtils.setCalendarMenuItemName(calName)
+        }
     }
 }
