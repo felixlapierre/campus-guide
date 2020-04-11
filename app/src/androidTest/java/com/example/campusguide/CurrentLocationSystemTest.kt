@@ -4,7 +4,11 @@ import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.uiautomator.*
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
+import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.Until
 import database.ObjectBox
 import junit.framework.Assert.assertEquals
 import org.junit.After
@@ -35,10 +39,9 @@ class CurrentLocationSystemTest {
         // Wait until the map is loaded
         device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
-
         val currentLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("currentLocationButton"))
 
-        if(currentLocationButton.exists() && currentLocationButton.isEnabled) {
+        if (currentLocationButton.exists() && currentLocationButton.isEnabled) {
             currentLocationButton.click()
         }
 
@@ -48,12 +51,10 @@ class CurrentLocationSystemTest {
         val marker: UiObject = device.findObject(UiSelector().descriptionContains("You are here."))
         // Note: The content-description field of Google Maps markers has the following format: {markerTitle.markerSnippet}
         assertEquals("You are here.. ", marker.contentDescription)
-
     }
 
     @After
     fun cleanUp() {
         ObjectBox.boxStore.close()
     }
-
 }

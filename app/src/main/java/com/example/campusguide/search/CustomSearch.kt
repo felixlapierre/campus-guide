@@ -39,7 +39,7 @@ class CustomSearch constructor(
     }
 
     fun setLocationListener(callback: (SearchLocation?) -> Unit) {
-        locationListener = object: SearchLocationListener {
+        locationListener = object : SearchLocationListener {
             override fun onLocation(location: SearchLocation?) {
                 callback(location)
             }

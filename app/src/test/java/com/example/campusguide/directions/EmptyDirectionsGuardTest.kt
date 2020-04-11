@@ -34,8 +34,8 @@ class EmptyDirectionsGuardTest() {
 
     @Test
     fun onConfirmCalled_WithEmptyStrings() {
-        val start = "";
-        val end = "";
+        val start = ""
+        val end = ""
 
         emptyDirectionsGuard.onConfirm(start, end)
         Mockito.verify(errorListener).onError(emptyDirectionsGuard.errorMessage)

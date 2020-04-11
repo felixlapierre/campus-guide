@@ -5,13 +5,13 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.MapsActivity
-import kotlin.collections.ArrayList
 import com.example.campusguide.R
 import com.google.android.material.navigation.NavigationView
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import kotlin.collections.ArrayList
 
 /**
  * Class for handling the user's calendars.

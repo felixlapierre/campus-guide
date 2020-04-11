@@ -10,6 +10,5 @@ class HelperTest {
         val lowerCaseString = "capitalize the words within this sentence"
         val capitalized = Helper.capitalizeWords(lowerCaseString)
         assert(capitalized == "Capitalize The Words Within This Sentence")
-
     }
 }

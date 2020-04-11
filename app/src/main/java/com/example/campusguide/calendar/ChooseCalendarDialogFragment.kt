@@ -50,7 +50,7 @@ class ChooseCalendarDialogFragment constructor(
 
     private fun fillRadioGroup(radioGroup: RadioGroup) {
         // Create radio button options for each calendar found on the logged in account
-        for(pair in calendarsList) {
+        for (pair in calendarsList) {
             val newCal = RadioButton(activity?.applicationContext)
             newCal.text = pair.second
             radioGroup.addView(newCal)

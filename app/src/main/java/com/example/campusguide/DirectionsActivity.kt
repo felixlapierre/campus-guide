@@ -30,6 +30,8 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var end: String
     private lateinit var startName: String
     private lateinit var endName: String
+    private lateinit var currentPath: PathPolyline
+    private lateinit var paths: Map<String, PathPolyline>
     private var travelMode = "Driving"
     private lateinit var path: PathPolyline
     private val colorStateList: ColorStateList = ColorStateList(
@@ -63,9 +65,32 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
-        path = createPath(startName, endName, travelMode)
+
+        // Hash map containing (travelMode, path) pairs
+        paths = mapOf(
+            "driving" to createPath(startName, endName, "driving"),
+            "walking" to createPath(startName, endName, "walking"),
+            "transit" to createPath(startName, endName, "transit")
+        )
+
+        // Display travel times
+        GlobalScope.launch {
+            for ((travelMode, path) in paths) {
+                path.waitUntilCreated()
+                runOnUiThread {
+                    val radioButtonId = "radio_$travelMode"
+                    val id = resources.getIdentifier(radioButtonId, "id", packageName)
+                    findViewById<RadioButton>(id).apply {
+                        text = "${path.segment.getDuration() / 60} min"
+                    }
+                }
+            }
+        }
+
+        currentPath = paths.getValue("driving")
+
         initializer.setOnMapReadyListener {
-            setPathOnMapAsync(path)
+            setPathOnMapAsync(currentPath)
         }
     }
 
@@ -85,21 +110,21 @@ class DirectionsActivity : AppCompatActivity() {
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
-                        travelMode = "Driving"
-                        path = createPath(startName, endName, travelMode)
-                        setPathOnMapAsync(path)
+                        removePreviousPath()
+                        currentPath = paths.getValue("driving")
+                        setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_walking ->
                     if (checked) {
-                        travelMode = "Walking"
-                        path = createPath(startName, endName, travelMode)
-                        setPathOnMapAsync(path)
+                        removePreviousPath()
+                        currentPath = paths.getValue("walking")
+                        setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_transit ->
                     if (checked) {
-                        travelMode = "Transit"
-                        path = createPath(startName, endName, travelMode)
-                        setPathOnMapAsync(path)
+                        removePreviousPath()
+                        currentPath = paths.getValue("transit")
+                        setPathOnMapAsync(currentPath)
                     }
             }
         }
@@ -131,10 +156,7 @@ class DirectionsActivity : AppCompatActivity() {
     }
 
     private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
-        if (::path.isInitialized) {
-            path.removeFromMap()
-        }
-        val errorListener = DisplayMessageErrorListener(this);
+        val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,
@@ -154,5 +176,11 @@ class DirectionsActivity : AppCompatActivity() {
         secondSegment.appendTo(firstSegment)
 
         return PathPolyline(startName, endName, firstSegment)
+    }
+
+    private fun removePreviousPath() {
+        if (::currentPath.isInitialized) {
+            currentPath.removeFromMap()
+        }
     }
 }
