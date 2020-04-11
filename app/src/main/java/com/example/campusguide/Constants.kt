@@ -1,5 +1,9 @@
 package com.example.campusguide
 
+import com.google.android.gms.maps.model.Dash
+import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.PatternItem
+
 object Constants {
     const val ZOOM_STREET_LVL = 17.0f;
     const val PERMISSION_REQUEST_CODE = 1
@@ -36,7 +40,10 @@ object Constants {
         45.458153, -73.640490
     )
 
-    const val PRIMARY_COLOR = "#008577"
-    const val ACCENT_COLOR = "#D81B60"
+    const val PATTERN_DASH_LENGTH_PX = 20F
+    const val PATTERN_GAP_LENGTH_PX = 20F
 
+    const val PRIMARY_COLOR = "#008577"
+    const val PRIMARY_COLOR_DARK = "#00574B"
+    const val ACCENT_COLOR = "#D81B60"
 }
