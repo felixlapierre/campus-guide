@@ -1,10 +1,12 @@
 package com.example.campusguide.search.outdoor
 
 import android.app.Activity
-import android.util.Log
+import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.location.Location
+import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
 import com.google.android.gms.maps.model.LatLng
@@ -14,12 +16,18 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
+import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 /**
  * Gets search results using Google's Places API.
@@ -27,6 +35,8 @@ import kotlin.coroutines.suspendCoroutine
 class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int = Int.MAX_VALUE):
     SearchResultProvider {
     private val placesClient: PlacesClient
+    val map = GoogleMapAdapter()
+    val inititalizer = GoogleMapInitializer(activity as FragmentActivity, map, "maps_activity_map")
 
     init {
         if (!Places.isInitialized())
@@ -79,23 +89,64 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
         return results
     }
 
+    // distance between latitudes and longitudes
+    private fun customeHaversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double, dist : Double): Double {
+
+        var dist = dist
+        var lat1 = lat1
+        var lat2 = lat2
+        var lon1 = lon1
+        var lon2 = lon2
+        lat1 = Math.toRadians(lat1)
+        lat2 = Math.toRadians(lat2)
+        lon1 = Math.toRadians(lon1)
+        lon2 = Math.toRadians(lon2)
+
+        //----------
+
+
+        val rad = 6371.0
+
+
+        dist /= (2 * rad)
+
+
+        // convert to radians
+        // apply formulae
+        val a = sin((lat2 - lat1) / 2).pow(2.0) + sin((lon2 - lon1) / 2).pow(2.0) * cos(lat1) * cos(lat2)
+        val c = 2 * asin(sqrt(a))
+        return rad * c
+    }
+
     fun searchNearbyPlaces(currentLocation : Location) {
         val searchBounds = RectangularBounds.newInstance(
-            LatLng(currentLocation.lat - 2, currentLocation.lon - 2),
-            LatLng(currentLocation.lat + 2, currentLocation.lon + 2)
+            LatLng(currentLocation.lat - 0.05, currentLocation.lon - 0.05),
+            LatLng(currentLocation.lat + 0.05, currentLocation.lon + 0.05)
         )
 
         val request = FindAutocompletePredictionsRequest.builder()
-            .setQuery("restaurant")
+            .setQuery("coffee, cafe")
             .setTypeFilter(TypeFilter.ESTABLISHMENT)
             .setLocationRestriction(searchBounds)
-            .setTypeFilter(TypeFilter.ADDRESS)
             .build()
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
-            val predictions = response.autocompletePredictions
-            Log.d("predictions", predictions.toString())
-        }
+            for (place in response.autocompletePredictions) {
+                val placeID = place.placeId
+                val placeFields: List<Place.Field> =
+                    listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
+                val request = FetchPlaceRequest.newInstance(placeID, placeFields)
 
+                placesClient.fetchPlace(request).addOnSuccessListener { response: FetchPlaceResponse ->
+                    val placeResponse = response.place
+                    placeResponse.latLng?.let { placeResponse.name?.let { it1 ->
+                        map.addMarker(it,
+                            it1
+                        )
+                    } }
+                    placeResponse!!.latLng?.let { map.animateCamera(it, 10.0f) }
+                }
+            }
+        }
     }
 }

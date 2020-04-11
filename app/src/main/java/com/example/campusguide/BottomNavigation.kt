@@ -2,7 +2,6 @@ package com.example.campusguide
 
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.location.FusedLocationProvider
-import com.example.campusguide.location.Location
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.PointsOfInterest
 import com.example.campusguide.utils.permissions.Permissions
@@ -51,7 +50,7 @@ class BottomNavigation constructor (
 
         val locationProvider = FusedLocationProvider(activity)
 
-        val pointsOfInterest = PointsOfInterest(activity, permissions, locationProvider)
+        val pointsOfInterest = PointsOfInterest(activity, locationProvider)
         pointsOfInterest.show(activity.supportFragmentManager, "chooseOriginOptions")
     }
 }
