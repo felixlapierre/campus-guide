@@ -45,4 +45,8 @@ class GoogleMapAdapter : Map {
     fun getCameraLocation(): LatLng{
         return adapted.cameraPosition.target
     }
+
+    fun setCameraMoveListener(cameraMoveListener: GoogleMap.OnCameraMoveListener){
+        adapted.setOnCameraMoveListener(cameraMoveListener)
+    }
 }

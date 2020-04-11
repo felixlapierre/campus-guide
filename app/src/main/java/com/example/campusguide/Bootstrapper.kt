@@ -8,6 +8,7 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.displayIndoor.OnZoomListener
 import com.example.campusguide.map.displayIndoor.ShowFloorPlan
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton

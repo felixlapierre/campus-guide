@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.Picture
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.map.displayIndoor.OnZoomListener
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -42,6 +43,9 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity,
                     )
                 )
             }
+            val zoomListener = OnZoomListener(wrapper)
+            wrapper.setCameraMoveListener(zoomListener)
+
             BuildingHighlights(map, activity).addBuildingHighlights()
             map.setOnPolygonClickListener(BuildingClickListener(activity, map))
             map.setContentDescription("Google Maps Ready")
