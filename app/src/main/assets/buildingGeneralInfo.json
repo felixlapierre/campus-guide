@@ -1,0 +1,27 @@
+{
+  "H" : {
+    "Coordinates" : {
+      "Lat": 45.4972695,
+      "Lng": -73.57894175
+    },
+    "bearing": 124,
+    "floors": {
+      "4":  "Hall4.png",
+      "5":  "Hall5.png",
+      "6":  "Hall6.png",
+      "7":  "Hall7.png",
+      "8":  "Hall8.png"
+    },
+    "LB" : {
+      "Coordinates" : {
+        "Lat": 45.4972695,
+        "Lng": -73.57894175
+      },
+      "floors": {
+        "2":  "lb_floor2.png",
+        "3":  "lb_floor3.png",
+        "4":  "lb_floor4.png",
+        "5":  "lb_floor5.png",
+      }
+    }
+}
