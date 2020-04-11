@@ -23,6 +23,7 @@
             android:layout_height="match_parent"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
+            android:tint="@color/colorAzure"
             android:src="@drawable/ic_place"/>
         <TextView
             android:id="@+id/origin"
@@ -42,6 +43,7 @@
             android:layout_height="match_parent"
             android:paddingStart="58dp"
             android:paddingEnd="10dp"
+            android:tint="@color/colorRed"
             android:src="@drawable/ic_place"/>
         <TextView
             android:id="@+id/destination"
