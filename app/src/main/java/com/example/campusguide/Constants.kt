@@ -38,5 +38,4 @@ object Constants {
 
     const val PRIMARY_COLOR = "#008577"
     const val ACCENT_COLOR = "#D81B60"
-
 }
