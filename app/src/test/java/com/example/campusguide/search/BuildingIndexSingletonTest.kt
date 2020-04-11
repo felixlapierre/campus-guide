@@ -1,6 +1,6 @@
 package com.example.campusguide.search
 
-import com.example.campusguide.search.indoor.*
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.nhaarman.mockitokotlin2.mock
 import org.junit.Test
 import org.junit.runner.RunWith

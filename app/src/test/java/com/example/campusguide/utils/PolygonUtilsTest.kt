@@ -1,8 +1,6 @@
 package com.example.campusguide.utils
 
-import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.google.android.gms.maps.model.LatLng
-import com.nhaarman.mockitokotlin2.mock
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4

@@ -4,7 +4,6 @@ import android.Manifest
 import android.view.View
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
-
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
@@ -26,13 +25,13 @@ class CenterLocationListener constructor(
         if (permissions.havePermission(locationPermission)) {
             goToCurrentLocation()
         } else {
-            //Request location permission
+            // Request location permission
             permissions.requestPermission(locationPermission)
         }
     }
 
     override fun onPermissionGranted(permissions: Array<out String>) {
-        if(permissions.contains(locationPermission)) {
+        if (permissions.contains(locationPermission)) {
             goToCurrentLocation()
         }
     }
@@ -53,5 +52,4 @@ class CenterLocationListener constructor(
             Constants.ZOOM_STREET_LVL
         )
     }
-
 }

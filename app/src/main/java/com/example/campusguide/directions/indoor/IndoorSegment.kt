@@ -57,14 +57,14 @@ class IndoorSegment constructor(
     }
 
     override suspend fun toListOfCoordinates(): List<LatLng> {
-        return if(endRoomCode != null)
+        return if (endRoomCode != null)
             pathfinding.findRoom(startRoomCode, endRoomCode!!)[0]
         else
             emptyList()
     }
 
     override fun getDuration(): Int {
-        //TODO: Estimate duration of indoor path segments
+        // TODO: Estimate duration of indoor path segments
         return 0
     }
 }

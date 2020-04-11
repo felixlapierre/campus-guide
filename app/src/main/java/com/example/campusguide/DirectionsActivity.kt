@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.TextView
-
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.directions.*
-
+import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
+import com.example.campusguide.directions.PathPolyline
+import com.example.campusguide.directions.Segment
+import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -17,8 +18,6 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.android.gms.maps.model.Polyline
-import com.google.maps.model.TravelMode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -124,7 +123,7 @@ class DirectionsActivity : AppCompatActivity() {
         if (::path.isInitialized) {
             path.removeFromMap()
         }
-        val errorListener = DisplayMessageErrorListener(this);
+        val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,

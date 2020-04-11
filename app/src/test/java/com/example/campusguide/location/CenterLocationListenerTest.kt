@@ -2,16 +2,18 @@ package com.example.campusguide.location
 
 import android.Manifest
 import com.example.campusguide.Constants
-
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
-
 
 @RunWith(JUnit4::class)
 class CenterLocationListenerTest {

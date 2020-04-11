@@ -12,7 +12,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.Polygon
 
-
 class BuildingClickListener(
     private val map: Map,
     private val index: BuildingIndex,

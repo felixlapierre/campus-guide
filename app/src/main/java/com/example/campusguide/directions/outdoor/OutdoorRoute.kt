@@ -10,10 +10,10 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
     suspend fun set(start: String, end: String, travelMode: String) {
         val response = directions.getDirections(start, end, travelMode)
 
-        if(response != null) {
-           line = PolylineEncoding.decode(response.routes[0].overviewPolyline.points).map {
-               LatLng(it.lat, it.lng)
-           }
+        if (response != null) {
+            line = PolylineEncoding.decode(response.routes[0].overviewPolyline.points).map {
+                LatLng(it.lat, it.lng)
+            }
             duration = response.routes[0].legs[0].duration.value
         }
     }
