@@ -3,7 +3,7 @@ package com.example.campusguide.utils
 import android.app.Application
 import android.content.Context
 
-class LocalResources: Application() {
+class LocalResources : Application() {
 
     companion object {
         private lateinit var mContext: Context
@@ -17,5 +17,4 @@ class LocalResources: Application() {
         super.onCreate()
         mContext = this
     }
-
 }
