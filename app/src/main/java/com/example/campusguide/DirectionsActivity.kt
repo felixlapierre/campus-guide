@@ -1,13 +1,16 @@
 package com.example.campusguide
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
 import android.widget.TextView
-
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.directions.*
-
+import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
+import com.example.campusguide.directions.PathPolyline
+import com.example.campusguide.directions.Segment
+import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -17,8 +20,6 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.android.gms.maps.model.Polyline
-import com.google.maps.model.TravelMode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,15 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private var travelMode = "Driving"
     private lateinit var path: PathPolyline
+    private val colorStateList: ColorStateList = ColorStateList(
+        arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_checked)
+        ), intArrayOf(
+            Color.BLACK,  //disabled
+            Color.parseColor(Constants.PRIMARY_COLOR) //enabled
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -72,6 +82,7 @@ class DirectionsActivity : AppCompatActivity() {
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
+            view.buttonTintList = colorStateList
 
             when (view.id) {
                 R.id.radio_driving ->
@@ -115,6 +126,8 @@ class DirectionsActivity : AppCompatActivity() {
                 val id = resources.getIdentifier(radioButtonId, "id", packageName)
                 findViewById<RadioButton>(id).apply {
                     text = "${path.segment.getDuration() / 60} min"
+                    isChecked = true
+                    buttonTintList = colorStateList
                 }
             }
         }
