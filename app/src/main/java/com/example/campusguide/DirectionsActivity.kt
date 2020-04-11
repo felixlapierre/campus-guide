@@ -38,7 +38,7 @@ class DirectionsActivity : AppCompatActivity() {
             intArrayOf(android.R.attr.state_checked)
         ), intArrayOf(
             Color.BLACK,  //disabled
-            Color.parseColor(Constants.PRIMARY_COLOR_DARK) //enabled
+            Color.parseColor(R.color.colorPrimary.toString()) //enabled
         )
     )
 

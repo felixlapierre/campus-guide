@@ -35,8 +35,4 @@ object Constants {
     val LOY_COORDINATES = com.google.android.gms.maps.model.LatLng(
         45.458153, -73.640490
     )
-
-    const val PRIMARY_COLOR = "#008577"
-    const val PRIMARY_COLOR_DARK = "#00574B"
-    const val ACCENT_COLOR = "#D81B60"
 }
