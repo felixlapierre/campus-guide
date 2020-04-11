@@ -9,23 +9,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
-import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.location.Location
 import com.example.campusguide.location.LocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
-import com.google.android.libraries.places.api.model.Place
 
 class PointsOfInterest(
     activity: MapsActivity,
-    private val locationProvider: LocationProvider
+    private val locationProvider: LocationProvider,
+    private val map: GoogleMapAdapter
 ) : DialogFragment() {
+
 
     private val locationPermission = Manifest.permission.ACCESS_FINE_LOCATION
     private val nearbyLocations = PlacesApiSearchResultProvider(activity)
-    val map = GoogleMapAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +37,6 @@ class PointsOfInterest(
         view.findViewById<Button>(R.id.GetNearbyPlaces)?.setOnClickListener {
             useCurrentLocation();
         }
-
         return view
     }
 
@@ -53,7 +51,7 @@ class PointsOfInterest(
     }
 
     private fun getNearbyPlaces(location : Location) {
-        nearbyLocations.searchNearbyPlaces(location)
+        nearbyLocations.searchNearbyPlaces(location, map)
     }
 
 }

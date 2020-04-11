@@ -50,7 +50,7 @@ class BottomNavigation constructor (
 
         val locationProvider = FusedLocationProvider(activity)
 
-        val pointsOfInterest = PointsOfInterest(activity, locationProvider)
+        val pointsOfInterest = PointsOfInterest(activity, locationProvider, map)
         pointsOfInterest.show(activity.supportFragmentManager, "chooseOriginOptions")
     }
 }
