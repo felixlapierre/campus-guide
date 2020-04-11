@@ -2,11 +2,12 @@ package com.example.campusguide
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageButton
 import android.widget.RadioButton
 import android.widget.TextView
-
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-
+import androidx.appcompat.widget.PopupMenu
 import com.example.campusguide.directions.Route
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
@@ -39,6 +40,9 @@ class DirectionsActivity : AppCompatActivity() {
             text = end
         }
 
+        // Set Listener for accessibility popup
+        setAccessPopup()
+
         // Display driving directions by default as soon as the activity gets created
         route = Route(map, this)
         route.set(start, end, travelMode)
@@ -61,21 +65,47 @@ class DirectionsActivity : AppCompatActivity() {
 
             when (view.id) {
                 R.id.radio_driving ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Driving"
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_walking ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Walking"
                         route.set(start, end, travelMode)
                     }
                 R.id.radio_transit ->
-                    if(checked) {
+                    if (checked) {
                         travelMode = "Transit"
                         route.set(start, end, travelMode)
                     }
             }
+        }
+    }
+
+    /**
+     * Called when the accessibility menu is clicked.
+     */
+    private fun setAccessPopup() {
+        val button = findViewById<ImageButton>(R.id.accessibility_directions_popup)
+        button.setOnClickListener {
+            val popup: PopupMenu = PopupMenu(this, button)
+            popup.menuInflater.inflate(R.menu.accessibility_menu, popup.menu)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.dir_escalators ->
+                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                            .show()
+                    R.id.dir_elevators ->
+                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                            .show()
+                    R.id.dir_stairs ->
+                        Toast.makeText( this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
+                            .show()
+                }
+                true
+            })
+            popup.show()
         }
     }
 }
