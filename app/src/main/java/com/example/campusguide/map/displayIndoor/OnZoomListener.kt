@@ -1,8 +1,11 @@
 package com.example.campusguide.map.displayIndoor
 
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
@@ -14,7 +17,7 @@ class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.O
         if (map.getCameraZoom() >= Constants.ZOOM_STREET_LVL){
             val location = map.getCameraLocation()
             if (cameraFocusedOnBuilding(location) != null){
-                ShowFloorPlan(map);
+               ShowFloorPlan(map).onClick(null)
             }
         }
     }
