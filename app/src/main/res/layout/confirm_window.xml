@@ -9,17 +9,21 @@
         android:id="@+id/locationName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textStyle="bold"
         android:text="Location"/>
 
     <TextView
         android:id="@+id/secondaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="Location"/>
 
     <Button
         android:id="@+id/goHere"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm"/>
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:text="@string/go_here"/>
 </LinearLayout>
