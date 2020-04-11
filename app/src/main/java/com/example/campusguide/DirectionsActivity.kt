@@ -126,7 +126,6 @@ class DirectionsActivity : AppCompatActivity() {
                 val id = resources.getIdentifier(radioButtonId, "id", packageName)
                 findViewById<RadioButton>(id).apply {
                     text = "${path.segment.getDuration() / 60} min"
-                    isChecked = true
                     buttonTintList = colorStateList
                 }
             }
