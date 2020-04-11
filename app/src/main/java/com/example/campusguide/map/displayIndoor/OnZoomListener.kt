@@ -1,13 +1,9 @@
 package com.example.campusguide.map.displayIndoor
 
 import com.example.campusguide.Constants
-import com.example.campusguide.R
 import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.GroundOverlayOptions
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.*
 
 class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
 
@@ -16,18 +12,22 @@ class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.O
     override fun onCameraMove() {
         if (map.getCameraZoom() >= Constants.ZOOM_STREET_LVL){
             val location = map.getCameraLocation()
-            if (cameraFocusedOnBuilding(location) != null){
-               ShowFloorPlan(map).onClick(null)
+            val focusedBuilding = cameraFocusedOnBuilding(location)
+            if (focusedBuilding != null){
+                FloorPlans.show(focusedBuilding)
             }
+        }
+        if (map.getCameraZoom()< Constants.ZOOM_STREET_LVL){
+            FloorPlans.hide()
         }
     }
 
     private fun cameraFocusedOnBuilding (location: LatLng): String? {
 
             if (buildingBounds[0].contains(location))
-                return "hall";
-            else if (buildingBounds[0].contains(location))
-                return "library"
+                return "library";
+            else if (buildingBounds[1].contains(location))
+                return "hall"
 
             return null
     }

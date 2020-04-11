@@ -17,6 +17,29 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
         changeFloor.setIds(upButtonId, downButtonId)
     }
 
+    fun displayButtons(){
+        if (floorUpButton != null) {
+            floorUpButton.show()
+            floorUpButton.setOnClickListener(changeFloor);
+
+        }
+        if (floorDownButton != null) {
+            floorDownButton.show()
+            floorDownButton.setOnClickListener(changeFloor)
+        }
+    }
+
+    fun hideButtons(){
+        changeFloor.hideCurrentFloor()
+
+        if (floorUpButton != null) {
+            floorUpButton.hide()
+        }
+        if (floorDownButton != null) {
+            floorDownButton.hide()
+        }
+
+    }
     override fun onClick(v: View?) {
         isClicked = !isClicked
 
@@ -37,6 +60,7 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
         }
         else{
             changeFloor.hideCurrentFloor()
+
             if (floorUpButton != null) {
                 floorUpButton.hide()
             }
@@ -46,9 +70,8 @@ class ShowFloorPlan constructor(private val map: GoogleMapAdapter)
         }
 
     }
-    private fun getBuilding(coordinates:LatLng){
-        //TODO: get building at point
-
+    fun setBuilding(buildingName:String){
+        changeFloor.setBuilding(buildingName)
     }
 
 }
