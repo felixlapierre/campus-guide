@@ -24,7 +24,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity() {
-
     private lateinit var map: GoogleMapAdapter
     private lateinit var start: String
     private lateinit var end: String
@@ -43,7 +42,6 @@ class DirectionsActivity : AppCompatActivity() {
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_directions)
 
@@ -60,6 +58,7 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.origin).apply {
             text = startName
         }
+
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
