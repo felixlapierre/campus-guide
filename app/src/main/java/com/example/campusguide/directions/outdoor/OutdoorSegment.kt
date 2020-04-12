@@ -5,12 +5,12 @@ import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.google.android.gms.maps.model.LatLng
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class OutdoorSegment(private val start: String, private val args: SegmentArgs) : Segment {
     private val route = OutdoorRoute(args.outdoorDirections)
@@ -39,8 +39,8 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         segment.setNext(this)
     }
 
-    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>>{ cont ->
-        if(next == null) {
+    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>> { cont ->
+        if (next == null) {
             cont.resume(emptyList())
         }
         GlobalScope.launch {

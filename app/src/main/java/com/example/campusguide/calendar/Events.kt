@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
 import com.example.campusguide.MapsActivity
-import java.util.*
+import java.util.Date
 import kotlin.collections.ArrayList
 
 class Events constructor(
@@ -53,17 +53,16 @@ class Events constructor(
         // narrow down to today & make sure it's sorted chronologically
         val unsortedEvents: ArrayList<Pair<Long, String>> = arrayListOf()
         for (pair in calendarEvents) {
-            if(pair.first > getDayStart() && pair.first < getDayEnd()){
+            if (pair.first > getDayStart() && pair.first < getDayEnd()) {
                 unsortedEvents.add(pair)
             }
         }
 
         val sortedList = unsortedEvents.sortedWith(compareBy { it.second.toLowerCase() })
 
-        for (pair in sortedList){
+        for (pair in sortedList) {
             todaysEvents.add(pair)
         }
-
     }
 
     fun getNextEventLocation(): String? {
@@ -86,7 +85,7 @@ class Events constructor(
 
         return nextEventLocation
     }
-    
+
     fun getLastEventLocation(): String? {
 
         var lastEventLocation: String? = null
@@ -107,7 +106,7 @@ class Events constructor(
             }
         }
 
-        if(eventsBeforeNow.isNotEmpty()) {
+        if (eventsBeforeNow.isNotEmpty()) {
             // keep location specifically
             lastEventLocation = eventsBeforeNow[eventsBeforeNow.size - 1].second
         }
@@ -132,5 +131,4 @@ class Events constructor(
 
         return dayEnd.time
     }
-
 }

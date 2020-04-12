@@ -1,7 +1,7 @@
 package com.example.campusguide.location
 
 open class Location
-    constructor(val name: String, val lat: Double, val lon: Double){
+    constructor(val name: String, val lat: Double, val lon: Double) {
 
     /**
      * Encode the location in a way that the directions activity will be

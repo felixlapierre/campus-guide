@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
  * otherwise the app would have to wait 2-3 seconds whenever it is
  * used.
  */
-class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
+class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
     /**
      * Companion object that performs the singleton logic, ensuring
      * the instance is unique and can be retrieved statically.
@@ -21,8 +21,8 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null
         fun getInstance(assets: AssetManager) =
-            INSTANCE?: synchronized(this) {
-                    INSTANCE?: BuildingIndexSingleton(
+            INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: BuildingIndexSingleton(
                             assets
                         ).also {
                             INSTANCE = it
@@ -38,10 +38,10 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
         GlobalScope.launch {
             val path = "index"
             val index: MutableList<Building> = mutableListOf()
-            assets.list(path)?.forEach {it ->
-                val contents = assets.open("$path/$it").bufferedReader().use {it.readText()}
+            assets.list(path)?.forEach { it ->
+                val contents = assets.open("$path/$it").bufferedReader().use { it.readText() }
                 val building = Klaxon().parse<Building>(contents)
-                if(building != null)
+                if (building != null)
                     index.add(building)
             }
             onLoaded?.invoke(index)

@@ -1,7 +1,7 @@
 package com.example.campusguide
 
 object Constants {
-    const val ZOOM_STREET_LVL = 17.0f;
+    const val ZOOM_STREET_LVL = 17.0f
     const val PERMISSION_REQUEST_CODE = 1
     const val REGULAR_SEARCH_REQUEST_CODE = 2
     const val ORIGIN_SEARCH_REQUEST_CODE = 3
@@ -36,4 +36,7 @@ object Constants {
         45.458153, -73.640490
     )
 
+    const val PRIMARY_COLOR = "#008577"
+    const val PRIMARY_COLOR_DARK = "#00574B"
+    const val ACCENT_COLOR = "#D81B60"
 }

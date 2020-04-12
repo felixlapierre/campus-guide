@@ -1,13 +1,19 @@
 package com.example.campusguide.directions
 
-import com.example.campusguide.utils.Helper
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
-import com.google.android.gms.maps.model.*
+import com.example.campusguide.utils.Helper
+import com.google.android.gms.maps.model.Dash
+import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PatternItem
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import java.io.Serializable
 
 class PathPolyline constructor(startName: String, endName: String, val segment: Segment) {
     class PolylineStyle {
@@ -75,13 +81,13 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         deferred.await()
     }
 
-    fun getPathBounds() : LatLngBounds {
+    fun getPathBounds(): LatLngBounds {
         var north: Double = path[0].latitude
         var south: Double = path[0].latitude
         var east: Double = path[0].longitude
         var west: Double = path[0].longitude
 
-        path.forEach {point ->
+        path.forEach { point ->
             north = Math.max(north, point.latitude)
             south = Math.min(south, point.latitude)
             east = Math.max(east, point.longitude)

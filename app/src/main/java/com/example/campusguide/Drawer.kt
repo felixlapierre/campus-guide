@@ -44,18 +44,17 @@ class Drawer constructor (
         return true
     }
 
-    private fun handleCalendarSelect(userEmail: String){
+    private fun handleCalendarSelect(userEmail: String) {
         val calendar = Calendar(activity, userEmail)
         val calendarsList = calendar.getCalendars()
         val chooseCalendar = ChooseCalendarDialogFragment(activity, calendar, calendarsList)
         chooseCalendar.show(activity.supportFragmentManager, "calendarList")
     }
 
-    private fun handleLoginSelect(item: MenuItem, userEmail: String){
+    private fun handleLoginSelect(item: MenuItem, userEmail: String) {
         if (item.title == "Login to an Account") {
             login.signIn()
-        }
-        else if (item.title == "Log Out of $userEmail") {
+        } else if (item.title == "Log Out of $userEmail") {
             login.signOut()
             Calendar(activity, userEmail).unsetCalendar()
         }
