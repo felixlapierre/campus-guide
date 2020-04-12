@@ -81,6 +81,7 @@ class DirectionsActivity : AppCompatActivity() {
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
                         text = "${path.segment.getDuration() / 60} min"
+                        buttonTintList = colorStateList
                     }
                 }
             }
@@ -106,6 +107,7 @@ class DirectionsActivity : AppCompatActivity() {
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
+            view.buttonTintList = colorStateList
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
@@ -148,7 +150,6 @@ class DirectionsActivity : AppCompatActivity() {
                 val id = resources.getIdentifier(radioButtonId, "id", packageName)
                 findViewById<RadioButton>(id).apply {
                     text = "${path.segment.getDuration() / 60} min"
-                    buttonTintList = colorStateList
                 }
             }
         }
