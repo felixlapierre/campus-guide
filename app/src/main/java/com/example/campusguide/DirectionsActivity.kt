@@ -33,14 +33,13 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
     private var travelMode = "Driving"
-    private lateinit var path: PathPolyline
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
             intArrayOf(android.R.attr.state_checked)
         ), intArrayOf(
             Color.BLACK,  //disabled
-            Color.parseColor(R.color.colorPrimary.toString()) //enabled
+            Color.parseColor(Constants.PRIMARY_COLOR_DARK) //enabled
         )
     )
 
