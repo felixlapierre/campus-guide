@@ -107,7 +107,6 @@ class DirectionsActivity : AppCompatActivity() {
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
-            view.buttonTintList = colorStateList
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
