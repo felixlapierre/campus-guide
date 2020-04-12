@@ -42,4 +42,5 @@ object Constants {
     const val PRIMARY_COLOR = "#008577"
     const val PRIMARY_COLOR_DARK = "#00574B"
     const val ACCENT_COLOR = "#D81B60"
+    const val AZURE_COLOR = "#007fff"
 }

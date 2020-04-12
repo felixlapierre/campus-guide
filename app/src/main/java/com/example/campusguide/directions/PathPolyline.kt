@@ -1,7 +1,12 @@
 package com.example.campusguide.directions
 
+import android.content.Context
 import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import androidx.core.content.ContextCompat.getSystemService
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.Helper
@@ -23,7 +28,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX)
         private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX)
         val patternPolygonAlpha = listOf(patternGap, patternDash)
-        val pathColor = Color.parseColor(Constants.ACCENT_COLOR)
+        val pathColor = Color.parseColor(Constants.AZURE_COLOR)
     }
 
     private lateinit var path: List<LatLng>
