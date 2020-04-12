@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
@@ -17,8 +18,8 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.android.gms.maps.model.Polyline
-import com.google.maps.model.TravelMode
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -31,6 +32,7 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private var travelMode = "Driving"
     private lateinit var path: PathPolyline
+    private lateinit var gson: Gson
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -56,6 +58,15 @@ class DirectionsActivity : AppCompatActivity() {
         path = createPath(startName, endName, travelMode)
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(path)
+        }
+
+        steps.setOnClickListener {
+            gson = Gson()
+            val test = path.getSteps()
+            val studentDataObjectAsAString = gson.toJson(test)
+            val stepIntent = Intent(this, StepsActivity::class.java)
+            stepIntent.putExtra("Steps", studentDataObjectAsAString)
+            this.startActivity(stepIntent)
         }
     }
 

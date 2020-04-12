@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import java.io.Serializable
 
 class PathPolyline constructor(startName: String, endName: String, val segment: Segment) {
     class PolylineStyle {
@@ -19,6 +20,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     private lateinit var path: List<LatLng>
+    private var stepsPath: Test = Test()
     private val polylineOptions: PolylineOptions
     private var polyline: Polyline? = null
 
@@ -35,11 +37,14 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         startMarkerOptions = MarkerOptions()
         endMarkerOptions = MarkerOptions()
 
+
         deferred = GlobalScope.async {
             path = segment.toListOfCoordinates()
             polylineOptions.addAll(path)
                 .color(style.colorBlueArgb.toInt())
                 .pattern(style.patternPolygonAlpha)
+
+            stepsPath.setSteps(segment.getSteps())
 
             val firstPoint = path[0]
             startMarkerOptions.position(firstPoint)
@@ -87,5 +92,9 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         val northeast = LatLng(north, east)
 
         return LatLngBounds(southwest, northeast)
+    }
+
+    fun getSteps(): Test {
+        return  stepsPath
     }
 }

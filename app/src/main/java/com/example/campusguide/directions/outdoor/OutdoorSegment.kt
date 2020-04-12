@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.outdoor
 
+import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
@@ -54,5 +55,9 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
 
     override fun getDuration(): Int {
         return route.duration
+    }
+
+    override suspend fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return route.getSteps()
     }
 }

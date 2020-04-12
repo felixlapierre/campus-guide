@@ -1,6 +1,8 @@
 package com.example.campusguide.directions
 
 import com.beust.klaxon.*
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * A set of data classes to represent the contents

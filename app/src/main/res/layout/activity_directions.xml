@@ -96,37 +96,56 @@
         android:id="@+id/directions_activity_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="493dp"
+        android:layout_height="479dp"
         tools:context=".DirectionsActivity" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="40dp"
         android:orientation="horizontal">
         <TextView
+            android:gravity="center_vertical"
+            android:layout_marginStart="30dp"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:text="4 min"></TextView>
         <TextView
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:text="(350 m)"></TextView>
     </LinearLayout>
     <TextView
+        android:layout_marginStart="30dp"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
+        android:gravity="center_vertical"
         android:text="via Blvd Maisonneuve 0 and Rue Guy">
     </TextView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="40dp"
+        android:orientation="horizontal">
         <Button
+            android:gravity="center_vertical"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"></Button>
+            android:layout_weight="1"
+            android:text="Start"
+            android:drawableLeft="@drawable/ic_place"></Button>
         <Button
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="80dp"
+            android:id="@+id/steps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Steps and More"></Button>
+            android:layout_weight="1"
+            android:text="Steps and More"
+            android:drawableLeft="@drawable/ic_place"></Button>
     </LinearLayout>
 </LinearLayout>
