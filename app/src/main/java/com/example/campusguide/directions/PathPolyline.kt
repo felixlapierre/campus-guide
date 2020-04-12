@@ -1,12 +1,7 @@
 package com.example.campusguide.directions
 
-import android.content.Context
 import android.graphics.Color
-import android.view.LayoutInflater
-import android.view.View
-import androidx.core.content.ContextCompat.getSystemService
 import com.example.campusguide.Constants
-import com.example.campusguide.R
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.Helper
