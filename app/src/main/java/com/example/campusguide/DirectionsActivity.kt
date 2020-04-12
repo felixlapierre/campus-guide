@@ -32,7 +32,6 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
-    private var travelMode = "Driving"
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -107,6 +106,7 @@ class DirectionsActivity : AppCompatActivity() {
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
+
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
@@ -145,11 +145,6 @@ class DirectionsActivity : AppCompatActivity() {
             path.waitUntilCreated()
             runOnUiThread {
                 map.addPath(path)
-                val radioButtonId = "radio_" + travelMode.toLowerCase()
-                val id = resources.getIdentifier(radioButtonId, "id", packageName)
-                findViewById<RadioButton>(id).apply {
-                    text = "${path.segment.getDuration() / 60} min"
-                }
             }
         }
     }
