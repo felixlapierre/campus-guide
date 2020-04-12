@@ -1,6 +1,8 @@
 package com.example.campusguide.directions
 
-import com.example.campusguide.directions.indoor.*
+import com.example.campusguide.directions.indoor.FindRoomPathfinding
+import com.example.campusguide.directions.indoor.Graph
+import com.example.campusguide.directions.indoor.NonexistentLocationException
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.example.campusguide.search.indoor.Room
@@ -40,13 +42,13 @@ class IndoorPathfindingTest {
         val paths = pathfinder.findRoom("1_nodeA", "103.00")
         Assert.assertEquals(paths.size, 1)
         val path = paths[0]
-        Assert.assertEquals(path.size, 4 )
+        Assert.assertEquals(path.size, 4)
 
         val expectedPath = arrayOf("1_nodeA", "1_nodeB", "1_nodeC", "103.00").map {
                 val node = graph.get(it)!!
                 LatLng(node.y, node.x)
             }
-        for((index, element) in path.withIndex()) {
+        for ((index, element) in path.withIndex()) {
             assert(element == expectedPath[index])
         }
     }
@@ -63,7 +65,7 @@ class IndoorPathfindingTest {
             val node = graph.get(it)!!
             LatLng(node.y, node.x)
         }
-        for((index, element) in path.withIndex()) {
+        for ((index, element) in path.withIndex()) {
             assert(element == expectedPath[index])
         }
     }

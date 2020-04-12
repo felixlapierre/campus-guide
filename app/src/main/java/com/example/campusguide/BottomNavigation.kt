@@ -1,14 +1,8 @@
 package com.example.campusguide
 
-import android.content.Intent
-import com.example.campusguide.directions.ChooseDestinationOptions
-import com.example.campusguide.directions.ChooseOriginOptions
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
-import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.maps.model.LatLng
 
 class BottomNavigation constructor (
     private val activity: MapsActivity,
@@ -16,7 +10,7 @@ class BottomNavigation constructor (
     private val directions: DirectionsFlow
 ) {
 
-    private var bottomNavigationView : BottomNavigationView =
+    private var bottomNavigationView: BottomNavigationView =
         activity.findViewById(R.id.bottom_navigation)
 
     init {
@@ -39,7 +33,7 @@ class BottomNavigation constructor (
         }
     }
 
-    private fun centerCameraSGW(){
+    private fun centerCameraSGW() {
         map.animateCamera(Constants.SGW_COORDINATES, Constants.ZOOM_STREET_LVL)
     }
 

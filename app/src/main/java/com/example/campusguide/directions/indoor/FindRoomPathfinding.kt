@@ -3,7 +3,7 @@ package com.example.campusguide.directions.indoor
 import com.example.campusguide.search.indoor.Node
 import com.google.android.gms.maps.model.LatLng
 
-class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
+class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
     lateinit var target: String
     private var complete = false
 
@@ -21,12 +21,12 @@ class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
     }
 
     override fun visit(node: Node) {
-        if(node.code == target)
+        if (node.code == target)
             complete = true
     }
 
     override fun getResults(): List<String> {
-        if(!complete) {
+        if (!complete) {
             throw PathNotFoundException("Could not find a path to room $target")
         }
         return listOf(target)

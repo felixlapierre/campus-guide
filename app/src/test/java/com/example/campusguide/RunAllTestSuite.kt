@@ -1,6 +1,10 @@
 package com.example.campusguide
 
-import com.example.campusguide.directions.*
+import com.example.campusguide.directions.CallbackDirectionsConfirmTest
+import com.example.campusguide.directions.DirectionsTest
+import com.example.campusguide.directions.EmptyDirectionsGuardTest
+import com.example.campusguide.directions.GraphTest
+import com.example.campusguide.directions.IndoorPathfindingTest
 import com.example.campusguide.location.CenterLocationListenerTest
 import com.example.campusguide.location.LocationTest
 import com.example.campusguide.location.SwitchCampusTest
