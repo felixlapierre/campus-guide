@@ -1,5 +1,7 @@
 package com.example.campusguide
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
@@ -22,7 +24,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity() {
-
     private lateinit var map: GoogleMapAdapter
     private lateinit var start: String
     private lateinit var end: String
@@ -30,9 +31,17 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
+    private val colorStateList: ColorStateList = ColorStateList(
+        arrayOf(
+            intArrayOf(-android.R.attr.state_checked),
+            intArrayOf(android.R.attr.state_checked)
+        ), intArrayOf(
+            Color.BLACK, // disabled
+            Color.parseColor(Constants.PRIMARY_COLOR_DARK) // enabled
+        )
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_directions)
 
@@ -49,6 +58,7 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.origin).apply {
             text = startName
         }
+
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
@@ -69,6 +79,7 @@ class DirectionsActivity : AppCompatActivity() {
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
                         text = "${path.segment.getDuration() / 60} min"
+                        buttonTintList = colorStateList
                     }
                 }
             }
