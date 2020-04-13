@@ -37,15 +37,26 @@ class BuildingClickListener(
         if (building == null) {
             info.symbol = "B"
             info.fullName = "Building"
-            info.address = "123 address"
-            info.servicesList = "-service1\n-service2"
+            info.address = "123 Street, Montreal, QC"
+            info.departments = "Departments:"
+            info.departmentsList = "- Faculty 1\n- Faculty 2"
+            info.services = "Services:"
+            info.servicesList = "- Service 1\n- Service 2"
         } else {
             info.symbol = building.code
             info.fullName = building.name
             info.address = building.address
+            info.departmentsList = building.departments
             info.servicesList = building.services
         }
-        info.services = "Services:"
+        if (building?.departments != "") {
+            info.departments = "Departments:"
+            // activity.findViewById<FrameLayout>(R.id.departmentsFrame).visibility = View.VISIBLE
+        }
+        if (building?.services != "") {
+            info.services = "Services:"
+            // activity.findViewById<FrameLayout>(R.id.departmentsFrame).visibility = View.VISIBLE
+        }
         return info
     }
 
@@ -70,7 +81,7 @@ class BuildingClickListener(
         marker?.showInfoWindow()
 
         // Animating to the info window
-        val cameraLocation = LatLng((coordinates.latitude) + 0.00055, coordinates.longitude)
+        val cameraLocation = LatLng((coordinates.latitude) + 0.0015, coordinates.longitude)
         map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
 }

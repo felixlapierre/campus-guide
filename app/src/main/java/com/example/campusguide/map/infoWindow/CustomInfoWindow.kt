@@ -6,6 +6,7 @@ import com.example.campusguide.R
 import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import org.w3c.dom.Text
 
 class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
 
@@ -22,6 +23,8 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
         view.findViewById<TextView>(R.id.symbol).text = infoWindowData?.symbol
         view.findViewById<TextView>(R.id.fullName).text = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.address).text = infoWindowData?.address
+        view.findViewById<TextView>(R.id.departments).text = infoWindowData?.departments
+        view.findViewById<TextView>(R.id.departmentsList).text = infoWindowData?.departmentsList
         view.findViewById<TextView>(R.id.services).text = infoWindowData?.services
         view.findViewById<TextView>(R.id.servicesList).text = infoWindowData?.servicesList
 
