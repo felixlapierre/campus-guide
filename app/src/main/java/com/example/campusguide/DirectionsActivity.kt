@@ -4,6 +4,8 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,8 @@ import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
+import com.example.campusguide.directions.TransitRoute
+import com.example.campusguide.directions.TransitRouteAdapter
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -20,10 +24,12 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
+import com.google.android.gms.maps.SupportMapFragment
+import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DirectionsActivity : AppCompatActivity() {
+class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private lateinit var map: GoogleMapAdapter
     private lateinit var start: String
     private lateinit var end: String
@@ -40,6 +46,8 @@ class DirectionsActivity : AppCompatActivity() {
             Color.parseColor(Constants.PRIMARY_COLOR_DARK) // enabled
         )
     )
+    private lateinit var listView: ListView
+    private lateinit var adapter: TransitRouteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +98,9 @@ class DirectionsActivity : AppCompatActivity() {
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(currentPath)
         }
+
+        adapter = TransitRouteAdapter(this)
+
     }
 
     /**
@@ -109,24 +120,57 @@ class DirectionsActivity : AppCompatActivity() {
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
+                        showMap()
                         removePreviousPath()
                         currentPath = paths.getValue("driving")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_walking ->
                     if (checked) {
+                        showMap()
                         removePreviousPath()
                         currentPath = paths.getValue("walking")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_transit ->
                     if (checked) {
-                        removePreviousPath()
-                        currentPath = paths.getValue("transit")
-                        setPathOnMapAsync(currentPath)
+
+                        // removePreviousPath()
+                        // currentPath = paths.getValue("transit")
+                        // setPathOnMapAsync(currentPath)
+
+                        // Hide the map
+                        hideMap()
+
+                        // var newView: ImageView = ImageView(this)
+                        // something.addView(newView)
+                        // newView.layoutParams.height = 100
+                        // newView.layoutParams.width = something.width
+                        // newView.setBackgroundColor(Color.MAGENTA)
+
+                        if(!::listView.isInitialized) {
+                            listView = ListView(this)
+                            activity_directions_layout.addView(listView)
+                            listView.adapter = adapter
+                            listView.onItemClickListener = this
+                            // Temporary
+                            adapter.add(TransitRoute("RECOMMENDED ROUTE", "S1 > S2 > S3","30 min"))
+                            adapter.add(TransitRoute("LESS WALKING", "S1 > S2 > S3","20 min"))
+                            adapter.add(TransitRoute("FEWER TRANSFERS", "S1 > S2 > S3","10 min"))
+                            runOnUiThread { adapter.notifyDataSetChanged() }
+                        }
                     }
             }
         }
+    }
+
+    /**
+     * Callback method to be invoked when an item in this AdapterView has
+     * been clicked.
+     */
+    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        finish()
+        //TODO: Correctly implement this method
     }
 
     private fun isIndoorLocation(encodedLocation: String): Boolean {
@@ -175,5 +219,17 @@ class DirectionsActivity : AppCompatActivity() {
         if (::currentPath.isInitialized) {
             currentPath.removeFromMap()
         }
+    }
+
+    private fun showMap() {
+        val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
+        if(!mapFragment.isVisible) {
+            this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
+        }
+    }
+
+    private fun hideMap() {
+        val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
+        this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
     }
 }
