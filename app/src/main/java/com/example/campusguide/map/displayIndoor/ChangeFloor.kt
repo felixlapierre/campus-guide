@@ -35,10 +35,10 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     }
 
     fun unsetBuilding(){
-
+        hideCurrentFloor()
         currentBuilding = ""
         currentFloor = -1
-        hideCurrentFloor()
+
     }
 
     override fun onClick(v: View?) {
