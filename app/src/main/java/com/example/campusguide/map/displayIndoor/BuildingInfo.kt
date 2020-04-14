@@ -55,8 +55,8 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
                     GroundOverlayOptions()
                         .image(BitmapDescriptorFactory.fromAsset("h_floor$floor.png"))
                         .position(buildingImageCoordinates, 68F, 63F).bearing(124F)
-                        .zIndex(-1F)
-                        .visible(true)
+                        .visible(false)
+                        .zIndex(3F)
                 )
             }
         }
@@ -66,8 +66,8 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
                     GroundOverlayOptions()
                         .image(BitmapDescriptorFactory.fromAsset("lb_floor$floor.png"))
                         .position(buildingImageCoordinates, 78F, 78F).bearing(-56F)
-                        .zIndex(-1F)
-                        .visible(true)
+                        .visible(false)
+                        .zIndex(3F)
                 )
             }
 

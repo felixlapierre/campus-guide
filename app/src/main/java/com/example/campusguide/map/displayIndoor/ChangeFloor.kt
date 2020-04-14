@@ -28,6 +28,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
 
         currentBuilding = buildingName
         currentFloor = buildings[buildingName]?.startFloor!!
+        displayCurrentFloor()
     }
 
     fun unsetBuilding(){
@@ -42,33 +43,32 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
 
         if (v?.id == upButtonId){
             val updatedFloor = updateFloorUp(currentFloor)
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.zIndex ?: -1F
-            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.zIndex ?: 5F
 
+            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
 
             currentFloor = updatedFloor
         }
         else if (v?.id == downButtonId){
             val updatedFloor = updateFloorDown(currentFloor)
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.zIndex ?: 5F
-            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.zIndex ?: -1F
 
-            if (buildingImageLatLng != null) {
-                map.animateCamera(buildingImageLatLng,map.adapted.cameraPosition.zoom)
-            }
+            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
             currentFloor = updatedFloor
+        }
+        if (buildingImageLatLng != null) {
+            map.animateCamera(buildingImageLatLng,map.adapted.cameraPosition.zoom)
         }
 
     }
 
     fun displayCurrentFloor(){
         if (currentBuilding != "" && buildings != null){
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.zIndex = 5F
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = true
         }
     }
     fun hideCurrentFloor(){
         if (currentBuilding != "" && buildings != null){
-           // buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.zIndex = -1F
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
         }
     }
