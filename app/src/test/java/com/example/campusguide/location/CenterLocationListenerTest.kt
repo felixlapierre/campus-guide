@@ -1,18 +1,19 @@
 package com.example.campusguide.location
 
 import android.Manifest
-import android.location.Location
 import com.example.campusguide.Constants
-
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
-
 
 @RunWith(JUnit4::class)
 class CenterLocationListenerTest {
@@ -37,11 +38,7 @@ class CenterLocationListenerTest {
     fun testAddMarkersAndCenterMap() {
         val listener = CenterLocationListener(map, permissions, locationProvider)
 
-        val mockLocation: Location = mock()
-        val someLat = 10.0
-        val someLon = 12.0
-        whenever(mockLocation.latitude).thenReturn(someLat)
-        whenever(mockLocation.longitude).thenReturn(someLon)
+        val mockLocation: Location = Location("someLocation", 10.0, 12.0)
 
         whenever(permissions.havePermission(locationPermission)).thenReturn(true)
         whenever(locationProvider.getLocation(any())).thenAnswer {
@@ -51,7 +48,7 @@ class CenterLocationListenerTest {
 
         listener.onClick(mock())
 
-        val expectedLatLng = LatLng(someLat, someLon)
+        val expectedLatLng = LatLng(mockLocation.lat, mockLocation.lon)
 
         verify(map).addMarker(expectedLatLng, Constants.LOCATION_MARKER_TITLE)
         verify(map).animateCamera(expectedLatLng, Constants.ZOOM_STREET_LVL)

@@ -1,0 +1,14 @@
+language: android
+os: linux
+dist: trusty
+android:
+  components:
+    - build-tools-29.0.2
+    - android-29
+branches:
+  only:
+    - master
+jobs:
+  include:
+    - stage: lint
+      script: ./gradlew ktlintCheck

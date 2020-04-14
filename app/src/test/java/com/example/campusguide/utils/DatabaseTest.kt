@@ -1,15 +1,20 @@
 package com.example.campusguide.utils
 
-import database.ObjectBox
-import database.entity.*
+import database.entity.Building
+import database.entity.Building_
+import database.entity.Highlight
+import database.entity.Hole
+import database.entity.MyObjectBox
+import database.entity.Outline
+import database.entity.Point
 import io.objectbox.BoxStore
 import io.objectbox.DebugFlags
 import io.objectbox.kotlin.boxFor
+import java.io.File
 import org.junit.After
+import org.junit.Assert.assertEquals as assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.io.File
-import org.junit.Assert.assertEquals as assertEquals
 
 class DatabaseTest {
     private val TEST_DIRECTORY: File = File("test-db/objectbox/")
@@ -32,12 +37,12 @@ class DatabaseTest {
     }
 
     @Test
-    fun whenAddABuilding_ThenShouldBeInDatabse(){
-        //given
+    fun whenAddABuilding_ThenShouldBeInDatabse() {
+        // given
         val store = store!!.boxFor<Building>()
         val outlinePoint = Point(1, 10.0, 20.0)
         val holePoint = Point(2, 30.0, 40.0)
-        val building  = Building(0, "Name", "abbreviation")
+        val building = Building(0, "Name", "abbreviation")
         building.highlight.target = Highlight(0)
         val outline = Outline(0)
         outline.points.add(outlinePoint)
@@ -46,10 +51,10 @@ class DatabaseTest {
         outline.holes.add(hole)
         building.highlight.target.outlines.add(outline)
 
-        //when
+        // when
         store.put(building)
 
-        //then
+        // then
         val buildings = store.query().equal(Building_.fullName, "Name").build().find()
         assertEquals(1, buildings.size)
         val dbBuilding = buildings[0]
@@ -59,15 +64,15 @@ class DatabaseTest {
         assertEquals(dbBuilding.highlight.target.outlines.size, 1)
         val dbOutline = dbBuilding.highlight.target.outlines[0]
         assertEquals(dbOutline.points.size, 1)
-        assertEquals(dbOutline.points[0].order,1)
-        assertEquals(dbOutline.points[0].latitude,10.0, 0.00001)
-        assertEquals(dbOutline.points[0].longitude,20.0, 0.00001)
+        assertEquals(dbOutline.points[0].order, 1)
+        assertEquals(dbOutline.points[0].latitude, 10.0, 0.00001)
+        assertEquals(dbOutline.points[0].longitude, 20.0, 0.00001)
 
         assertEquals(dbBuilding.highlight.target.outlines[0].holes.size, 1)
         val dbHole = dbBuilding.highlight.target.outlines[0].holes[0]
         assertEquals(dbHole.points.size, 1)
-        assertEquals(dbHole.points[0].order,2)
-        assertEquals(dbHole.points[0].latitude,30.0, 0.00001)
-        assertEquals(dbHole.points[0].longitude,40.0, 0.00001)
+        assertEquals(dbHole.points[0].order, 2)
+        assertEquals(dbHole.points[0].latitude, 30.0, 0.00001)
+        assertEquals(dbHole.points[0].longitude, 40.0, 0.00001)
     }
 }

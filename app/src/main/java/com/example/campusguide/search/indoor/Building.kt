@@ -12,6 +12,18 @@ data class Building(
     @Json(name = "address")
     val address: String,
 
+    @Json(name = "services")
+    val services: String,
+
+    @Json(name = "lat")
+    val lat: String,
+
+    @Json(name = "lon")
+    val lon: String,
+
     @Json(name = "rooms")
-    val rooms: List<Room>
+    val rooms: List<Room>,
+
+    @Json(name = "nodes")
+    val nodes: List<Node>
 )

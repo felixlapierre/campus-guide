@@ -12,21 +12,21 @@ import java.lang.RuntimeException
  */
 class IndoorLocationProvider constructor(
     private val index: BuildingIndex,
-    private val next: SearchLocationProvider
+    private val next: SearchLocationProvider?
 ) : SearchLocationProvider {
-    override suspend fun getLocation(id: String): SearchLocation {
+    override suspend fun getLocation(id: String): SearchLocation? {
         val isIndoor = id.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
 
-        if(isIndoor) {
+        if (isIndoor) {
             val locationInfo = id.split("_")
-            if(locationInfo.size != 3) {
+            if (locationInfo.size != 3) {
                 throw IdFormatException("Id $id is an indoor identifier that does not have the format indoor_buildingcode_roomcode")
             }
             val buildingCode = locationInfo[1]
             val roomCode = locationInfo[2]
             return getIndoorLocation(buildingCode, roomCode, id)
         } else {
-            return next.getLocation(id)
+            return next?.getLocation(id)
         }
     }
 
@@ -48,11 +48,12 @@ class IndoorLocationProvider constructor(
         val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
             ?: throw RoomNotFoundException("Room code $roomCode was not found in the index.")
 
-        return SearchLocation(
+        return IndoorLocation(
             targetRoom.name,
-            id,
             targetRoom.lat.toDouble(),
-            targetRoom.lon.toDouble()
+            targetRoom.lon.toDouble(),
+            id,
+            targetBuilding.name
         )
     }
 }

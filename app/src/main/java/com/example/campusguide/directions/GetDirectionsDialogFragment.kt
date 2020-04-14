@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
-
 import com.example.campusguide.R
 
 /**
@@ -24,8 +23,9 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
      * @param onConfirm Callback that will be executed when the user confirms the dialog window
      */
     class DirectionsDialogOptions constructor(
-        val message : String?,
-        val start: String?, val end: String?,
+        val message: String?,
+        val start: String?,
+        val end: String?,
         val confirmationListener: DirectionsDialogConfirmationListener
     )
 

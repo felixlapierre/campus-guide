@@ -10,7 +10,7 @@ import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class PlacesApiSearchLocationProvider constructor(private val activity: FragmentActivity):
+class PlacesApiSearchLocationProvider constructor(private val activity: FragmentActivity) :
     SearchLocationProvider {
     override suspend fun getLocation(id: String): SearchLocation = suspendCoroutine { cont ->
         val fields: List<Place.Field> =
@@ -22,21 +22,21 @@ class PlacesApiSearchLocationProvider constructor(private val activity: Fragment
             val place = response.place
             val name = place.name
             val latlng = place.latLng
-            if(latlng != null && name != null) {
+            if (latlng != null && name != null) {
                 val location = SearchLocation(
                     name,
-                    id,
                     latlng.latitude,
-                    latlng.longitude
+                    latlng.longitude,
+                    id,
+                    place.address!!
                 )
                 cont.resume(location)
             }
         }.addOnFailureListener { exception ->
             val message = exception.message
-            if(message != null) {
+            if (message != null) {
                 DisplayMessageErrorListener(activity).onError(message)
             }
         }
     }
-
 }

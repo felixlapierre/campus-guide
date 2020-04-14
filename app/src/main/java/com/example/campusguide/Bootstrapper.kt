@@ -1,14 +1,16 @@
 package com.example.campusguide
 
-import android.view.View
-import com.example.campusguide.directions.ChooseDirectionOptionsDialogFragment
-import com.example.campusguide.directions.Route
+import CustomInfoWindow
+import com.example.campusguide.calendar.Login
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.location.CenterLocationListener
 import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
+import com.example.campusguide.search.PopupSearchLocationListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
@@ -24,28 +26,52 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
+        // Permissions
+        val permissions = Permissions(activity)
+        activity.permissions = permissions
+
+        val locationProvider = FusedLocationProvider(activity)
+
+        // Directions
+        val directions = DirectionsFlow(activity, permissions, locationProvider)
+
         // Map
         val map = GoogleMapAdapter()
-        GoogleMapInitializer(activity, map, "maps_activity_map")
+        val buildingClickListener = BuildingClickListener(
+            map,
+            BuildingIndexSingleton.getInstance(activity.assets),
+            CustomInfoWindow(activity),
+            directions
+        )
+        GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener)
 
-        //Permissions
-        val permissions = Permissions(activity)
+        // Center on Location
+        val centerLocation = CenterLocationListener(
+            map,
+            permissions,
+            locationProvider
+        )
+        activity.setOnCenterLocationListener(centerLocation)
 
         // Search
-        val locationProvider = IndoorLocationProvider(
+        val searchLocationProvider = IndoorLocationProvider(
             BuildingIndexSingleton.getInstance(activity.assets),
             PlacesApiSearchLocationProvider(activity)
         )
-        val search = CustomSearch(activity, map, locationProvider)
+        val search =
+            CustomSearch(
+                activity,
+                searchLocationProvider,
+                Constants.REGULAR_SEARCH_REQUEST_CODE
+            )
+
+        search.locationListener = PopupSearchLocationListener(
+            activity,
+            DirectionsFlow(activity, permissions, locationProvider),
+            map
+        )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
-
-        // Center on Location
-        val centerLocation = CenterLocationListener(map,
-            permissions,
-            FusedLocationProvider(activity)
-        )
-        activity.setOnCenterLocationListener(centerLocation)
 
         //Show Floor Plan
 
@@ -58,11 +84,16 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setSwitchCampusButtonListener(switchCampus)
 
-        // Navigation
-        val route = Route(map, activity)
-        activity.setOnNavigateListener(View.OnClickListener{
-            val chooseDirectionOptions = ChooseDirectionOptionsDialogFragment()
-            chooseDirectionOptions.show(activity.supportFragmentManager, "directionsOptions")
-        })
+        // Login
+        val login = Login(activity, permissions)
+        login.onCreate()
+        login.onStart()
+        activity.addActivityResultListener(login)
+
+        // Drawer
+        val drawer = Drawer(activity, login)
+
+        // Bottom Navigation
+        val bottomNavigation = BottomNavigation(activity, map, directions)
     }
 }

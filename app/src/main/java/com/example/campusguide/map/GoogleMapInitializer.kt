@@ -11,9 +11,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 
-class GoogleMapInitializer constructor(private val activity: FragmentActivity,
-                                       private val wrapper: GoogleMapAdapter,
-                                       private val mapId: String): OnMapReadyCallback {
+class GoogleMapInitializer constructor(
+    private val activity: FragmentActivity,
+    private val wrapper: GoogleMapAdapter,
+    private val mapId: String,
+    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null
+) : OnMapReadyCallback {
+    private var onMapReadyListener: (() -> Unit)? = null
+    private var googleMap: GoogleMap? = null
+
     init {
         // Obtain the SupportMapFragment and get notified when the map is ready to be used
         val id = activity.resources.getIdentifier(mapId, "id", activity.packageName)
@@ -22,7 +28,8 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity,
     }
 
     override fun onMapReady(map: GoogleMap?) {
-        if(map != null) {
+        if (map != null) {
+            googleMap = map
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
             map.uiSettings.isIndoorLevelPickerEnabled = false
@@ -30,24 +37,32 @@ class GoogleMapInitializer constructor(private val activity: FragmentActivity,
             map.isBuildingsEnabled = false
 
 
-            // Center the map on Hall building
-            if(mapId == "maps_activity_map") {
-                val hall = LatLng(45.497290, -73.578824)
-                map.animateCamera(
-                    CameraUpdateFactory.newLatLngZoom(
-                        hall,
-                        Constants.ZOOM_STREET_LVL
-                    )
+            // Center the map on SGW Campus
+            map.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    Constants.SGW_COORDINATES,
+                    Constants.ZOOM_STREET_LVL
                 )
-            }
+            )
+
             val zoomListener = OnZoomListener(wrapper)
             wrapper.setCameraMoveListener(zoomListener)
 
             BuildingHighlights(map, activity).addBuildingHighlights()
-            map.setOnPolygonClickListener(BuildingClickListener(activity, map))
-            map.setContentDescription("Google Maps Ready")
+
+            if (onPolygonClickListener != null) {
+                map.setOnPolygonClickListener(onPolygonClickListener)
+            }
+            map.setContentDescription("$mapId ready")
+
+            onMapReadyListener?.invoke()
         }
     }
 
-
+    fun setOnMapReadyListener(callback: () -> Unit) {
+        if (googleMap != null)
+            callback()
+        else
+            onMapReadyListener = callback
+    }
 }

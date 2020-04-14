@@ -45,12 +45,13 @@
         android:textColor="@android:color/black"/>
 
     <Button
-        android:id="@+id/btnAddARoom"
+        android:id="@+id/btnGoHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white"
+        android:layout_gravity="center"
         android:layout_marginBottom="10dp"
-        android:text="GO HERE" />
+        android:text="@string/go_here" />
 
 </LinearLayout>

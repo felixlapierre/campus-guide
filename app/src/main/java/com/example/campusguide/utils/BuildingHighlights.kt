@@ -15,13 +15,13 @@ import io.objectbox.kotlin.boxFor
 
 class BuildingHighlights(private val googleMap: GoogleMap, private val context: Context) {
 
-    fun addBuildingHighlights(){
-        val buildingBox: Box<Building> =  ObjectBox.boxStore.boxFor()
-        for(building in buildingBox.all){
-            for(outline in building.highlight.target.outlines){
+    fun addBuildingHighlights() {
+        val buildingBox: Box<Building> = ObjectBox.boxStore.boxFor()
+        for (building in buildingBox.all) {
+            for (outline in building.highlight.target.outlines) {
                 val polygon = PolygonOptions()
                 polygon.addAll(getLatLngList(outline.points))
-                for(hole in outline.holes){
+                for (hole in outline.holes) {
                     polygon.addHole(getLatLngList(hole.points))
                 }
                 polygon.clickable(true)
@@ -31,15 +31,15 @@ class BuildingHighlights(private val googleMap: GoogleMap, private val context: 
         }
     }
 
-    private fun getLatLngList(points: Collection<Point>): Collection<LatLng>{
+    private fun getLatLngList(points: Collection<Point>): Collection<LatLng> {
         val latLngs = mutableListOf<LatLng>()
-        for(point in points.sortedBy { it.order }){
+        for (point in points.sortedBy { it.order }) {
             latLngs.add(LatLng(point.latitude, point.longitude))
         }
         return latLngs
     }
 
-    private fun applyPolygonStyle(polygon: PolygonOptions){
+    private fun applyPolygonStyle(polygon: PolygonOptions) {
         val primaryColor = ContextCompat.getColor(context, R.color.colorPrimary)
         val darkColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
         polygon.strokeWidth(3.5F)

@@ -1,9 +1,15 @@
 package com.example.campusguide.map
 
+import com.example.campusguide.directions.PathPolyline
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 
 class GoogleMapAdapter : Map {
     lateinit var adapted: GoogleMap
@@ -14,11 +20,11 @@ class GoogleMapAdapter : Map {
             .title(title)
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
 
-        return adapted.addMarker(opts)
+        return GoogleMapMarker(adapted.addMarker(opts))
     }
 
     override fun addMarker(opts: MarkerOptions): Marker? {
-        return adapted.addMarker(opts)
+        return GoogleMapMarker(adapted.addMarker(opts))
     }
 
     override fun animateCamera(position: LatLng, zoom: Float) {
@@ -34,8 +40,35 @@ class GoogleMapAdapter : Map {
         return adapted.moveCamera(update)
     }
 
+    override fun moveCamera(bounds: LatLngBounds) {
+        adapted.moveCamera(
+            CameraUpdateFactory.newLatLngBounds(
+                bounds,
+                100 // padding around the route in pixels
+            )
+        )
+    }
+
     override fun addPolyline(polyOptions: PolylineOptions?): Polyline? {
         return adapted.addPolyline(polyOptions)
+    }
+
+    override fun setInfoWindowAdapter(infoWindowAdapter: GoogleMap.InfoWindowAdapter) {
+        adapted.setInfoWindowAdapter(infoWindowAdapter)
+    }
+
+    override fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener) {
+        adapted.setOnInfoWindowClickListener(infoWindowClickListener)
+    }
+
+    override fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener) {
+        adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
+    }
+
+    override fun addPath(path: PathPolyline) {
+        path.removeFromMap()
+        path.addToMap(this)
+        moveCamera(path.getPathBounds())
     }
 
     fun getCameraZoom(): Float {

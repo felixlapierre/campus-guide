@@ -19,7 +19,7 @@ import kotlin.coroutines.suspendCoroutine
 /**
  * Gets search results using Google's Places API.
  */
-class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int = Int.MAX_VALUE):
+class PlacesApiSearchResultProvider constructor(activity: Activity, private val count: Int = Int.MAX_VALUE) :
     SearchResultProvider {
     private val placesClient: PlacesClient
 
@@ -46,7 +46,7 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
             cont.resume(toSearchResults(response))
-        }.addOnFailureListener{ exception ->
+        }.addOnFailureListener { exception ->
             cont.resumeWithException(exception)
         }
     }
@@ -66,7 +66,7 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
 
             results.add(searchResult)
 
-            if(results.count() >= count) {
+            if (results.count() >= count) {
                 return results
             }
         }
