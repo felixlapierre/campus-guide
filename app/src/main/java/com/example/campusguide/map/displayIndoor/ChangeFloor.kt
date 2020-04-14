@@ -26,6 +26,9 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
 
     fun setBuilding(buildingName: String){
 
+        if (buildingName != currentBuilding){
+            unsetBuilding()
+        }
         currentBuilding = buildingName
         currentFloor = buildings[buildingName]?.startFloor!!
         displayCurrentFloor()
@@ -35,6 +38,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
 
         currentBuilding = ""
         currentFloor = -1
+        hideCurrentFloor()
     }
 
     override fun onClick(v: View?) {
@@ -59,7 +63,6 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
         if (buildingImageLatLng != null) {
             map.animateCamera(buildingImageLatLng,map.adapted.cameraPosition.zoom)
         }
-
     }
 
     fun displayCurrentFloor(){
