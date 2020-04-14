@@ -3,9 +3,10 @@ package com.example.campusguide.map.displayIndoor
 import com.example.campusguide.Constants
 import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 
-class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
+class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
 
     init{
         FloorPlans.setUpChangeFloor(map)
@@ -16,31 +17,29 @@ class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.O
         if (map.getCameraZoom() >= Constants.ZOOM_INDOOR_LVL){
             val location = map.getCameraLocation()
             val focusedBuilding = cameraFocusedOnBuilding(location)
-            if (focusedBuilding != null){
+            if (focusedBuilding != null) {
                 FloorPlans.show(focusedBuilding)
-            }
-            else{
+            } else {
                 FloorPlans.hide()
             }
         }
-        if (map.getCameraZoom()< Constants.ZOOM_INDOOR_LVL){
+        if (map.getCameraZoom()< Constants.ZOOM_INDOOR_LVL) {
             FloorPlans.hide()
         }
     }
 
-    private fun cameraFocusedOnBuilding (location: LatLng): String? {
+    private fun cameraFocusedOnBuilding(location: LatLng): String? {
 
             if (buildingBounds[0].contains(location)) {
                 return "library"
-            }
-            else if (buildingBounds[1].contains(location)) {
+            } else if (buildingBounds[1].contains(location)) {
                 return "hall"
             }
 
             return null
     }
 
-    private fun getBuildingBounds(): Array<LatLngBounds> {
+    private fun getBuildingBounds(): Array <LatLngBounds> {
         val library: LatLngBounds.Builder = LatLngBounds.builder()
 
             library.include(LatLng(45.496691, -73.578638))
@@ -56,6 +55,5 @@ class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.O
             hall.include(LatLng(45.497383, -73.578292))
 
         return arrayOf(library.build(), hall.build())
-
     }
 }

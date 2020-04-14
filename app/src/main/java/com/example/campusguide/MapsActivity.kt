@@ -7,12 +7,11 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.map.displ.ChangeFloor
+import com.example.campusguide.map.displayIndoor.ChangeFloor
 import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
-
 
 class MapsActivity : AppCompatActivity() {
     var permissions: Permissions? = null
@@ -56,7 +55,7 @@ class MapsActivity : AppCompatActivity() {
         currentLocationButton.setOnClickListener(listener)
     }
 
-    fun setFloorPlanButtons(){
+    fun setFloorPlanButtons() {
         ChangeFloor.upButtonId = R.id.upOneFloor
         ChangeFloor.downButtonId = R.id.downOneFloor
         FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)

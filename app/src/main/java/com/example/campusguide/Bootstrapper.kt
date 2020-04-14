@@ -73,7 +73,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
-        //Show Floor Plan
+        // Show Floor Plan
 
         activity.setFloorPlanButtons()
 

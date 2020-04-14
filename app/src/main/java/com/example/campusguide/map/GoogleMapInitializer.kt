@@ -3,13 +3,11 @@ package com.example.campusguide.map
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.map.displayIndoor.OnZoomListener
-import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.*
 
 class GoogleMapInitializer constructor(
     private val activity: FragmentActivity,
@@ -35,7 +33,6 @@ class GoogleMapInitializer constructor(
             map.uiSettings.isIndoorLevelPickerEnabled = false
             map.isIndoorEnabled = false
             map.isBuildingsEnabled = false
-
 
             // Center the map on SGW Campus
             map.animateCamera(
