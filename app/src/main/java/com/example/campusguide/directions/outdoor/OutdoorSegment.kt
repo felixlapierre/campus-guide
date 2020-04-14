@@ -19,7 +19,7 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun setNext(next: IndoorSegment) {
         routingTask?.cancel()
         routingTask = GlobalScope.async {
-            route.set(start, next.getBuilding().address, args.travelMode)
+            route.set(start, next.getBuilding().address, args.travelMode, args.transitPreference)
         }
         val nextSegment = IndoorSegment(next.getBuilding().code, next.getBuilding().nodes[0].code, args)
         nextSegment.setNext(next)
@@ -29,7 +29,7 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun setNext(next: OutdoorSegment) {
         routingTask?.cancel()
         routingTask = GlobalScope.async {
-            route.set(start, next.start, args.travelMode)
+            route.set(start, next.start, args.travelMode, args.transitPreference)
         }
         this.next = next
     }

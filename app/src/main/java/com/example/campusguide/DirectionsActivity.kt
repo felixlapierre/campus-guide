@@ -73,9 +73,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         // Hash map containing (travelMode, path) pairs
         paths = mapOf(
-            "driving" to createPath(startName, endName, "driving"),
-            "walking" to createPath(startName, endName, "walking"),
-            "transit" to createPath(startName, endName, "transit")
+            "driving" to createPath(startName, endName, "driving", null),
+            "walking" to createPath(startName, endName, "walking", null),
+            "transit" to createPath(startName, endName, "transit", "less_walking")
         )
 
         // Display travel times
@@ -135,18 +135,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 R.id.radio_transit ->
                     if (checked) {
 
-                        // removePreviousPath()
-                        // currentPath = paths.getValue("transit")
-                        // setPathOnMapAsync(currentPath)
-
                         // Hide the map
                         hideMap()
-
-                        // var newView: ImageView = ImageView(this)
-                        // something.addView(newView)
-                        // newView.layoutParams.height = 100
-                        // newView.layoutParams.width = something.width
-                        // newView.setBackgroundColor(Color.MAGENTA)
 
                         if(!::listView.isInitialized) {
                             listView = ListView(this)
@@ -192,7 +182,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
     }
 
-    private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
+    private fun createPath(startName: String, endName: String, travelMode: String, transitPreference: String?): PathPolyline {
         val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
@@ -206,7 +196,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             errorListener
         )
         val segmentArgs =
-            SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
+                SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions, transitPreference)
 
         val firstSegment = createSegment(start, segmentArgs)
         val secondSegment = createSegment(end, segmentArgs)

@@ -18,7 +18,8 @@ class OutdoorDirections constructor(
     suspend fun getDirections(
         startLocation: String,
         endLocation: String,
-        travelMode: String
+        travelMode: String,
+        transitPreference: String?
     ): GoogleDirectionsAPIResponse? {
         /**
          * Start, end and travel mode will be placed in query params, so they must be urlEncoded.
@@ -28,7 +29,11 @@ class OutdoorDirections constructor(
         val travelModeEncoded = URLEncoder.encode(travelMode.toLowerCase(), "UTF-8")
 
         val path = Constants.DIRECTIONS_API_URL
-        val url = "$path?origin=$startEncoded&destination=$endEncoded&mode=$travelModeEncoded"
+        var url = "$path?origin=$startEncoded&destination=$endEncoded&mode=$travelModeEncoded"
+        if(transitPreference != null) {
+            val transitPreferenceEncoded = URLEncoder.encode(transitPreference, "UTF-8")
+            url = "$url&transit_routing_preference=$transitPreferenceEncoded"
+        }
 
         val response = requestDispatcher.sendRequest(url)
         val responseObj = responseParser.parse(response)
