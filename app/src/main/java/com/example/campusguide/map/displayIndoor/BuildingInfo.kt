@@ -24,22 +24,21 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
     val startFloor: Int? = floors?.get(0)
 
     private fun setBuildingImageCoordinates(buildingName: String): LatLng {
-        if (buildingName == "hall")     return LatLng(45.4972695, -73.57894175)
-        if (buildingName == "library")  return LatLng(45.496753, -73.577904)
+        if (buildingName == "hall") return LatLng(45.4972695, -73.57894175)
+        if (buildingName == "library") return LatLng(45.496753, -73.577904)
 
         return LatLng(0.0, 0.0)
     }
     private fun setFloors(buildingName: String): IntArray? {
-        if (buildingName == "hall")     return intArrayOf(4, 5, 6, 7, 8)
-        if (buildingName == "library")  return intArrayOf(2, 3, 4, 5)
+        if (buildingName == "hall") return intArrayOf(4, 5, 6, 7, 8)
+        if (buildingName == "library") return intArrayOf(2, 3, 4, 5)
 
         return null
     }
 
     private fun setUpFloorPlans(buildingName: String, map: GoogleMapAdapter): HashMap<Int, GroundOverlay>? {
 
-        if (floors == null)
-        {
+        if (floors == null) {
             return null
         }
 

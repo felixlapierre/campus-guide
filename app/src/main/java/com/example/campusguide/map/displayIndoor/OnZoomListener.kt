@@ -8,10 +8,10 @@ import com.google.android.gms.maps.model.LatLngBounds
 
 class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
 
-    init{
+    init {
         FloorPlans.setUpChangeFloor(map)
     }
-    private val buildingBounds: Array<LatLngBounds> = getBuildingBounds()
+    private val buildingBounds: Array <LatLngBounds> = getBuildingBounds()
 
     override fun onCameraMove() {
         if (map.getCameraZoom() >= Constants.ZOOM_INDOOR_LVL){
@@ -47,7 +47,7 @@ class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.
             library.include(LatLng(45.496870, -73.577072))
             library.include(LatLng(45.497293, -73.578063))
 
-        val hall : LatLngBounds.Builder = LatLngBounds.builder()
+        val hall: LatLngBounds.Builder = LatLngBounds.builder()
 
             hall.include(LatLng(45.497735, -73.579038))
             hall.include(LatLng(45.497162, -73.579559))

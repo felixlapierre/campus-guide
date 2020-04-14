@@ -4,9 +4,9 @@ import android.view.View
 import com.example.campusguide.map.GoogleMapAdapter
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map: GoogleMapAdapter): View.OnClickListener {
+class ChangeFloor constructor(private val map : GoogleMapAdapter): View.OnClickListener {
 
-    private val buildings =  buildBuildings(map)
+    private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
     private var currentFloor = -1
 
@@ -57,12 +57,12 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter): View.OnClickLi
             currentFloor = updatedFloor
         }
         if (buildingImageLatLng != null) {
-            map.animateCamera(buildingImageLatLng,map.adapted.cameraPosition.zoom)
+            map.animateCamera(buildingImageLatLng, map.adapted.cameraPosition.zoom)
         }
     }
 
     private fun displayCurrentFloor() {
-        if (currentBuilding != "" ) {
+        if (currentBuilding != "") {
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = true
         }
     }
@@ -74,7 +74,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter): View.OnClickLi
     private fun updateFloorUp(currentFloor: Int): Int {
 
         val floorNumbers = buildings[currentBuilding]?.getFloors()
-        if (currentFloor == floorNumbers!![floorNumbers.size-1] || currentFloor == buildings[currentBuilding]?.getFloors()!![0]){
+        if (currentFloor == floorNumbers!![floorNumbers.size - 1] || currentFloor == buildings[currentBuilding]?.getFloors()!![0]) {
             return currentFloor
         }
 
@@ -82,7 +82,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter): View.OnClickLi
     }
     private fun updateFloorDown(currentFloor: Int): Int {
         val floorNumbers = buildings[currentBuilding]?.getFloors()
-        if (currentFloor == floorNumbers!![0] || currentFloor == floorNumbers[floorNumbers.size-1] ){
+        if (currentFloor == floorNumbers!![0] || currentFloor == floorNumbers[floorNumbers.size - 1]) {
             return currentFloor
         }
         return currentFloor - 1
