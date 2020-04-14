@@ -49,14 +49,8 @@ class BuildingClickListener(
             info.departmentsList = building.departments
             info.servicesList = building.services
         }
-        if (building?.departments != "") {
             info.departments = "Departments:"
-            // activity.findViewById<FrameLayout>(R.id.departmentsFrame).visibility = View.VISIBLE
-        }
-        if (building?.services != "") {
             info.services = "Services:"
-            // activity.findViewById<FrameLayout>(R.id.departmentsFrame).visibility = View.VISIBLE
-        }
         return info
     }
 
@@ -84,7 +78,7 @@ class BuildingClickListener(
         marker?.showInfoWindow()
 
         // Animating to the info window
-        val cameraLocation = LatLng((coordinates.latitude) + 0.0015, coordinates.longitude)
+        val cameraLocation = LatLng((coordinates.latitude) + 0.0018, coordinates.longitude)
         map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
 }
