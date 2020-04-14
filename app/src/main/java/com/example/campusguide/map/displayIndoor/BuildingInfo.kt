@@ -7,7 +7,6 @@ import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
 
 class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
-    private val name = buildingName
 
     private val floors : IntArray? = setFloors(buildingName)
         fun getFloors(): IntArray? {
@@ -36,7 +35,6 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
         if (buildingName == "library")  return intArrayOf(2,3,4,5)
 
         return null
-
     }
 
     private fun setUpFloorPlans(buildingName: String, map: GoogleMapAdapter): HashMap<Int, GroundOverlay>?{
@@ -46,7 +44,7 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
             return null
         }
 
-        var buildingFloors = HashMap<Int, GroundOverlay>()
+        val buildingFloors = hashMapOf<Int, GroundOverlay>()
 
         if (buildingName == "hall"){
 

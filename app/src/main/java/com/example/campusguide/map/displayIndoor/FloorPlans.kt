@@ -23,11 +23,11 @@ object FloorPlans {
         }
     }
     private fun displayButtons(){
-            floorUpButton.show()
-            floorUpButton.setOnClickListener(changeFloor);
+        floorUpButton.show()
+        floorUpButton.setOnClickListener(changeFloor)
 
-            floorDownButton.show()
-            floorDownButton.setOnClickListener(changeFloor)
+        floorDownButton.show()
+        floorDownButton.setOnClickListener(changeFloor)
     }
 
     fun hide(){

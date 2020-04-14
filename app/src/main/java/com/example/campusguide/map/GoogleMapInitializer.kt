@@ -33,7 +33,7 @@ class GoogleMapInitializer constructor(
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
             map.uiSettings.isIndoorLevelPickerEnabled = false
-            map.isIndoorEnabled = false;
+            map.isIndoorEnabled = false
             map.isBuildingsEnabled = false
 
 

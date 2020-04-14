@@ -12,7 +12,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     private var currentBuilding : String = ""
     private var currentFloor = -1
 
-    companion object buttonInfo{
+    companion object ButtonInfo{
         var upButtonId = -1
         var downButtonId = -1
     }
@@ -48,8 +48,8 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
         if (v?.id == upButtonId){
             val updatedFloor = updateFloorUp(currentFloor)
 
-            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
+            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
 
             currentFloor = updatedFloor
         }
@@ -78,16 +78,19 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     private fun updateFloorUp(currentFloor: Int): Int {
 
         val floorNumbers = buildings[currentBuilding]?.getFloors()
-        if(currentFloor == floorNumbers!![floorNumbers.size-1]){
-            return currentFloor;
+        if(currentFloor == floorNumbers!![floorNumbers.size-1]
+            || currentFloor == buildings[currentBuilding]?.getFloors()!![0]){
+            return currentFloor
         }
-        return currentFloor + 1;
+
+        return currentFloor + 1
     }
     private fun updateFloorDown(currentFloor: Int): Int {
-
-        if(currentFloor == buildings[currentBuilding]?.getFloors()!![0]){
-            return currentFloor;
+        val floorNumbers = buildings[currentBuilding]?.getFloors()
+        if(currentFloor == floorNumbers!![0]
+            || currentFloor == floorNumbers[floorNumbers.size-1] ){
+            return currentFloor
         }
-        return currentFloor - 1;
+        return currentFloor - 1
     }
 }
