@@ -66,6 +66,9 @@ class BuildingClickListener(
             val location = Location(info.fullName!!, coordinates.latitude, coordinates.longitude)
             directions?.startFlow(null, location)
         })
+        map.setOnInfoWindowCloseListener(GoogleMap.OnInfoWindowCloseListener {
+            marker?.remove()
+        })
 
         // Clears any existing markers from the GoogleMap
         marker?.remove()

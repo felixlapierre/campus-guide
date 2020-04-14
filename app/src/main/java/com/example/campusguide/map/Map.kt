@@ -19,4 +19,5 @@ interface Map {
     fun addPath(path: PathPolyline)
     fun setInfoWindowAdapter(infoWindowAdapter: GoogleMap.InfoWindowAdapter)
     fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener)
+    fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener)
 }
