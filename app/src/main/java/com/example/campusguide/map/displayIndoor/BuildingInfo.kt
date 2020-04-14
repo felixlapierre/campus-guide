@@ -27,7 +27,7 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
 
     private fun setBuildingImageCoordinates(buildingName: String) : LatLng {
         if (buildingName == "hall")     return LatLng(45.4972695, -73.57894175)
-        if (buildingName == "library")  return LatLng(45.496782, -73.577889)
+        if (buildingName == "library")  return LatLng(45.496753, -73.577904)
 
         return LatLng(0.0,0.0)
     }
@@ -65,7 +65,7 @@ class BuildingInfo constructor(buildingName: String, map: GoogleMapAdapter) {
                 buildingFloors[floor] = map.adapted.addGroundOverlay(
                     GroundOverlayOptions()
                         .image(BitmapDescriptorFactory.fromAsset("lb_floor$floor.png"))
-                        .position(buildingImageCoordinates, 78F, 78F).bearing(-56F)
+                        .position(buildingImageCoordinates, 82F, 82F).bearing(-56F)
                         .visible(false)
                         .zIndex(3F)
                 )
