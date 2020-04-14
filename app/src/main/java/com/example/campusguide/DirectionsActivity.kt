@@ -151,10 +151,11 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                             activity_directions_layout.addView(listView)
                             listView.adapter = adapter
                             listView.onItemClickListener = this
-                            // Temporary
-                            adapter.add(TransitRoute("RECOMMENDED ROUTE", "S1 > S2 > S3","30 min"))
-                            adapter.add(TransitRoute("LESS WALKING", "S1 > S2 > S3","20 min"))
-                            adapter.add(TransitRoute("FEWER TRANSFERS", "S1 > S2 > S3","10 min"))
+
+                            for ((title, path) in extraPaths) {
+                                adapter.add(TransitRoute(title, "S1 > S2 > S3","${path.segment.getDuration() / 60} min"))
+                            }
+
                             runOnUiThread { adapter.notifyDataSetChanged() }
                         }
                     }
