@@ -66,12 +66,12 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     }
 
     private fun displayCurrentFloor(){
-        if (currentBuilding != "" && buildings != null){
+        if (currentBuilding != "" ){
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = true
         }
     }
     private fun hideCurrentFloor(){
-        if (currentBuilding != "" && buildings != null){
+        if (currentBuilding != ""){
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
         }
     }

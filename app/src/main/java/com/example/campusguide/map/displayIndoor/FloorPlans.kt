@@ -16,37 +16,27 @@ object FloorPlans {
     }
     fun show(buildingName: String){
         if (currentBuilding != buildingName){
+
             currentBuilding = buildingName
             changeFloor.setBuilding(buildingName)
             displayButtons()
         }
     }
     private fun displayButtons(){
-        if (floorUpButton != null) {
             floorUpButton.show()
             floorUpButton.setOnClickListener(changeFloor);
 
-        }
-        if (floorDownButton != null) {
             floorDownButton.show()
             floorDownButton.setOnClickListener(changeFloor)
-        }
     }
 
     fun hide(){
         changeFloor.unsetBuilding()
         currentBuilding = ""
+        hideButtons()
     }
     private fun hideButtons(){
-        changeFloor.hideCurrentFloor()
-
-        if (floorUpButton != null) {
             floorUpButton.hide()
-        }
-        if (floorDownButton != null) {
             floorDownButton.hide()
-        }
-        changeFloor.unsetBuilding()
-
     }
 }
