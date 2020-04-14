@@ -8,8 +8,6 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
-import com.example.campusguide.map.displayIndoor.FloorPlans
-import com.example.campusguide.map.displayIndoor.ShowFloorPlan
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -50,10 +48,8 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnCenterLocationListener(centerLocation)
 
         //Show Floor Plan
-        val showFloorPlan =
-            ShowFloorPlan(map)
-        FloorPlans.setShowFloorPlan(showFloorPlan)
-        activity.setShowFloorPlanListener(showFloorPlan)
+
+        activity.setFloorPlanButtons()
 
         // Switch Campus
         val switchCampus = SwitchCampus(

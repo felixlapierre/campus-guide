@@ -7,17 +7,23 @@ import com.google.android.gms.maps.model.*
 
 class OnZoomListener constructor(private val map: GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
 
+    init{
+        FloorPlans.setUpChangeFloor(map)
+    }
     private val buildingBounds: Array<LatLngBounds> = getBuildingBounds()
 
     override fun onCameraMove() {
-        if (map.getCameraZoom() >= Constants.ZOOM_STREET_LVL){
+        if (map.getCameraZoom() >= Constants.ZOOM_INDOOR_LVL){
             val location = map.getCameraLocation()
             val focusedBuilding = cameraFocusedOnBuilding(location)
             if (focusedBuilding != null){
                 FloorPlans.show(focusedBuilding)
             }
+            else{
+                FloorPlans.hide()
+            }
         }
-        if (map.getCameraZoom()< Constants.ZOOM_STREET_LVL){
+        if (map.getCameraZoom()< Constants.ZOOM_INDOOR_LVL){
             FloorPlans.hide()
         }
     }

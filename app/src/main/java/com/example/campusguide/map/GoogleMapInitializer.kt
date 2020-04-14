@@ -1,7 +1,5 @@
 package com.example.campusguide.map
 
-import android.graphics.Bitmap
-import android.graphics.Picture
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.map.displayIndoor.OnZoomListener

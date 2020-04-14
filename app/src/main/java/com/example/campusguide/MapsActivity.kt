@@ -7,7 +7,9 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.map.displayIndoor.ShowFloorPlan
+import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.map.displ.ChangeFloor
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,13 +62,11 @@ class MapsActivity : AppCompatActivity() {
         currentLocationButton.setOnClickListener(listener)
     }
 
-    fun setShowFloorPlanListener(listener: ShowFloorPlan){
-        val showFloorPlanButton: FloatingActionButton = findViewById(R.id.showFloorPlan)
-        showFloorPlanButton.setOnClickListener(listener)
-        listener.setUp(R.id.upOneFloor, R.id.downOneFloor)
-        listener.floorUpButton = findViewById(R.id.upOneFloor)
-        listener.floorDownButton = findViewById(R.id.downOneFloor)
-
+    fun setFloorPlanButtons(){
+        ChangeFloor.buttonInfo.upButtonId = R.id.upOneFloor
+        ChangeFloor.buttonInfo.downButtonId = R.id.downOneFloor
+        FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
+        FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
 
 
