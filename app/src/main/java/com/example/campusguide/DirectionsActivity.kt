@@ -153,7 +153,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                             listView.onItemClickListener = this
 
                             for ((title, path) in extraPaths) {
-                                adapter.add(TransitRoute(title, "S1 > S2 > S3","${path.segment.getDuration() / 60} min"))
+                                adapter.add(TransitRoute(title, "S1 > S2 > S3 > S1 > S2 > S3 > S1 > S2 > S3","${path.segment.getDuration() / 60} min"))
                             }
 
                             runOnUiThread { adapter.notifyDataSetChanged() }
