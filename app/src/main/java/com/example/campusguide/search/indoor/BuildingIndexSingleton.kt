@@ -2,6 +2,7 @@ package com.example.campusguide.search.indoor
 
 import android.content.res.AssetManager
 import com.beust.klaxon.Klaxon
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -11,7 +12,7 @@ import kotlinx.coroutines.launch
  * otherwise the app would have to wait 2-3 seconds whenever it is
  * used.
  */
-class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
+class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
     /**
      * Companion object that performs the singleton logic, ensuring
      * the instance is unique and can be retrieved statically.
@@ -20,8 +21,8 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null
         fun getInstance(assets: AssetManager) =
-            INSTANCE?: synchronized(this) {
-                    INSTANCE?: BuildingIndexSingleton(
+            INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: BuildingIndexSingleton(
                             assets
                         ).also {
                             INSTANCE = it
@@ -31,17 +32,19 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
 
     private var buildings: List<Building>? = null
 
+    var onLoaded: ((List<Building>) -> Unit)? = null
+
     init {
         GlobalScope.launch {
             val path = "index"
             val index: MutableList<Building> = mutableListOf()
-            assets.list(path)?.forEach {it ->
-                val contents = assets.open("$path/$it").bufferedReader().use {it.readText()}
+            assets.list(path)?.forEach { it ->
+                val contents = assets.open("$path/$it").bufferedReader().use { it.readText() }
                 val building = Klaxon().parse<Building>(contents)
-                if(building != null)
+                if (building != null)
                     index.add(building)
             }
-
+            onLoaded?.invoke(index)
             buildings = index
         }
     }
@@ -52,5 +55,23 @@ class BuildingIndexSingleton constructor(assets: AssetManager): BuildingIndex{
      */
     override fun getBuildings(): List<Building>? {
         return buildings
+    }
+
+    override fun getBuildingAtCoordinates(coordinates: LatLng): Building? {
+        return buildings?.find { building ->
+            val lat = building.lat.toDouble()
+            val lon = building.lon.toDouble()
+            coordinates.latitude == lat && coordinates.longitude == lon
+        }
+    }
+
+    override fun findBuildingByCode(code: String): Building? {
+        return getBuildings()?.find { building ->
+            building.code == code
+        }
+    }
+
+    override fun getAddressOfBuilding(code: String): String? {
+        return findBuildingByCode(code)?.address
     }
 }

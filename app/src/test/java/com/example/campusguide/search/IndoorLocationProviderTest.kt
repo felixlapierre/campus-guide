@@ -1,12 +1,20 @@
 package com.example.campusguide.search
 
 import com.example.campusguide.Constants
-import com.example.campusguide.search.indoor.*
+import com.example.campusguide.search.indoor.Building
+import com.example.campusguide.search.indoor.BuildingIndex
+import com.example.campusguide.search.indoor.BuildingNotFoundException
+import com.example.campusguide.search.indoor.IdFormatException
+import com.example.campusguide.search.indoor.IndexNotLoadedException
+import com.example.campusguide.search.indoor.IndoorLocationProvider
+import com.example.campusguide.search.indoor.Room
+import com.example.campusguide.search.indoor.RoomNotFoundException
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.runBlocking
 
 @RunWith(JUnit4::class)
 class IndoorLocationProviderTest {
@@ -21,7 +29,16 @@ class IndoorLocationProviderTest {
         val fakeBuildingCode = "BD"
         fakeRoom = Room("someRoomName", "420.69", "3.0", "2.0")
         fakeBuilding =
-            Building("someBuildingName", fakeBuildingCode, "someAddress", listOf(fakeRoom))
+            Building(
+                "someBuildingName",
+                fakeBuildingCode,
+                "someAddress",
+                "someServices",
+                "1.0",
+                "1.0",
+                listOf(fakeRoom),
+                listOf()
+            )
 
         fakeIndex = mock()
         whenever(fakeIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
@@ -30,7 +47,7 @@ class IndoorLocationProviderTest {
     @Test
     fun testNotIndoorLocation() = runBlocking {
         val id = "some_not_indoor_id"
-        val expected = SearchLocation("someName", "someId", 1.0, 2.0)
+        val expected = SearchLocation("someName", 1.0, 2.0, "someId", "secondaryTest")
 
         val buildingIndex: BuildingIndex = mock()
         val nextInChain: SearchLocationProvider = mock()
@@ -48,8 +65,9 @@ class IndoorLocationProviderTest {
 
         val searchLocationProvider = IndoorLocationProvider(fakeIndex, mock())
 
-        val searchResult = searchLocationProvider.getLocation(searchId)
-
+        var searchResult = searchLocationProvider.getLocation(searchId)
+        assert(searchResult != null)
+        searchResult = searchResult as SearchLocation
         assert(searchResult.id == searchId)
         assert(searchResult.name == fakeRoom.name)
         assert(searchResult.lat == fakeRoom.lat.toDouble())

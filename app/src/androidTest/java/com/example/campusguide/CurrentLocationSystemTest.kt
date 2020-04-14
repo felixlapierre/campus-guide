@@ -1,16 +1,16 @@
 package com.example.campusguide
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.uiautomator.*
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
+import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.Until
 import database.ObjectBox
 import junit.framework.Assert.assertEquals
-import org.hamcrest.CoreMatchers.notNullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -21,41 +21,27 @@ private const val TIMEOUT = 5000L
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 @SdkSuppress(minSdkVersion = 18)
-class CurrentLocationAcceptanceTest {
+class CurrentLocationSystemTest {
 
-    private lateinit var device: UiDevice
+    private var device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
 
     @get:Rule
-    var permissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
+    var permissionRule: GrantPermissionRule = GrantPermissionRule.grant(android.Manifest.permission.ACCESS_FINE_LOCATION)
 
     @Before
-    fun startMainActivityFromHomeScreen() {
-
-        device = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-
-        device.pressHome()
-
-        val launcherPackage: String = device.launcherPackageName
-        assertThat(launcherPackage, notNullValue())
-        device.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)), TIMEOUT)
-
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        val intent = context.packageManager.getLaunchIntentForPackage("com.example.campusguide")
-        context.startActivity(intent)
-
-        device.wait(Until.hasObject(By.pkg("com.example.campusguide").depth(0)), TIMEOUT)
+    fun setUp() {
+        SystemTestUtils.startActivityFromHomeScreen(device, TIMEOUT)
     }
 
     @Test
     fun clickCurrentLocationButton() {
 
         // Wait until the map is loaded
-        device.wait(Until.hasObject(By.desc("Google Maps Ready")), TIMEOUT)
-
+        device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         val currentLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("currentLocationButton"))
 
-        if(currentLocationButton.exists() && currentLocationButton.isEnabled) {
+        if (currentLocationButton.exists() && currentLocationButton.isEnabled) {
             currentLocationButton.click()
         }
 
@@ -65,12 +51,10 @@ class CurrentLocationAcceptanceTest {
         val marker: UiObject = device.findObject(UiSelector().descriptionContains("You are here."))
         // Note: The content-description field of Google Maps markers has the following format: {markerTitle.markerSnippet}
         assertEquals("You are here.. ", marker.contentDescription)
-
     }
 
     @After
     fun cleanUp() {
         ObjectBox.boxStore.close()
     }
-
 }

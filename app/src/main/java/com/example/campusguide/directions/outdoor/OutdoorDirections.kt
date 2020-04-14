@@ -1,11 +1,13 @@
-package com.example.campusguide.directions
+package com.example.campusguide.directions.outdoor
 
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.GoogleDirectionsAPIResponse
+import com.example.campusguide.directions.GoogleDirectionsAPIResponseParser
 import com.example.campusguide.utils.ErrorListener
 import com.example.campusguide.utils.request.RequestDispatcher
 import java.net.URLEncoder
 
-class Directions constructor(
+class OutdoorDirections constructor(
     private var requestDispatcher: RequestDispatcher,
     private var responseParser: GoogleDirectionsAPIResponseParser,
     private var errorListener: ErrorListener

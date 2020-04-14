@@ -1,11 +1,9 @@
 package com.example.campusguide.location
 
 import android.Manifest
-import android.location.Location
 import android.view.View
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
-
 import com.example.campusguide.utils.permissions.PermissionGrantedObserver
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import com.google.android.gms.maps.model.LatLng
@@ -27,14 +25,15 @@ class CenterLocationListener constructor(
         if (permissions.havePermission(locationPermission)) {
             goToCurrentLocation()
         } else {
-            //Request location permission
+            // Request location permission
             permissions.requestPermission(locationPermission)
         }
     }
 
-    override fun onPermissionGranted(permission: String) {
-        if(permission == locationPermission)
+    override fun onPermissionGranted(permissions: Array<out String>) {
+        if (permissions.contains(locationPermission)) {
             goToCurrentLocation()
+        }
     }
 
     /**
@@ -47,11 +46,10 @@ class CenterLocationListener constructor(
     }
 
     private fun animateCurrentLocation(location: Location) {
-        val currentLatLng = LatLng(location.latitude, location.longitude)
+        val currentLatLng = LatLng(location.lat, location.lon)
         map.addMarker(currentLatLng, Constants.LOCATION_MARKER_TITLE)
         map.animateCamera(currentLatLng,
             Constants.ZOOM_STREET_LVL
         )
     }
-
 }

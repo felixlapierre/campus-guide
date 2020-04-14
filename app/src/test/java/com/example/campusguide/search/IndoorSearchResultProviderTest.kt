@@ -1,11 +1,15 @@
 package com.example.campusguide.search
 
-import com.example.campusguide.search.indoor.*
+import com.example.campusguide.search.indoor.Building
+import com.example.campusguide.search.indoor.BuildingIndex
+import com.example.campusguide.search.indoor.IndoorSearchResultProvider
+import com.example.campusguide.search.indoor.Room
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.runBlocking
 
 @RunWith(JUnit4::class)
 class IndoorSearchResultProviderTest {
@@ -14,7 +18,16 @@ class IndoorSearchResultProviderTest {
     init {
         val fakeRoomOne = Room("fakeRoomOne", "100.00", "1.0", "2.0")
         val fakeRoomTwo = Room("fakeRoomTwo", "200.00", "3.0", "4.0")
-        val fakeBuilding = Building("fakeBuilding", "BD", "fakeAddress", listOf(fakeRoomOne, fakeRoomTwo))
+        val fakeBuilding = Building(
+            "fakeBuilding",
+            "BD",
+            "fakeAddress",
+            "fakeServices",
+            "1.0",
+            "1.0",
+            listOf(fakeRoomOne, fakeRoomTwo),
+            listOf()
+        )
         testIndex = mock()
         whenever(testIndex.getBuildings()).thenReturn(listOf(fakeBuilding))
     }
@@ -50,7 +63,7 @@ class IndoorSearchResultProviderTest {
     }
 
     @Test
-    fun searchYieldsNoResults() = runBlocking  {
+    fun searchYieldsNoResults() = runBlocking {
         val provider = IndoorSearchResultProvider(testIndex, 3)
         val results = provider.search("queryNotMatchingAnything")
         assert(results.isEmpty())

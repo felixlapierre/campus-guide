@@ -2,7 +2,7 @@ package com.example.campusguide.search.indoor
 
 import com.beust.klaxon.Json
 
-data class Room (
+data class Room(
     @Json(name = "name")
     val name: String,
 

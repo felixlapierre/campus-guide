@@ -2,15 +2,12 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.widget.TextView
-
+import com.example.campusguide.R
+import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-import com.example.campusguide.R
-import com.example.campusguide.map.infoWindow.InfoWindowData
-
-
-class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter{
+class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
 
     override fun getInfoWindow(marker: Marker): View? {
         return null

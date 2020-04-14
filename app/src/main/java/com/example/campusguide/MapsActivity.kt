@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_maps.*
 
 
 class MapsActivity : AppCompatActivity() {
-    private val permissions = Permissions(this)
+    var permissions: Permissions? = null
     private lateinit var onSearchListener: View.OnClickListener
     private val activityResultListeners: MutableList<ActivityResultListener> = mutableListOf()
 
@@ -40,7 +40,7 @@ class MapsActivity : AppCompatActivity() {
         requestedPermissions: Array<out String>,
         grantResults: IntArray
     ) {
-        permissions.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
+        permissions?.onRequestPermissionsResult(requestCode, requestedPermissions, grantResults)
     }
 
     fun setOnSearchClickedListener(listener: View.OnClickListener) {
@@ -67,17 +67,14 @@ class MapsActivity : AppCompatActivity() {
         activityResultListeners.add(listener)
     }
 
+    fun removeActivityResultListener(listener: ActivityResultListener) {
+        activityResultListeners.remove(listener)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         activityResultListeners.forEach { listener ->
             listener.onActivityResult(requestCode, resultCode, data)
         }
-    }
-
-    fun onOpenMenu(view: View) { }
-
-    fun setOnNavigateListener(listener: View.OnClickListener) {
-        val navigateButton: FloatingActionButton = findViewById(R.id.navigateButton)
-        navigateButton.setOnClickListener(listener)
     }
 }

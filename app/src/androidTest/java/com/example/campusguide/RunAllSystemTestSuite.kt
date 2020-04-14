@@ -5,8 +5,9 @@ import org.junit.runners.Suite
 
 @RunWith(Suite::class)
 @Suite.SuiteClasses(
-    CurrentLocationAcceptanceTest::class,
-    SwitchCampusAcceptanceTest::class
+    CurrentLocationSystemTest::class,
+    SwitchCampusSystemTest::class,
+    DirectionsSystemTest::class
 )
 
-class RunAllAcceptanceTestSuite
+class RunAllSystemTestSuite
