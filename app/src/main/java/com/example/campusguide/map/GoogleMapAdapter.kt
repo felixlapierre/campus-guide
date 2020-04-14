@@ -61,6 +61,10 @@ class GoogleMapAdapter : Map {
         adapted.setOnInfoWindowClickListener(infoWindowClickListener)
     }
 
+    override fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener) {
+        adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
+    }
+
     override fun addPath(path: PathPolyline) {
         path.removeFromMap()
         path.addToMap(this)

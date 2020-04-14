@@ -10,7 +10,11 @@ import com.example.campusguide.search.travelWindow.TravelWindowClickListener
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
-class PopupSearchLocationListener constructor(private val activity: AppCompatActivity, private val directions: DirectionsFlow, private val map: GoogleMapAdapter) : SearchLocationListener {
+class PopupSearchLocationListener constructor(
+    private val activity: AppCompatActivity,
+    private val directions: DirectionsFlow,
+    private val map: GoogleMapAdapter
+) : SearchLocationListener {
     private var marker: com.example.campusguide.map.Marker? = null
 
     override fun onLocation(location: SearchLocation?) {
