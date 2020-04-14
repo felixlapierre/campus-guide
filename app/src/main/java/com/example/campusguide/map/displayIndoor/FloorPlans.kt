@@ -34,8 +34,8 @@ object FloorPlans {
     }
 
     fun hide(){
+        changeFloor.unsetBuilding()
         currentBuilding = ""
-        hideButtons()
     }
     private fun hideButtons(){
         changeFloor.hideCurrentFloor()

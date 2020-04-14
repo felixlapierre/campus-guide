@@ -1,7 +1,6 @@
 package com.example.campusguide.map.displ
 
 import com.example.campusguide.map.displayIndoor.BuildingInfo
-
 import android.view.View
 import com.example.campusguide.map.GoogleMapAdapter
 import kotlin.collections.HashMap
@@ -12,6 +11,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
     private val buildings =  buildBuildings(map)
     private var currentBuilding : String = ""
     private var currentFloor = -1
+
     companion object buttonInfo{
         var upButtonId = -1
         var downButtonId = -1
@@ -65,12 +65,12 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter)
         }
     }
 
-    fun displayCurrentFloor(){
+    private fun displayCurrentFloor(){
         if (currentBuilding != "" && buildings != null){
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = true
         }
     }
-    fun hideCurrentFloor(){
+    private fun hideCurrentFloor(){
         if (currentBuilding != "" && buildings != null){
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
         }
