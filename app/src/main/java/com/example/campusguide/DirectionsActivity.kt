@@ -36,7 +36,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     private lateinit var startName: String
     private lateinit var endName: String
     private lateinit var currentPath: PathPolyline
-    private lateinit var paths: Map<String, PathPolyline>
+    private lateinit var mainPaths: Map<String, PathPolyline>
+    private lateinit var extraPaths: Map<String, PathPolyline>
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -71,16 +72,23 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             text = endName
         }
 
-        // Hash map containing (travelMode, path) pairs
-        paths = mapOf(
+        // Hash map containing (travelMode, path) pairs for the three main paths
+        mainPaths = mapOf(
             "driving" to createPath(startName, endName, "driving", null),
             "walking" to createPath(startName, endName, "walking", null),
-            "transit" to createPath(startName, endName, "transit", "less_walking")
+            "transit" to createPath(startName, endName, "transit", null)
+        )
+
+        // Hash map containing (title, path) pairs for the optional transit paths
+        extraPaths = mapOf(
+            "RECOMMENDED ROUTE" to mainPaths.getValue("transit"),
+            "LESS WALKING" to createPath(startName, endName, "transit", "less_walking"),
+            "FEWER TRANSFERS" to createPath(startName, endName, "transit", "fewer_transfers")
         )
 
         // Display travel times
         GlobalScope.launch {
-            for ((travelMode, path) in paths) {
+            for ((travelMode, path) in mainPaths) {
                 path.waitUntilCreated()
                 runOnUiThread {
                     val radioButtonId = "radio_$travelMode"
@@ -93,7 +101,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
         }
 
-        currentPath = paths.getValue("driving")
+        currentPath = mainPaths.getValue("driving")
 
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(currentPath)
@@ -122,14 +130,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     if (checked) {
                         showMap()
                         removePreviousPath()
-                        currentPath = paths.getValue("driving")
+                        currentPath = mainPaths.getValue("driving")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_walking ->
                     if (checked) {
                         showMap()
                         removePreviousPath()
-                        currentPath = paths.getValue("walking")
+                        currentPath = mainPaths.getValue("walking")
                         setPathOnMapAsync(currentPath)
                     }
                 R.id.radio_transit ->
