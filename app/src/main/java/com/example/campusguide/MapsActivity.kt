@@ -63,8 +63,8 @@ class MapsActivity : AppCompatActivity() {
     }
 
     fun setFloorPlanButtons(){
-        ChangeFloor.buttonInfo.upButtonId = R.id.upOneFloor
-        ChangeFloor.buttonInfo.downButtonId = R.id.downOneFloor
+        ChangeFloor.upButtonId = R.id.upOneFloor
+        ChangeFloor.downButtonId = R.id.downOneFloor
         FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
         FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
