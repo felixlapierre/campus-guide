@@ -21,7 +21,12 @@ class AmenitiesPathfinding(graph: Graph) : IndoorPathfinding(graph) {
         }
     }
 
-    override fun getResults(): List<String> {
-        return listOfBathrooms
+    override fun getResults(filter: String): List<String> {
+        val filteredList = mutableListOf<String>()
+        listOfBathrooms.map {
+            if(it.contains(filter))
+                filteredList.add(it)
+        }
+        return filteredList
     }
 }

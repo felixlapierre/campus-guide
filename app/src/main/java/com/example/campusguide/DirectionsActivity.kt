@@ -53,7 +53,7 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
-        path = createPath(startName, endName, travelMode)
+        path = createPath(startName, endName, travelMode) //
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(path)
         }
