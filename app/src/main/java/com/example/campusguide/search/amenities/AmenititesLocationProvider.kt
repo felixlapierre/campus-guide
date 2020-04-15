@@ -23,19 +23,20 @@ class AmenitiesLocationProvider constructor(
     override suspend fun getLocation(id: String): SearchLocation? {
         val isAmenities = id.startsWith(Constants.AMENITIES_LOCATION_IDENTIFIER)
         val lbBuildingIndex =  BuildingIndexSingleton.getInstance(activity.assets).findBuildingByCode("LB")!!
-        println("-------------------------id: " + id)
-        println("-------------------------is amenities: " + isAmenities)
 
         if(isAmenities) {
+            val filter = id.split("_")[2]
             println("-------------------------WOW amenities!")
             val origin = getOrigin().encodeForDirections()
+            println("-------origin: " + origin)
             var start = ""
             if (origin.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)) {
                 start = origin.split("_")[2]
             } else {
                 start = lbBuildingIndex.nodes[0].code
             }
-            val pathfinding = AmenitiesPathfinding(Graph(lbBuildingIndex))
+
+            val pathfinding = AmenitiesPathfinding(Graph(lbBuildingIndex), filter)
             val listOfBathrooms = pathfinding.findRoom(start)
 
             val resultBathroom = listOfBathrooms[0][listOfBathrooms[0].size - 1]

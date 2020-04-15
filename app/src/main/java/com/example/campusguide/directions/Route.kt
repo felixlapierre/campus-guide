@@ -40,7 +40,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         begin?.remove()
         dest?.remove()
 
-        val errorListener = DisplayMessageErrorListener(activity);
+        val errorListener = DisplayMessageErrorListener(activity)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 activity,
@@ -97,6 +97,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         polyline = map.addPolyline(polyOptions)
         begin = map.addMarker(startPoint)
         dest = map.addMarker(endPoint)
+        println("----!-----!-----!----!---- dest: " + dest)
         map.moveCamera(
             CameraUpdateFactory.newLatLngBounds(
                 routeBounds,

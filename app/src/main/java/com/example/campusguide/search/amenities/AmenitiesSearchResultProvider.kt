@@ -23,12 +23,12 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
             )
             results.add(
                 SearchResult(
-                    "Men's Bathroom", "Find a bathroom near me", "amenities_bath_men"
+                    "Men's Bathroom", "Find a bathroom near me", "amenities_bath_mens"
                 )
             )
             results.add(
                 SearchResult(
-                    "Unisex Bathroom", "Find a bathroom near me", "amenities_bath_uni"
+                    "Unisex Bathroom", "Find a bathroom near me", "amenities_bath_all"
                 )
             )
         } else if (women.startsWith(query.toLowerCase())) {
@@ -40,13 +40,13 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
         } else if (men.startsWith(query.toLowerCase())) {
             results.add(
                 SearchResult(
-                    "Men's Bathroom", "Find a bathroom near me", "amenities_bath_men"
+                    "Men's Bathroom", "Find a bathroom near me", "amenities_bath_mens"
                 )
             )
         } else if (unisex.startsWith(query.toLowerCase())) {
             results.add(
                 SearchResult(
-                    "Unisex Bathroom", "Find a bathroom near me", "amenities_bath_uni"
+                    "Unisex Bathroom", "Find a bathroom near me", "amenities_bath_all"
                 )
             )
         }
