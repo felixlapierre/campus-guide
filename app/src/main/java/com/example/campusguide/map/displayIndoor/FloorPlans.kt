@@ -4,7 +4,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 object FloorPlans {
-
+    private var isHidden = true
     private var currentBuilding = ""
     private lateinit var changeFloor: ChangeFloor
     lateinit var floorUpButton: FloatingActionButton
@@ -15,15 +15,19 @@ object FloorPlans {
     }
 
     fun show(buildingName: String) {
+
         if (currentBuilding != buildingName) {
 
             currentBuilding = buildingName
             changeFloor.setBuilding(buildingName)
-            displayButtons()
+            if (isHidden){
+                displayButtons()
+            }
         }
     }
 
     private fun displayButtons() {
+
         floorUpButton.show()
         floorUpButton.setOnClickListener(changeFloor)
 
@@ -32,9 +36,11 @@ object FloorPlans {
     }
 
     fun hide() {
-        changeFloor.unsetBuilding()
-        currentBuilding = ""
-        hideButtons()
+        if (!isHidden){
+            changeFloor.unsetBuilding()
+            currentBuilding = ""
+            hideButtons()
+        }
     }
 
     private fun hideButtons() {

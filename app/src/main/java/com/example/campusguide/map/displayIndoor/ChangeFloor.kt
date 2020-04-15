@@ -41,21 +41,18 @@ class ChangeFloor constructor(private val map : GoogleMapAdapter): View.OnClickL
     override fun onClick(v: View?) {
 
         val buildingImageLatLng = buildings[currentBuilding]?.getBuildingImageCoordinates()
-
+        var updatedFloor: Int = 0
         if (v?.id == upButtonId) {
-            val updatedFloor = updateFloorUp(currentFloor)
+            updatedFloor = updateFloorUp(currentFloor)
 
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
-            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
-
-            currentFloor = updatedFloor
         } else if (v?.id == downButtonId) {
-            val updatedFloor = updateFloorDown(currentFloor)
-
-            buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
-            currentFloor = updatedFloor
+            updatedFloor = updateFloorDown(currentFloor)
         }
+        buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
+        buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
+
+        currentFloor = updatedFloor
+
         if (buildingImageLatLng != null) {
             map.animateCamera(buildingImageLatLng, map.adapted.cameraPosition.zoom)
         }
@@ -74,17 +71,17 @@ class ChangeFloor constructor(private val map : GoogleMapAdapter): View.OnClickL
     private fun updateFloorUp(currentFloor: Int): Int {
 
         val floorNumbers = buildings[currentBuilding]?.getFloors()
-        if (currentFloor == floorNumbers!![floorNumbers.size - 1] || currentFloor == buildings[currentBuilding]?.getFloors()!![0]) {
-            return currentFloor
+        if (currentFloor >= floorNumbers!![floorNumbers.size - 1]) {
+            return floorNumbers!![floorNumbers.size - 1]
         }
-
         return currentFloor + 1
     }
+
     private fun updateFloorDown(currentFloor: Int): Int {
         val floorNumbers = buildings[currentBuilding]?.getFloors()
-        if (currentFloor == floorNumbers!![0] || currentFloor == floorNumbers[floorNumbers.size - 1]) {
-            return currentFloor
+        if (currentFloor <= floorNumbers!![0]) {
+            return floorNumbers!![0]
         }
-        return currentFloor - 1
+        return (currentFloor - 1)
     }
 }
