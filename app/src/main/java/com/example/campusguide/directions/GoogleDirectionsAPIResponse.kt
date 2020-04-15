@@ -117,7 +117,25 @@ data class GoogleDirectionsAPIStep(
     val startLocation: GoogleDirectionsAPILocation,
 
     @Json(name = "travel_mode")
-    val travelMode: String
+    val travelMode: String,
+
+    @Json(name = "transit_details")
+    val transitDetails: GoogleDirectionsAPITransitDetails = GoogleDirectionsAPITransitDetails()
+)
+
+data class GoogleDirectionsAPITransitDetails(
+
+    @Json(name = "line")
+    val line: GoogleDirectionsAPITransitLine = GoogleDirectionsAPITransitLine()
+)
+
+data class GoogleDirectionsAPITransitLine(
+
+    @Json(name = "short_name")
+    val shortName: String = "",
+
+    @Json(name = "color")
+    val color: String = ""
 )
 
 data class GoogleDirectionsAPILocation(

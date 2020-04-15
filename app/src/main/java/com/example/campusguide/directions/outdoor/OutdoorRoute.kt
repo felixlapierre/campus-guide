@@ -1,11 +1,13 @@
 package com.example.campusguide.directions.outdoor
 
+import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.internal.PolylineEncoding
 
 class OutdoorRoute constructor(private val directions: OutdoorDirections) {
     private var line: List<LatLng> = emptyList()
-    var duration: Int = 0
+    private var duration: Int = 0
+    private var steps: List<GoogleDirectionsAPIStep> = emptyList()
 
     suspend fun set(start: String, end: String, travelMode: String, transitPreference: String?) {
         val response = directions.getDirections(start, end, travelMode, transitPreference)
@@ -15,10 +17,18 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
                 LatLng(it.lat, it.lng)
             }
             duration = response.routes[0].legs[0].duration.value
+            steps = response.routes[0].legs[0].steps
         }
     }
 
     fun getLine(): List<LatLng> {
         return line
+    }
+
+    fun getDuration(): Int {
+        return duration
+    }
+    fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return steps
     }
 }
