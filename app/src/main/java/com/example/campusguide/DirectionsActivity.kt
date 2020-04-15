@@ -10,8 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
+import com.example.campusguide.directions.RoutePreviewActivity
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
+import com.example.campusguide.directions.StepsActivity
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -32,9 +34,6 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var end: String
     private lateinit var startName: String
     private lateinit var endName: String
-    private var travelMode = "Driving"
-    private lateinit var path: PathPolyline
-    private lateinit var gson: Gson
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
     private val colorStateList: ColorStateList = ColorStateList(
@@ -98,12 +97,19 @@ class DirectionsActivity : AppCompatActivity() {
         }
 
         steps.setOnClickListener {
-            gson = Gson()
-            val test = path.getSteps()
-            val studentDataObjectAsAString = gson.toJson(test)
+            val test = currentPath.getSteps()
+            val studentDataObjectAsAString = Gson().toJson(test)
             val stepIntent = Intent(this, StepsActivity::class.java)
             stepIntent.putExtra("Steps", studentDataObjectAsAString)
             this.startActivity(stepIntent)
+        }
+
+        startButton.setOnClickListener {
+            val test = currentPath.getSteps()
+            val studentDataObjectAsAString = Gson().toJson(test)
+            val routePreview = Intent(this, RoutePreviewActivity::class.java)
+            routePreview.putExtra("Steps", studentDataObjectAsAString)
+            this.startActivity(routePreview)
         }
     }
 
@@ -164,9 +170,6 @@ class DirectionsActivity : AppCompatActivity() {
     }
 
     private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
-        if (::path.isInitialized) {
-            path.removeFromMap()
-        }
         val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(

@@ -1,6 +1,7 @@
 package com.example.campusguide.directions
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +12,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_steps.*
 
 class StepsActivity : AppCompatActivity(){
     private lateinit var path: Test
     private lateinit var gson: Gson
-    private lateinit var steps : List<GoogleDirectionsAPIStep>
+    private var steps : List<GoogleDirectionsAPIStep> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,6 +35,12 @@ class StepsActivity : AppCompatActivity(){
         steps = path.getSteps()
         val listView = findViewById<ListView>(R.id.stepList)
         listView.adapter = DirectionStepsAdapter(this, steps)
+
+        start.setOnClickListener {
+            val routeIntent = Intent(this, RoutePreviewActivity::class.java)
+            routeIntent.putExtra("RoutePreview", string)
+            this.startActivity(routeIntent)
+        }
 
     }
 

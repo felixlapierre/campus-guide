@@ -16,6 +16,7 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
            line = PolylineEncoding.decode(response.routes[0].overviewPolyline.points).map {
                LatLng(it.lat, it.lng)
            }
+
             steps = response.routes[0].legs[0].steps
             duration = response.routes[0].legs[0].duration.value
         }

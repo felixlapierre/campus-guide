@@ -51,6 +51,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
                 .pattern(style.patternPolygonAlpha)
 
             stepsPath.setSteps(segment.getSteps())
+            stepsPath.setPath(path)
 
             val firstPoint = path[0]
             startMarkerOptions.position(firstPoint)
