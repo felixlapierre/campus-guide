@@ -42,8 +42,7 @@ class GoogleMapInitializer constructor(
                 )
             )
 
-            val zoomListener = OnZoomListener(wrapper)
-            wrapper.setCameraMoveListener(zoomListener)
+            OnZoomListener(wrapper)
 
             BuildingHighlights(map, activity).addBuildingHighlights()
 

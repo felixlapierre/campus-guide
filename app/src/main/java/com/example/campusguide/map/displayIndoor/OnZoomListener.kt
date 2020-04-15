@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.LatLngBounds
 class OnZoomListener constructor(private val map: GoogleMapAdapter) : GoogleMap.OnCameraMoveListener {
 
     init {
+        map.setCameraMoveListener(this)
         FloorPlans.setUpChangeFloor(map)
     }
     private val buildingBounds: Array <LatLngBounds> = getBuildingBounds()
