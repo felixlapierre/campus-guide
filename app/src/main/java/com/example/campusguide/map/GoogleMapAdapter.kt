@@ -36,8 +36,8 @@ class GoogleMapAdapter : Map {
         )
     }
 
-    override fun moveCamera(update: CameraUpdate?) {
-        return adapted.moveCamera(update)
+    override fun moveCamera(newLatLngZoom: CameraUpdate?) {
+        return adapted.moveCamera(newLatLngZoom)
     }
 
     override fun moveCamera(bounds: LatLngBounds) {
@@ -61,9 +61,25 @@ class GoogleMapAdapter : Map {
         adapted.setOnInfoWindowClickListener(infoWindowClickListener)
     }
 
+    override fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener) {
+        adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
+    }
+
     override fun addPath(path: PathPolyline) {
         path.removeFromMap()
         path.addToMap(this)
         moveCamera(path.getPathBounds())
+    }
+
+    fun getCameraZoom(): Float {
+        return adapted.cameraPosition.zoom
+    }
+
+    fun getCameraLocation(): LatLng {
+        return adapted.cameraPosition.target
+    }
+
+    fun setCameraMoveListener(cameraMoveListener: GoogleMap.OnCameraMoveListener) {
+        adapted.setOnCameraMoveListener(cameraMoveListener)
     }
 }

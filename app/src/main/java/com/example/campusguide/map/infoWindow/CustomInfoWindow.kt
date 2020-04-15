@@ -19,12 +19,18 @@ class CustomInfoWindow(private val context: Context) : GoogleMap.InfoWindowAdapt
 
         val infoWindowData = marker.tag as InfoWindowData?
 
+        fillOutInfo(view, infoWindowData)
+
+        return view
+    }
+
+    private fun fillOutInfo(view: View, infoWindowData: InfoWindowData?) {
         view.findViewById<TextView>(R.id.symbol).text = infoWindowData?.symbol
         view.findViewById<TextView>(R.id.fullName).text = infoWindowData?.fullName
         view.findViewById<TextView>(R.id.address).text = infoWindowData?.address
+        view.findViewById<TextView>(R.id.departments).text = infoWindowData?.departments
+        view.findViewById<TextView>(R.id.departmentsList).text = infoWindowData?.departmentsList
         view.findViewById<TextView>(R.id.services).text = infoWindowData?.services
         view.findViewById<TextView>(R.id.servicesList).text = infoWindowData?.servicesList
-
-        return view
     }
 }

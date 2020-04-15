@@ -73,6 +73,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
+        // Show Floor Plan
+
+        activity.setFloorPlanButtons()
+
         // Switch Campus
         val switchCampus = SwitchCampus(
             map,
