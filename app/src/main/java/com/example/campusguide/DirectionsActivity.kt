@@ -36,6 +36,7 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
+    private lateinit var pathAsSegment: Segment
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -83,7 +84,7 @@ class DirectionsActivity : AppCompatActivity() {
                     val radioButtonId = "radio_$travelMode"
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
-                        text = "${path.segment.getDuration() / 60} min"
+                        text = "${pathAsSegment.getDuration() / 60} min"
                         buttonTintList = colorStateList
                     }
                 }
@@ -188,6 +189,8 @@ class DirectionsActivity : AppCompatActivity() {
         val firstSegment = createSegment(start, segmentArgs)
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
+
+        pathAsSegment = firstSegment
 
         return PathPolyline(startName, endName, firstSegment)
     }

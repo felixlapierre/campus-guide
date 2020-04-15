@@ -11,11 +11,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PatternItem
 import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class PathPolyline constructor(startName: String, endName: String, val segment: Segment) {
+class PathPolyline private constructor(val startName: String, val endName: String, private val deferred: Deferred<List<LatLng>>) {
     class PolylineStyle {
         private val patternDashLengthPx = 20.0f
         private val patternGapLengthPx = 20.0f
@@ -27,43 +28,31 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
 
     private lateinit var path: List<LatLng>
     private var stepsPath: Test = Test()
-    private val polylineOptions: PolylineOptions
+    private var polylineOptions: PolylineOptions
     private var polyline: Polyline? = null
 
-    private val startMarkerOptions: MarkerOptions
+    private var startMarkerOptions: MarkerOptions
     private var startMarker: Marker? = null
-    private val endMarkerOptions: MarkerOptions
+    private var endMarkerOptions: MarkerOptions
     private var endMarker: Marker? = null
 
-    private val deferred: Deferred<Unit>
+    constructor(startName: String, endName: String, segment: Segment) : this(
+        startName,
+        endName,
+        GlobalScope.async {
+            segment.toListOfCoordinates()
+        })
+
+    constructor(startName: String, endName: String, line: List<LatLng>) : this(
+        startName,
+        endName,
+        CompletableDeferred(line)
+    )
 
     init {
-        val style = PolylineStyle()
         polylineOptions = PolylineOptions()
         startMarkerOptions = MarkerOptions()
         endMarkerOptions = MarkerOptions()
-
-
-        deferred = GlobalScope.async {
-            path = segment.toListOfCoordinates()
-            polylineOptions.addAll(path)
-                .color(style.colorBlueArgb.toInt())
-                .pattern(style.patternPolygonAlpha)
-
-            stepsPath.setSteps(segment.getSteps())
-            stepsPath.setPath(path)
-
-            val firstPoint = path[0]
-            startMarkerOptions.position(firstPoint)
-                .title(Helper.capitalizeWords(startName))
-                .snippet("Start")
-
-            val lastPoint = path[path.size - 1]
-            endMarkerOptions.position(lastPoint)
-                .title(Helper.capitalizeWords(endName))
-                .snippet("Destination")
-            Unit
-        }
     }
 
     fun addToMap(map: Map) {
@@ -79,7 +68,25 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     suspend fun waitUntilCreated() {
-        deferred.await()
+        path = deferred.await()
+
+        val style = PolylineStyle()
+
+        polylineOptions = PolylineOptions()
+        polylineOptions.addAll(path)
+            .color(style.colorBlueArgb.toInt())
+            .pattern(style.patternPolygonAlpha)
+
+        val firstPoint = path[0]
+        startMarkerOptions = MarkerOptions()
+        startMarkerOptions.position(firstPoint)
+            .title(Helper.capitalizeWords(startName))
+            .snippet("Start")
+
+        val lastPoint = path[path.size - 1]
+        endMarkerOptions = MarkerOptions()
+        endMarkerOptions.position(lastPoint).title(Helper.capitalizeWords(endName))
+            .snippet("Destination")
     }
 
     fun getPathBounds(): LatLngBounds {
@@ -102,6 +109,6 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     fun getSteps(): Test {
-        return  stepsPath
+        return stepsPath
     }
 }
