@@ -21,7 +21,7 @@ class RequestQueueTest {
     @Test
     fun testMaxOneDispatcher() {
         val obj1 = RequestQueueSingleton.getInstance(context)
-        val obj2 = RequestQueueSingleton.getInstance(context);
+        val obj2 = RequestQueueSingleton.getInstance(context)
 
         assert(obj1 == obj2)
     }

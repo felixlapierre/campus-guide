@@ -5,12 +5,19 @@ import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
-import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.Helper
+import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.Dash
+import com.google.android.gms.maps.model.Gap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PatternItem
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 import com.google.maps.internal.PolylineEncoding
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,7 +60,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
             errorListener
         )
 
-        //Create a coroutine so we can invoke the suspend function Directions::getDirections
+        // Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
             val response = directions.getDirections(start, end, travelMode)
             if (response != null) {
@@ -89,7 +96,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         }
     }
 
-    private fun polyLineOptions(startPoint : MarkerOptions, endPoint : MarkerOptions, routeBounds : LatLngBounds, decodedAsGoodLatLng: List<LatLng>) {
+    private fun polyLineOptions(startPoint: MarkerOptions, endPoint: MarkerOptions, routeBounds: LatLngBounds, decodedAsGoodLatLng: List<LatLng>) {
         val polyOptions = PolylineOptions()
             .color(COLOR_BLUE_ARGB.toInt())
             .pattern(PATTERN_POLYGON_ALPHA)
@@ -115,7 +122,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         ).title(Helper.capitalizeWords(start)).snippet(startString)
     }
 
-    private fun routeEndPoint(end : String, response : GoogleDirectionsAPIResponse): MarkerOptions {
+    private fun routeEndPoint(end: String, response: GoogleDirectionsAPIResponse): MarkerOptions {
 
         return MarkerOptions().position(
             LatLng(
@@ -125,7 +132,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         ).title(Helper.capitalizeWords(end)).snippet(destString)
     }
 
-    private fun routeRouteBounds(response : GoogleDirectionsAPIResponse): LatLngBounds {
+    private fun routeRouteBounds(response: GoogleDirectionsAPIResponse): LatLngBounds {
 
         return LatLngBounds(
             LatLng(
@@ -139,8 +146,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         )
     }
 
-
-    private fun decodeLine(line: String): List<LatLng>{
+    private fun decodeLine(line: String): List<LatLng> {
         /**
          * The com.google package contains two different representations of the
          * LatLng class. The decoded points must be converted to the representation
@@ -152,7 +158,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
         }
     }
 
-    private fun runAddPolyline(decodedAsGoodLatLng: List<LatLng>){
+    private fun runAddPolyline(decodedAsGoodLatLng: List<LatLng>) {
         /**
          * addPolyline throws an exception if it is not run on the Ui thread.
          */

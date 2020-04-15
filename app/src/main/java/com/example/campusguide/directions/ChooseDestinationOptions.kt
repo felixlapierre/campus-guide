@@ -16,6 +16,9 @@ import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocationProvider
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.search.indoor.IndoorLocationProvider
+import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
@@ -42,7 +45,7 @@ class ChooseDestinationOptions(private val provider: SearchLocationProvider, pri
         return view
     }
 
-    private fun useNextEvent(){
+    private fun useNextEvent() {
         dismiss()
         val act = activity as MapsActivity
         val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
@@ -54,21 +57,21 @@ class ChooseDestinationOptions(private val provider: SearchLocationProvider, pri
         }
     }
 
-    private fun chooseFromMap(){
-        //TODO fill this method once we have the logic to select from the map
+    private fun chooseFromMap() {
+        // TODO fill this method once we have the logic to select from the map
         dismiss()
         val location = Location("Montreal", 45.5017, -73.5673)
         locationSelectedListener(location)
     }
 
-    private fun searchForLocation(){
+    private fun searchForLocation() {
         dismiss()
         // Build the CustomSearch
         val act = activity as MapsActivity
         val search = CustomSearch(act, provider, Constants.DESTINATION_SEARCH_REQUEST_CODE)
 
-        search.setLocationListener {searchLocation ->
-            if(searchLocation != null) {
+        search.setLocationListener { searchLocation ->
+            if (searchLocation != null) {
                 locationSelectedListener(searchLocation)
             }
             act.removeActivityResultListener(search)

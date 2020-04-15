@@ -27,7 +27,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
-        //Permissions
+        // Permissions
         val permissions = Permissions(activity)
         activity.permissions = permissions
 
@@ -78,6 +78,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
+
+        // Show Floor Plan
+
+        activity.setFloorPlanButtons()
 
         // Switch Campus
         val switchCampus = SwitchCampus(

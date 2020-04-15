@@ -1,6 +1,5 @@
 package com.example.campusguide.search.indoor
 
-import android.app.Activity
 import com.example.campusguide.Constants
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
@@ -38,14 +37,14 @@ class IndoorSearchResultProvider constructor(
                 }
             }
         }
-        return results;
+        return results
     }
 
     private fun matchesQuery(building: Building, room: Room, query: String): Boolean {
         val adjustedQuery = query.toLowerCase().replace("-", "")
 
-        return room.name.toLowerCase().startsWith(adjustedQuery)
-                || room.code.startsWith(adjustedQuery)
-                || "${building.code.toLowerCase()}${room.code}".startsWith(adjustedQuery)
+        return room.name.toLowerCase().startsWith(adjustedQuery) ||
+                room.code.startsWith(adjustedQuery) ||
+                "${building.code.toLowerCase()}${room.code}".startsWith(adjustedQuery)
     }
 }

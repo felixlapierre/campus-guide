@@ -9,8 +9,7 @@ import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-
-class TravelWindow (private val context: Context) : GoogleMap.InfoWindowAdapter{
+class TravelWindow(private val context: Context) : GoogleMap.InfoWindowAdapter {
 
     override fun getInfoWindow(marker: Marker): View? {
         return null

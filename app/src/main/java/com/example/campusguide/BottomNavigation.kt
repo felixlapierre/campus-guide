@@ -10,7 +10,7 @@ class BottomNavigation constructor (
     private val directions: DirectionsFlow
 ) {
 
-    private var bottomNavigationView : BottomNavigationView =
+    private var bottomNavigationView: BottomNavigationView =
         activity.findViewById(R.id.bottom_navigation)
 
     init {
@@ -33,7 +33,7 @@ class BottomNavigation constructor (
         }
     }
 
-    private fun centerCameraSGW(){
+    private fun centerCameraSGW() {
         map.animateCamera(Constants.SGW_COORDINATES, Constants.ZOOM_STREET_LVL)
     }
 

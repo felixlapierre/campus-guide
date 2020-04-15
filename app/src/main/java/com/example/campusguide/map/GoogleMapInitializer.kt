@@ -1,17 +1,13 @@
 package com.example.campusguide.map
 
-import CustomInfoWindow
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
-import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.map.infoWindow.BuildingClickListener
-import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.map.displayIndoor.OnZoomListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
 
 class GoogleMapInitializer constructor(
     private val activity: FragmentActivity,
@@ -34,6 +30,9 @@ class GoogleMapInitializer constructor(
             googleMap = map
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
+            map.uiSettings.isIndoorLevelPickerEnabled = false
+            map.isIndoorEnabled = false
+            map.isBuildingsEnabled = false
 
             // Center the map on SGW Campus
             map.animateCamera(
@@ -42,9 +41,12 @@ class GoogleMapInitializer constructor(
                     Constants.ZOOM_STREET_LVL
                 )
             )
+
+            OnZoomListener(wrapper)
+
             BuildingHighlights(map, activity).addBuildingHighlights()
 
-            if(onPolygonClickListener != null) {
+            if (onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
             }
             map.setContentDescription("$mapId ready")
@@ -54,7 +56,7 @@ class GoogleMapInitializer constructor(
     }
 
     fun setOnMapReadyListener(callback: () -> Unit) {
-        if(googleMap != null)
+        if (googleMap != null)
             callback()
         else
             onMapReadyListener = callback

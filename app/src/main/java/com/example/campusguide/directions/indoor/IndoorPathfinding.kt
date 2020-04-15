@@ -1,9 +1,9 @@
 package com.example.campusguide.directions.indoor
 
 import com.example.campusguide.search.indoor.Node
-import com.google.android.gms.maps.model.LatLng
 import java.lang.RuntimeException
-import java.util.*
+import java.util.ArrayDeque
+import java.util.Queue
 import kotlin.math.sqrt
 
 abstract class IndoorPathfinding constructor(private val graph: Graph) {
@@ -22,7 +22,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         openSet = open
         open.add(start)
         nodeData.clear()
-        graph.forEach {code ->
+        graph.forEach { code ->
             nodeData[code] = NodeData()
         }
         nodeData[start]!!.cheapest = 0.0
@@ -45,8 +45,10 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     abstract fun visit(node: Node)
     abstract fun getResults(): List<String>
 
+    // TODO: Reinstate priority queue mechanism
+
     private fun approximateDistance(node1: Node?, node2: Node?): Double {
-        if(node1 == null || node2 == null)
+        if (node1 == null || node2 == null)
             return Double.MAX_VALUE
         val deltaX = node2.x - node1.x
         val deltaY = node2.y - node1.y
@@ -65,7 +67,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)
-            if(canVisit(neighbor) && length < neighborData.cheapest) {
+            if (canVisit(neighbor) && length < neighborData.cheapest) {
                 visit(neighbor)
                 neighborData.cameFrom = curr
                 neighborData.cheapest = length
@@ -74,7 +76,6 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
                 }
             }
         }
-
     }
 
     private fun reconstructPath(end: String): List<Node> {

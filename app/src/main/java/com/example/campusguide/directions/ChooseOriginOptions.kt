@@ -87,8 +87,8 @@ class ChooseOriginOptions(
         )
         val search = CustomSearch(act, provider, Constants.ORIGIN_SEARCH_REQUEST_CODE)
 
-        search.setLocationListener {searchLocation ->
-            if(searchLocation != null) {
+        search.setLocationListener { searchLocation ->
+            if (searchLocation != null) {
                 locationSelectedListener(searchLocation)
             }
             act.removeActivityResultListener(search)
@@ -97,7 +97,7 @@ class ChooseOriginOptions(
         search.openCustomSearchActivity()
     }
 
-    private fun useLastEventLocation(){
+    private fun useLastEventLocation() {
         val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
         val mycal = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
 

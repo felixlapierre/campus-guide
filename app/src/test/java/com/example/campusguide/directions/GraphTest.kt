@@ -4,7 +4,7 @@ import com.example.campusguide.directions.indoor.Graph
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.example.campusguide.search.indoor.Room
-import org.junit.Assert.*
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -27,7 +27,6 @@ class GraphTest {
         )
 
         val graph = Graph(building)
-
 
         assertTrue(graph.get("100.00")?.edges?.contains("1_node")!!)
     }

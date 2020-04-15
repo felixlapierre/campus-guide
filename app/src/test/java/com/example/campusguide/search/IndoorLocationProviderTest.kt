@@ -1,12 +1,20 @@
 package com.example.campusguide.search
 
 import com.example.campusguide.Constants
-import com.example.campusguide.search.indoor.*
+import com.example.campusguide.search.indoor.Building
+import com.example.campusguide.search.indoor.BuildingIndex
+import com.example.campusguide.search.indoor.BuildingNotFoundException
+import com.example.campusguide.search.indoor.IdFormatException
+import com.example.campusguide.search.indoor.IndexNotLoadedException
+import com.example.campusguide.search.indoor.IndoorLocationProvider
+import com.example.campusguide.search.indoor.Room
+import com.example.campusguide.search.indoor.RoomNotFoundException
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import com.nhaarman.mockitokotlin2.*
-import kotlinx.coroutines.runBlocking
 
 @RunWith(JUnit4::class)
 class IndoorLocationProviderTest {

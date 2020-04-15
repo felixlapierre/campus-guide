@@ -2,10 +2,10 @@
 Concordia Campus Guide application - SOEN390
 
 
-## Objective:
+## Objective
 Create a campus guide application to help students locate their classrooms.
 
-## Team Members:
+## Team Members
 
 | Name                    |Student ID| 
 |:------------------------|:--------:|
@@ -27,6 +27,6 @@ Create a campus guide application to help students locate their classrooms.
 1. Create a file `app\src\main\res\values\google_maps_api.xml`
 1. Write the following to the file: `<resources><string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">*API_KEY_GOES_HERE*</string></resources>`
 1. Obtain a `credentials.json` file by [configuring a Google API Console project](https://developers.google.com/identity/sign-in/android/start-integrating#configure_a_project) to enable login and put the file in the `app` level/directory of the project
-1. For the above `credentials.json` file, the package name is `com.example.campusguide` and instructions on how to obtain the SHA-1 signing certificate is found in this [link](https://developers.google.com/android/guides/client-auth) or can be done via Android Studio as shown [here](https://imgur.com/a/LLPt6vJ)
+1. For the above `credentials.json` file, the package name is `com.example.campusguide` and instructions on how to obtain the SHA-1 signing certificate is found in this [link](https://developers.google.com/android/guides/client-auth) or can be done via Android Studio as shown [here](https://i.imgur.com/7RF6gsI.png)
 1. Open the project in Android Studio
 1. Run the project using an emulator or using a connected Android device
