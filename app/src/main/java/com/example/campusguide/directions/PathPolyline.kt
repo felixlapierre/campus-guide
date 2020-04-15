@@ -47,7 +47,6 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
                 .snippet("Start")
 
             val lastPoint = path[path.size - 1]
-            println("-------------------------------LAST POINT"  + lastPoint)
             endMarkerOptions.position(lastPoint)
                 .title(Helper.capitalizeWords(endName))
                 .snippet("Destination")

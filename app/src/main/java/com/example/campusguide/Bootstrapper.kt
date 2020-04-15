@@ -64,7 +64,6 @@ class Bootstrapper constructor(activity: MapsActivity) {
                     locationProvider
                 )
         )
-        println("------------------searchlocationprovider: " + searchLocationProvider.javaClass)
         val search =
             CustomSearch(
                 activity,

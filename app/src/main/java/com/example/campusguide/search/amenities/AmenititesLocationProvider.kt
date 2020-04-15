@@ -26,9 +26,7 @@ class AmenitiesLocationProvider constructor(
 
         if(isAmenities) {
             val filter = id.split("_")[2]
-            println("-------------------------WOW amenities!")
             val origin = getOrigin().encodeForDirections()
-            println("-------origin: " + origin)
             var start = ""
             if (origin.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)) {
                 start = origin.split("_")[2]

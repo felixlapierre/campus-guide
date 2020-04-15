@@ -22,7 +22,6 @@ class DirectionsFlow constructor(private val activity: AppCompatActivity, privat
             val finalDestination = destination ?: getDestination()
             val finalOrigin = origin ?: getOrigin()
 
-            println("________________________________finalDestination: " + finalDestination.encodeForDirections())
             val intent = Intent(activity, DirectionsActivity::class.java).apply {
                 putExtra("OriginName", finalOrigin.name)
                 putExtra("OriginEncoded", finalOrigin.encodeForDirections())

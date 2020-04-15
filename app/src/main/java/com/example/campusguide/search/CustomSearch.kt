@@ -32,9 +32,7 @@ class CustomSearch constructor(
         val id = data?.data?.toString()
         if (id != null) {
             GlobalScope.launch {
-                println("--------------------------------locationprovider: " + locationProvider.javaClass)
                 val location = locationProvider.getLocation(id)
-                println("--------------------------------- location: " + location?.name)
                 locationListener?.onLocation(location)
             }
         }
