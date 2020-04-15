@@ -43,7 +43,11 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
                 }
                 "TRANSIT" -> {
-                    iv.setImageResource(R.drawable.ic_directions_transit)
+                    if(steps[i].transitDetails.line.vehicle.name == "Subway") {
+                        iv.setImageResource(R.drawable.ic_subway)
+                    } else {
+                        iv.setImageResource(R.drawable.ic_directions_transit)
+                    }
                     tv.text = steps[i].transitDetails.line.shortName
                     if(steps[i].transitDetails.line.color != "") {
                         tv.setBackgroundColor(Color.parseColor(steps[i].transitDetails.line.color))

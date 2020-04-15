@@ -135,7 +135,16 @@ data class GoogleDirectionsAPITransitLine(
     val shortName: String = "",
 
     @Json(name = "color")
-    val color: String = ""
+    val color: String = "",
+
+    @Json(name = "vehicle")
+    val vehicle: GoogleDirectionsAPIVehicle = GoogleDirectionsAPIVehicle()
+)
+
+data class GoogleDirectionsAPIVehicle(
+
+    @Json(name = "name")
+    val name: String = ""
 )
 
 data class GoogleDirectionsAPILocation(
