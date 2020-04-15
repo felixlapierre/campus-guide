@@ -22,8 +22,7 @@ class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.
             } else {
                 FloorPlans.hide()
             }
-        }
-        if (map.getCameraZoom()< Constants.ZOOM_INDOOR_LVL) {
+        } else {
             FloorPlans.hide()
         }
     }
