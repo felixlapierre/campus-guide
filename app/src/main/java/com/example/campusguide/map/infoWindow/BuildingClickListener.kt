@@ -73,7 +73,7 @@ class BuildingClickListener(
         map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
 
-    private fun nullBuilding(info: InfoWindowData){
+    private fun nullBuilding(info: InfoWindowData) {
         info.symbol = "B"
         info.fullName = "Building"
         info.address = "123 Street, Montreal, QC"
@@ -83,7 +83,7 @@ class BuildingClickListener(
         info.servicesList = "- Service 1\n- Service 2"
     }
 
-    private fun campusBuilding(info: InfoWindowData, building: Building){
+    private fun campusBuilding(info: InfoWindowData, building: Building) {
         info.symbol = building.code
         info.fullName = building.name
         info.address = building.address
