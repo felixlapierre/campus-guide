@@ -2,6 +2,7 @@ package com.example.campusguide.map.displayIndoor
 
 import android.view.View
 import com.example.campusguide.map.GoogleMapAdapter
+import com.google.android.gms.maps.model.GroundOverlay
 import kotlin.collections.HashMap
 
 class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickListener {
@@ -41,17 +42,10 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
     override fun onClick(v: View?) {
 
         val buildingImageLatLng = buildings[currentBuilding]?.getBuildingImageCoordinates()
-        var updatedFloor: Int = 0
-        if (v?.id == upButtonId) {
-            updatedFloor = updateFloorUp(currentFloor)
-        } else if (v?.id == downButtonId) {
-            updatedFloor = updateFloorDown(currentFloor)
-        }
-        buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
-        buildings[currentBuilding]?.getFloorPlans()?.get(updatedFloor)?.isVisible = true
 
-        currentFloor = updatedFloor
+        var updatedFloor: Int = updateFloor(v?.id)
 
+        buildings[currentBuilding]?.getFloorPlans()?.let { changeVisibleFloor(it, updatedFloor) }
         if (buildingImageLatLng != null) {
             map.animateCamera(buildingImageLatLng, map.adapted.cameraPosition.zoom)
         }
@@ -62,7 +56,21 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
             buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = isVisible
         }
     }
-    private fun updateFloorUp(currentFloor: Int): Int {
+
+    private fun updateFloor(buttonId: Int?): Int {
+        return when (buttonId) {
+            upButtonId -> {
+                updateFloorUp()
+            }
+            downButtonId -> {
+                updateFloorDown()
+            }
+            else -> {
+                0
+            }
+        }
+    }
+    private fun updateFloorUp(): Int {
 
         val floorNumbers = buildings[currentBuilding]?.getFloors()
         if (currentFloor >= floorNumbers!![floorNumbers.size - 1]) {
@@ -71,11 +79,18 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         return currentFloor + 1
     }
 
-    private fun updateFloorDown(currentFloor: Int): Int {
+    private fun updateFloorDown(): Int {
         val floorNumbers = buildings[currentBuilding]?.getFloors()
         if (currentFloor <= floorNumbers!![0]) {
             return floorNumbers!![0]
         }
         return (currentFloor - 1)
+    }
+
+    private fun changeVisibleFloor(floorPlans: HashMap <Int, GroundOverlay>, updatedFloor: Int) {
+        floorPlans?.get(currentFloor)?.isVisible = false
+        floorPlans?.get(updatedFloor)?.isVisible = true
+
+        currentFloor = updatedFloor
     }
 }
