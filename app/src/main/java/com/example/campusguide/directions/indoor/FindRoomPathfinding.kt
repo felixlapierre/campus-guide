@@ -9,7 +9,11 @@ class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
 
     fun findRoom(start: String, target: String): List<List<LatLng>> {
         this.target = target
-        return super.findRoom(start)
+        return super.findRoom(start).map {
+            it.map { node ->
+                LatLng(node.y, node.x)
+            }
+        }
     }
 
     override fun isComplete(): Boolean {

@@ -11,7 +11,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     private val nodeData: MutableMap<String, NodeData> = mutableMapOf()
 
     // Priority queue requires api version 24 for some reason
-    open fun findRoom(start: String): List<List<LatLng>> {
+    open fun findRoom(start: String): List<List<Node>> {
         if(graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
@@ -77,19 +77,14 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     }
 
-    private fun reconstructPath(end: String): List<LatLng> {
+    private fun reconstructPath(end: String): List<Node> {
         var current = end
-        val totalPath: MutableList<LatLng> = mutableListOf(getCoordinatesOfNode(end))
+        val totalPath: MutableList<Node> = mutableListOf(graph.get(end)!!)
         while(nodeData[current]!!.cameFrom != null) {
             current = nodeData[current]!!.cameFrom!!
-            totalPath.add(0, getCoordinatesOfNode(current))
+            totalPath.add(0, graph.get(current)!!)
         }
         return totalPath
-    }
-
-    private fun getCoordinatesOfNode(code: String): LatLng {
-        val node = graph.get(code) ?: throw NonexistentLocationException("Could not find room: $code")
-        return LatLng(node!!.y, node!!.x)
     }
 
     data class NodeData(

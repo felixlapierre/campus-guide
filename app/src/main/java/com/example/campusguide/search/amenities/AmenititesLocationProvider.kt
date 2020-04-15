@@ -9,6 +9,7 @@ import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.SearchLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.search.indoor.IndoorLocation
 import com.example.campusguide.utils.permissions.Permissions
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -34,11 +35,11 @@ class AmenitiesLocationProvider constructor(
             } else {
                 start = lbBuildingIndex.nodes[0].code
             }
-            val listOfBathrooms = AmenitiesPathfinding(
-                Graph(
-                   lbBuildingIndex
-                )).findRoom(start)
-            return SearchLocation("Bathroom", listOfBathrooms[0][listOfBathrooms[0].size - 1].latitude, listOfBathrooms[0][listOfBathrooms[0].size - 1].longitude, "amenities_bathroom", "")
+            val pathfinding = AmenitiesPathfinding(Graph(lbBuildingIndex))
+            val listOfBathrooms = pathfinding.findRoom(start)
+
+            val resultBathroom = listOfBathrooms[0][listOfBathrooms[0].size - 1]
+            return IndoorLocation("Bathroom", resultBathroom.y, resultBathroom.x, "indoor_LB_${resultBathroom.code}", "")
         } else {
             return next?.getLocation(id)
         }

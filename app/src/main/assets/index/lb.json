@@ -172,402 +172,402 @@
   "nodes": [
     {
       "type": "stairs",
-      "code": "2_entry_stairs",
+      "code": "2-entry-stairs",
       "x": 0.203,
       "y": 0.429,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "2_near_printers",
+      "code": "2-near-printers",
       "x": 0.375,
       "y": 0.195,
-      "edges": ["2_near_tech", "2_near_top_stairs"]
+      "edges": ["2-near-tech", "2-near-top-stairs"]
     },
     {
       "type": "basic",
-      "code": "2_near_top_stairs",
+      "code": "2-near-top-stairs",
       "x": 0.468,
       "y": 0.195,
-      "edges": ["2_top_stairs"]
+      "edges": ["2-top-stairs"]
     },
     {
       "type": "stairs",
-      "code": "2_top_stairs",
+      "code": "2-top-stairs",
       "x": 0.468,
       "y": 0.133,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "2_near_tech",
+      "code": "2-near-tech",
       "x": 0.191,
       "y": 0.193,
-      "edges": ["2_tech_mens", "211.00", "2_tech_ne"]
+      "edges": ["2-tech-mens", "211.00", "2-tech-ne"]
     },
     {
       "type": "bathroom",
-      "code": "2_tech_mens",
+      "code": "2-tech-mens",
       "x": 0.188,
       "y": 0.266,
-      "edges": ["2_near_tech", "2_tech_woms"]
+      "edges": ["2-near-tech", "2-tech-woms"]
     },
     {
       "type": "bathroom",
-      "code": "2_tech_woms",
+      "code": "2-tech-woms",
       "x": 0.191,
       "y": 0.329,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "2_stair_NW",
+      "code": "2-stair-NW",
       "x": 0.123,
       "y": 0.316,
-      "edges": ["3_stair_NW"]
+      "edges": ["3-stair-NW"]
     },
     {
       "type": "basic",
-      "code": "2_tech_ne",
+      "code": "2-tech-ne",
       "x": 0.191,
       "y": 0.129,
-      "edges": ["205.00", "2_tech_nw"]
+      "edges": ["205.00", "2-tech-nw"]
     },
     {
       "type": "basic",
-      "code": "2_tech_nw",
+      "code": "2-tech-nw",
       "x": 0.038,
       "y": 0.129,
       "edges": ["207.00"]
     },
     {
       "type": "basic",
-      "code": "2_tech_sw",
+      "code": "2-tech-sw",
       "x": 0.038,
       "y": 0.254,
-      "edges": ["209.01", "2_tech_mens"]
+      "edges": ["209.01", "2-tech-mens"]
     },
     {
       "type": "basic",
-      "code": "2_entryway",
+      "code": "2-entryway",
       "x": 0.355,
       "y": 0.442,
-      "edges": ["2_near_printers", "2_entry_stairs", "201.01"]
+      "edges": ["2-near-printers", "2-entry-stairs", "201.01"]
     },
     {
       "type": "elevators",
-      "code": "2_near_elevators",
+      "code": "2-near-elevators",
       "x": 0.375,
       "y": 0.578,
-      "edges": ["2_entryway"]
+      "edges": ["2-entryway"]
     },
     {
       "type": "basic",
-      "code": "2_sw_intersect",
+      "code": "2-sw-intersect",
       "x": 0.375,
       "y": 0.676,
-      "edges": ["2_near_elevators", "2_near_231"]
+      "edges": ["2-near-elevators", "2-near-231"]
     },
     {
       "type": "basic",
-      "code": "2_near_231",
+      "code": "2-near-231",
       "x": 0.375,
       "y": 0.852,
-      "edges": ["231.00", "2_stairs_SSW"]
+      "edges": ["231.00", "2-stairs-SSW"]
     },
     {
       "type": "stairs",
-      "code": "2_stairs_SSW",
+      "code": "2-stairs-SSW",
       "x": 0.292,
       "y": 0.905,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "2_near_bot_stairs",
+      "code": "2-near-bot-stairs",
       "x": 0.464,
       "y": 0.675,
-      "edges": ["2_bot_stairs"]
+      "edges": ["2-bot-stairs"]
     },
     {
       "type": "stairs",
-      "code": "2_bot_stairs",
+      "code": "2-bot-stairs",
       "x": 0.464,
       "y": 0.737,
-      "edges": ["3_bot_stairs"]
+      "edges": ["3-bot-stairs"]
     },
     {
       "type": "basic",
-      "code": "2_hall_bottom",
+      "code": "2-hall-bottom",
       "x": 0.570,
       "y": 0.670,
-      "edges": ["245.00", "251.00", "2_hall_top", "2_se_corner"]
+      "edges": ["245.00", "251.00", "2-hall-top", "2-se-corner"]
     },
     {
       "type": "basic",
-      "code": "2_hall_top",
+      "code": "2-hall-top",
       "x": 0.570,
       "y": 0.194,
-      "edges": ["285.00", "259.00", "257.00","2_ne_corner", "2_near_top_stairs"]
+      "edges": ["285.00", "259.00", "257.00","2-ne-corner", "2-near-top-stairs"]
     },
     {
       "type": "basic",
-      "code": "2_ne_corner",
+      "code": "2-ne-corner",
       "x": 0.815,
       "y": 0.194,
-      "edges": ["285.00", "2_se_corner", "2_mens_east","2_stairs_ne", "2_east_hall_top"]
+      "edges": ["285.00", "2-se-corner", "2-mens-east","2-stairs-ne", "2-east-hall-top"]
     },
     {
       "type": "bathroom",
-      "code": "2_mens_east",
+      "code": "2-mens-east",
       "x": 0.886,
       "y": 0.209,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "2_stairs_ne",
+      "code": "2-stairs-ne",
       "x": 0.847,
       "y": 0.277,
-      "edges": ["3_stairs_ne"]
+      "edges": ["3-stairs-ne"]
     },
     {
       "type": "basic",
-      "code": "2_se_corner",
+      "code": "2-se-corner",
       "x": 0.816,
       "y": 0.674,
-      "edges": ["245.00", "2_stairs_se", "2_women_e"]
+      "edges": ["245.00", "2-stairs-se", "2-women-e"]
     },
     {
       "type": "bathroom",
-      "code": "2_women_e",
+      "code": "2-women-e",
       "x": 0.852,
       "y": 0.658,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "2_stairs_se",
+      "code": "2-stairs-se",
       "x": 0.847,
       "y": 0.592,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "2_east_hall_top",
+      "code": "2-east-hall-top",
       "x": 0.824,
       "y": 0.330,
-      "edges": ["2_east_hall_bottom", "261.00"]
+      "edges": ["2-east-hall-bottom", "261.00"]
     },
     {
       "type": "basic",
-      "code": "2_east_hall_bottom",
+      "code": "2-east-hall-bottom",
       "x": 0.824,
       "y": 0.537,
-      "edges": ["2_se_corner", "261.00"]
+      "edges": ["2-se-corner", "261.00"]
     },
     {
       "type": "basic",
-      "code": "3_near_printers",
+      "code": "3-near-printers",
       "x": 0.375,
       "y": 0.195,
-      "edges": ["3_near_top_stairs"]
+      "edges": ["3-near-top-stairs"]
     },
     {
       "type": "basic",
-      "code": "3_near_top_stairs",
+      "code": "3-near-top-stairs",
       "x": 0.468,
       "y": 0.195,
-      "edges": ["3_top_stairs"]
+      "edges": ["3-top-stairs"]
     },
     {
       "type": "stairs",
-      "code": "3_top_stairs",
+      "code": "3-top-stairs",
       "x": 0.468,
       "y": 0.133,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "3_stair_NW",
+      "code": "3-stair-NW",
       "x": 0.123,
       "y": 0.316,
-      "edges": ["3_num_15"]
+      "edges": ["3-num-15"]
     },
     {
       "type": "basic",
-      "code": "3_num_15",
+      "code": "3-num-15",
       "x": 0.253,
       "y": 0.285,
-      "edges": ["3_hallway_15", "322.00", "314.00"]
+      "edges": ["3-hallway-15", "322.00", "314.00"]
     },
     {
       "type": "basic",
-      "code": "3_hallway_15",
+      "code": "3-hallway-15",
       "x": 0.253,
       "y": 0.196,
-      "edges": ["3_near_printers", "3_num_15", "311.00", "3_east_hallway_top"]
+      "edges": ["3-near-printers", "3-num-15", "311.00", "3-east-hallway-top"]
     },
     {
       "type": "basic",
-      "code": "3_east_hallway_top",
+      "code": "3-east-hallway-top",
       "x": 0.029,
       "y": 0.196,
-      "edges": ["316.00", "3_east_hallway_bot"]
+      "edges": ["316.00", "3-east-hallway-bot"]
     },
     {
       "type": "basic",
-      "code": "3_east_hallway_bot",
+      "code": "3-east-hallway-bot",
       "x": 0.029,
       "y": 0.696,
-      "edges": ["328.00", "3_sw_hallway"]
+      "edges": ["328.00", "3-sw-hallway"]
     },
     {
       "type": "stairs",
-      "code": "3_sw_hallway",
+      "code": "3-sw-hallway",
       "x": 0.204,
       "y": 0.696,
-      "edges": ["3_sw_intersect", "327.00", "3_mens_east", "3_allgender_east"]
+      "edges": ["3-sw-intersect", "327.00", "3-mens-east", "3-allgender-east"]
     },
     {
       "type": "bathroom",
-      "code": "3_mens_east",
+      "code": "3-mens-east",
       "x": 0.258,
       "y": 0.579,
       "edges": []
     },
     {
       "type": "bathroom",
-      "code": "3_allgender_east",
+      "code": "3-allgender-east",
       "x": 0.258,
       "y": 0.623,
       "edges": []
     },
     {
       "type": "elevators",
-      "code": "3_near_elevators",
+      "code": "3-near-elevators",
       "x": 0.375,
       "y": 0.578,
-      "edges": ["3_near_printers"]
+      "edges": ["3-near-printers"]
     },
     {
       "type": "basic",
-      "code": "3_sw_intersect",
+      "code": "3-sw-intersect",
       "x": 0.375,
       "y": 0.676,
-      "edges": ["3_near_elevators", "3_near_331"]
+      "edges": ["3-near-elevators", "3-near-331"]
     },
     {
       "type": "basic",
-      "code": "3_near_331",
+      "code": "3-near-331",
       "x": 0.375,
       "y": 0.852,
-      "edges": ["331.00", "3_stairs_SSW"]
+      "edges": ["331.00", "3-stairs-SSW"]
     },
     {
       "type": "stairs",
-      "code": "3_stairs_SSW",
+      "code": "3-stairs-SSW",
       "x": 0.292,
       "y": 0.905,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "3_near_bot_stairs",
+      "code": "3-near-bot-stairs",
       "x": 0.464,
       "y": 0.675,
-      "edges": ["3_bot_stairs"]
+      "edges": ["3-bot-stairs"]
     },
     {
       "type": "stairs",
-      "code": "3_bot_stairs",
+      "code": "3-bot-stairs",
       "x": 0.464,
       "y": 0.737,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "3_hall_bottom",
+      "code": "3-hall-bottom",
       "x": 0.570,
       "y": 0.670,
-      "edges": ["345.00", "351.00", "353.00", "3_hall_top", "3_se_corner"]
+      "edges": ["345.00", "351.00", "353.00", "3-hall-top", "3-se-corner"]
     },
     {
       "type": "basic",
-      "code": "3_hall_top",
+      "code": "3-hall-top",
       "x": 0.570,
       "y": 0.194,
-      "edges": ["385.00", "359.00","3_ne_corner", "3_near_top_stairs"]
+      "edges": ["385.00", "359.00","3-ne-corner", "3-near-top-stairs"]
     },
     {
       "type": "basic",
-      "code": "3_ne_corner",
+      "code": "3-ne-corner",
       "x": 0.815,
       "y": 0.194,
-      "edges": ["385.00", "3_mens_east","3_stairs_ne", "3_east_hall_top"]
+      "edges": ["385.00", "3-mens-east","3-stairs-ne", "3-east-hall-top"]
     },
     {
       "type": "bathroom",
-      "code": "3_mens_east",
+      "code": "3-mens-east",
       "x": 0.886,
       "y": 0.209,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "3_stairs_ne",
+      "code": "3-stairs-ne",
       "x": 0.847,
       "y": 0.277,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "3_se_corner",
+      "code": "3-se-corner",
       "x": 0.816,
       "y": 0.674,
-      "edges": ["345.00", "3_stairs_se", "3_women_e"]
+      "edges": ["345.00", "3-stairs-se", "3-women-e"]
     },
     {
       "type": "bathroom",
-      "code": "3_women_e",
+      "code": "3-women-e",
       "x": 0.852,
       "y": 0.658,
       "edges": []
     },
     {
       "type": "stairs",
-      "code": "3_stairs_se",
+      "code": "3-stairs-se",
       "x": 0.847,
       "y": 0.592,
       "edges": []
     },
     {
       "type": "basic",
-      "code": "3_east_hall_top",
+      "code": "3-east-hall-top",
       "x": 0.824,
       "y": 0.330,
       "edges": ["361.00", "362.00"]
     },
     {
       "type": "basic",
-      "code": "3_east_hall_bottom",
+      "code": "3-east-hall-bottom",
       "x": 0.824,
       "y": 0.537,
-      "edges": ["3_se_corner", "361.00", "362.00"]
+      "edges": ["3-se-corner", "361.00", "362.00"]
     },
     {
       "type": "basic",
-      "code": "3_east_stacks_bottom",
+      "code": "3-east-stacks-bottom",
       "x": 0.765,
       "y": 0.560,
-      "edges": ["3_east_hall_bottom", "3_east_stacks_top"]
+      "edges": ["3-east-hall-bottom", "3-east-stacks-top"]
     },
     {
       "type": "basic",
-      "code": "3_east_stacks_top",
+      "code": "3-east-stacks-top",
       "x": 0.765,
       "y": 0.560,
-      "edges": ["3_east_hall_top"]
+      "edges": ["3-east-hall-top"]
     }
   ]
 }
