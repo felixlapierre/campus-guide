@@ -4,7 +4,7 @@ import android.view.View
 import com.example.campusguide.map.GoogleMapAdapter
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map : GoogleMapAdapter): View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
@@ -44,7 +44,6 @@ class ChangeFloor constructor(private val map : GoogleMapAdapter): View.OnClickL
         var updatedFloor: Int = 0
         if (v?.id == upButtonId) {
             updatedFloor = updateFloorUp(currentFloor)
-
         } else if (v?.id == downButtonId) {
             updatedFloor = updateFloorDown(currentFloor)
         }

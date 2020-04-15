@@ -6,7 +6,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
-class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.OnCameraMoveListener {
+class OnZoomListener constructor(private val map: GoogleMapAdapter) : GoogleMap.OnCameraMoveListener {
 
     init {
         FloorPlans.setUpChangeFloor(map)
@@ -14,7 +14,7 @@ class OnZoomListener constructor(private val map : GoogleMapAdapter): GoogleMap.
     private val buildingBounds: Array <LatLngBounds> = getBuildingBounds()
 
     override fun onCameraMove() {
-        if (map.getCameraZoom() >= Constants.ZOOM_INDOOR_LVL){
+        if (map.getCameraZoom() >= Constants.ZOOM_INDOOR_LVL) {
             val location = map.getCameraLocation()
             val focusedBuilding = cameraFocusedOnBuilding(location)
             if (focusedBuilding != null) {

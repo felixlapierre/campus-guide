@@ -20,7 +20,7 @@ object FloorPlans {
 
             currentBuilding = buildingName
             changeFloor.setBuilding(buildingName)
-            if (isHidden){
+            if (isHidden) {
                 displayButtons()
                 isHidden = false
             }
@@ -37,7 +37,7 @@ object FloorPlans {
     }
 
     fun hide() {
-        if (!isHidden){
+        if (!isHidden) {
             changeFloor.unsetBuilding()
             currentBuilding = ""
             hideButtons()
