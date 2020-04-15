@@ -29,11 +29,11 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         }
         currentBuilding = buildingName
         currentFloor = buildings[buildingName]?.startFloor!!
-        displayCurrentFloor()
+        currentFloorIsVisible(true)
     }
 
     fun unsetBuilding() {
-        hideCurrentFloor()
+        currentFloorIsVisible(false)
         currentBuilding = ""
         currentFloor = -1
     }
@@ -57,14 +57,9 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         }
     }
 
-    private fun displayCurrentFloor() {
+    private fun currentFloorIsVisible(isVisible: Boolean) {
         if (currentBuilding != "") {
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = true
-        }
-    }
-    private fun hideCurrentFloor() {
-        if (currentBuilding != "") {
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = false
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = isVisible
         }
     }
     private fun updateFloorUp(currentFloor: Int): Int {
