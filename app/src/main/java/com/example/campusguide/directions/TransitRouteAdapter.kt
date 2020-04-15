@@ -1,10 +1,15 @@
 package com.example.campusguide.directions
 
 import android.app.Activity
+import android.graphics.Color
+import android.graphics.Typeface
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.campusguide.R
 
@@ -21,8 +26,34 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         val row = inflater.inflate(R.layout.transit_route_item, parent, false)
 
         row.findViewById<TextView>(R.id.routeTitle).text = results[position].title
-        row.findViewById<TextView>(R.id.routeSteps).text = results[position].steps
         row.findViewById<TextView>(R.id.routeDuration).text = results[position].duration
+
+        val steps = results[position].steps
+        // TODO Limit how many steps are displayed (likely 5)
+        for (i in steps.indices) {
+            val iv = ImageView(activity)
+            val tv = TextView(activity)
+            when(steps[i].travelMode) {
+                "DRIVING" -> {
+                    iv.setImageResource(R.drawable.ic_directions_car)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
+                }
+                "WALKING" -> {
+                    iv.setImageResource(R.drawable.ic_directions_walk)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
+                }
+                "TRANSIT" -> {
+                    iv.setImageResource(R.drawable.ic_directions_transit)
+                    tv.text = steps[i].transitDetails.line.shortName
+                    if(steps[i].transitDetails.line.color != "") {
+                        tv.setBackgroundColor(Color.parseColor(steps[i].transitDetails.line.color))
+                    }
+                    styleTransitLine(tv)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv)
+                }
+            }
+        }
 
         return row
     }
@@ -53,5 +84,13 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
      */
     fun add(result: TransitRoute) {
         results.add(result)
+    }
+
+    private fun styleTransitLine(tv: TextView) {
+        tv.minWidth = 100
+        tv.minHeight = 65
+        tv.gravity = Gravity.CENTER
+        tv.typeface = Typeface.DEFAULT_BOLD
+        tv.setTextColor(Color.BLACK)
     }
 }
