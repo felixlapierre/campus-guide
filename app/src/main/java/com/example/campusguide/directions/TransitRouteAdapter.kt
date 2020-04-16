@@ -29,8 +29,13 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         row.findViewById<TextView>(R.id.routeDuration).text = results[position].duration
 
         val steps = results[position].steps
-        // TODO Limit how many steps are displayed (likely 5)
-        for (i in steps.indices) {
+
+        var n = 3
+        if(steps.size < 4) {
+            n = steps.size-1
+        }
+
+        for (i in 0..n) {
             val iv = ImageView(activity)
             val tv = TextView(activity)
             when(steps[i].travelMode) {
@@ -56,6 +61,14 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv)
                 }
+            }
+            val tv2 = TextView(activity)
+            if(i != n) {
+                tv2.text = ">"
+                row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv2)
+            } else if(steps.size > i+1) {
+                tv2.text = "..."
+                row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv2)
             }
         }
 
