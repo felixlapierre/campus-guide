@@ -12,6 +12,9 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.campusguide.R
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdapter() {
 
@@ -77,6 +80,17 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
                 row.findViewById<LinearLayout>(R.id.routeSteps).addView(separator)
             }
         }
+
+        // Display the departure and arrival times
+        val df = SimpleDateFormat("h:mm aa", Locale.CANADA)
+        val time = Calendar.getInstance()
+        val departureTime = df.format(time.time)
+        time.add(Calendar.SECOND, results[position].duration)
+        val arrivalTime = df.format(time.time)
+        val tv = TextView(activity)
+        val text = "$departureTime \u2014 $arrivalTime"
+        tv.text = text
+        row.findViewById<LinearLayout>(R.id.transitRouteItemLayout).addView(tv)
 
         return row
     }
