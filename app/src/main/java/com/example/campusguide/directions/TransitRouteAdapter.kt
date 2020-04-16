@@ -25,17 +25,19 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         val inflater = LayoutInflater.from(activity)
         val row = inflater.inflate(R.layout.transit_route_item, parent, false)
 
+        // Set the route title
         row.findViewById<TextView>(R.id.routeTitle).text = results[position].title
-        row.findViewById<TextView>(R.id.routeDuration).text = results[position].duration
 
+        // Set the route travel time
+        val travelTime = "${results[position].duration / 60} min"
+        row.findViewById<TextView>(R.id.routeDuration).text = travelTime
+
+        // Display the first four steps
         val steps = results[position].steps
-
-        // Display the first 4 steps
         var n = 3
         if(steps.size < 4) {
             n = steps.size-1
         }
-
         for (i in 0..n) {
             val stepIcon = ImageView(activity)
             val stepTransitLine = TextView(activity)

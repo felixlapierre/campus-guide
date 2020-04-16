@@ -94,7 +94,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     val radioButtonId = "radio_$travelMode"
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
-                        text = "${path.segment.getDuration() / 60} min"
+                        val travelTime = "${path.segment.getDuration() / 60} min"
+                        text = travelTime
                         buttonTintList = colorStateList
                     }
                 }
@@ -149,7 +150,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                             listView.adapter = adapter
                             listView.onItemClickListener = this
                             for ((title, path) in extraPaths) {
-                                adapter.add(TransitRoute(title, path.segment.getSteps(),"${path.segment.getDuration() / 60} min"))
+                                adapter.add(TransitRoute(title, path.segment.getSteps(),path.segment.getDuration()))
                             }
                             runOnUiThread { adapter.notifyDataSetChanged() }
                         }
