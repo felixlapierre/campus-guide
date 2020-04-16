@@ -142,20 +142,15 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     }
                 R.id.radio_transit ->
                     if (checked) {
-
-                        // Hide the map
                         hideMap()
-
                         if(!::listView.isInitialized) {
                             listView = ListView(this)
                             activity_directions_layout.addView(listView)
                             listView.adapter = adapter
                             listView.onItemClickListener = this
-
                             for ((title, path) in extraPaths) {
                                 adapter.add(TransitRoute(title, path.segment.getSteps(),"${path.segment.getDuration() / 60} min"))
                             }
-
                             runOnUiThread { adapter.notifyDataSetChanged() }
                         }
                     }

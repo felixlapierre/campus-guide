@@ -37,30 +37,32 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         }
 
         for (i in 0..n) {
-            val iv = ImageView(activity)
-            val tv = TextView(activity)
+            val stepIcon = ImageView(activity)
+            val stepTransitLine = TextView(activity)
             when(steps[i].travelMode) {
                 "DRIVING" -> {
-                    iv.setImageResource(R.drawable.ic_directions_car)
-                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
+                    stepIcon.setImageResource(R.drawable.ic_directions_car)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
                 }
                 "WALKING" -> {
-                    iv.setImageResource(R.drawable.ic_directions_walk)
-                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
+                    stepIcon.setImageResource(R.drawable.ic_directions_walk)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
                 }
                 "TRANSIT" -> {
                     if(steps[i].transitDetails.line.vehicle.name == "Subway") {
-                        iv.setImageResource(R.drawable.ic_subway)
+                        stepIcon.setImageResource(R.drawable.ic_subway)
                     } else {
-                        iv.setImageResource(R.drawable.ic_directions_transit)
+                        stepIcon.setImageResource(R.drawable.ic_directions_transit)
                     }
-                    tv.text = steps[i].transitDetails.line.shortName
+                    stepTransitLine.text = steps[i].transitDetails.line.shortName
                     if(steps[i].transitDetails.line.color != "") {
-                        tv.setBackgroundColor(Color.parseColor(steps[i].transitDetails.line.color))
+                        stepTransitLine.setBackgroundColor(
+                            Color.parseColor(steps[i].transitDetails.line.color)
+                        )
                     }
-                    styleTransitLine(tv)
-                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(iv)
-                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv)
+                    styleTransitLine(stepTransitLine)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
+                    row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepTransitLine)
                 }
             }
             val separator = TextView(activity)
