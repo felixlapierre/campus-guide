@@ -30,6 +30,7 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
 
         val steps = results[position].steps
 
+        // Display the first 4 steps
         var n = 3
         if(steps.size < 4) {
             n = steps.size-1
@@ -62,13 +63,14 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv)
                 }
             }
-            val tv2 = TextView(activity)
+            val separator = TextView(activity)
+            separator.setPadding(20, 0, 20, 0)
             if(i != n) {
-                tv2.text = ">"
-                row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv2)
+                separator.text = ">"
+                row.findViewById<LinearLayout>(R.id.routeSteps).addView(separator)
             } else if(steps.size > i+1) {
-                tv2.text = "..."
-                row.findViewById<LinearLayout>(R.id.routeSteps).addView(tv2)
+                separator.text = "..."
+                row.findViewById<LinearLayout>(R.id.routeSteps).addView(separator)
             }
         }
 
