@@ -124,7 +124,6 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
             val checked = view.isChecked
-
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
@@ -143,23 +142,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 R.id.radio_transit ->
                     if (checked) {
                         hideMap()
-                        if (!::listView.isInitialized) {
-                            listView = ListView(this)
-                            activity_directions_layout.addView(listView)
-                            listView.adapter = adapter
-                            listView.onItemClickListener = this
-                            for ((title, path) in extraPaths) {
-                                adapter.add(
-                                    TransitRoute(
-                                        title,
-                                        path.segment.getSteps(),
-                                        path.segment.getDuration(),
-                                        path.segment.getFare()
-                                    )
-                                )
-                            }
-                            runOnUiThread { adapter.notifyDataSetChanged() }
-                        }
+                        initializeListView()
                     }
             }
         }
@@ -240,5 +223,25 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     private fun hideMap() {
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
+    }
+
+    private fun initializeListView() {
+        if (!::listView.isInitialized) {
+            listView = ListView(this)
+            activity_directions_layout.addView(listView)
+            listView.adapter = adapter
+            listView.onItemClickListener = this
+            for ((title, path) in extraPaths) {
+                adapter.add(
+                    TransitRoute(
+                        title,
+                        path.segment.getSteps(),
+                        path.segment.getDuration(),
+                        path.segment.getFare()
+                    )
+                )
+            }
+            runOnUiThread { adapter.notifyDataSetChanged() }
+        }
     }
 }
