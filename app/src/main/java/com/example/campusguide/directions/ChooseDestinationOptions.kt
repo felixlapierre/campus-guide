@@ -34,9 +34,6 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         view.findViewById<Button>(R.id.calendar).setOnClickListener {
             useNextEvent()
         }
-        view.findViewById<Button>(R.id.fromMap).setOnClickListener {
-            chooseFromMap()
-        }
         view.findViewById<Button>(R.id.search).setOnClickListener {
             searchForLocation()
         }
@@ -54,13 +51,6 @@ class ChooseDestinationOptions(private val locationSelectedListener: (location: 
         GlobalScope.launch {
             FindEventLocation(act, locationSelectedListener).getLocationOfEvent(nextLocation)
         }
-    }
-
-    private fun chooseFromMap() {
-        // TODO fill this method once we have the logic to select from the map
-        dismiss()
-        val location = Location("Montreal", 45.5017, -73.5673)
-        locationSelectedListener(location)
     }
 
     private fun searchForLocation() {
