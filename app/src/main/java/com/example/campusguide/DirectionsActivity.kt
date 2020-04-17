@@ -109,7 +109,6 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
         adapter = TransitRouteAdapter(this)
-
     }
 
     /**
@@ -144,7 +143,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 R.id.radio_transit ->
                     if (checked) {
                         hideMap()
-                        if(!::listView.isInitialized) {
+                        if (!::listView.isInitialized) {
                             listView = ListView(this)
                             activity_directions_layout.addView(listView)
                             listView.adapter = adapter
@@ -233,7 +232,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     private fun showMap() {
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
-        if(!mapFragment.isVisible) {
+        if (!mapFragment.isVisible) {
             this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
         }
     }

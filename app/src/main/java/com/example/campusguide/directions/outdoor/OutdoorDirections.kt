@@ -30,7 +30,7 @@ class OutdoorDirections constructor(
 
         val path = Constants.DIRECTIONS_API_URL
         var url = "$path?origin=$startEncoded&destination=$endEncoded&mode=$travelModeEncoded"
-        if(transitPreference != null) {
+        if (transitPreference != null) {
             val transitPreferenceEncoded = URLEncoder.encode(transitPreference, "UTF-8")
             url = "$url&transit_routing_preference=$transitPreferenceEncoded"
         }

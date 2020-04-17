@@ -38,13 +38,13 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         // Display the first four steps
         val steps = results[position].steps
         var n = 3
-        if(steps.size < 4) {
-            n = steps.size-1
+        if (steps.size < 4) {
+            n = steps.size - 1
         }
         for (i in 0..n) {
             val stepIcon = ImageView(activity)
             val stepTransitLine = TextView(activity)
-            when(steps[i].travelMode) {
+            when (steps[i].travelMode) {
                 "DRIVING" -> {
                     stepIcon.setImageResource(R.drawable.ic_directions_car)
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
@@ -54,13 +54,13 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
                 }
                 "TRANSIT" -> {
-                    if(steps[i].transitDetails.line.vehicle.name == "Subway") {
+                    if (steps[i].transitDetails.line.vehicle.name == "Subway") {
                         stepIcon.setImageResource(R.drawable.ic_subway)
                     } else {
                         stepIcon.setImageResource(R.drawable.ic_directions_transit)
                     }
                     stepTransitLine.text = steps[i].transitDetails.line.shortName
-                    if(steps[i].transitDetails.line.color != "") {
+                    if (steps[i].transitDetails.line.color != "") {
                         stepTransitLine.setBackgroundColor(
                             Color.parseColor(steps[i].transitDetails.line.color)
                         )
@@ -72,10 +72,10 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
             }
             val separator = TextView(activity)
             separator.setPadding(20, 0, 20, 0)
-            if(i != n) {
+            if (i != n) {
                 separator.text = ">"
                 row.findViewById<LinearLayout>(R.id.routeSteps).addView(separator)
-            } else if(steps.size > i+1) {
+            } else if (steps.size > i + 1) {
                 separator.text = "..."
                 row.findViewById<LinearLayout>(R.id.routeSteps).addView(separator)
             }
@@ -87,7 +87,7 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         // Display the fare
         val fare = TextView(activity)
         fare.text = results[position].fare
-        fare.setPadding(30, 0, 0 , 0)
+        fare.setPadding(30, 0, 0, 0)
         row.findViewById<LinearLayout>(R.id.routeTimeAndFare).addView(fare)
         return row
     }
