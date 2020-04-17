@@ -19,19 +19,17 @@ class FindEventLocation constructor(
     private val activity: FragmentActivity,
     private val locationListener: (location: Location) -> Unit
 ) {
-    private val permissions = Permissions(activity)
-    private val fusedLocationProvider = FusedLocationProvider(activity)
     private val buildingIndex: BuildingIndex = BuildingIndexSingleton.getInstance(activity.assets)
     private val indoorSearch = IndoorSearchResultProvider(buildingIndex)
     private val outdoorSearch = PlacesApiSearchResultProvider(activity)
-    //chain of responsibility
+    // chain of responsibility
     private val locationProvider = IndoorLocationProvider(
         buildingIndex,
         AmenitiesLocationProvider(
             PlacesApiSearchLocationProvider(activity),
-            permissions,
+            Permissions(activity),
             activity as AppCompatActivity,
-            fusedLocationProvider
+            FusedLocationProvider(activity)
         )
     )
 

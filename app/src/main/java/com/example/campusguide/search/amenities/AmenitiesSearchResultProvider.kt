@@ -29,7 +29,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
         return results
     }
 
-    private fun addMensBathroom(results: MutableList<SearchResult>) : MutableList<SearchResult> {
+    private fun addMensBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
                 "Men's Bathroom", "Find a bathroom near me", "amenities_bath_wom"
@@ -38,7 +38,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
         return results
     }
 
-    private fun addWomensBathroom(results: MutableList<SearchResult>) : MutableList<SearchResult> {
+    private fun addWomensBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
                 "Women's Bathroom", "Find a bathroom near me", "amenities_bath_mens"
@@ -47,7 +47,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
         return results
     }
 
-    private fun addGenderNeutralBathroom(results: MutableList<SearchResult>) : MutableList<SearchResult> {
+    private fun addGenderNeutralBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
                 "Gender Neutral Bathroom", "Find a bathroom near me", "amenities_bath_all"
