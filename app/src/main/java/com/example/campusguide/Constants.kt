@@ -19,6 +19,11 @@ object Constants {
     const val INDOOR_LOCATION_IDENTIFIER = "indoor"
     const val AMENITIES_LOCATION_IDENTIFIER = "amenities"
 
+    const val AMENITIES_BATHROOM = "bathroom"
+    const val AMENITIES_WOMENS_BATHROOM = "women's bathroom"
+    const val AMENITIES_MENS_BATHROOM = "men's bathroom"
+    const val AMENITIES_GENDER_NEUTRAL_BATHROOM = "gender neutral bathroom"
+
     const val SEARCH_BOTTOM_BOUND = 45.351240
     const val SEARCH_LEFT_BOUND = -74.031124
     const val SEARCH_TOP_BOUND = 45.734999
