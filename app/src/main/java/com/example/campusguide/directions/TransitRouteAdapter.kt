@@ -82,16 +82,8 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         }
 
         // Display the departure and arrival times
-        val df = SimpleDateFormat("h:mm aa", Locale.CANADA)
-        val time = Calendar.getInstance()
-        val departureTime = df.format(time.time)
-        time.add(Calendar.SECOND, results[position].duration)
-        val arrivalTime = df.format(time.time)
-        val tv = TextView(activity)
-        val text = "$departureTime \u2014 $arrivalTime"
-        tv.text = text
-        row.findViewById<LinearLayout>(R.id.transitRouteItemLayout).addView(tv)
-
+        setTransitTime(position, row)
+        
         return row
     }
 
@@ -129,5 +121,17 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         tv.gravity = Gravity.CENTER
         tv.typeface = Typeface.DEFAULT_BOLD
         tv.setTextColor(Color.BLACK)
+    }
+
+    private fun setTransitTime(position: Int, row: View) {
+        val df = SimpleDateFormat("h:mm aa", Locale.CANADA)
+        val time = Calendar.getInstance()
+        val departureTime = df.format(time.time)
+        time.add(Calendar.SECOND, results[position].duration)
+        val arrivalTime = df.format(time.time)
+        val tv = TextView(activity)
+        val text = "$departureTime \u2014 $arrivalTime"
+        tv.text = text
+        row.findViewById<LinearLayout>(R.id.transitRouteItemLayout).addView(tv)
     }
 }
