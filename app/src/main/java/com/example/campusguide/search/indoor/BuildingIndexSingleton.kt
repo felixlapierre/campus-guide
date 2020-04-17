@@ -13,10 +13,11 @@ import kotlinx.coroutines.launch
  * used.
  */
 class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
+
     /**
-     * Companion object that performs the singleton logic, ensuring
-     * the instance is unique and can be retrieved statically.
-     */
+    * Companion object that performs the singleton logic, ensuring
+    * the instance is unique and can be retrieved statically.
+    */
     companion object {
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null
@@ -35,7 +36,7 @@ class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
     var onLoaded: ((List<Building>) -> Unit)? = null
 
     init {
-        GlobalScope.launch {
+        //GlobalScope.launch {
             val path = "index"
             val index: MutableList<Building> = mutableListOf()
             assets.list(path)?.forEach { it ->
@@ -46,7 +47,7 @@ class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
             }
             onLoaded?.invoke(index)
             buildings = index
-        }
+        //}
     }
 
     /**

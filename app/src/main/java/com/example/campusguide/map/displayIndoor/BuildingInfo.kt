@@ -1,15 +1,19 @@
 package com.example.campusguide.map.displayIndoor
 
+
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.search.indoor.Building
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.GroundOverlay
 import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter) {
+class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
-    private val floorPlans: HashMap<Int, GroundOverlay>? = setUpFloorPlans(map)
+    private val floorPlans: HashMap<Int, Floor>? = setUpFloorPlans(map)
     val startFloor: Int? = floors?.get(0)
 
     fun getFloors(): IntArray? {
@@ -18,7 +22,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
     fun getBuildingImageCoordinates(): LatLng {
         return buildingImageCoordinates
     }
-    fun getFloorPlans(): HashMap<Int, GroundOverlay>? {
+    fun getFloorPlans(): HashMap<Int, Floor>? {
         return floorPlans
     }
 
@@ -34,7 +38,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
 
         return null
     }
-    private fun setUpFloorPlans(map: GoogleMapAdapter): HashMap<Int, GroundOverlay>? {
+    private fun setUpFloorPlans(map: GoogleMapAdapter): HashMap<Int, Floor>? {
 
         if (floors != null) {
             if (buildingName == "hall") {
@@ -46,20 +50,45 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
         return null
     }
 
-    private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float): HashMap<Int, GroundOverlay> {
-        val buildingFloors = hashMapOf<Int, GroundOverlay>()
+    private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float): HashMap<Int, Floor> {
+        val buildingFloors = hashMapOf<Int, Floor>()
+        val buildings = buildingIndexSingleton.getBuildings()
+        val building =  buildings!!.first{ it.code?.equals(buildingCode, true)}
 
         if (floors != null) {
             for (floor in floors) {
-                buildingFloors[floor] = map.adapted.addGroundOverlay(
+
+                val overlay = map.adapted.addGroundOverlay(
                     GroundOverlayOptions()
                         .image(BitmapDescriptorFactory.fromAsset("${buildingCode}_floor$floor.png"))
                         .position(buildingImageCoordinates, length, width).bearing(bearing)
                         .visible(false)
                         .zIndex(3F)
                 )
+                val amenities = getFloorAmenities(building, floor, map)
+                buildingFloors[floor] = Floor(overlay, amenities)
             }
+
         }
         return buildingFloors
+    }
+
+    /**
+     * Finds the ameneities on a building's floor and return a list of map markers
+     * @param  building The building in which to find the rooms
+     * @param floorNumber The floornumber on which we want to find amenitites
+     * @param map The map to which the markers are added
+     * @return A list of map markers
+     */
+    private fun getFloorAmenities(building: Building, floorNumber: Int, map: GoogleMapAdapter): List<Marker>{
+        var amenities: MutableList<Marker> = mutableListOf()
+        for (room in building.rooms){
+            if(room.code.toDouble().toInt() in (floorNumber*100)..((floorNumber+1)*100)){
+                amenities.add(map.adapted.addMarker(
+                    MarkerOptions().position(LatLng(room.lat.toDouble(), room.lon.toDouble())).visible(false)
+                ))
+            }
+        }
+        return amenities
     }
 }

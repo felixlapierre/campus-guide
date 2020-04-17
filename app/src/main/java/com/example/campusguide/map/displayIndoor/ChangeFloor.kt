@@ -2,10 +2,10 @@ package com.example.campusguide.map.displayIndoor
 
 import android.view.View
 import com.example.campusguide.map.GoogleMapAdapter
-import com.google.android.gms.maps.model.GroundOverlay
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
@@ -18,8 +18,8 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
 
     private fun buildBuildings(map: GoogleMapAdapter): HashMap<String, BuildingInfo> {
         val build = HashMap<String, BuildingInfo>()
-        build["hall"] = BuildingInfo("hall", map)
-        build["library"] = BuildingInfo("library", map)
+        build["hall"] = BuildingInfo("hall", map, buildingIndexSingleton)
+        build["library"] = BuildingInfo("library", map, buildingIndexSingleton)
         return build
     }
 
@@ -53,7 +53,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
 
     private fun currentFloorIsVisible(isVisible: Boolean) {
         if (currentBuilding != "") {
-            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.isVisible = isVisible
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.setVisible(isVisible)
         }
     }
 
@@ -87,9 +87,9 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         return (currentFloor - 1)
     }
 
-    private fun changeVisibleFloor(floorPlans: HashMap <Int, GroundOverlay>, updatedFloor: Int) {
-        floorPlans?.get(currentFloor)?.isVisible = false
-        floorPlans?.get(updatedFloor)?.isVisible = true
+    private fun changeVisibleFloor(floorPlans: HashMap <Int, Floor>, updatedFloor: Int) {
+        floorPlans?.get(currentFloor)?.hideFloor()
+        floorPlans?.get(updatedFloor)?.displayFloor()
 
         currentFloor = updatedFloor
     }
