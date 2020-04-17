@@ -20,6 +20,11 @@ class AmenitiesLocationProvider constructor(
     private val activity: AppCompatActivity,
     private val locationProvider: FusedLocationProvider
 ) : SearchLocationProvider {
+
+    /**
+     * gets the bathroom the person is closest to if they selected bathroom from search.
+     * asks the user where they are to determine the closest bathroom to them
+     */
     override suspend fun getLocation(id: String): SearchLocation? {
         val isAmenities = id.startsWith(Constants.AMENITIES_LOCATION_IDENTIFIER)
         val lbBuildingIndex = BuildingIndexSingleton.getInstance(activity.assets).findBuildingByCode("LB")!!
@@ -44,6 +49,9 @@ class AmenitiesLocationProvider constructor(
         }
     }
 
+    /**
+     * to ask the user where they are
+     */
     private suspend fun getOrigin() = suspendCoroutine<Location> { cont ->
         val chooseOriginOptions = ChooseOriginOptions(permissions, locationProvider) { origin ->
             cont.resume(origin)

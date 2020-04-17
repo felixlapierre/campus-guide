@@ -21,6 +21,9 @@ class AmenitiesPathfinding(graph: Graph, private val filter: String) : IndoorPat
         }
     }
 
+    /**
+     * use the filter so users can search for mens, womens, and gender neutral bathrooms
+     */
     override fun getResults(): List<String> {
         val filteredList = mutableListOf<String>()
         listOfBathrooms.map {

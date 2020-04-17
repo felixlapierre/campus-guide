@@ -54,7 +54,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnCenterLocationListener(centerLocation)
 
-        // Search
+        // Search using chain of responsibility
         val searchLocationProvider = IndoorLocationProvider(
                 BuildingIndexSingleton.getInstance(activity.assets),
                 AmenitiesLocationProvider(

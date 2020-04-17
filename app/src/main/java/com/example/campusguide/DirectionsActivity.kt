@@ -62,6 +62,7 @@ class DirectionsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.destination).apply {
             text = endName
         }
+
         // Hash map containing (travelMode, path) pairs
         paths = mapOf(
             "driving" to createPath(startName, endName, "driving"),

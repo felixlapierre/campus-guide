@@ -24,6 +24,7 @@ class FindEventLocation constructor(
     private val buildingIndex: BuildingIndex = BuildingIndexSingleton.getInstance(activity.assets)
     private val indoorSearch = IndoorSearchResultProvider(buildingIndex)
     private val outdoorSearch = PlacesApiSearchResultProvider(activity)
+    //chain of responsibility
     private val locationProvider = IndoorLocationProvider(
         buildingIndex,
         AmenitiesLocationProvider(
