@@ -150,7 +150,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                             listView.adapter = adapter
                             listView.onItemClickListener = this
                             for ((title, path) in extraPaths) {
-                                adapter.add(TransitRoute(title, path.segment.getSteps(),path.segment.getDuration()))
+                                adapter.add(
+                                    TransitRoute(
+                                        title,
+                                        path.segment.getSteps(),
+                                        path.segment.getDuration(),
+                                        path.segment.getFare()
+                                    )
+                                )
                             }
                             runOnUiThread { adapter.notifyDataSetChanged() }
                         }

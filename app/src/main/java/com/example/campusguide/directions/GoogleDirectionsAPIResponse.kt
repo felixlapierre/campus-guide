@@ -51,9 +51,16 @@ data class GoogleDirectionsAPIRoute(
     val warnings: List<Any>,
 
     @Json(name = "waypoint_order")
-    var waypointOrder: List<Int>
+    var waypointOrder: List<Int>,
+
+    @Json(name = "fare")
+    val fare: GoogleDirectionsAPIFare = GoogleDirectionsAPIFare()
 )
 
+data class GoogleDirectionsAPIFare(
+    @Json(name = "text")
+    val text: String = ""
+)
 data class GoogleDirectionsAPIBounds(
 
     @Json(name = "northeast")

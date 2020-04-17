@@ -72,4 +72,8 @@ class IndoorSegment constructor(
     override fun getSteps(): List<GoogleDirectionsAPIStep> {
         return emptyList()
     }
+
+    override fun getFare(): String {
+        return ""
+    }
 }

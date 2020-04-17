@@ -83,7 +83,12 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
 
         // Display the departure and arrival times
         setTransitTime(position, row)
-        
+
+        // Display the fare
+        val fare = TextView(activity)
+        fare.text = results[position].fare
+        fare.setPadding(30, 0, 0 , 0)
+        row.findViewById<LinearLayout>(R.id.routeTimeAndFare).addView(fare)
         return row
     }
 
@@ -132,6 +137,6 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
         val tv = TextView(activity)
         val text = "$departureTime \u2014 $arrivalTime"
         tv.text = text
-        row.findViewById<LinearLayout>(R.id.transitRouteItemLayout).addView(tv)
+        row.findViewById<LinearLayout>(R.id.routeTimeAndFare).addView(tv)
     }
 }

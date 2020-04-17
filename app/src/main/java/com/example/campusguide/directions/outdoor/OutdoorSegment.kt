@@ -60,4 +60,8 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun getSteps(): List<GoogleDirectionsAPIStep> {
         return route.getSteps()
     }
+
+    override fun getFare(): String {
+        return route.getFare()
+    }
 }
