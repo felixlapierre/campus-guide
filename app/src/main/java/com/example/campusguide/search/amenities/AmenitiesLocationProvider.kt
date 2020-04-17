@@ -22,9 +22,9 @@ class AmenitiesLocationProvider constructor(
 ) : SearchLocationProvider {
     override suspend fun getLocation(id: String): SearchLocation? {
         val isAmenities = id.startsWith(Constants.AMENITIES_LOCATION_IDENTIFIER)
-        val lbBuildingIndex =  BuildingIndexSingleton.getInstance(activity.assets).findBuildingByCode("LB")!!
+        val lbBuildingIndex = BuildingIndexSingleton.getInstance(activity.assets).findBuildingByCode("LB")!!
 
-        if(isAmenities) {
+        if (isAmenities) {
             val filter = id.split("_")[2]
             val origin = getOrigin().encodeForDirections()
             var start = ""

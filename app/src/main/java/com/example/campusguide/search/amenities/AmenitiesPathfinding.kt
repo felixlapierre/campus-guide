@@ -16,7 +16,7 @@ class AmenitiesPathfinding(graph: Graph, private val filter: String) : IndoorPat
     }
 
     override fun visit(node: Node) {
-        if(node.type == "bathroom") {
+        if (node.type == "bathroom") {
             listOfBathrooms.add(node.code)
         }
     }
@@ -24,7 +24,7 @@ class AmenitiesPathfinding(graph: Graph, private val filter: String) : IndoorPat
     override fun getResults(): List<String> {
         val filteredList = mutableListOf<String>()
         listOfBathrooms.map {
-            if(it.contains(filter))
+            if (it.contains(filter))
                 filteredList.add(it)
         }
         return filteredList

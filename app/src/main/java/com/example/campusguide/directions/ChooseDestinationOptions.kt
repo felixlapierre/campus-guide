@@ -16,9 +16,6 @@ import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocationProvider
-import com.example.campusguide.search.indoor.BuildingIndexSingleton
-import com.example.campusguide.search.indoor.IndoorLocationProvider
-import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
@@ -26,7 +23,7 @@ import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ChooseDestinationOptions(private val provider: SearchLocationProvider, private val locationSelectedListener: (location: Location) -> Unit): DialogFragment() {
+class ChooseDestinationOptions(private val provider: SearchLocationProvider, private val locationSelectedListener: (location: Location) -> Unit) : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))

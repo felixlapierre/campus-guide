@@ -12,7 +12,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
 
     // Priority queue requires api version 24 for some reason
     open fun findRoom(start: String): List<List<Node>> {
-        if(graph.get(start) == null) {
+        if (graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
 
@@ -27,7 +27,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         }
         nodeData[start]!!.cheapest = 0.0
 
-        while(!isComplete() && open.isNotEmpty()) {
+        while (!isComplete() && open.isNotEmpty()) {
             iterate()
         }
 
@@ -71,7 +71,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
                 visit(neighbor)
                 neighborData.cameFrom = curr
                 neighborData.cheapest = length
-                if(!openSet.contains(it)) {
+                if (!openSet.contains(it)) {
                     openSet.add(it)
                 }
             }
@@ -81,7 +81,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     private fun reconstructPath(end: String): List<Node> {
         var current = end
         val totalPath: MutableList<Node> = mutableListOf(graph.get(end)!!)
-        while(nodeData[current]!!.cameFrom != null) {
+        while (nodeData[current]!!.cameFrom != null) {
             current = nodeData[current]!!.cameFrom!!
             totalPath.add(0, graph.get(current)!!)
         }
