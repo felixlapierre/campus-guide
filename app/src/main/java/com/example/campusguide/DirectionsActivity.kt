@@ -164,8 +164,16 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
      * been clicked.
      */
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        finish()
-        //TODO: Correctly implement this method
+        showMap()
+        removePreviousPath()
+        currentPath = extraPaths.getValue(adapter.getItem(position).title)
+        setPathOnMapAsync(currentPath)
+        // Change the transit travel time depending on which optional route was selected
+        val radioButtonId = resources.getIdentifier("radio_transit", "id", packageName)
+        findViewById<RadioButton>(radioButtonId).apply {
+            val travelTime = "${adapter.getItem(position).duration / 60} min"
+            text = travelTime
+        }
     }
 
     private fun isIndoorLocation(encodedLocation: String): Boolean {
