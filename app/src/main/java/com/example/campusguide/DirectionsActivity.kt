@@ -43,7 +43,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             intArrayOf(-android.R.attr.state_checked),
             intArrayOf(android.R.attr.state_checked)
         ), intArrayOf(
-            Color.BLACK, // disabled
+            Color.WHITE, // disabled
             Color.parseColor(Constants.PRIMARY_COLOR_DARK) // enabled
         )
     )

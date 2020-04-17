@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colorAzure">#0080ff</color>
     <color name="colorRed">#FF0000</color>
+    <color name="colorWhite">#F0F0F0F0</color>
 </resources>
