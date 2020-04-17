@@ -34,9 +34,26 @@ class PointsOfInterest(
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val view = inflater.inflate(R.layout.points_of_interest_options, container, false)
 
-        view.findViewById<Button>(R.id.GetNearbyPlaces)?.setOnClickListener {
-            useCurrentLocation();
+        view.findViewById<Button>(R.id.cafe)?.setOnClickListener {
+            dismiss();
+            searchPOINearCurrentLocation("Cafe");
         }
+        // view.findViewById<Button>(R.id.fastfood)?.setOnClickListener {
+        //     dismiss();
+        //     searchPOINearCurrentLocation("Fast Food");
+        // }
+        // view.findViewById<Button>(R.id.restaurant)?.setOnClickListener {
+        //     dismiss();
+        //     searchPOINearCurrentLocation("Restaurant");
+        // }
+        // view.findViewById<Button>(R.id.shopping)?.setOnClickListener {
+        //     dismiss();
+        //     searchPOINearCurrentLocation("Shopping");
+        // }
+        // view.findViewById<Button>(R.id.pharmacy)?.setOnClickListener {
+        //     dismiss();
+        //     searchPOINearCurrentLocation("Pharmacy");
+        // }
         return view
     }
 
@@ -44,14 +61,14 @@ class PointsOfInterest(
      * Gets the user's last known most recent location
      */
 
-    private fun useCurrentLocation() {
+    private fun searchPOINearCurrentLocation(poi: String) {
         return locationProvider.getLocation {
-            getNearbyPlaces(it)
+            getNearbyPlaces(poi, it)
         }
     }
 
-    private fun getNearbyPlaces(location : Location) {
-        nearbyLocations.searchNearbyPlaces(location, map)
+    private fun getNearbyPlaces(poi: String, location : Location) {
+        nearbyLocations.searchNearbyPlaces(poi, location, map)
     }
 
 }

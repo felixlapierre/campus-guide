@@ -4,8 +4,33 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/GetNearbyPlaces"
+        android:id="@+id/cafe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Get Nearby Places" />
+        android:text="Cafes" />
+
+    <Button
+        android:id="@+id/fastfood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fast Food" />
+
+    <Button
+        android:id="@+id/restaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Restaurants" />
+
+    <Button
+        android:id="@+id/shopping"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shopping" />
+
+    <Button
+        android:id="@+id/pharmacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Pharmacies" />
+
 </LinearLayout>

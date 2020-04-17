@@ -85,48 +85,20 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
         return results
     }
 
-    // distance between latitudes and longitudes
-    private fun customeHaversine(lat1: Double, lon1: Double, lat2: Double, lon2: Double, dist : Double): Double {
-
-        var dist = dist
-        var lat1 = lat1
-        var lat2 = lat2
-        var lon1 = lon1
-        var lon2 = lon2
-        lat1 = Math.toRadians(lat1)
-        lat2 = Math.toRadians(lat2)
-        lon1 = Math.toRadians(lon1)
-        lon2 = Math.toRadians(lon2)
-
-        //----------
-
-
-        val rad = 6371.0
-
-
-        dist /= (2 * rad)
-
-
-        // convert to radians
-        // apply formulae
-        val a = sin((lat2 - lat1) / 2).pow(2.0) + sin((lon2 - lon1) / 2).pow(2.0) * cos(lat1) * cos(lat2)
-        val c = 2 * asin(sqrt(a))
-
-        return rad * c
-    }
-
     fun searchNearbyPlaces(
+        pointOfInterest : String,
         currentLocation: Location,
         map: GoogleMapAdapter
     ) {
+
         val searchBounds = RectangularBounds.newInstance(
-            LatLng(currentLocation.lat - 0.05, currentLocation.lon - 0.05),
-            LatLng(currentLocation.lat + 0.05, currentLocation.lon + 0.05)
+            LatLng(currentLocation.lat - 0.01, currentLocation.lon - 0.01),
+            LatLng(currentLocation.lat + 0.01, currentLocation.lon + 0.01)
         )
 
 
         val request = FindAutocompletePredictionsRequest.builder()
-            .setQuery("coffee, cafe")
+            .setQuery(pointOfInterest)
             .setTypeFilter(TypeFilter.ESTABLISHMENT)
             .setLocationRestriction(searchBounds)
             .build()
@@ -149,7 +121,7 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
                                 )
                             }
                         }
-                        placeResponse!!.latLng?.let { map.animateCamera(it, 10.0f) }
+                        placeResponse!!.latLng?.let { map.animateCamera(it, 14.0f) }
                     }
             }
         }

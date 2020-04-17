@@ -28,7 +28,6 @@ class BottomNavigation constructor (
                     centerCameraSGW()
                 }
                 R.id.poi -> {
-                    // TODO: Switch to POI list view as part of UC-47
                     choosePOI();
                 }
             }
@@ -51,6 +50,6 @@ class BottomNavigation constructor (
         val locationProvider = FusedLocationProvider(activity)
 
         val pointsOfInterest = PointsOfInterest(activity, locationProvider, map)
-        pointsOfInterest.show(activity.supportFragmentManager, "chooseOriginOptions")
+        pointsOfInterest.show(activity.supportFragmentManager, "pointsOfInterest")
     }
 }
