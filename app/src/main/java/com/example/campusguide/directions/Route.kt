@@ -42,7 +42,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
     private val startString: String = "Start"
     private val destString: String = "Destination"
 
-    fun set(start: String, end: String, travelMode: String) {
+    fun set(start: String, end: String, travelMode: String, transitPreference: String) {
         polyline?.remove()
         begin?.remove()
         dest?.remove()
@@ -62,7 +62,7 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
 
         // Create a coroutine so we can invoke the suspend function Directions::getDirections
         GlobalScope.launch {
-            val response = directions.getDirections(start, end, travelMode)
+            val response = directions.getDirections(start, end, travelMode, transitPreference)
             if (response != null) {
                 val startPoint = routeStartPoint(start, response)
                 val endPoint = routeEndPoint(end, response)

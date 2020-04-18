@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -66,5 +67,13 @@ class IndoorSegment constructor(
     override fun getDuration(): Int {
         // TODO: Estimate duration of indoor path segments
         return 0
+    }
+
+    override fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return emptyList()
+    }
+
+    override fun getFare(): String {
+        return ""
     }
 }
