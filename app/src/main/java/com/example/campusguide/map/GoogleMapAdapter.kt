@@ -4,7 +4,12 @@ import com.example.campusguide.directions.PathPolyline
 import com.google.android.gms.maps.CameraUpdate
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.Polyline
+import com.google.android.gms.maps.model.PolylineOptions
 
 class GoogleMapAdapter : Map {
     lateinit var adapted: GoogleMap
@@ -31,8 +36,8 @@ class GoogleMapAdapter : Map {
         )
     }
 
-    override fun moveCamera(update: CameraUpdate?) {
-        return adapted.moveCamera(update)
+    override fun moveCamera(newLatLngZoom: CameraUpdate?) {
+        return adapted.moveCamera(newLatLngZoom)
     }
 
     override fun moveCamera(bounds: LatLngBounds) {
@@ -56,9 +61,25 @@ class GoogleMapAdapter : Map {
         adapted.setOnInfoWindowClickListener(infoWindowClickListener)
     }
 
+    override fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener) {
+        adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
+    }
+
     override fun addPath(path: PathPolyline) {
         path.removeFromMap()
         path.addToMap(this)
         moveCamera(path.getPathBounds())
+    }
+
+    fun getCameraZoom(): Float {
+        return adapted.cameraPosition.zoom
+    }
+
+    fun getCameraLocation(): LatLng {
+        return adapted.cameraPosition.target
+    }
+
+    fun setCameraMoveListener(cameraMoveListener: GoogleMap.OnCameraMoveListener) {
+        adapted.setOnCameraMoveListener(cameraMoveListener)
     }
 }

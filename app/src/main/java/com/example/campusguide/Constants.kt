@@ -1,7 +1,8 @@
 package com.example.campusguide
 
 object Constants {
-    const val ZOOM_STREET_LVL = 17.0f;
+    const val ZOOM_STREET_LVL = 17.0f
+    const val ZOOM_INDOOR_LVL = 18.0f
     const val PERMISSION_REQUEST_CODE = 1
     const val REGULAR_SEARCH_REQUEST_CODE = 2
     const val ORIGIN_SEARCH_REQUEST_CODE = 3
@@ -16,6 +17,12 @@ object Constants {
     const val LOCATION_MARKER_TITLE = "You are here."
 
     const val INDOOR_LOCATION_IDENTIFIER = "indoor"
+    const val AMENITIES_LOCATION_IDENTIFIER = "amenities"
+
+    const val AMENITIES_BATHROOM = "bathroom"
+    const val AMENITIES_WOMENS_BATHROOM = "women's bathroom"
+    const val AMENITIES_MENS_BATHROOM = "men's bathroom"
+    const val AMENITIES_GENDER_NEUTRAL_BATHROOM = "gender neutral bathroom"
 
     const val SEARCH_BOTTOM_BOUND = 45.351240
     const val SEARCH_LEFT_BOUND = -74.031124
@@ -36,4 +43,18 @@ object Constants {
         45.458153, -73.640490
     )
 
+    const val PATTERN_DASH_LENGTH_PX = 20F
+    const val PATTERN_GAP_LENGTH_PX = 20F
+
+    const val PRIMARY_COLOR = "#008577"
+    const val PRIMARY_COLOR_DARK = "#00574B"
+    const val ACCENT_COLOR = "#D81B60"
+    const val AZURE_COLOR = "#007fff"
+
+    const val TRAVEL_MODE_DRIVING = "driving"
+    const val TRAVEL_MODE_WALKING = "walking"
+    const val TRAVEL_MODE_TRANSIT = "transit"
+    const val TITLE_RECOMMENDED_ROUTE = "RECOMMENDED_ROUTE"
+    const val TITLE_LESS_WALKING = "LESS WALKING"
+    const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"
 }

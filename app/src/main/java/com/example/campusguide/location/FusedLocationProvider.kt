@@ -16,5 +16,4 @@ class FusedLocationProvider constructor(private val activity: Activity) : Locati
             }
         }
     }
-
 }

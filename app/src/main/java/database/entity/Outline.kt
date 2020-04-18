@@ -9,7 +9,7 @@ import io.objectbox.relation.ToOne
 @Entity
 data class Outline(
     @Id var id: Long = 0
-){
+) {
     lateinit var highlight: ToOne<Highlight>
     @Backlink(to = "outline")
     lateinit var points: ToMany<Point>

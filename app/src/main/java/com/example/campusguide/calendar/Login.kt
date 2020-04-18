@@ -52,7 +52,7 @@ class Login constructor(
     }
 
     override fun onPermissionGranted(permissions: Array<out String>) {
-        if(permissions.contains(calendarPermission)) {
+        if (permissions.contains(calendarPermission)) {
             updateUI()
         }
     }
@@ -131,7 +131,7 @@ class Login constructor(
     private fun setCalendarMenuItemNameFromDB() {
         val calendarUtils = CalendarUtils(activity)
         val calName = calendarUtils.getCalendarNameFromDB()
-        if (calName != ""){
+        if (calName != "") {
             calendarUtils.setCalendarMenuItemName(calName)
         }
     }

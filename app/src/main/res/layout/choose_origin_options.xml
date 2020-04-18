@@ -29,16 +29,6 @@
         android:textColor="#F0F0F0" />
 
     <Button
-        android:id="@+id/fromMap"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginVertical="10dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:drawableLeft="@drawable/ic_touch_app_off_white_24dp"
-        android:text="@string/choose_direction_map"
-        android:textColor="#F0F0F0" />
-
-    <Button
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="60dp"

@@ -11,6 +11,7 @@ import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.PopupSearchLocationListener
+import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
@@ -26,7 +27,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
-        //Permissions
+        // Permissions
         val permissions = Permissions(activity)
         activity.permissions = permissions
 
@@ -53,10 +54,15 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnCenterLocationListener(centerLocation)
 
-        // Search
+        // Search using chain of responsibility
         val searchLocationProvider = IndoorLocationProvider(
-            BuildingIndexSingleton.getInstance(activity.assets),
-            PlacesApiSearchLocationProvider(activity)
+                BuildingIndexSingleton.getInstance(activity.assets),
+                AmenitiesLocationProvider(
+                    PlacesApiSearchLocationProvider(activity),
+                    permissions,
+                    activity,
+                    locationProvider
+                )
         )
         val search =
             CustomSearch(
@@ -72,6 +78,10 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
+
+        // Show Floor Plan
+
+        activity.setFloorPlanButtons()
 
         // Switch Campus
         val switchCampus = SwitchCampus(

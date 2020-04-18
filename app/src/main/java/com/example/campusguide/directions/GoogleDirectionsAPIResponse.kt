@@ -1,12 +1,12 @@
 package com.example.campusguide.directions
 
-import com.beust.klaxon.*
+import com.beust.klaxon.Json
 
 /**
  * A set of data classes to represent the contents
  * of a Google Directions API response.
  */
-data class GoogleDirectionsAPIResponse (
+data class GoogleDirectionsAPIResponse(
 
     @Json(name = "status")
     val status: String,
@@ -18,8 +18,7 @@ data class GoogleDirectionsAPIResponse (
     val routes: List<GoogleDirectionsAPIRoute>
 )
 
-
-data class GoogleDirectionsAPIGeocodedWaypoint (
+data class GoogleDirectionsAPIGeocodedWaypoint(
 
     @Json(name = "geocoder_status")
     val geocoderStatus: String,
@@ -31,8 +30,7 @@ data class GoogleDirectionsAPIGeocodedWaypoint (
     val types: List<String>
 )
 
-
-data class GoogleDirectionsAPIRoute (
+data class GoogleDirectionsAPIRoute(
 
     @Json(name = "bounds")
     val bounds: GoogleDirectionsAPIBounds,
@@ -53,11 +51,17 @@ data class GoogleDirectionsAPIRoute (
     val warnings: List<Any>,
 
     @Json(name = "waypoint_order")
-    var waypointOrder: List<Int>
+    var waypointOrder: List<Int>,
+
+    @Json(name = "fare")
+    val fare: GoogleDirectionsAPIFare = GoogleDirectionsAPIFare()
 )
 
-
-data class GoogleDirectionsAPIBounds (
+data class GoogleDirectionsAPIFare(
+    @Json(name = "text")
+    val text: String = ""
+)
+data class GoogleDirectionsAPIBounds(
 
     @Json(name = "northeast")
     val northeast: GoogleDirectionsAPILocation,
@@ -66,8 +70,7 @@ data class GoogleDirectionsAPIBounds (
     val southwest: GoogleDirectionsAPILocation
 )
 
-
-data class GoogleDirectionsAPILeg (
+data class GoogleDirectionsAPILeg(
 
     @Json(name = "distance")
     val distance: GoogleDirectionsAPITextValuePair,
@@ -97,8 +100,7 @@ data class GoogleDirectionsAPILeg (
     val viaWaypoint: List<Any>
 )
 
-
-data class GoogleDirectionsAPIStep (
+data class GoogleDirectionsAPIStep(
 
     @Json(name = "distance")
     val distance: GoogleDirectionsAPITextValuePair,
@@ -122,11 +124,37 @@ data class GoogleDirectionsAPIStep (
     val startLocation: GoogleDirectionsAPILocation,
 
     @Json(name = "travel_mode")
-    val travelMode: String
+    val travelMode: String,
+
+    @Json(name = "transit_details")
+    val transitDetails: GoogleDirectionsAPITransitDetails = GoogleDirectionsAPITransitDetails()
 )
 
+data class GoogleDirectionsAPITransitDetails(
 
-data class GoogleDirectionsAPILocation (
+    @Json(name = "line")
+    val line: GoogleDirectionsAPITransitLine = GoogleDirectionsAPITransitLine()
+)
+
+data class GoogleDirectionsAPITransitLine(
+
+    @Json(name = "short_name")
+    val shortName: String = "",
+
+    @Json(name = "color")
+    val color: String = "",
+
+    @Json(name = "vehicle")
+    val vehicle: GoogleDirectionsAPIVehicle = GoogleDirectionsAPIVehicle()
+)
+
+data class GoogleDirectionsAPIVehicle(
+
+    @Json(name = "name")
+    val name: String = ""
+)
+
+data class GoogleDirectionsAPILocation(
 
     @Json(name = "lat")
     val lat: Float,
@@ -135,8 +163,7 @@ data class GoogleDirectionsAPILocation (
     val lng: Float
 )
 
-
-data class GoogleDirectionsAPITextValuePair (
+data class GoogleDirectionsAPITextValuePair(
 
     @Json(name = "text")
     val text: String,
@@ -145,12 +172,8 @@ data class GoogleDirectionsAPITextValuePair (
     val value: Int
 )
 
-
 data class GoogleDirectionsAPIPolyline(
 
     @Json(name = "points")
-    val points:String
+    val points: String
 )
-
-
-

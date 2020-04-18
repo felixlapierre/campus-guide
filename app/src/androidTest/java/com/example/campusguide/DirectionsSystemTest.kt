@@ -5,15 +5,19 @@ import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.uiautomator.*
+import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiDevice
+import androidx.test.uiautomator.UiObject
+import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.Until
 import database.ObjectBox
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.containsString
+import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import kotlin.reflect.jvm.internal.impl.load.java.Constant
 
 private const val TIMEOUT = 5000L
 
@@ -40,7 +44,7 @@ class DirectionsSystemTest {
 
         // Click the Navigate button
         val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
-        if(navigateButton.exists() && navigateButton.isEnabled) {
+        if (navigateButton.exists() && navigateButton.isEnabled) {
             navigateButton.click()
         }
 
@@ -49,7 +53,7 @@ class DirectionsSystemTest {
 
         // Click on the Search For Location button
         val searchForLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("searchForLocationButton"))
-        if(searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
+        if (searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
             searchForLocationButton.click()
         }
 
@@ -73,7 +77,7 @@ class DirectionsSystemTest {
 
         // Click on the Use Current Location button
         val useCurrentLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("useCurrentLocationButton"))
-        if(useCurrentLocationButton.exists() && useCurrentLocationButton.isEnabled) {
+        if (useCurrentLocationButton.exists() && useCurrentLocationButton.isEnabled) {
             useCurrentLocationButton.click()
         }
 
@@ -81,7 +85,7 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
-        //val travelMode = travelModes.random()
+        // val travelMode = travelModes.random()
         val travelMode = "walking"
 
         // Click on the travel mode button
@@ -108,7 +112,7 @@ class DirectionsSystemTest {
 
         // Click the Navigate button
         val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
-        if(navigateButton.exists() && navigateButton.isEnabled) {
+        if (navigateButton.exists() && navigateButton.isEnabled) {
             navigateButton.click()
         }
 
@@ -117,7 +121,7 @@ class DirectionsSystemTest {
 
         // Click on the Search For Location button
         val searchForLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("searchForLocationButton"))
-        if(searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
+        if (searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
             searchForLocationButton.click()
         }
 
@@ -140,7 +144,7 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc("chooseOriginOptionsLayout")), TIMEOUT)
 
         // Click on the Search For Location button
-        if(searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
+        if (searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
             searchForLocationButton.click()
         }
 
@@ -160,7 +164,7 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Pick a random travel mode
-        //val travelMode = travelModes.random()
+        // val travelMode = travelModes.random()
         val travelMode = "walking"
 
         // Click on the travel mode button

@@ -7,6 +7,8 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.map.displayIndoor.ChangeFloor
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*
@@ -51,6 +53,13 @@ class MapsActivity : AppCompatActivity() {
     fun setOnCenterLocationListener(listener: View.OnClickListener) {
         val currentLocationButton: FloatingActionButton = findViewById(R.id.currentLocationButton)
         currentLocationButton.setOnClickListener(listener)
+    }
+
+    fun setFloorPlanButtons() {
+        ChangeFloor.upButtonId = R.id.upOneFloor
+        ChangeFloor.downButtonId = R.id.downOneFloor
+        FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
+        FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
 
     fun addActivityResultListener(listener: ActivityResultListener) {

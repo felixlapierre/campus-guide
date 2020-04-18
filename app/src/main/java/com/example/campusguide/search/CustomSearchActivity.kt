@@ -4,9 +4,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ListView
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
+import com.example.campusguide.search.amenities.AmenitiesSearchResultProvider
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
@@ -28,7 +31,12 @@ class CustomSearchActivity : AppCompatActivity(), SearchView.OnQueryTextListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val buildingIndex = BuildingIndexSingleton.getInstance(this.assets)
-        searchResultProviders.add(IndoorSearchResultProvider(buildingIndex))
+        searchResultProviders.add(
+            AmenitiesSearchResultProvider()
+        )
+        searchResultProviders.add(
+            IndoorSearchResultProvider(buildingIndex)
+        )
         searchResultProviders.add(
             PlacesApiSearchResultProvider(this)
         )

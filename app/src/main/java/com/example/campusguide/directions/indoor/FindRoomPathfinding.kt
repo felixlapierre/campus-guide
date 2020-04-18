@@ -7,9 +7,13 @@ open class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
     lateinit var target: String
     private var complete = false
 
-    override fun findRoom(start: String, target: String): List<List<LatLng>> {
+    fun findRoom(start: String, target: String): List<List<LatLng>> {
         this.target = target
-        return super.findRoom(start, target)
+        return super.findRoom(start).map {
+            it.map { node ->
+                LatLng(node.y, node.x)
+            }
+        }
     }
 
     override fun isComplete(): Boolean {
@@ -21,12 +25,12 @@ open class FindRoomPathfinding(graph: Graph): IndoorPathfinding(graph) {
     }
 
     override fun visit(node: Node) {
-        if(node.code == target)
+        if (node.code == target)
             complete = true
     }
 
     override fun getResults(): List<String> {
-        if(!complete) {
+        if (!complete) {
             throw PathNotFoundException("Could not find a path to room $target")
         }
         return listOf(target)

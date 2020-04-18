@@ -5,11 +5,11 @@ import androidx.fragment.app.FragmentTransaction
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
+import java.lang.IllegalStateException
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import org.mockito.ArgumentMatchers.anyString
-import java.lang.IllegalStateException
 
 @RunWith(JUnit4::class)
 class MessageDialogFragmentTest {

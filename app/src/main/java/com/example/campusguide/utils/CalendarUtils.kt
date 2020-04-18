@@ -10,14 +10,14 @@ import io.objectbox.kotlin.boxFor
 
 class CalendarUtils constructor(private val activity: MapsActivity) {
 
-    fun setCalendarMenuItemName(calendarName : String) {
+    fun setCalendarMenuItemName(calendarName: String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
         navView.menu.findItem(R.id.calendar).title = "Calendar: $calendarName"
     }
 
-    fun getCalendarNameFromDB() : String {
+    fun getCalendarNameFromDB(): String {
         val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
-        lateinit var calName : String
+        lateinit var calName: String
         calName = if (!calendarBox.isEmpty) {
             calendarBox.all[0].name
         } else {
