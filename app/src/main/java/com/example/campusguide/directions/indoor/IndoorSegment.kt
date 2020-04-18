@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.Accessibility
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -24,7 +25,7 @@ class IndoorSegment constructor(
         args
     )
     init {
-        pathfinding = FindRoomPathfinding(Graph(building))
+        pathfinding = AccessibleRoomPathfinding(Graph(building), Accessibility.forbiddenRooms)
     }
 
     override fun setNext(next: IndoorSegment) {
