@@ -90,9 +90,14 @@ class PointsOfInterest(
     }
 
     private suspend fun getNearbyPlaces(poi: String, location: Location) {
-        var places = nearbyLocations.searchNearbyPlaces(poi, location)
+        activity.runOnUiThread {
+            PopupSearchLocationListener.clearAllMarkers()
+        }
+
+        val places = nearbyLocations.searchNearbyPlaces(poi, location)
 
         for (place in places.autocompletePredictions) {
+
             val placeID = place.placeId
             val placeFields: List<Place.Field> =
                 listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
@@ -118,16 +123,7 @@ class PointsOfInterest(
 
                     popupSearchLocationListener.onLocation(searchLocation)
 
-                    // placeResponse.latLng?.let {
-                    //     placeResponse.name?.let { it1 ->
-                    //         map.addMarker(
-                    //             it,
-                    //             it1
-                    //         )
-                    //     }
-                    // }
-
-                    placeResponse!!.latLng?.let { map.animateCamera(it, 14.0f) }
+                    placeResponse.latLng?.let { map.animateCamera(it, 14.0f) }
                 }
         }
     }
