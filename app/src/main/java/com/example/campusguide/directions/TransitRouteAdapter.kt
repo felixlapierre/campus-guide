@@ -16,6 +16,9 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
+/**
+ * An Android Adapter class that provides views for elements in a list of TransitRoute elements.
+ */
 class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdapter() {
 
     private val results: ArrayList<TransitRoute> = arrayListOf()
