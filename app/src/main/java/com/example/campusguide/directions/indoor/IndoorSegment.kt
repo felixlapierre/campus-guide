@@ -13,7 +13,7 @@ class IndoorSegment constructor(
     private val args: SegmentArgs
 ) :
     Segment {
-    private val pathfinding: IndoorPathfinding
+    private val pathfinding: FindRoomPathfinding
     private var endRoomCode: String? = null
     private var next: Segment? = null
     private val building: Building = args.buildingIndex.findBuildingByCode(buildingCode)

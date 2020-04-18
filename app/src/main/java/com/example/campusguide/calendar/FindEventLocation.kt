@@ -1,8 +1,11 @@
 package com.example.campusguide.calendar
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
+import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchResult
+import com.example.campusguide.search.amenities.AmenitiesLocationProvider
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -10,6 +13,7 @@ import com.example.campusguide.search.indoor.IndoorSearchResultProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchResultProvider
 import com.example.campusguide.utils.DisplayMessageErrorListener
+import com.example.campusguide.utils.permissions.Permissions
 
 class FindEventLocation constructor(
     private val activity: FragmentActivity,
@@ -18,9 +22,15 @@ class FindEventLocation constructor(
     private val buildingIndex: BuildingIndex = BuildingIndexSingleton.getInstance(activity.assets)
     private val indoorSearch = IndoorSearchResultProvider(buildingIndex)
     private val outdoorSearch = PlacesApiSearchResultProvider(activity)
+    // chain of responsibility
     private val locationProvider = IndoorLocationProvider(
         buildingIndex,
-        PlacesApiSearchLocationProvider(activity)
+        AmenitiesLocationProvider(
+            PlacesApiSearchLocationProvider(activity),
+            Permissions(activity),
+            activity as AppCompatActivity,
+            FusedLocationProvider(activity)
+        )
     )
 
     suspend fun getLocationOfEvent(eventLocation: String?) {
