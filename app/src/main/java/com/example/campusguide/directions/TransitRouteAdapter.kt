@@ -11,6 +11,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.example.campusguide.Constants
 import com.example.campusguide.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -48,15 +49,15 @@ class TransitRouteAdapter constructor(private val activity: Activity) : BaseAdap
             val stepIcon = ImageView(activity)
             val stepTransitLine = TextView(activity)
             when (steps[i].travelMode) {
-                "DRIVING" -> {
+                Constants.TRAVEL_MODE_DRIVING.toUpperCase() -> {
                     stepIcon.setImageResource(R.drawable.ic_directions_car)
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
                 }
-                "WALKING" -> {
+                Constants.TRAVEL_MODE_WALKING.toUpperCase() -> {
                     stepIcon.setImageResource(R.drawable.ic_directions_walk)
                     row.findViewById<LinearLayout>(R.id.routeSteps).addView(stepIcon)
                 }
-                "TRANSIT" -> {
+                Constants.TRAVEL_MODE_TRANSIT.toUpperCase() -> {
                     if (steps[i].transitDetails.line.vehicle.name == "Subway") {
                         stepIcon.setImageResource(R.drawable.ic_subway)
                     } else {

@@ -74,16 +74,16 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         // Hash map containing (travelMode, path) pairs for the three main paths
         mainPaths = mapOf(
-            "driving" to createPath(startName, endName, "driving", null),
-            "walking" to createPath(startName, endName, "walking", null),
-            "transit" to createPath(startName, endName, "transit", null)
+            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
+            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
+            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
         )
 
         // Hash map containing (title, path) pairs for the optional transit paths
         extraPaths = mapOf(
-            "RECOMMENDED ROUTE" to mainPaths.getValue("transit"),
-            "LESS WALKING" to createPath(startName, endName, "transit", "less_walking"),
-            "FEWER TRANSFERS" to createPath(startName, endName, "transit", "fewer_transfers")
+            Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
+            Constants.TITLE_LESS_WALKING to createPath(startName, endName, "transit", "less_walking"),
+            Constants.TITLE_FEWER_TRANSFERS to createPath(startName, endName, "transit", "fewer_transfers")
         )
 
         // Display travel times

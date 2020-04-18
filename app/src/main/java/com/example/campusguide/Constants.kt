@@ -44,4 +44,13 @@ object Constants {
     const val PRIMARY_COLOR_DARK = "#00574B"
     const val ACCENT_COLOR = "#D81B60"
     const val AZURE_COLOR = "#007fff"
+
+    const val TRAVEL_MODE_DRIVING = "driving"
+    const val TRAVEL_MODE_WALKING = "walking"
+    const val TRAVEL_MODE_TRANSIT = "transit"
+    const val TITLE_RECOMMENDED_ROUTE = "RECOMMENDED_ROUTE"
+    const val TITLE_LESS_WALKING = "LESS WALKING"
+    const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"
+
+
 }
