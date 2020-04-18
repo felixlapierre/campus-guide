@@ -51,6 +51,4 @@ object Constants {
     const val TITLE_RECOMMENDED_ROUTE = "RECOMMENDED_ROUTE"
     const val TITLE_LESS_WALKING = "LESS WALKING"
     const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"
-
-
 }
