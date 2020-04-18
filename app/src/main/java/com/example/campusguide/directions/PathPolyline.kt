@@ -26,9 +26,9 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         val pathColor = Color.parseColor(Constants.AZURE_COLOR)
     }
 
-    private lateinit var path: List<LatLng>
-    private val polylineOptions: PolylineOptions
-    private var polyline: Polyline? = null
+    private lateinit var path: List<Path>
+    private val polylineOptions: MutableList<PolylineOptions>
+    private var polylines: MutableList<Polyline>
 
     private val startMarkerOptions: MarkerOptions
     private var startMarker: Marker? = null
@@ -39,23 +39,34 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
 
     init {
         val style = PolylineStyle()
-        polylineOptions = PolylineOptions()
+        polylineOptions = mutableListOf()
+        polylines = mutableListOf()
         startMarkerOptions = MarkerOptions()
         endMarkerOptions = MarkerOptions()
 
         deferred = GlobalScope.async {
-            path = segment.toListOfCoordinates()
-            polylineOptions.addAll(path)
-                .color(style.pathColor)
-                .pattern(style.patternPolygonAlpha)
+            path = segment.toPath()
+            val firstPoint = path[0].points[0]
+            val lastPath = path[path.size - 1]
+            val lastPoint = lastPath.points[lastPath.points.size - 1]
 
-            val firstPoint = path[0]
+            var endOfLastPath: LatLng? = null
+            path.forEach {path ->
+                val opts = PolylineOptions()
+                if(endOfLastPath != null)
+                    opts.add(endOfLastPath)
+                opts.addAll(path.points)
+                    .color(style.pathColor)
+                    .pattern(style.patternPolygonAlpha)
+                polylineOptions.add(opts)
+                endOfLastPath = path.points[path.points.size - 1]
+            }
+
             startMarkerOptions.position(firstPoint)
                 .title(Helper.capitalizeWords(startName))
                 .snippet("Start")
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
-            val lastPoint = path[path.size - 1]
             endMarkerOptions.position(lastPoint)
                 .title(Helper.capitalizeWords(endName))
                 .snippet("Destination")
@@ -64,13 +75,18 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     fun addToMap(map: Map) {
-        polyline = map.addPolyline(polylineOptions)
+        polylineOptions.forEach { line ->
+            polylines.add(map.addPolyline(line)!!)
+        }
         startMarker = map.addMarker(startMarkerOptions)
         endMarker = map.addMarker(endMarkerOptions)
     }
 
     fun removeFromMap() {
-        polyline?.remove()
+        polylines.forEach {
+            it.remove()
+        }
+        polylines = mutableListOf()
         startMarker?.remove()
         endMarker?.remove()
     }
@@ -80,16 +96,18 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     fun getPathBounds(): LatLngBounds {
-        var north: Double = path[0].latitude
-        var south: Double = path[0].latitude
-        var east: Double = path[0].longitude
-        var west: Double = path[0].longitude
+        var north: Double = path[0].points[0].latitude
+        var south: Double = path[0].points[0].latitude
+        var east: Double = path[0].points[0].longitude
+        var west: Double = path[0].points[0].longitude
 
-        path.forEach { point ->
-            north = Math.max(north, point.latitude)
-            south = Math.min(south, point.latitude)
-            east = Math.max(east, point.longitude)
-            west = Math.min(west, point.longitude)
+        path.forEach {path ->
+            path.points.forEach {point ->
+                north = Math.max(north, point.latitude)
+                south = Math.min(south, point.latitude)
+                east = Math.max(east, point.longitude)
+                west = Math.min(west, point.longitude)
+            }
         }
 
         val southwest = LatLng(south, west)

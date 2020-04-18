@@ -1,6 +1,7 @@
 package com.example.campusguide.directions.outdoor
 
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
+import com.example.campusguide.directions.Path
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorSegment
@@ -39,15 +40,15 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         segment.setNext(this)
     }
 
-    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>> { cont ->
+    override suspend fun toPath() = suspendCoroutine<List<Path>> { cont ->
         if (next == null) {
             cont.resume(emptyList())
         }
         GlobalScope.launch {
             if (routingTask?.await() != null) {
-                val result = mutableListOf<LatLng>()
-                result.addAll(route.getLine())
-                result.addAll(next?.toListOfCoordinates() ?: emptyList())
+                val result = mutableListOf<Path>()
+                result.add(Path(route.getLine().toMutableList()))
+                result.addAll(next?.toPath() ?: emptyList())
                 cont.resume(result)
             }
         }

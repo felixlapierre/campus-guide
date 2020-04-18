@@ -11,7 +11,7 @@ interface Segment {
     fun setNext(next: IndoorSegment)
     fun setNext(next: OutdoorSegment)
     fun appendTo(segment: Segment)
-    suspend fun toListOfCoordinates(): List<LatLng>
+    suspend fun toPath(): List<Path>
     fun getDuration(): Int
     fun getSteps(): List<GoogleDirectionsAPIStep>
     fun getFare(): String

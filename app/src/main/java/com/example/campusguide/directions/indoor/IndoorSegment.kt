@@ -1,6 +1,7 @@
 package com.example.campusguide.directions.indoor
 
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
+import com.example.campusguide.directions.Path
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -57,7 +58,7 @@ class IndoorSegment constructor(
         return building
     }
 
-    override suspend fun toListOfCoordinates(): List<LatLng> {
+    override suspend fun toPath(): List<Path> {
         return if (endRoomCode != null)
             pathfinding.findRoom(startRoomCode, endRoomCode!!)[0]
         else
