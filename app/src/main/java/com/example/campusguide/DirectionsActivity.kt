@@ -127,17 +127,11 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             when (view.id) {
                 R.id.radio_driving ->
                     if (checked) {
-                        showMap()
-                        removePreviousPath()
-                        currentPath = mainPaths.getValue("driving")
-                        setPathOnMapAsync(currentPath)
+                        onTravelModeClicked(Constants.TRAVEL_MODE_DRIVING, mainPaths)
                     }
                 R.id.radio_walking ->
                     if (checked) {
-                        showMap()
-                        removePreviousPath()
-                        currentPath = mainPaths.getValue("walking")
-                        setPathOnMapAsync(currentPath)
+                        onTravelModeClicked(Constants.TRAVEL_MODE_WALKING, mainPaths)
                     }
                 R.id.radio_transit ->
                     if (checked) {
@@ -153,10 +147,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
      * been clicked.
      */
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        showMap()
-        removePreviousPath()
-        currentPath = extraPaths.getValue(adapter.getItem(position).title)
-        setPathOnMapAsync(currentPath)
+        onTravelModeClicked(adapter.getItem(position).title, extraPaths)
         // Change the transit travel time depending on which optional route was selected
         val radioButtonId = resources.getIdentifier("radio_transit", "id", packageName)
         findViewById<RadioButton>(radioButtonId).apply {
@@ -243,5 +234,12 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
             runOnUiThread { adapter.notifyDataSetChanged() }
         }
+    }
+
+    private fun onTravelModeClicked(travelMode: String, paths: Map<String, PathPolyline>) {
+        showMap()
+        removePreviousPath()
+        currentPath = paths.getValue(travelMode)
+        setPathOnMapAsync(currentPath)
     }
 }
