@@ -58,21 +58,21 @@ class PointsOfInterest(
             dismiss();
             searchPOINearCurrentLocation("Cafe");
         }
-        view.findViewById<Button>(R.id.fastfood)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Fast Food");
-        }
         view.findViewById<Button>(R.id.restaurant)?.setOnClickListener {
             dismiss();
             searchPOINearCurrentLocation("Restaurant");
         }
         view.findViewById<Button>(R.id.shopping)?.setOnClickListener {
             dismiss();
-            searchPOINearCurrentLocation("Shopping");
+            searchPOINearCurrentLocation("Shopping mall");
         }
         view.findViewById<Button>(R.id.pharmacy)?.setOnClickListener {
             dismiss();
             searchPOINearCurrentLocation("Pharmacy");
+        }
+        view.findViewById<Button>(R.id.grocerystore)?.setOnClickListener {
+            dismiss();
+            searchPOINearCurrentLocation("Grocery store");
         }
         return view
     }

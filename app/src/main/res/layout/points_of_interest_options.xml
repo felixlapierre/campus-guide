@@ -6,31 +6,46 @@
     <Button
         android:id="@+id/cafe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cafes" />
-
-    <Button
-        android:id="@+id/fastfood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Fast Food" />
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="CAFÉs"
+        android:textColor="#F0F0F0" />
 
     <Button
         android:id="@+id/restaurant"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Restaurants" />
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Restaurant"
+        android:textColor="#F0F0F0" />
 
     <Button
         android:id="@+id/shopping"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shopping" />
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Shopping"
+        android:textColor="#F0F0F0" />
 
     <Button
         android:id="@+id/pharmacy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pharmacies" />
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Pharmacies"
+        android:textColor="#F0F0F0" />
+
+    <Button
+        android:id="@+id/grocerystore"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Grocey Store"
+        android:textColor="#F0F0F0" />
 
 </LinearLayout>
