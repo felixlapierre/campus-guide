@@ -4,28 +4,19 @@ import android.app.Activity
 import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.location.Location
-import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
-import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.RectangularBounds
 import com.google.android.libraries.places.api.model.TypeFilter
-import com.google.android.libraries.places.api.net.FetchPlaceRequest
-import com.google.android.libraries.places.api.net.FetchPlaceResponse
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
-import kotlin.math.asin
-import kotlin.math.cos
-import kotlin.math.pow
-import kotlin.math.sin
-import kotlin.math.sqrt
 
 /**
  * Gets search results using Google's Places API.
@@ -85,11 +76,10 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
         return results
     }
 
-    fun searchNearbyPlaces(
-        pointOfInterest : String,
-        currentLocation: Location,
-        map: GoogleMapAdapter
-    ) {
+    suspend fun searchNearbyPlaces(
+        pointOfInterest: String,
+        currentLocation: Location
+    ) = suspendCoroutine<FindAutocompletePredictionsResponse> { cont ->
 
         val searchBounds = RectangularBounds.newInstance(
             LatLng(currentLocation.lat - 0.01, currentLocation.lon - 0.01),
@@ -104,26 +94,13 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
             .build()
 
         placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
-            for (place in response.autocompletePredictions) {
-                val placeID = place.placeId
-                val placeFields: List<Place.Field> =
-                    listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
-                val request = FetchPlaceRequest.newInstance(placeID, placeFields)
 
-                placesClient.fetchPlace(request)
-                    .addOnSuccessListener { response: FetchPlaceResponse ->
-                        val placeResponse = response.place
-                        placeResponse.latLng?.let {
-                            placeResponse.name?.let { it1 ->
-                                map.addMarker(
-                                    it,
-                                    it1
-                                )
-                            }
-                        }
-                        placeResponse!!.latLng?.let { map.animateCamera(it, 14.0f) }
-                    }
-            }
+            cont.resume(getPlaces(response))
         }
     }
+
+    private fun getPlaces(response: FindAutocompletePredictionsResponse): FindAutocompletePredictionsResponse {
+            return(response)
+    }
+
 }

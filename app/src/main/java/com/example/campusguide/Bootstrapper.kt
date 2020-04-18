@@ -10,6 +10,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
+import com.example.campusguide.search.PointsOfInterest
 import com.example.campusguide.search.PopupSearchLocationListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
@@ -72,6 +73,13 @@ class Bootstrapper constructor(activity: MapsActivity) {
         )
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
+
+        //searchNearby
+        val searchNearby = PointsOfInterest(activity, locationProvider, map, directions)
+        searchNearby.locationListener = PopupSearchLocationListener(
+            activity,
+            DirectionsFlow(activity, permissions, locationProvider),
+            map)
 
         // Switch Campus
         val switchCampus = SwitchCampus(
