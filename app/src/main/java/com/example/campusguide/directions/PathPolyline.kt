@@ -27,7 +27,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     }
 
     private lateinit var path: List<LatLng>
-    private var stepsPath: Test = Test()
+    private var stepsPath: RoutePreviewData = RoutePreviewData()
     private var polylineOptions: PolylineOptions
     private var polyline: Polyline? = null
 
@@ -35,7 +35,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     private var startMarker: Marker? = null
     private var endMarkerOptions: MarkerOptions
     private var endMarker: Marker? = null
-    private lateinit var segmentTest: Segment
+    private lateinit var segment: Segment
 
     constructor(startName: String, endName: String, segment: Segment) : this(
         startName,
@@ -43,7 +43,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         GlobalScope.async {
             segment.toListOfCoordinates()
         }){
-        segmentTest = segment
+        this.segment = segment
     }
 
     constructor(startName: String, endName: String, line: List<LatLng>) : this(
@@ -92,8 +92,8 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
             .snippet("Destination")
 
         stepsPath.setPath(path)
-        if(this::segmentTest.isInitialized)
-            stepsPath.setSteps(segmentTest.getSteps())
+        if(this::segment.isInitialized)
+            stepsPath.setSteps(segment.getSteps())
     }
 
     fun getPathBounds(): LatLngBounds {
@@ -115,7 +115,15 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         return LatLngBounds(southwest, northeast)
     }
 
-    fun getSteps(): Test {
+    fun getSteps(): RoutePreviewData {
         return stepsPath
+    }
+
+    fun getDuration() : Int {
+        return segment.getDuration()
+    }
+
+    fun getDistance() : String{
+        return segment.getDistance()
     }
 }

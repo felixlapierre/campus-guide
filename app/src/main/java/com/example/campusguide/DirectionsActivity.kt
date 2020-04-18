@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -36,7 +37,6 @@ class DirectionsActivity : AppCompatActivity() {
     private lateinit var endName: String
     private lateinit var currentPath: PathPolyline
     private lateinit var paths: Map<String, PathPolyline>
-    private lateinit var pathAsSegment: Segment
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -84,11 +84,18 @@ class DirectionsActivity : AppCompatActivity() {
                     val radioButtonId = "radio_$travelMode"
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
-                        text = "${pathAsSegment.getDuration() / 60} min"
+                        text = "${path.getDuration() / 60} min"
                         buttonTintList = colorStateList
                     }
                 }
             }
+            runOnUiThread {
+                findViewById<TextView>(R.id.route_duration).text = "${currentPath.getDuration()/60} min"
+                findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
+                findViewById<Button>(R.id.startButton).isEnabled = true
+                findViewById<Button>(R.id.steps).isEnabled = true
+            }
+
         }
 
         currentPath = paths.getValue("driving")
@@ -101,6 +108,8 @@ class DirectionsActivity : AppCompatActivity() {
             val test = currentPath.getSteps()
             test.setStart(startName)
             test.setEnd(endName)
+            test.setDistance(currentPath.getDistance())
+            test.setDuration(currentPath.getDuration()/60)
             val studentDataObjectAsAString = Gson().toJson(test)
             val stepIntent = Intent(this, StepsActivity::class.java)
             stepIntent.putExtra("Steps", studentDataObjectAsAString)
@@ -152,6 +161,7 @@ class DirectionsActivity : AppCompatActivity() {
                         setPathOnMapAsync(currentPath)
                     }
             }
+            route_duration.text = "${currentPath.getDuration()/60} min"
         }
     }
 
@@ -193,8 +203,6 @@ class DirectionsActivity : AppCompatActivity() {
         val firstSegment = createSegment(start, segmentArgs)
         val secondSegment = createSegment(end, segmentArgs)
         secondSegment.appendTo(firstSegment)
-
-        pathAsSegment = firstSegment
 
         return PathPolyline(startName, endName, firstSegment)
     }

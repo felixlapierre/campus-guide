@@ -2,13 +2,31 @@ package com.example.campusguide.directions
 
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
+import java.time.Duration
 
-open class Test : Serializable{
+open class RoutePreviewData : Serializable{
     private lateinit var steps : List<GoogleDirectionsAPIStep>
     private lateinit var path : List<LatLng>
-    private lateinit var pathPolyline: PathPolyline
-    private lateinit var start : String
-    private lateinit var end : String
+    private var start : String = ""
+    private var end : String = ""
+    private  var distance : String = ""
+    private var duration: Int = 0
+
+    fun setDuration(d : Int){
+        duration = d
+    }
+
+    fun getDuration() : Int{
+        return duration
+    }
+
+    fun setDistance(s:String){
+        distance = s
+    }
+
+    fun getDistance() : String{
+        return distance
+    }
 
     fun setStart(s:String){
         start = s
@@ -40,13 +58,5 @@ open class Test : Serializable{
 
     fun getPath() : List<LatLng> {
         return path
-    }
-
-    fun setPathPolyline(newSegment: PathPolyline) {
-        pathPolyline = newSegment
-    }
-
-    fun getPathPolyline() : PathPolyline {
-        return pathPolyline
     }
 }

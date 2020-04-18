@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_steps.*
 import org.jsoup.Jsoup
 
 class StepsActivity : AppCompatActivity(){
-    private lateinit var path: Test
+    private lateinit var path: RoutePreviewData
     private lateinit var gson: Gson
     private var steps : List<GoogleDirectionsAPIStep> = emptyList()
 
@@ -30,8 +30,11 @@ class StepsActivity : AppCompatActivity(){
         gson = Gson()
         path = gson.fromJson(
             string,
-            Test::class.java
+            RoutePreviewData::class.java
         )
+
+        steps_duration.text = "${path.getDuration()} min"
+        steps_distance.text = "(${path.getDistance()})"
 
         steps = path.getSteps()
         val listView = findViewById<ListView>(R.id.stepList)
@@ -92,8 +95,7 @@ class StepsActivity : AppCompatActivity(){
                     "turn-left" -> R.drawable.ic_turn_left
                     "ramp-right" -> R.drawable.ic_turn_right
                     "ramp-left" -> R.drawable.ic_turn_left
-                    "merge" -> R.drawable.ic_directions
-                    else -> R.drawable.ic_place
+                    else -> R.drawable.ic_straight
                 }
             textView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
         }

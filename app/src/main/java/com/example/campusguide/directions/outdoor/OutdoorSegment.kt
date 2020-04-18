@@ -57,7 +57,11 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         return route.duration
     }
 
-    override suspend fun getSteps(): List<GoogleDirectionsAPIStep> {
+    override fun getSteps(): List<GoogleDirectionsAPIStep> {
         return route.getSteps()
+    }
+
+    override fun getDistance(): String {
+        return route.distance
     }
 }

@@ -15,7 +15,7 @@ import org.jsoup.Jsoup
 
 class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
-    private lateinit var pathPolyline: Test
+    private lateinit var pathPolyline: RoutePreviewData
     private lateinit var steps : List<GoogleDirectionsAPIStep>
     private lateinit var stepPath : List<LatLng>
     private var currentStepPath : MutableList<LatLng> = mutableListOf()
@@ -35,7 +35,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         val string = intent.getSerializableExtra("RoutePreview")!! as String
         pathPolyline = Gson().fromJson(
             string,
-            Test::class.java
+            RoutePreviewData::class.java
         )
         steps = pathPolyline.getSteps()
         stepPath = pathPolyline.getPath()
@@ -135,9 +135,11 @@ class RoutePreviewActivity : AppCompatActivity() {
     private fun setIcon(instruction: TextView, step : Int){
         val drawable : Int =
             when (steps[step].maneuver){
-            "turn-right" -> R.drawable.ic_turn_right
-            "turn-left" -> R.drawable.ic_turn_left
-            else -> R.drawable.ic_place
+                "turn-right" -> R.drawable.ic_turn_right
+                "turn-left" -> R.drawable.ic_turn_left
+                "ramp-right" -> R.drawable.ic_turn_right
+                "ramp-left" -> R.drawable.ic_turn_left
+                else -> R.drawable.ic_straight
         }
         instruction.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
     }

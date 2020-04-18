@@ -69,7 +69,12 @@ class IndoorSegment constructor(
         return 0
     }
 
-    override suspend fun getSteps(): List<GoogleDirectionsAPIStep> {
+    override fun getDistance(): String {
+        // TODO: Estimate distance of indoor path segments
+        return ""
+    }
+
+    override fun getSteps(): List<GoogleDirectionsAPIStep> {
         return emptyList()
     }
 }

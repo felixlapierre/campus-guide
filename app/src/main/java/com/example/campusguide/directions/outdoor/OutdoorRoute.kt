@@ -8,6 +8,7 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
     private var line: List<LatLng> = emptyList()
     private var steps: List<GoogleDirectionsAPIStep> = emptyList()
     var duration: Int = 0
+    var distance: String = ""
 
     suspend fun set(start: String, end: String, travelMode: String) {
         val response = directions.getDirections(start, end, travelMode)
@@ -19,6 +20,7 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
 
             steps = response.routes[0].legs[0].steps
             duration = response.routes[0].legs[0].duration.value
+            distance = response.routes[0].legs[0].distance.text
         }
     }
 
