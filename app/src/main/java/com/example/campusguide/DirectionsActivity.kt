@@ -8,9 +8,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import com.example.campusguide.directions.Route
 import com.example.campusguide.directions.*
 import com.example.campusguide.directions.indoor.IndoorSegment
+import com.example.campusguide.directions.indoor.SelectAccessibilityOptionsDialogFragment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
@@ -19,8 +19,6 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.android.gms.maps.model.Polyline
-import com.google.maps.model.TravelMode
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -111,15 +109,8 @@ class DirectionsActivity : AppCompatActivity() {
             popup.menuInflater.inflate(R.menu.accessibility_menu, popup.menu)
             popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                 when (item.itemId) {
-                    R.id.dir_escalators ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
-                    R.id.dir_elevators ->
-                        Toast.makeText(this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
-                    R.id.dir_stairs ->
-                        Toast.makeText( this, "You Clicked : " + item.title, Toast.LENGTH_SHORT)
-                            .show()
+                    R.id.access_popup ->
+                        handleAccessibilitySelect()
                 }
                 true
             })
@@ -155,7 +146,7 @@ class DirectionsActivity : AppCompatActivity() {
         if (::path.isInitialized) {
             path.removeFromMap()
         }
-        val errorListener = DisplayMessageErrorListener(this);
+        val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,
@@ -176,4 +167,9 @@ class DirectionsActivity : AppCompatActivity() {
 
         return PathPolyline(startName, endName, firstSegment)
     }
+    private fun handleAccessibilitySelect(){
+        val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this)
+        selectAccessibility.show(this.supportFragmentManager, "accessibilityOptions")
+    }
+
 }
