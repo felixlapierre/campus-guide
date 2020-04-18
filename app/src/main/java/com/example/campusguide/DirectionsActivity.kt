@@ -43,8 +43,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             intArrayOf(-android.R.attr.state_checked),
             intArrayOf(android.R.attr.state_checked)
         ), intArrayOf(
-            Color.WHITE, // disabled
-            Color.parseColor(Constants.PRIMARY_COLOR_DARK) // enabled
+            Color.parseColor(Constants.PRIMARY_COLOR_DARK), // disabled
+            Color.WHITE // enabled
         )
     )
     private lateinit var listView: ListView
