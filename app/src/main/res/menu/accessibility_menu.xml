@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/dir_escalators"
-        android:title="Use Escalators"/>
-    <item
-        android:id="@+id/dir_elevators"
-        android:title="Use Elevators"/>
-    <item
-        android:id="@+id/dir_stairs"
-        android:title="Use Stairs"/>
+        android:id="@+id/access_popup"
+        android:title="Change Indoor Accessibility"/>
 </menu>
