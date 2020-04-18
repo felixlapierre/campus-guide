@@ -99,6 +99,8 @@ class DirectionsActivity : AppCompatActivity() {
 
         steps.setOnClickListener {
             val test = currentPath.getSteps()
+            test.setStart(startName)
+            test.setEnd(endName)
             val studentDataObjectAsAString = Gson().toJson(test)
             val stepIntent = Intent(this, StepsActivity::class.java)
             stepIntent.putExtra("Steps", studentDataObjectAsAString)
@@ -107,9 +109,11 @@ class DirectionsActivity : AppCompatActivity() {
 
         startButton.setOnClickListener {
             val test = currentPath.getSteps()
+            test.setStart(startName)
+            test.setEnd(endName)
             val studentDataObjectAsAString = Gson().toJson(test)
             val routePreview = Intent(this, RoutePreviewActivity::class.java)
-            routePreview.putExtra("Steps", studentDataObjectAsAString)
+                routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
             this.startActivity(routePreview)
         }
     }

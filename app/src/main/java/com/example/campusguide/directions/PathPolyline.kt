@@ -35,13 +35,16 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     private var startMarker: Marker? = null
     private var endMarkerOptions: MarkerOptions
     private var endMarker: Marker? = null
+    private lateinit var segmentTest: Segment
 
     constructor(startName: String, endName: String, segment: Segment) : this(
         startName,
         endName,
         GlobalScope.async {
             segment.toListOfCoordinates()
-        })
+        }){
+        segmentTest = segment
+    }
 
     constructor(startName: String, endName: String, line: List<LatLng>) : this(
         startName,
@@ -87,6 +90,10 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         endMarkerOptions = MarkerOptions()
         endMarkerOptions.position(lastPoint).title(Helper.capitalizeWords(endName))
             .snippet("Destination")
+
+        stepsPath.setPath(path)
+        if(this::segmentTest.isInitialized)
+            stepsPath.setSteps(segmentTest.getSteps())
     }
 
     fun getPathBounds(): LatLngBounds {

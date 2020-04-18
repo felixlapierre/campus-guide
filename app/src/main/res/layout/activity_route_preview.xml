@@ -5,54 +5,42 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp">
-        <ImageView
-            android:id="@+id/place_origin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_place"/>
         <TextView
+            android:layout_marginLeft="10dp"
             android:id="@+id/stepInstruction"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:text="via Blvd Maisonneuve 0 and Rue Guy"
-            android:gravity="center_vertical"></TextView>
-    </LinearLayout>
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/ic_place"
+            android:drawablePadding="10dp"></TextView>
 
     <fragment
-        android:id="@+id/directions_activity_map"
+        android:id="@+id/route_preview_activity_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="644dp"
         tools:context=".RoutePreviewActivity">
 
-        <androidx.appcompat.widget.AppCompatToggleButton
+        <Button
             android:id="@+id/previousStep"
+            android:background="@drawable/ic_previous_step"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="72dp"
             android:layout_marginBottom="50dp"
-            android:contentDescription="switchCampusButton"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
+            android:scaleY="-1"/>
 
-        <androidx.appcompat.widget.AppCompatToggleButton
+        <Button
             android:id="@+id/nextStep"
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="50dp"
-            android:contentDescription="switchCampusButton"
-            android:textAllCaps="true"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"/>
+            android:background="@drawable/ic_next_step"
+            android:scaleY="-1"/>
     </fragment>
 
 </LinearLayout>

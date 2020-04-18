@@ -14,13 +14,17 @@
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="4 min"></TextView>
+            android:text="4 min"
+            android:textColor="#000000"
+            android:textSize="17dp"></TextView>
 
         <TextView
             android:gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="(350 m)"></TextView>
+            android:text="(350 m)"
+            android:textSize="20dp"
+            android:paddingLeft="5dp"></TextView>
     </LinearLayout>
 
     <TextView
@@ -36,7 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:text="Steps"
-        android:gravity="center_vertical"></TextView>
+        android:gravity="center_vertical"
+        android:textColor="#000000"></TextView>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -51,30 +56,38 @@
         android:dividerHeight="2px"></ListView>`
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
         <Button
             android:id="@+id/start"
-            android:drawableLeft="@drawable/ic_place"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
             android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start"></Button>
+            android:layout_weight="1"
+            android:text="Start"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@drawable/ic_start_route"
+            android:drawablePadding="5dp"
+            android:paddingLeft="6dp"></Button>
 
         <Button
-            android:id="@+id/showMap"
-            android:drawableLeft="@drawable/ic_place"
             android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="80dp"
+            android:id="@+id/showMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Show Map"></Button>
-    </LinearLayout>
-
+            android:layout_weight="1"
+            android:text="Show Map"
+            android:drawableLeft="@drawable/ic_steps_map"
+            android:drawablePadding="5dp"
+            android:background="#FFFFFF"></Button>
+        </LinearLayout>
 </LinearLayout>

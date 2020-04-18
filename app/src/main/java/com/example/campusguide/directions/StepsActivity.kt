@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_steps.*
+import org.jsoup.Jsoup
 
 class StepsActivity : AppCompatActivity(){
     private lateinit var path: Test
@@ -42,6 +43,9 @@ class StepsActivity : AppCompatActivity(){
             this.startActivity(routeIntent)
         }
 
+        showMap.setOnClickListener {
+            finish()
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -63,10 +67,8 @@ class StepsActivity : AppCompatActivity(){
             val directionStepsItem = layoutInflater.inflate(R.layout.direction_steps_item, parent, false)
 
             val instruction = directionStepsItem.findViewById<TextView>(R.id.instructions)
-            instruction.text = direction[position].htmlInstruction
-
-            if(direction[position].maneuver != "x")
-                instruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_directions, 0, 0, 0)
+            instruction.text = Jsoup.parse(direction[position].htmlInstruction).text()
+            setIcon(instruction, position)
 
             return directionStepsItem
         }
@@ -81,6 +83,19 @@ class StepsActivity : AppCompatActivity(){
 
         override fun getCount(): Int {
             return direction.size
+        }
+
+        private fun setIcon(textView: TextView, position: Int){
+            val drawable : Int =
+                when (direction[position].maneuver){
+                    "turn-right" -> R.drawable.ic_turn_right
+                    "turn-left" -> R.drawable.ic_turn_left
+                    "ramp-right" -> R.drawable.ic_turn_right
+                    "ramp-left" -> R.drawable.ic_turn_left
+                    "merge" -> R.drawable.ic_directions
+                    else -> R.drawable.ic_place
+                }
+            textView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
         }
     }
 }
