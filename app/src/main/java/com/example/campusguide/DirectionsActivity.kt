@@ -168,9 +168,13 @@ class DirectionsActivity : AppCompatActivity() {
             runOnUiThread {
                val  pathPolylines = route.getPathPolylines()
                 if (pathPolylines.isNullOrEmpty()) {
-                    errorListener.onError("No shuttle bus route.")
+                    errorListener.onError("No shuttle bus route available.")
                 }else{
                     pathPolylines.forEach { map.addPath(it) }
+                    map.moveCamera(pathPolylines.first().getPathBounds()
+                        // .including(pathPolylines.last().getPathBounds().northeast)
+                        // .including(pathPolylines.last().getPathBounds().southwest)
+                    )
                 }
 
             }

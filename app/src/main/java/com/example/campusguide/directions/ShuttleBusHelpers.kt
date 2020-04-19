@@ -2,6 +2,7 @@ package com.example.campusguide.directions
 
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
+import java.util.Calendar
 
 fun ShuttleBusStopSGW(): LocationMetadata {
     return LocationMetadata(
@@ -37,9 +38,8 @@ enum class Campus {
 public fun shouldBeShuttleRoute(start: LocationMetadata, end: LocationMetadata): Boolean {
     val startCampus = campusFromLatLng(start.getLatLng())
     val endCampus = campusFromLatLng(end.getLatLng())
-    return startCampus != Campus.OFF_CAMPUS &&
-        endCampus != Campus.OFF_CAMPUS &&
-        startCampus != endCampus
+    return checkCurrTimeValid() && checkLocationsValid(startCampus, endCampus)
+
 }
 
 public fun campusFromLatLng (location: LatLng): Campus {
@@ -54,4 +54,37 @@ public fun campusFromLatLng (location: LatLng): Campus {
             Campus.OFF_CAMPUS
         }
     }
+}
+
+
+private fun checkCurrTimeValid(calendar: Calendar = Calendar.getInstance()): Boolean {
+    val day = calendar.get(Calendar.DAY_OF_WEEK)
+    val hour = calendar.get(Calendar.HOUR_OF_DAY)
+    val minute = calendar.get(Calendar.MINUTE)
+    // println("DAY/TIME : $day / $hour:$minute")
+    // Time aware 'enough' for feature completion for W2020 semester
+    // Weekends
+    if (day == 1 || day == 7)
+        return false
+    // Fridays
+    if(day == 6) {
+        if (hour < 7 || (hour == 7 && minute < 40))
+            return false
+        if (hour > 20 || (hour == 19 && minute < 50))
+            return false
+    }
+    // Monday to Thursday
+    if (day in 2..5) {
+        if (hour < 7 || (hour == 7 && minute < 30))
+            return false
+        if (hour > 23)
+            return false
+    }
+    return true
+
+}
+private fun checkLocationsValid(startCampus: Campus, endCampus: Campus): Boolean {
+    return startCampus != Campus.OFF_CAMPUS &&
+        endCampus != Campus.OFF_CAMPUS &&
+        startCampus != endCampus
 }

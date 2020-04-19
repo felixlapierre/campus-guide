@@ -97,9 +97,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:button="@drawable/ic_directions_transit"
+            android:button="@drawable/ic_directions_bus"
             android:layout_gravity="center_vertical"
-            android:text="Shuttle"
+            android:text="-"
             android:paddingStart="10dp"
             android:onClick="onRadioButtonClicked"
             android:contentDescription="shuttleRadioButton"/>
