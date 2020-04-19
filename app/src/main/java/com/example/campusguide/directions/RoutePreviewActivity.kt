@@ -46,7 +46,7 @@ class RoutePreviewActivity : AppCompatActivity() {
 
         stepInstruction.text = parseHTMLString(steps[0].htmlInstruction)
         previousStepButton.isEnabled = false
-        stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_turn_right, 0, 0, 0)
+        stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
 
         initializer.setOnMapReadyListener {
             val path = PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
@@ -78,8 +78,10 @@ class RoutePreviewActivity : AppCompatActivity() {
             PathPolyline("", "", currentStepPath),
             i
         )
-        if (i == 0)
+        if (i == 0) {
             previousStepButton.isEnabled = false
+            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
+        }
         else
             nextStepButton.isEnabled = true
     }
@@ -95,6 +97,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         )
         if (i == steps.size - 1) {
             nextStepButton.isEnabled = false
+            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
         } else {
             previousStepButton.isEnabled = true
         }
