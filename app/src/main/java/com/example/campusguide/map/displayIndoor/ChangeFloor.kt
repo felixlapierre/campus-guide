@@ -7,12 +7,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(
-    private val map: GoogleMapAdapter,
-    private val buildingIndexSingleton: BuildingIndexSingleton,
-    private val directionsFlow: DirectionsFlow?,
-    private val activity: Activity
-) : View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
@@ -27,8 +22,7 @@ class ChangeFloor constructor(
     private fun buildBuildings(map: GoogleMapAdapter): HashMap<String, BuildingInfo> {
         val build = HashMap<String, BuildingInfo>()
         build["hall"] = BuildingInfo("hall", map, buildingIndexSingleton, directionsFlow, activity)
-        build["library"] =
-            BuildingInfo("library", map, buildingIndexSingleton, directionsFlow, activity)
+        build["library"] = BuildingInfo("library", map, buildingIndexSingleton, directionsFlow, activity)
         return build
     }
 
@@ -58,10 +52,7 @@ class ChangeFloor constructor(
 
     private fun currentFloorIsVisible(isVisible: Boolean) {
         if (currentBuilding != "") {
-            val building = buildings[currentBuilding]
-            val plans = building?.getFloorPlans()
-            val floor = plans?.get(currentFloor)
-            floor?.setVisible(isVisible)
+            buildings[currentBuilding]?.getFloorPlans()?.get(currentFloor)?.setVisible(isVisible)
         }
     }
 
@@ -78,7 +69,6 @@ class ChangeFloor constructor(
             }
         }
     }
-
     private fun updateFloorUp(): Int {
 
         val floorNumbers = buildings[currentBuilding]?.getFloors()
@@ -96,7 +86,7 @@ class ChangeFloor constructor(
         return (currentFloor - 1)
     }
 
-    private fun changeVisibleFloor(floorPlans: HashMap<Int, Floor>, updatedFloor: Int) {
+    private fun changeVisibleFloor(floorPlans: HashMap <Int, Floor>, updatedFloor: Int) {
         floorPlans?.get(currentFloor)?.hideFloor()
         floorPlans?.get(updatedFloor)?.displayFloor()
 
