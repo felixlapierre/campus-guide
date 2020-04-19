@@ -27,7 +27,7 @@
             android:required="false" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="@string/google_maps_key"/>
         <activity
             android:name=".MapsActivity"
             android:label="@string/app_name"
@@ -55,6 +55,18 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".directions.StepsActivity"
+            android:label="Steps"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
+        </activity>
+        <activity android:name=".directions.RoutePreviewActivity"
+            android:label="Steps"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
         </activity>
     </application>
 

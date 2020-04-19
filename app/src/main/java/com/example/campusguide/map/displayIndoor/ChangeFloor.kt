@@ -91,4 +91,8 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         currentFloor = updatedFloor
         changeFloorListener?.invoke(currentFloor)
     }
+
+    fun getCurrentFloor(): Int {
+        return currentFloor
+    }
 }

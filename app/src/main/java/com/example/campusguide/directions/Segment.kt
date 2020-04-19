@@ -12,6 +12,7 @@ interface Segment {
     fun appendTo(segment: Segment)
     suspend fun toPath(): List<Path>
     fun getDuration(): Int
+    fun getDistance(): String
     fun getSteps(): List<GoogleDirectionsAPIStep>
     fun getFare(): String
 }

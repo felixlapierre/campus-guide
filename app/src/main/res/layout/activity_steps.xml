@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+
+        <TextView
+            android:id="@+id/steps_duration"
+            android:layout_marginStart="30dp"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="4 min"
+            android:textColor="#000000"
+            android:textSize="17dp"></TextView>
+
+        <TextView
+            android:id="@+id/steps_distance"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="(350 m)"
+            android:textSize="20dp"
+            android:paddingLeft="5dp"></TextView>
+    </LinearLayout>
+    <TextView
+        android:layout_marginStart="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="Steps"
+        android:gravity="center_vertical"
+        android:textColor="#000000"></TextView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="631dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+    <ListView
+        android:layout_marginStart="40dp"
+        android:id="@+id/stepList"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:dividerHeight="2px"></ListView>`
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_margin="10dp">
+        <Button
+            android:id="@+id/start"
+            android:gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:drawableLeft="@drawable/ic_start_route"
+            android:drawablePadding="5dp"
+            android:paddingLeft="6dp"></Button>
+
+        <Button
+            android:gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="80dp"
+            android:id="@+id/showMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show Map"
+            android:drawableLeft="@drawable/ic_steps_map"
+            android:drawablePadding="5dp"
+            android:background="#FFFFFF"></Button>
+        </LinearLayout>
+</LinearLayout>

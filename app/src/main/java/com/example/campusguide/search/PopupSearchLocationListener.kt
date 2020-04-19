@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.map.Marker
 import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.example.campusguide.search.travelWindow.TravelWindow
 import com.example.campusguide.search.travelWindow.TravelWindowClickListener
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -17,9 +19,20 @@ class PopupSearchLocationListener constructor(
 ) : SearchLocationListener {
     private var marker: com.example.campusguide.map.Marker? = null
 
+    companion object {
+        private var allMarkers: ArrayList<Marker?> = ArrayList()
+
+        fun clearAllMarkers() {
+            allMarkers.forEach {
+                it?.remove()
+            }
+        }
+    }
+
     override fun onLocation(location: SearchLocation?) {
         if (location == null) return
         activity.runOnUiThread {
+
             val travelWindow = TravelWindow(activity)
             map.setInfoWindowAdapter(travelWindow)
             map.setOnInfoWindowClickListener(TravelWindowClickListener(directions, location))
@@ -36,10 +49,12 @@ class PopupSearchLocationListener constructor(
 
             map.setInfoWindowAdapter(travelWindow)
 
-            marker = map.addMarker(markerOptions)
+            marker = map.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)))
             marker?.setTag(infoWindowData)
             marker?.showInfoWindow()
             map.animateCamera(latLng, Constants.ZOOM_STREET_LVL)
+
+            marker?.let { allMarkers.add(it) }
         }
     }
 }

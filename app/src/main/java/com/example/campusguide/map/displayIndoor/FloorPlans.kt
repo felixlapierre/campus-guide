@@ -52,4 +52,8 @@ object FloorPlans {
         floorUpButton.hide()
         floorDownButton.hide()
     }
+
+    fun getCurrentFloor(): Int {
+        return changeFloor.getCurrentFloor()
+    }
 }
