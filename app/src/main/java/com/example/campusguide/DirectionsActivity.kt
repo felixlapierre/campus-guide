@@ -5,19 +5,14 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-<<<<<<< HEAD
 import android.widget.ImageButton
-=======
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ListView
->>>>>>> c76baf2f4132f8eb41a794a6ad095b29017aed47
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import android.widget.AdapterView
-import android.widget.ListView
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
 import com.example.campusguide.directions.RoutePreviewActivity
