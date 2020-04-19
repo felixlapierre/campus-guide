@@ -14,22 +14,16 @@ import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.math.floor
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) {
+class BuildingInfo constructor(private val buildingName: String, private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
     private var floorPlans: HashMap<Int, Floor>? = null
     val startFloor: Int? = floors?.get(0)
 
     init {
-        var buildings = buildingIndexSingleton.getBuildings()
-        if (buildings == null) {
-            buildingIndexSingleton.onLoaded = { it ->
-                floorPlans = setUpFloorPlans(map, it)
-            }
-        } else {
-            floorPlans = setUpFloorPlans(map, buildings)
-        }
+        setupFloorPlansFromBuildingIndex()
     }
     fun getFloors(): IntArray? {
         return floors
@@ -38,6 +32,9 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
         return buildingImageCoordinates
     }
     fun getFloorPlans(): HashMap<Int, Floor>? {
+        if (floorPlans == null) {
+            setupFloorPlansFromBuildingIndex()
+        }
         return floorPlans
     }
 
@@ -52,6 +49,17 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
         if (buildingName == "library") return intArrayOf(2, 3, 4, 5)
 
         return null
+    }
+
+    private fun setupFloorPlansFromBuildingIndex() {
+        var buildings = buildingIndexSingleton.getBuildings()
+        if (buildings == null) {
+            buildingIndexSingleton.onLoaded = { it ->
+                floorPlans = setUpFloorPlans(map, it)
+            }
+        } else {
+            floorPlans = setUpFloorPlans(map, buildings)
+        }
     }
     private fun setUpFloorPlans(map: GoogleMapAdapter, buildings: List<Building>): HashMap<Int, Floor>? {
 
