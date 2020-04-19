@@ -1,10 +1,10 @@
 package com.example.campusguide.map.infoWindow
 
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.location.Location
+import com.example.campusguide.map.IMarker
 import com.example.campusguide.map.Map
-import com.example.campusguide.map.Marker
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.utils.PolygonUtils
@@ -16,10 +16,9 @@ import com.google.android.gms.maps.model.Polygon
 class BuildingClickListener(
     private val map: Map,
     private val index: BuildingIndex,
-    private val customInfoWindow: GoogleMap.InfoWindowAdapter,
     private val directions: DirectionsFlow?
 ) : GoogleMap.OnPolygonClickListener {
-    private var marker: Marker? = null
+    private var marker: IMarker? = null
 
     override fun onPolygonClick(p0: Polygon?) {
         polygonClick(p0?.points as ArrayList<LatLng>)
@@ -32,29 +31,16 @@ class BuildingClickListener(
         buildingInfoWindow(coordinates!!, info)
     }
 
-    private fun determineBuilding(coordinates: LatLng?): InfoWindowData {
-        val info = InfoWindowData()
+    private fun determineBuilding(coordinates: LatLng?): BuildingTag {
+        val buildingTag = BuildingTag(R.layout.custom_info_marker, directions!!, coordinates!!)
         var building = coordinates?.let { index.getBuildingAtCoordinates(it) }
-        if (building == null) {
-            nullBuilding(info)
-        } else {
-            campusBuilding(info, building)
+        if (building != null) {
+            campusBuilding(buildingTag, building)
         }
-            info.departments = "Departments:"
-            info.services = "Services:"
-        return info
+        return buildingTag
     }
 
-    private fun buildingInfoWindow(coordinates: LatLng, info: InfoWindowData) {
-        map.setInfoWindowAdapter(customInfoWindow)
-        map.setOnInfoWindowClickListener(GoogleMap.OnInfoWindowClickListener {
-            val location = Location(info.fullName!!, coordinates.latitude, coordinates.longitude)
-            directions?.startFlow(null, location)
-        })
-        map.setOnInfoWindowCloseListener(GoogleMap.OnInfoWindowCloseListener {
-            marker?.remove()
-        })
-
+    private fun buildingInfoWindow(coordinates: LatLng, buildingTag: BuildingTag) {
         // Clears any existing markers from the GoogleMap
         marker?.remove()
 
@@ -65,7 +51,7 @@ class BuildingClickListener(
         markerOptions.position(coordinates)
 
         marker = map.addMarker(markerOptions)
-        marker?.setTag(info)
+        marker?.setTag(buildingTag)
         marker?.showInfoWindow()
 
         // Animating to the info window
@@ -73,21 +59,11 @@ class BuildingClickListener(
         map.animateCamera(cameraLocation, Constants.ZOOM_STREET_LVL)
     }
 
-    private fun nullBuilding(info: InfoWindowData) {
-        info.symbol = "B"
-        info.fullName = "Building"
-        info.address = "123 Street, Montreal, QC"
-        info.departments = "Departments:"
-        info.departmentsList = "- Faculty 1\n- Faculty 2"
-        info.services = "Services:"
-        info.servicesList = "- Service 1\n- Service 2"
-    }
-
-    private fun campusBuilding(info: InfoWindowData, building: Building) {
-        info.symbol = building.code
-        info.fullName = building.name
-        info.address = building.address
-        info.departmentsList = building.departments
-        info.servicesList = building.services
+    private fun campusBuilding(buildingTag: BuildingTag, building: Building) {
+        buildingTag.symbol = building.code
+        buildingTag.fullName = building.name
+        buildingTag.address = building.address
+        buildingTag.departmentsList = building.departments
+        buildingTag.servicesList = building.services
     }
 }
