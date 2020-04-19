@@ -44,8 +44,7 @@ class BottomNavigation constructor (
     }
 
     private fun choosePOI() {
-        val permissions = Permissions(activity)
-        activity.permissions = permissions
+        activity.permissions = Permissions(activity)
 
         val locationProvider = FusedLocationProvider(activity)
 

@@ -20,6 +20,7 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
 import com.google.android.libraries.places.api.net.FetchPlaceResponse
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -95,7 +96,10 @@ class PointsOfInterest(
         }
 
         val places = nearbyLocations.searchNearbyPlaces(poi, location)
+        displayNearbyLocations(places)
+    }
 
+    private fun displayNearbyLocations(places : FindAutocompletePredictionsResponse) {
         for (place in places.autocompletePredictions) {
 
             val placeID = place.placeId

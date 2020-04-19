@@ -9,6 +9,7 @@ import com.example.campusguide.map.Marker
 import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.example.campusguide.search.travelWindow.TravelWindow
 import com.example.campusguide.search.travelWindow.TravelWindowClickListener
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -46,7 +47,7 @@ class PopupSearchLocationListener constructor(private val activity: AppCompatAct
 
             map.setInfoWindowAdapter(travelWindow)
 
-            marker = map.addMarker(markerOptions)
+            marker = map.addMarker(markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN)))
             marker?.setTag(infoWindowData)
             marker?.showInfoWindow()
             map.animateCamera(latLng, Constants.ZOOM_STREET_LVL)
