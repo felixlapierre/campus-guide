@@ -78,6 +78,7 @@ class RoutePreviewActivity : AppCompatActivity() {
             PathPolyline("", "", currentStepPath),
             i
         )
+
         if (i == 0) {
             previousStepButton.isEnabled = false
             textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)

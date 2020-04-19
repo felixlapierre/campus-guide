@@ -33,6 +33,7 @@ class IndoorLocationProviderTest {
                 "someBuildingName",
                 fakeBuildingCode,
                 "someAddress",
+                "departments",
                 "someServices",
                 "1.0",
                 "1.0",
