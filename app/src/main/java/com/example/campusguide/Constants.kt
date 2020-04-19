@@ -120,7 +120,7 @@ object Constants {
     // Throwable exception messages for pathfinding
     const val DIRECTIONS_API_NULL_RESPONSE =
         "Could not get a response from the Google Directions API."
-    const val NO_PATH_TO_ROOM = "Could not find a path to room: "
+    const val NO_PATH_TO_ROOM = "Could not find a path to room:"
     const val LOCATION_NOT_FOUND_GRAPH = "location was not found in the graph."
     const val LOCATION_NOT_FOUND_ROOM = "Could not find room:"
     const val INDOOR_SEGMENT_NOT_FOUND_BUILDING = "not found. Cannot create IndoorSegment."

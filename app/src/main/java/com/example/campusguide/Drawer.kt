@@ -58,7 +58,7 @@ class Drawer constructor (
     private fun handleLoginSelect(item: MenuItem, userEmail: String) {
         if (item.title == Constants.LOGIN_TO_ACCOUNT) {
             login.signIn()
-        } else if (item.title == "$Constants.LOGOUT_OF $userEmail") {
+        } else if (item.title == "${Constants.LOGOUT_OF} $userEmail") {
             login.signOut()
             Calendar(activity, userEmail).unsetCalendar()
         }
