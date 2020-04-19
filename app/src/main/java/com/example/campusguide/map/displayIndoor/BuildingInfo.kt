@@ -102,7 +102,8 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
                         .icon(imageDescription)
                         .visible(false)
                 )
-                marker.tag = IndoorTag(R.layout.confirm_window, directionsFlow, room)
+                val roomId = "indoor_${building.code}_${room.code}"
+                marker.tag = IndoorTag(R.layout.confirm_window, directionsFlow, room, roomId)
                 amenities.add(marker)
             }
         }

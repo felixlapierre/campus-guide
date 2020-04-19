@@ -4,18 +4,19 @@ import android.view.View
 import android.widget.TextView
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.location.Location
+import com.example.campusguide.search.indoor.IndoorLocation
 import com.example.campusguide.search.indoor.Room
 import com.google.android.gms.maps.GoogleMap
 
 class IndoorTag(
     layout: Int,
     private val directionsFlow: DirectionsFlow,
-    private val room: Room
+    private val room: Room,
+    private val roomId: String
 ) : MarkerTag(layout) {
     override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
         return GoogleMap.OnInfoWindowClickListener {
-            val location = Location(room.code, room.lat.toDouble(), room.lon.toDouble())
+            val location = IndoorLocation(room.code, room.lat.toDouble(), room.lon.toDouble(), roomId, room.name)
             directionsFlow.startFlow(destination = location)
         }
     }
