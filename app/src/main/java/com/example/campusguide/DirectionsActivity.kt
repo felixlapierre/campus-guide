@@ -1,18 +1,22 @@
 package com.example.campusguide
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
+import com.example.campusguide.directions.RoutePreviewActivity
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
+import com.example.campusguide.directions.StepsActivity
 import com.example.campusguide.directions.TransitRoute
 import com.example.campusguide.directions.TransitRouteAdapter
 import com.example.campusguide.directions.indoor.IndoorSegment
@@ -25,6 +29,7 @@ import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -94,11 +99,16 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     val radioButtonId = "radio_$travelMode"
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
-                        val travelTime = "${path.segment.getDuration() / 60} min"
-                        text = travelTime
+                        text = "${path.getDuration() / 60} min"
                         buttonTintList = colorStateList
                     }
                 }
+            }
+            runOnUiThread {
+                findViewById<TextView>(R.id.route_duration).text = "${currentPath.getDuration() / 60} min"
+                findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
+                findViewById<Button>(R.id.startButton).isEnabled = true
+                findViewById<Button>(R.id.steps).isEnabled = true
             }
         }
 
@@ -106,6 +116,28 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(currentPath)
+        }
+
+        steps.setOnClickListener {
+            val routePreviewData = currentPath.getRoutePreviewData()
+            routePreviewData.setStart(startName)
+            routePreviewData.setEnd(endName)
+            routePreviewData.setDistance(currentPath.getDistance())
+            routePreviewData.setDuration(currentPath.getDuration() / 60)
+            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
+            val stepIntent = Intent(this, StepsActivity::class.java)
+            stepIntent.putExtra("Steps", studentDataObjectAsAString)
+            this.startActivity(stepIntent)
+        }
+
+        startButton.setOnClickListener {
+            val routePreviewData = currentPath.getRoutePreviewData()
+            routePreviewData.setStart(startName)
+            routePreviewData.setEnd(endName)
+            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
+            val routePreview = Intent(this, RoutePreviewActivity::class.java)
+                routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
+            this.startActivity(routePreview)
         }
 
         adapter = TransitRouteAdapter(this)
@@ -139,6 +171,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                         initializeListView()
                     }
             }
+            route_duration.text = "${currentPath.getDuration() / 60} min"
         }
     }
 
@@ -151,9 +184,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         // Change the transit travel time depending on which optional route was selected
         val radioButtonId = resources.getIdentifier("radio_transit", "id", packageName)
         findViewById<RadioButton>(radioButtonId).apply {
-            val travelTime = "${adapter.getItem(position).duration / 60} min"
-            text = travelTime
+            text = "${adapter.getItem(position).duration / 60} min"
         }
+        route_duration.text = "${currentPath.getDuration() / 60} min"
+        route_distance.text = "(${currentPath.getDistance()})"
     }
 
     private fun isIndoorLocation(encodedLocation: String): Boolean {
@@ -208,12 +242,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         if (!mapFragment.isVisible) {
             this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
+            route_layout.visibility = View.VISIBLE
         }
     }
 
     private fun hideMap() {
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
+        route_layout.visibility = View.GONE
     }
 
     private fun initializeListView() {
@@ -226,9 +262,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 adapter.add(
                     TransitRoute(
                         title,
-                        path.segment.getSteps(),
-                        path.segment.getDuration(),
-                        path.segment.getFare()
+                        path.getSteps(),
+                        path.getDuration(),
+                        path.getFare()
                     )
                 )
             }
@@ -237,9 +273,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun onTravelModeClicked(travelMode: String, paths: Map<String, PathPolyline>) {
-        showMap()
         removePreviousPath()
         currentPath = paths.getValue(travelMode)
         setPathOnMapAsync(currentPath)
+        showMap()
     }
 }

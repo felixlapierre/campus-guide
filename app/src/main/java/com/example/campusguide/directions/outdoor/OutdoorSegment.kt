@@ -64,4 +64,8 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun getFare(): String {
         return route.getFare()
     }
+
+    override fun getDistance(): String {
+        return route.distance
+    }
 }
