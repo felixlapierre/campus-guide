@@ -11,16 +11,16 @@
         android:id="@+id/escalators_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Escalators"/>
+        android:text="Can't Use Escalators"/>
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/elevators_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Elevators"/>
+        android:text="Can't Use Elevators"/>
     <androidx.appcompat.widget.AppCompatCheckBox
         android:id="@+id/stairs_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Use Stairs"/>
+        android:text="Can't Use Stairs"/>
 
 </LinearLayout>
