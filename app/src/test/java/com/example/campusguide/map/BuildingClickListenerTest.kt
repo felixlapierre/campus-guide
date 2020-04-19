@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-
+import com.example.campusguide.map.IMarker
 @RunWith(JUnit4::class)
 class BuildingClickListenerTest {
     lateinit var index: BuildingIndex
@@ -28,9 +28,9 @@ class BuildingClickListenerTest {
 
     @Test
     fun testBuildingFound() {
-        val listener = BuildingClickListener(map, index, mock(), null)
+        val listener = BuildingClickListener(map, index, mock())
 
-        val marker: Marker = mock()
+        val marker: IMarker? = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
         whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(
             Building(
@@ -48,21 +48,21 @@ class BuildingClickListenerTest {
 
         listener.polygonClick(points)
 
-        verify(marker).setTag(any())
-        verify(marker).showInfoWindow()
+        verify(marker)?.setTag(any())
+        verify(marker)?.showInfoWindow()
     }
 
     @Test
     fun testBuildingNotFound() {
-        val listener = BuildingClickListener(map, index, mock(), null)
+        val listener = BuildingClickListener(map, index, mock())
 
-        val marker: Marker = mock()
+        val marker: IMarker? = mock()
         whenever(map.addMarker(any())).thenReturn(marker)
         whenever(index.getBuildingAtCoordinates(LatLng(1.5, 1.5))).thenReturn(null)
 
         listener.polygonClick(points)
 
-        verify(marker).setTag(any())
-        verify(marker).showInfoWindow()
+        verify(marker)?.setTag(any())
+        verify(marker)?.showInfoWindow()
     }
 }

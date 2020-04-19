@@ -3,7 +3,7 @@ package com.example.campusguide.directions
 import android.graphics.Color
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
-import com.example.campusguide.map.Marker
+import com.example.campusguide.map.IMarker
 import com.example.campusguide.utils.Helper
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
@@ -32,9 +32,9 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     private var polyline: Polyline? = null
 
     private var startMarkerOptions: MarkerOptions
-    private var startMarker: Marker? = null
+    private var startMarker: IMarker? = null
     private var endMarkerOptions: MarkerOptions
-    private var endMarker: Marker? = null
+    private var endMarker: IMarker? = null
     private lateinit var segment: Segment
 
     constructor(startName: String, endName: String, segment: Segment) : this(

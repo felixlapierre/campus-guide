@@ -4,7 +4,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.Map
-import com.example.campusguide.map.Marker
+import com.example.campusguide.map.IMarker
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.utils.PolygonUtils
@@ -18,7 +18,7 @@ class BuildingClickListener(
     private val index: BuildingIndex,
     private val directions: DirectionsFlow?
 ) : GoogleMap.OnPolygonClickListener {
-    private var marker: Marker? = null
+    private var marker: IMarker? = null
 
     override fun onPolygonClick(p0: Polygon?) {
         polygonClick(p0?.points as ArrayList<LatLng>)

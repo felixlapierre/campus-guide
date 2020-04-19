@@ -5,7 +5,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
-import com.example.campusguide.map.Marker
+import com.example.campusguide.map.IMarker
 import com.example.campusguide.map.infoWindow.PopupSearchLocationTag
 import com.example.campusguide.search.travelWindow.TravelWindowClickListener
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -17,10 +17,10 @@ class PopupSearchLocationListener constructor(
     private val directions: DirectionsFlow,
     private val map: GoogleMapAdapter
 ) : SearchLocationListener {
-    private var marker: com.example.campusguide.map.Marker? = null
+    private var marker: IMarker? = null
 
     companion object {
-        private var allMarkers: ArrayList<Marker?> = ArrayList()
+        private var allMarkers: ArrayList<IMarker?> = ArrayList()
 
         fun clearAllMarkers() {
             allMarkers.forEach {

@@ -4,7 +4,7 @@ import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.map.Map
-import com.example.campusguide.map.Marker
+import com.example.campusguide.map.IMarker
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.Helper
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
@@ -37,8 +37,8 @@ class Route constructor(private val map: Map, private val activity: FragmentActi
     private val PATTERN_POLYGON_ALPHA = listOf(GAP, DASH)
     private val COLOR_BLUE_ARGB = 0xff0000ff
     private var polyline: Polyline? = null
-    private var begin: Marker? = null
-    private var dest: Marker? = null
+    private var begin: IMarker? = null
+    private var dest: IMarker? = null
     private val startString: String = "Start"
     private val destString: String = "Destination"
 
