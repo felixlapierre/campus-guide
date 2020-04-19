@@ -10,6 +10,10 @@ import com.example.campusguide.calendar.ChooseCalendarDialogFragment
 import com.example.campusguide.calendar.Login
 import com.google.android.material.navigation.NavigationView
 
+/**
+ * Class for handling the drawer menu.
+ * Handles events on menu item on click and sets their titles correspondingly.
+ */
 class Drawer constructor (
     private val activity: MapsActivity,
     private val login: Login
@@ -52,9 +56,9 @@ class Drawer constructor (
     }
 
     private fun handleLoginSelect(item: MenuItem, userEmail: String) {
-        if (item.title == "Login to an Account") {
+        if (item.title == Constants.LOGIN_TO_ACCOUNT) {
             login.signIn()
-        } else if (item.title == "Log Out of $userEmail") {
+        } else if (item.title == "${Constants.LOGOUT_OF} $userEmail") {
             login.signOut()
             Calendar(activity, userEmail).unsetCalendar()
         }

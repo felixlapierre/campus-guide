@@ -105,7 +105,7 @@
             android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="-"
+            android:text="@string/dash"
             android:textColor="@drawable/travel_mode_button_color" />
 
         <RadioButton
@@ -120,7 +120,7 @@
             android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="-"
+            android:text="@string/dash"
             android:textColor="@drawable/travel_mode_button_color" />
 
         <RadioButton
@@ -135,11 +135,12 @@
             android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="-"
+            android:text="@string/dash"
             android:textColor="@drawable/travel_mode_button_color" />
     </RadioGroup>
 
     <FrameLayout
+        android:id="@+id/frame_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -192,7 +193,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="30dp"
                     android:gravity="center_vertical"
-                    android:text="- min"
+                    android:text="@string/min"
                     android:textColor="#000000"
                     android:textSize="22dp"/>
                 <TextView
@@ -202,7 +203,7 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:paddingLeft="5dp"
-                    android:text="(- km)"
+                    android:text="@string/km"
                     android:textSize="17dp"/>
             </LinearLayout>
             <LinearLayout
@@ -222,7 +223,7 @@
                     android:enabled="false"
                     android:gravity="center_vertical"
                     android:paddingLeft="6dp"
-                    android:text="Start"
+                    android:text="@string/start"
                     android:textColor="@android:color/white" />
                 <Button
                     android:id="@+id/steps"
@@ -234,7 +235,7 @@
                     android:enabled="false"
                     android:padding="10dp"
                     android:gravity="center_vertical"
-                    android:text="Steps and More"/>
+                    android:text="@string/steps_and_more"/>
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.Constants
 import com.example.campusguide.R
 
 /**
@@ -44,7 +45,7 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
             val builder = AlertDialog.Builder(it)
                 .setView(view)
                 .setMessage(this.options.message)
-                .setPositiveButton("Go") { _, _ ->
+                .setPositiveButton(Constants.GO_CHOICE) { _, _ ->
                     val startEditText =
                         dialog?.findViewById<EditText>(R.id.startLocationTextInput)
                     val endEditText = dialog?.findViewById<EditText>(R.id.endLocationTextInput)
@@ -54,12 +55,12 @@ class GetDirectionsDialogFragment constructor(private val options: DirectionsDia
 
                     options.confirmationListener.onConfirm(start, end)
                 }
-                .setNegativeButton("Cancel") { dialog, _ ->
+                .setNegativeButton(Constants.CANCEL_CHOICE) { dialog, _ ->
                     dialog.cancel()
                 }
 
             return builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
+        } ?: throw IllegalStateException(Constants.ACTIVITY_NULL_MSG)
     }
 
     private fun setDefaultLocations(view: View) {

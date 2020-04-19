@@ -39,11 +39,10 @@ class OnZoomListener constructor(
     }
 
     private fun cameraFocusedOnBuilding(location: LatLng): String? {
-
         if (buildingBounds[0].contains(location)) {
-            return "library"
+            return Constants.LIBRARY
         } else if (buildingBounds[1].contains(location)) {
-            return "hall"
+            return Constants.HALL
         }
 
         return null

@@ -20,7 +20,7 @@ class IndoorLocationProvider constructor(
         if (isIndoor) {
             val locationInfo = id.split("_")
             if (locationInfo.size != 3) {
-                throw IdFormatException("Id $id is an indoor identifier that does not have the format indoor_buildingcode_roomcode")
+                throw IdFormatException("$id ${Constants.INDOOR_IDENTIFIER_BAD_FORMAT}")
             }
             val buildingCode = locationInfo[1]
             val roomCode = locationInfo[2]
@@ -40,13 +40,13 @@ class IndoorLocationProvider constructor(
          * yet. This shouldn't happen because the index will have been loaded during the search.
          */
         val buildings = index.getBuildings()
-            ?: throw IndexNotLoadedException("Building index is not loaded yet")
+            ?: throw IndexNotLoadedException(Constants.INDOOR_INDEX_NOT_LOADED)
 
         val targetBuilding = buildings?.find { building -> building.code == buildingCode }
-            ?: throw BuildingNotFoundException("Building code $buildingCode does not correspond to a building in the index")
+            ?: throw BuildingNotFoundException("$buildingCode ${Constants.BUILDING_CODE_NOT_FOUND}")
 
         val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
-            ?: throw RoomNotFoundException("Room code $roomCode was not found in the index.")
+            ?: throw RoomNotFoundException("$roomCode ${Constants.ROOM_CODE_NOT_FOUND}")
 
         return IndoorLocation(
             targetRoom.name,

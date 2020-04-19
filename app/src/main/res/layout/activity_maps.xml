@@ -40,7 +40,7 @@
                         android:textColor="@android:color/white"
                         android:textSize="20sp"
                         android:paddingLeft="16dp"
-                        android:text="SGW Campus"/>
+                        android:text="@string/sgw_campus_name"/>
                     <ImageButton
                         android:layout_width="0dp"
                         android:layout_weight=".15"
