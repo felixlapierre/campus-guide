@@ -42,16 +42,10 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
     }
 
     override fun onClick(v: View?) {
-
-        val buildingImageLatLng = buildings[currentBuilding]?.getBuildingImageCoordinates()
-
         var updatedFloor: Int = updateFloor(v?.id)
         changeFloorListener?.invoke(updatedFloor)
 
         buildings[currentBuilding]?.getFloorPlans()?.let { changeVisibleFloor(it, updatedFloor) }
-        if (buildingImageLatLng != null) {
-            map.animateCamera(buildingImageLatLng, map.adapted.cameraPosition.zoom)
-        }
     }
 
     private fun currentFloorIsVisible(isVisible: Boolean) {

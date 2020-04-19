@@ -113,6 +113,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         initializer.setOnMapReadyListener {
             setPathOnMapAsync(currentPath)
+            centerMapOnPath(currentPath)
         }
 
         adapter = TransitRouteAdapter(this)
@@ -183,6 +184,15 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
     }
 
+    private fun centerMapOnPath(path: PathPolyline) {
+        GlobalScope.launch {
+            path.waitUntilCreated()
+            runOnUiThread {
+                map.moveCamera(path.getPathBounds())
+            }
+        }
+    }
+
     private fun createPath(startName: String, endName: String, travelMode: String, transitPreference: String?): PathPolyline {
         val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
@@ -249,6 +259,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         removePreviousPath()
         currentPath = paths.getValue(travelMode)
         setPathOnMapAsync(currentPath)
+        centerMapOnPath(currentPath)
     }
 
     private fun onFloorChange(floor: Int) {

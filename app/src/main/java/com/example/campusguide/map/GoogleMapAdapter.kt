@@ -68,7 +68,6 @@ class GoogleMapAdapter : Map {
     override fun addPath(path: PathPolyline, floor: Int) {
         path.removeFromMap()
         path.addToMap(this, floor)
-        moveCamera(path.getPathBounds())
     }
 
     fun getCameraZoom(): Float {
