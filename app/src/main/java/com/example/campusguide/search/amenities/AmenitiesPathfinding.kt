@@ -1,6 +1,5 @@
 package com.example.campusguide.search.amenities
 
-import com.example.campusguide.Constants
 import com.example.campusguide.directions.indoor.Graph
 import com.example.campusguide.directions.indoor.IndoorPathfinding
 import com.example.campusguide.search.indoor.Node
