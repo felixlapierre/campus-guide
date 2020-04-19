@@ -18,7 +18,7 @@ fun ShuttleBusStopLOYOLA(): LocationMetadata {
 
 fun DOWNTOWN_CAMPUS_BOUNDS(): LatLngBounds {
     val builder = LatLngBounds.builder()
-    builder.include(LatLng(45.496789, -73.573031)).include(LatLng(45.459212,-73.641706))
+    builder.include(LatLng(45.496789, -73.573031)).include(LatLng(45.491396, -73.587632))
     return builder.build()
 }
 
@@ -45,17 +45,12 @@ public fun shouldBeShuttleRoute(start: LocationMetadata, end: LocationMetadata):
 public fun campusFromLatLng (location: LatLng): Campus {
     return when {
         DOWNTOWN_CAMPUS_BOUNDS().contains(location) -> {
-            println("It is in SGW!!")
             Campus.DOWNTOWN
         }
         LOYOLA_CAMPUS_BOUNDS().contains(location) -> {
-            println("It is in LOY!!")
             Campus.LOYOLA
         }
         else -> {
-            println("SGW bounds: ${DOWNTOWN_CAMPUS_BOUNDS()}")
-            println("LOY bounds: ${LOYOLA_CAMPUS_BOUNDS()}")
-            println("This location is off campus: ${location.longitude}, ${location.latitude}")
             Campus.OFF_CAMPUS
         }
     }
