@@ -38,8 +38,8 @@ enum class Campus {
 public fun shouldBeShuttleRoute(start: LocationMetadata, end: LocationMetadata): Boolean {
     val startCampus = campusFromLatLng(start.getLatLng())
     val endCampus = campusFromLatLng(end.getLatLng())
+    // return checkLocationsValid(startCampus, endCampus)
     return checkCurrTimeValid() && checkLocationsValid(startCampus, endCampus)
-
 }
 
 public fun campusFromLatLng (location: LatLng): Campus {

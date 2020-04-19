@@ -68,11 +68,13 @@ class DirectionsActivity : AppCompatActivity() {
         // Extract origin and destination from the intent
         start = LocationMetadata(
             encoded = intent.getStringExtra("OriginEncoded")!!,
-            name = intent.getStringExtra("OriginName")!!
+            name = intent.getStringExtra("OriginName")!!,
+            buildingIndexSingleton = buildingIndexSingleton
         )
         end = LocationMetadata(
             encoded = intent.getStringExtra("DestinationEncoded")!!,
-            name = intent.getStringExtra("DestinationName")!!
+            name = intent.getStringExtra("DestinationName")!!,
+            buildingIndexSingleton = buildingIndexSingleton
         )
         println("Encoded value is: ${start.encoded}")
 
