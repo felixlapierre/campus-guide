@@ -34,7 +34,7 @@ class BuildingTag(
         }
     }
 
-    override fun fillOutInfor(view: View): View {
+    override fun fillView(view: View): View {
         view.findViewById<TextView>(R.id.symbol).text = symbol
         view.findViewById<TextView>(R.id.fullName).text = fullName
         view.findViewById<TextView>(R.id.address).text = address

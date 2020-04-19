@@ -1,7 +1,10 @@
 package com.example.campusguide.map.displayIndoor
 
 import android.graphics.Color
+import com.example.campusguide.R
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.map.infoWindow.IndoorTag
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.Helper
@@ -11,7 +14,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton) {
+class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
     private val floorPlans: HashMap<Int, Floor>? = setUpFloorPlans(map)
@@ -87,15 +90,15 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
             val imageDescription =
                 BitmapDescriptorFactory.fromBitmap(Helper.textAsBitmap(room.code, 32f, Color.BLACK))
             if (room.code.toDouble().toInt() in (floorNumber * 100)..((floorNumber + 1) * 100)) {
-                amenities.add(
-                    map.adapted.addMarker(
-                        MarkerOptions()
-                            .position(LatLng(room.lat.toDouble(), room.lon.toDouble()))
-                            .title(room.name)
-                            .icon(imageDescription)
-                            .visible(false)
-                    )
+                val marker = map.adapted.addMarker(
+                    MarkerOptions()
+                        .position(LatLng(room.lat.toDouble(), room.lon.toDouble()))
+                        .title(room.code)
+                        .icon(imageDescription)
+                        .visible(false)
                 )
+                marker.tag = IndoorTag(R.layout.confirm_window, directionsFlow, room)
+                amenities.add(marker)
             }
         }
         return amenities

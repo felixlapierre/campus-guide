@@ -8,7 +8,6 @@ import android.widget.TextView
 import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.map.displayIndoor.ChangeFloor
-import com.example.campusguide.map.displayIndoor.Floor
 import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.permissions.Permissions
@@ -60,7 +59,6 @@ class MapsActivity : AppCompatActivity() {
     fun setFloorPlanButtons() {
         ChangeFloor.upButtonId = R.id.upOneFloor
         ChangeFloor.downButtonId = R.id.downOneFloor
-        FloorPlans.buildingIndexSingleton = BuildingIndexSingleton.getInstance(assets)
         FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
         FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }

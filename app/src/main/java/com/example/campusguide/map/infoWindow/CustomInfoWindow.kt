@@ -18,6 +18,6 @@ class CustomInfoWindow(private val context: Context, private val  map: GoogleMap
 
         map.setOnInfoWindowClickListener(markerTag.onInfoWindowClick())
         map.setOnInfoWindowCloseListener(markerTag.onInfoWindowClose())
-        return markerTag.fillOutInfor(view)
+        return markerTag.fillView(view)
     }
 }

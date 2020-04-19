@@ -4,18 +4,20 @@ import android.view.View
 import android.widget.TextView
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.search.SearchLocation
-import com.example.campusguide.search.travelWindow.TravelWindowClickListener
+import com.example.campusguide.location.Location
+import com.example.campusguide.search.indoor.Room
 import com.google.android.gms.maps.GoogleMap
 
-class PopupSearchLocationTag
-    (
+class IndoorTag(
     layout: Int,
-    private val location: SearchLocation,
-    private val directions: DirectionsFlow
-): MarkerTag(layout) {
+    private val directionsFlow: DirectionsFlow,
+    private val room: Room
+) : MarkerTag(layout) {
     override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
-        return TravelWindowClickListener(directions, location)
+        return GoogleMap.OnInfoWindowClickListener {
+            val location = Location(room.code, room.lat.toDouble(), room.lon.toDouble())
+            directionsFlow.startFlow(location)
+        }
     }
 
     override fun onInfoWindowClose(): GoogleMap.OnInfoWindowCloseListener {
@@ -25,8 +27,8 @@ class PopupSearchLocationTag
     }
 
     override fun fillView(view: View): View {
-        view.findViewById<TextView>(R.id.locationName).text = location.name
-        view.findViewById<TextView>(R.id.secondaryText).text = location.secondaryText
-        return view
+        view.findViewById<TextView>(R.id.locationName).text = room.name
+
+        return  view
     }
 }

@@ -1,11 +1,12 @@
 package com.example.campusguide.map.displayIndoor
 
 import android.view.View
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton) : View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
@@ -18,8 +19,8 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter, private val bui
 
     private fun buildBuildings(map: GoogleMapAdapter): HashMap<String, BuildingInfo> {
         val build = HashMap<String, BuildingInfo>()
-        build["hall"] = BuildingInfo("hall", map, buildingIndexSingleton)
-        build["library"] = BuildingInfo("library", map, buildingIndexSingleton)
+        build["hall"] = BuildingInfo("hall", map, buildingIndexSingleton, directionsFlow)
+        build["library"] = BuildingInfo("library", map, buildingIndexSingleton, directionsFlow)
         return build
     }
 

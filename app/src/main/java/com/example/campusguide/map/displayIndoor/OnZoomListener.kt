@@ -1,16 +1,18 @@
 package com.example.campusguide.map.displayIndoor
 
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
-class OnZoomListener constructor(private val map: GoogleMapAdapter) : GoogleMap.OnCameraMoveListener {
+class OnZoomListener constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow) : GoogleMap.OnCameraMoveListener {
 
     init {
         map.setCameraMoveListener(this)
-        FloorPlans.setUpChangeFloor(map)
+        FloorPlans.setUpChangeFloor(map, buildingIndexSingleton, directionsFlow)
     }
     private val buildingBounds: Array <LatLngBounds> = getBuildingBounds()
 
