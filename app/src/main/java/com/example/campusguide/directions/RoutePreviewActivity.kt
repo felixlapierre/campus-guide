@@ -88,6 +88,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         i++
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
+        setCurrentStep(i)
         focusCameraOnCurrentStep(
             PathPolyline("","", currentStepPath),
             i
@@ -97,7 +98,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         } else {
             previousStepButton.isEnabled = true
         }
-            }
+    }
 
     private fun setPathOnMapAsync(path: PathPolyline) {
         GlobalScope.launch {
@@ -109,7 +110,6 @@ class RoutePreviewActivity : AppCompatActivity() {
     }
 
     private fun focusCameraOnCurrentStep(path: PathPolyline, step : Int){
-        setCurrentStep(i)
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
