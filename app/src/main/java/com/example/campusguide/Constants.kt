@@ -57,4 +57,7 @@ object Constants {
     const val TITLE_RECOMMENDED_ROUTE = "RECOMMENDED_ROUTE"
     const val TITLE_LESS_WALKING = "LESS WALKING"
     const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"
+
+    const val NO_CALENDAR_LOGIN_EXCEPTION_MSG = "You are not logged in or you do not have a calendar set.\n" +
+        "\nPlease login and choose a calendar in the drawer menu."
 }
