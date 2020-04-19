@@ -33,7 +33,7 @@ class IndoorPathfindingTest {
             Node("nodeB", "1_nodeB", -73.2, 43.2, mutableListOf("1_nodeC", "102.00")),
             Node("nodeC", "1_nodeC", -73.3, 43.3, mutableListOf("103.00"))
         )
-        val building = Building("someName", "someCode", "someAddress", "someDepartments","someServices", "1.0", "2.0", rooms, nodes)
+        val building = Building("someName", "someCode", "someAddress", "someDepartments", "someServices", "1.0", "2.0", rooms, nodes)
         graph = Graph(building)
     }
 
