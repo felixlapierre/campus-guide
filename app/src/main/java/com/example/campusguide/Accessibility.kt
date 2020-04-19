@@ -10,17 +10,17 @@ object Accessibility {
 
     // public methods to be called on click
     fun setEscalators(bool: Boolean) {
-        if (bool) forbidEscalators()
+        if (!bool) forbidEscalators()
         else allowEscalators()
     }
 
     fun setElevators(bool: Boolean) {
-        if (bool) forbidElevators()
+        if (!bool) forbidElevators()
         else allowElevators()
     }
 
     fun setStairs(bool: Boolean) {
-        if (bool) forbidStairs()
+        if (!bool) forbidStairs()
         else allowStairs()
     }
 
