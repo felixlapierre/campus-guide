@@ -15,7 +15,7 @@ import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class DirectionsFlow constructor(private val activity: AppCompatActivity, private val permissions: Permissions, private val locationProvider: FusedLocationProvider) {
+open class DirectionsFlow constructor(private val activity: AppCompatActivity, private val permissions: Permissions, private val locationProvider: FusedLocationProvider) {
     fun startFlow(origin: Location? = null, destination: Location? = null) {
         GlobalScope.launch {
             val finalDestination = destination ?: getDestination()
