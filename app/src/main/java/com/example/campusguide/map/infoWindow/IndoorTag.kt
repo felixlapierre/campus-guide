@@ -27,8 +27,8 @@ class IndoorTag(
     }
 
     override fun fillView(view: View): View {
-        view.findViewById<TextView>(R.id.locationName).text = room.name
-
+        view.findViewById<TextView>(R.id.locationName).text = room.code
+        view.findViewById<TextView>(R.id.secondaryText).text = room.name
         return  view
     }
 }
