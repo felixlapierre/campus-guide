@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng
  * display or not. Basically, this exists so we can display only the current floor of indoor directions.
  */
 open class Path(val points: MutableList<LatLng>) {
-    open fun shouldDisplay(currentFloor: Int) : Boolean {
+    open fun shouldDisplay(currentFloor: Int): Boolean {
         return true
     }
 }

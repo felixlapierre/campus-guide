@@ -51,9 +51,9 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
             val lastPoint = lastPath.points[lastPath.points.size - 1]
 
             var endOfLastPath: LatLng? = null
-            paths.forEach {path ->
+            paths.forEach { path ->
                 val opts = PolylineOptions()
-                if(endOfLastPath != null)
+                if (endOfLastPath != null)
                     opts.add(endOfLastPath)
                 opts.addAll(path.points)
                     .color(style.pathColor)
@@ -75,10 +75,10 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     fun addToMap(map: Map, floor: Int) {
-        for(i in paths.indices) {
+        for (i in paths.indices) {
             val path = paths[i]
             val opts = polylineOptions[i]
-            if(path.shouldDisplay(floor)) {
+            if (path.shouldDisplay(floor)) {
                 opts.zIndex(5F)
             } else {
                 opts.zIndex(1F)
@@ -110,8 +110,8 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         var east: Double = paths[0].points[0].longitude
         var west: Double = paths[0].points[0].longitude
 
-        paths.forEach {path ->
-            path.points.forEach {point ->
+        paths.forEach { path ->
+            path.points.forEach { point ->
                 north = Math.max(north, point.latitude)
                 south = Math.min(south, point.latitude)
                 east = Math.max(east, point.longitude)

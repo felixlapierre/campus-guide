@@ -10,10 +10,10 @@ class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
     fun findRoom(start: String, target: String): List<List<IndoorPath>> {
         this.target = target
         val list = super.findRoom(start).map {
-            val list=  mutableListOf<IndoorPath>()
+            val list = mutableListOf<IndoorPath>()
             it.forEach { node ->
                 val point = LatLng(node.y, node.x)
-                if(list.size == 0 || list[list.size - 1].floor != node.floor) {
+                if (list.size == 0 || list[list.size - 1].floor != node.floor) {
                     list.add(IndoorPath(mutableListOf(point), node.floor))
                 } else {
                     list[list.size - 1].points.add(point)

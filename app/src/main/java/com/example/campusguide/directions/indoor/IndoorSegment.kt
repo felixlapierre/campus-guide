@@ -6,7 +6,6 @@ import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.search.indoor.Building
-import com.google.android.gms.maps.model.LatLng
 
 class IndoorSegment constructor(
     private val buildingCode: String,

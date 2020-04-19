@@ -2,7 +2,6 @@ package com.example.campusguide.directions
 
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorSegment
-import com.google.android.gms.maps.model.LatLng
 
 /**
  * Represents a segment of a route.

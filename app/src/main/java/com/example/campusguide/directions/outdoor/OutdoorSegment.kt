@@ -5,7 +5,6 @@ import com.example.campusguide.directions.Path
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.indoor.IndoorSegment
-import com.google.android.gms.maps.model.LatLng
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Deferred
