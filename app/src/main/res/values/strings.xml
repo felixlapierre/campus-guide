@@ -10,6 +10,6 @@
     <string name="cancel">Cancel</string>
     <string name="directions">Directions</string>
     <string name="campus_map">Campus Map</string>
-    <string name="poi">Points of Interest</string>
+    <string name="poi">Near Me</string>
     <string name="go_here">GO HERE</string>
 </resources>

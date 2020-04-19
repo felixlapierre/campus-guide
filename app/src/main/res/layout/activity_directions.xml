@@ -132,10 +132,81 @@
             android:onClick="onRadioButtonClicked"
             android:contentDescription="transitRadioButton"/>
     </RadioGroup>
-    <fragment
-        android:id="@+id/directions_activity_map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".DirectionsActivity"/>
+        android:layout_height="match_parent">
+
+        <fragment
+            android:id="@+id/directions_activity_map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="100dp"
+            tools:context=".DirectionsActivity"/>
+
+        <LinearLayout
+            android:id="@+id/route_layout"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/route_duration"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="30dp"
+                    android:gravity="center_vertical"
+                    android:text="- min"
+                    android:textColor="#000000"
+                    android:textSize="22dp"/>
+                <TextView
+                    android:id="@+id/route_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5dp"
+                    android:text="(- km)"
+                    android:textSize="17dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/startButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:background="@color/colorPrimary"
+                    android:drawableLeft="@drawable/ic_start_route"
+                    android:drawablePadding="5dp"
+                    android:enabled="false"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="6dp"
+                    android:text="Start"
+                    android:textColor="@android:color/white"/>
+                <Button
+                    android:id="@+id/steps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:drawableLeft="@drawable/ic_steps_list"
+                    android:drawablePadding="5dp"
+                    android:enabled="false"
+                    android:padding="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Steps and More"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>
