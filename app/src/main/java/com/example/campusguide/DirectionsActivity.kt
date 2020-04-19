@@ -7,7 +7,9 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.campusguide.directions.DOWNTOWN_CAMPUS_BOUNDS
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
+import com.example.campusguide.directions.LOYOLA_CAMPUS_BOUNDS
 import com.example.campusguide.directions.LocationMetadata
 import com.example.campusguide.directions.Route
 import com.example.campusguide.directions.outdoor.OutdoorDirections
@@ -17,6 +19,7 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
+import com.google.android.gms.maps.model.PolylineOptions
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -71,6 +74,7 @@ class DirectionsActivity : AppCompatActivity() {
             encoded = intent.getStringExtra("DestinationEncoded")!!,
             name = intent.getStringExtra("DestinationName")!!
         )
+        println("Encoded value is: ${start.encoded}")
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
@@ -112,6 +116,14 @@ class DirectionsActivity : AppCompatActivity() {
 
         initializer.setOnMapReadyListener {
             setRouteOnMapAsync(currentRoute)
+            map.addPolyline(PolylineOptions()
+                .add(LOYOLA_CAMPUS_BOUNDS().southwest)
+                .add(LOYOLA_CAMPUS_BOUNDS().northeast)
+            )
+            map.addPolyline(PolylineOptions()
+                .add(DOWNTOWN_CAMPUS_BOUNDS().southwest)
+                .add(DOWNTOWN_CAMPUS_BOUNDS().northeast)
+            )
         }
     }
 
@@ -163,7 +175,12 @@ class DirectionsActivity : AppCompatActivity() {
             route.waitUntilCreated()
             runOnUiThread {
                val  pathPolylines = route.getPathPolylines()
-               pathPolylines.forEach { map.addPath(it) }
+                if (pathPolylines.isNullOrEmpty()) {
+                    errorListener.onError("No shuttle bus route.")
+                }else{
+                    pathPolylines.forEach { map.addPath(it) }
+                }
+
             }
         }
     }

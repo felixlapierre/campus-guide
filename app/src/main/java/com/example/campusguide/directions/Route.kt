@@ -1,6 +1,5 @@
-package com.example.campusguide.directions;
+package com.example.campusguide.directions
 
-import android.location.Location
 import com.example.campusguide.Constants
 import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
@@ -14,44 +13,70 @@ public class Route constructor (
     private val buildingIndexSingleton: BuildingIndexSingleton,
     private val giveMeAnOutdoorDirections: () -> OutdoorDirections
 ) {
-    private lateinit var pathPolylines: MutableList<PathPolyline>
+    private var pathPolylines: MutableList<PathPolyline>? = null
 
     init {
         when(travelMode) {
             "shuttle" -> {
-
+                if (shouldBeShuttleRoute(start, end)) {
+                    pathPolylines = mutableListOf<PathPolyline>()
+                    createShuttlePathPolylineList(start, end)
+                }
             }
             else -> {
-                pathPolylines.add(createPathPolyline(
+                pathPolylines = mutableListOf<PathPolyline>()
+                pathPolylines!!.add(createPathPolyline(
                     start, end, travelMode
                 ))
             }
         }
     }
     public fun removeFromMap() {
-        pathPolylines.forEach{
+        pathPolylines?.forEach{
             it.removeFromMap()
         }
     }
-    public fun getPathPolylines(): List<PathPolyline> {
+    public fun getPathPolylines(): List<PathPolyline>? {
         return this.pathPolylines
     }
-    private fun isIndoorLocation(encodedLocation: String): Boolean {
-        return encodedLocation.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
+
+    public fun getDuration(): Int {
+        var duration = 0
+        this.pathPolylines?.forEach {
+            duration += it.segment.getDuration()
+        }
+        return duration
     }
 
-    suspend fun waitUntilCreated() {
-        this.pathPolylines.forEach {
+    public suspend fun waitUntilCreated() {
+        this.pathPolylines?.forEach {
             it.waitUntilCreated()
         }
     }
 
-    fun getDuration(): Int {
-        var duration = 0
-        this.pathPolylines.forEach {
-            duration += it.segment.getDuration()
+    private fun isIndoorLocation(encodedLocation: String): Boolean {
+        return encodedLocation.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
+    }
+
+    private fun createShuttlePathPolylineList(start: LocationMetadata, end: LocationMetadata) {
+        when (campusFromLatLng(start.getLatLng())){
+            Campus.DOWNTOWN -> {
+                pathPolylines!!.add(
+                    createPathPolyline(start, ShuttleBusStopSGW(), "walking"))
+                pathPolylines!!.add(
+                    createPathPolyline(ShuttleBusStopSGW(), ShuttleBusStopLOYOLA(), "driving"))
+                pathPolylines!!.add(
+                    createPathPolyline(ShuttleBusStopLOYOLA(), end, "walking"))
+            }
+            Campus.LOYOLA -> {
+                pathPolylines!!.add(
+                    createPathPolyline(start, ShuttleBusStopLOYOLA(), "walking"))
+                pathPolylines!!.add(
+                    createPathPolyline(ShuttleBusStopLOYOLA(), ShuttleBusStopSGW(), "driving"))
+                pathPolylines!!.add(
+                    createPathPolyline(ShuttleBusStopSGW(), end, "walking"))
+            }
         }
-        return duration
     }
 
     private fun createPathPolyline(start: LocationMetadata, end: LocationMetadata, travelMode: String): PathPolyline {
