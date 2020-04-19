@@ -76,8 +76,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         if (i == 0) {
             previousStepButton.isEnabled = false
             textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
-        }
-        else
+        } else
             nextStepButton.isEnabled = true
     }
 
