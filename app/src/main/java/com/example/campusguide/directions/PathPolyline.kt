@@ -116,7 +116,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     }
 
     fun getSteps(): List<GoogleDirectionsAPIStep> {
-        return routePreviewData.getSteps()
+        return segment.getSteps()
     }
 
     fun getDuration() : Int {
