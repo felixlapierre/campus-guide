@@ -9,7 +9,6 @@ import android.widget.ToggleButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.map.displayIndoor.ChangeFloor
 import com.example.campusguide.map.displayIndoor.FloorPlans
-import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_maps.*

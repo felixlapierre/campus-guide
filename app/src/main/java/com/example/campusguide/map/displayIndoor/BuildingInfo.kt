@@ -2,7 +2,6 @@ package com.example.campusguide.map.displayIndoor
 
 import android.app.Activity
 import android.graphics.Color
-import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
@@ -22,7 +21,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
     private var floorPlans: HashMap<Int, Floor>? = null
     val startFloor: Int? = floors?.get(0)
 
-    init{
+    init {
         buildingIndexSingleton.onLoaded = { buildings ->
             floorPlans = setUpFloorPlans(map, buildings)
         }
@@ -63,7 +62,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
 
     private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float, buildings: List<Building>): HashMap<Int, Floor> {
         val buildingFloors = hashMapOf<Int, Floor>()
-        val building = buildings!!.first{ it.code?.equals(buildingCode, true)}
+        val building = buildings!!.first { it.code?.equals(buildingCode, true) }
         if (floors != null) {
             for (floor in floors) {
                 activity.runOnUiThread {
@@ -85,7 +84,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
 
     /**
      * Finds the ameneities on a building's floor and return a list of map markers
-     * @param  building The building in which to find the rooms
+     * @param building The building in which to find the rooms
      * @param floorNumber The floornumber on which we want to find amenitites
      * @param map The map to which the markers are added
      * @return A list of map markers

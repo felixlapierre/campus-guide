@@ -8,19 +8,18 @@ import com.example.campusguide.search.SearchLocation
 import com.example.campusguide.search.travelWindow.TravelWindowClickListener
 import com.google.android.gms.maps.GoogleMap
 
-class PopupSearchLocationTag
-    (
+class PopupSearchLocationTag(
     layout: Int,
     private val location: SearchLocation,
     private val directions: DirectionsFlow
-): MarkerTag(layout) {
+) : MarkerTag(layout) {
     override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
         return TravelWindowClickListener(directions, location)
     }
 
     override fun onInfoWindowClose(): GoogleMap.OnInfoWindowCloseListener {
         return GoogleMap.OnInfoWindowCloseListener {
-            //noop
+            // noop
         }
     }
 

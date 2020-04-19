@@ -1,6 +1,5 @@
 package com.example.campusguide.map.infoWindow
 
-import android.text.Layout
 import android.view.View
 import android.widget.TextView
 import com.example.campusguide.R
@@ -20,8 +19,8 @@ class BuildingTag(
     var departmentsList: String = "- Faculty 1\n- Faculty 2",
     var services: String = "Services:",
     var servicesList: String = "- Service 1\n- Service 2"
-): MarkerTag(layout) {
-    override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener{
+) : MarkerTag(layout) {
+    override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
         return GoogleMap.OnInfoWindowClickListener {
             val location = Location(fullName, coordinates.latitude, coordinates.longitude)
             directions?.startFlow(null, location)

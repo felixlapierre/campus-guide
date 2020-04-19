@@ -16,19 +16,19 @@ class IndoorTag(
     override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
         return GoogleMap.OnInfoWindowClickListener {
             val location = Location(room.code, room.lat.toDouble(), room.lon.toDouble())
-            directionsFlow.startFlow( destination = location)
+            directionsFlow.startFlow(destination = location)
         }
     }
 
     override fun onInfoWindowClose(): GoogleMap.OnInfoWindowCloseListener {
         return GoogleMap.OnInfoWindowCloseListener {
-            //noop
+            // noop
         }
     }
 
     override fun fillView(view: View): View {
         view.findViewById<TextView>(R.id.locationName).text = room.code
         view.findViewById<TextView>(R.id.secondaryText).text = room.name
-        return  view
+        return view
     }
 }

@@ -1,7 +1,6 @@
 package com.example.campusguide.map.displayIndoor
 
 import android.app.Activity
-import android.content.res.AssetManager
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton

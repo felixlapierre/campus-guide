@@ -47,7 +47,7 @@ class GoogleMapInitializer constructor(
                 )
             )
 
-            if(directionsFlow != null && buildingIndexSingleton != null){
+            if (directionsFlow != null && buildingIndexSingleton != null) {
                 OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity)
             }
 
@@ -56,7 +56,7 @@ class GoogleMapInitializer constructor(
             if (onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
             }
-            if(infoWindowAdapter != null) {
+            if (infoWindowAdapter != null) {
                 map.setInfoWindowAdapter(infoWindowAdapter)
             }
             map.setContentDescription("$mapId ready")

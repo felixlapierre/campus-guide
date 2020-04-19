@@ -1,7 +1,6 @@
 package com.example.campusguide
 
 import android.content.Intent
-import CustomInfoWindow
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
@@ -12,7 +11,6 @@ import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
 import com.example.campusguide.directions.RoutePreviewActivity

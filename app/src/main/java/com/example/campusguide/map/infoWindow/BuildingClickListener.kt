@@ -3,7 +3,6 @@ package com.example.campusguide.map.infoWindow
 import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.location.Location
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.search.indoor.Building
