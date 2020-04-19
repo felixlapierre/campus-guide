@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.PolylineOptions
 class GoogleMapAdapter : Map {
     lateinit var adapted: GoogleMap
 
-    override fun addMarker(position: LatLng, title: String): Marker? {
+    override fun addMarker(position: LatLng, title: String): IMarker? {
         val opts = MarkerOptions()
             .position(position)
             .title(title)
@@ -23,7 +23,7 @@ class GoogleMapAdapter : Map {
         return GoogleMapMarker(adapted.addMarker(opts))
     }
 
-    override fun addMarker(opts: MarkerOptions): Marker? {
+    override fun addMarker(opts: MarkerOptions): IMarker? {
         return GoogleMapMarker(adapted.addMarker(opts))
     }
 
@@ -65,10 +65,9 @@ class GoogleMapAdapter : Map {
         adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
     }
 
-    override fun addPath(path: PathPolyline) {
+    override fun addPath(path: PathPolyline, floor: Int) {
         path.removeFromMap()
-        path.addToMap(this)
-        moveCamera(path.getPathBounds())
+        path.addToMap(this, floor)
     }
 
     fun getCameraZoom(): Float {

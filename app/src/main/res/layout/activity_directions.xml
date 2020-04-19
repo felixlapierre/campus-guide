@@ -1,130 +1,142 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
+    android:id="@+id/activity_directions_layout"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/activity_directions_layout">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
-        android:paddingEnd="20dp"
-        android:background="@color/colorPrimary">
+        android:paddingEnd="20dp">
+
         <ImageButton
             android:id="@+id/backspace"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/ic_keyboard_backspace"
-            android:tint="@android:color/white"
+            android:background="?android:selectableItemBackgroundBorderless"
             android:onClick="finishActivity"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:background="?android:selectableItemBackgroundBorderless"/>
+            android:src="@drawable/ic_keyboard_backspace"
+            android:tint="@android:color/white" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="40dp"
-            android:paddingEnd="20dp"
             android:layout_margin="5dp"
-            android:background="@drawable/rounded_container">
+            android:background="@drawable/rounded_container"
+            android:paddingEnd="20dp">
+
             <ImageView
                 android:id="@+id/place_origin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:tint="@color/colorAzure"
-                android:src="@drawable/ic_place"/>
+                android:src="@drawable/ic_place"
+                android:tint="@color/colorAzure" />
+
             <TextView
                 android:id="@+id/origin"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:textSize="14sp"
-                android:textColor="@color/colorDarkGrey"/>
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:paddingStart="50dp"
-        android:paddingEnd="21dp"
-        android:background="@color/colorPrimary">
+        android:paddingEnd="21dp">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="40dp"
-            android:paddingEnd="10dp"
             android:layout_margin="3dp"
-            android:background="@drawable/rounded_container">
+            android:background="@drawable/rounded_container"
+            android:paddingEnd="10dp">
+
             <ImageView
                 android:id="@+id/place_destination"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingStart="8dp"
                 android:paddingEnd="10dp"
-                android:tint="@color/colorRed"
-                android:src="@drawable/ic_place"/>
+                android:src="@drawable/ic_place"
+                android:tint="@color/colorRed" />
+
             <TextView
                 android:id="@+id/destination"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:textSize="14sp"
-                android:textColor="@color/colorDarkGrey"/>
+                android:textColor="@color/colorDarkGrey"
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
+
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:checkedButton="@id/radio_driving"
-        android:background="@color/colorPrimary"
         android:layout_gravity="center"
-        android:gravity="center">
+        android:background="@color/colorPrimary"
+        android:checkedButton="@id/radio_driving"
+        android:gravity="center"
+        android:orientation="horizontal">
+
         <RadioButton
             android:id="@+id/radio_driving"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="25dp"
             android:layout_weight="1"
             android:button="@drawable/ic_directions_car"
-            android:layout_gravity="center_vertical"
-            android:text="-"
             android:buttonTint="@color/colorPrimaryDark"
-            android:textColor="@drawable/travel_mode_button_color"
+            android:contentDescription="drivingRadioButton"
+            android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:layout_marginStart="25dp"
-            android:onClick="onRadioButtonClicked"
-            android:contentDescription="drivingRadioButton"/>
+            android:text="-"
+            android:textColor="@drawable/travel_mode_button_color" />
+
         <RadioButton
             android:id="@+id/radio_walking"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:button="@drawable/ic_directions_walk"
-            android:layout_gravity="center_vertical"
-            android:text="-"
             android:buttonTint="@color/colorPrimaryDark"
-            android:textColor="@drawable/travel_mode_button_color"
+            android:contentDescription="walkingRadioButton"
+            android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:onClick="onRadioButtonClicked"
-            android:contentDescription="walkingRadioButton"/>
+            android:text="-"
+            android:textColor="@drawable/travel_mode_button_color" />
+
         <RadioButton
             android:id="@+id/radio_transit"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
             android:layout_weight="1"
             android:button="@drawable/ic_directions_transit"
-            android:layout_gravity="center_vertical"
-            android:text="-"
             android:buttonTint="@color/colorPrimaryDark"
-            android:textColor="@drawable/travel_mode_button_color"
+            android:contentDescription="transitRadioButton"
+            android:onClick="onRadioButtonClicked"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:onClick="onRadioButtonClicked"
-            android:contentDescription="transitRadioButton"/>
+            android:text="-"
+            android:textColor="@drawable/travel_mode_button_color" />
     </RadioGroup>
 
     <FrameLayout
@@ -132,14 +144,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <fragment
+        <fragment xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/directions_activity_map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
-            tools:context=".DirectionsActivity"/>
+            tools:context=".DirectionsActivity">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/upOneFloor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="170dp"
+                android:src="@drawable/ic_arrow_up_24px"
+                android:visibility="invisible"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="mini" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/downOneFloor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="124dp"
+                android:src="@drawable/ic_arrow_down_24px"
+                android:visibility="invisible"
+                app:backgroundTint="@android:color/white"
+                app:fabSize="mini" />
+        </fragment>
         <LinearLayout
             android:id="@+id/route_layout"
             android:layout_width="match_parent"
@@ -188,7 +224,7 @@
                     android:gravity="center_vertical"
                     android:paddingLeft="6dp"
                     android:text="Start"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
                 <Button
                     android:id="@+id/steps"
                     android:layout_width="wrap_content"
@@ -203,5 +239,4 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
 </LinearLayout>

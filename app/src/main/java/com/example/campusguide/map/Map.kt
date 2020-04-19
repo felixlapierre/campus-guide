@@ -10,13 +10,13 @@ import com.google.android.gms.maps.model.Polyline
 import com.google.android.gms.maps.model.PolylineOptions
 
 interface Map {
-    fun addMarker(position: LatLng, title: String): Marker?
-    fun addMarker(opts: MarkerOptions): Marker?
+    fun addMarker(position: LatLng, title: String): IMarker?
+    fun addMarker(opts: MarkerOptions): IMarker?
     fun animateCamera(position: LatLng, zoom: Float)
     fun moveCamera(newLatLngZoom: CameraUpdate?)
     fun moveCamera(bounds: LatLngBounds)
     fun addPolyline(polyOptions: PolylineOptions?): Polyline?
-    fun addPath(path: PathPolyline)
+    fun addPath(path: PathPolyline, floor: Int)
     fun setInfoWindowAdapter(infoWindowAdapter: GoogleMap.InfoWindowAdapter)
     fun setOnInfoWindowClickListener(infoWindowClickListener: GoogleMap.OnInfoWindowClickListener)
     fun setOnInfoWindowCloseListener(infoWindowCloseListener: GoogleMap.OnInfoWindowCloseListener)

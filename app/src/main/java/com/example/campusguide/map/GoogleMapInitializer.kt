@@ -2,7 +2,9 @@ package com.example.campusguide.map
 
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.displayIndoor.OnZoomListener
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -13,7 +15,10 @@ class GoogleMapInitializer constructor(
     private val activity: FragmentActivity,
     private val wrapper: GoogleMapAdapter,
     private val mapId: String,
-    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null
+    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null,
+    private val infoWindowAdapter: GoogleMap.InfoWindowAdapter? = null,
+    private val directionsFlow: DirectionsFlow? = null,
+    private val buildingIndexSingleton: BuildingIndexSingleton? = null
 ) : OnMapReadyCallback {
     private var onMapReadyListener: (() -> Unit)? = null
     private var googleMap: GoogleMap? = null
@@ -42,12 +47,17 @@ class GoogleMapInitializer constructor(
                 )
             )
 
-            OnZoomListener(wrapper)
+            if (directionsFlow != null && buildingIndexSingleton != null) {
+                OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity)
+            }
 
             BuildingHighlights(map, activity).addBuildingHighlights()
 
             if (onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
+            }
+            if (infoWindowAdapter != null) {
+                map.setInfoWindowAdapter(infoWindowAdapter)
             }
             map.setContentDescription("$mapId ready")
 

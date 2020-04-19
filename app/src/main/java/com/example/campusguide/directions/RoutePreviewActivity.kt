@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -17,8 +18,8 @@ class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
     private lateinit var pathPolyline: RoutePreviewData
     private lateinit var steps: List<GoogleDirectionsAPIStep>
-    private lateinit var stepPath: List<LatLng>
-    private lateinit var currentStepPath: LatLng
+    private lateinit var stepPath: List<Path>
+    private var currentStepPath: MutableList<Path> = mutableListOf()
     private lateinit var previousStepButton: Button
     private lateinit var nextStepButton: Button
     private var i: Int = 0
@@ -46,12 +47,13 @@ class RoutePreviewActivity : AppCompatActivity() {
 
         stepInstruction.text = parseHTMLString(steps[0].htmlInstruction)
         previousStepButton.isEnabled = false
-        stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
+        stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_turn_right, 0, 0, 0)
 
         initializer.setOnMapReadyListener {
             val path = PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
             setPathOnMapAsync(path)
             setCurrentStep(0)
+            focusCameraOnCurrentStep(PathPolyline("", "", currentStepPath), 0)
         }
 
         previousStepButton.setOnClickListener {
@@ -73,10 +75,13 @@ class RoutePreviewActivity : AppCompatActivity() {
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
-        if (i == 0) {
+        focusCameraOnCurrentStep(
+            PathPolyline("", "", currentStepPath),
+            i
+        )
+        if (i == 0)
             previousStepButton.isEnabled = false
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
-        } else
+        else
             nextStepButton.isEnabled = true
     }
 
@@ -85,9 +90,12 @@ class RoutePreviewActivity : AppCompatActivity() {
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
+        focusCameraOnCurrentStep(
+            PathPolyline("", "", currentStepPath),
+            i
+        )
         if (i == steps.size - 1) {
             nextStepButton.isEnabled = false
-            textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
         } else {
             previousStepButton.isEnabled = true
         }
@@ -97,15 +105,16 @@ class RoutePreviewActivity : AppCompatActivity() {
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
-                map.addPath(path)
+                map.addPath(path, FloorPlans.getCurrentFloor())
             }
         }
     }
 
-    private fun focusCameraOnCurrentStep() {
+    private fun focusCameraOnCurrentStep(path: PathPolyline, step: Int) {
         GlobalScope.launch {
+            path.waitUntilCreated()
             runOnUiThread {
-                map.animateCamera(currentStepPath, 30f)
+                map.moveCamera(path.getPathBounds())
             }
         }
     }
@@ -115,9 +124,13 @@ class RoutePreviewActivity : AppCompatActivity() {
     }
 
     private fun setCurrentStep(i: Int) {
-        currentStepPath = LatLng(steps[i].startLocation.lat.toDouble(),
+        currentStepPath.clear()
+        var startLatLng = LatLng(steps[i].startLocation.lat.toDouble(),
             steps[i].startLocation.lng.toDouble())
-        focusCameraOnCurrentStep()
+        var endLatLng = LatLng(steps[i].endLocation.lat.toDouble(),
+            steps[i].endLocation.lng.toDouble())
+        currentStepPath.add(Path(mutableListOf(startLatLng)))
+        currentStepPath.add(Path(mutableListOf(endLatLng)))
     }
 
     private fun setIcon(instruction: TextView, step: Int) {
@@ -128,7 +141,7 @@ class RoutePreviewActivity : AppCompatActivity() {
                 "ramp-right" -> R.drawable.ic_turn_right
                 "ramp-left" -> R.drawable.ic_turn_left
                 else -> R.drawable.ic_straight
-        }
+            }
         instruction.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
     }
 }
