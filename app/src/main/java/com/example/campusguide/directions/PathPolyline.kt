@@ -18,30 +18,41 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class PathPolyline constructor(startName: String, endName: String, val segment: Segment) {
-    class PolylineStyle {
-        private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX)
-        private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX)
-        val patternPolygonAlpha = listOf(patternGap, patternDash)
-        val pathColor = Color.parseColor(Constants.AZURE_COLOR)
-    }
+class PolylineStyle constructor(
+    private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX),
+    private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX),
+    val pathColor:Int = Color.parseColor(Constants.AZURE_COLOR)
+){
+    val patternPolygonAlpha = listOf(patternGap, patternDash)
+}
+
+class PathPolyline constructor(
+    startName: String,
+    endName: String,
+    val segment: Segment,
+    private val style: PolylineStyle = PolylineStyle(),
+    private val startMarkerOptions: MarkerOptions =
+        MarkerOptions()
+            .title(Helper.capitalizeWords(startName))
+            .snippet("Start")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)),
+    private val endMarkerOptions: MarkerOptions =
+        MarkerOptions()
+            .title(Helper.capitalizeWords(endName))
+            .snippet("Destination")
+) {
+
 
     private lateinit var path: List<LatLng>
-    private val polylineOptions: PolylineOptions
+    private val polylineOptions: PolylineOptions = PolylineOptions()
     private var polyline: Polyline? = null
 
-    private val startMarkerOptions: MarkerOptions
     private var startMarker: Marker? = null
-    private val endMarkerOptions: MarkerOptions
     private var endMarker: Marker? = null
 
     private val deferred: Deferred<Unit>
 
     init {
-        val style = PolylineStyle()
-        polylineOptions = PolylineOptions()
-        startMarkerOptions = MarkerOptions()
-        endMarkerOptions = MarkerOptions()
 
         deferred = GlobalScope.async {
             path = segment.toListOfCoordinates()
@@ -51,14 +62,10 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
 
             val firstPoint = path[0]
             startMarkerOptions.position(firstPoint)
-                .title(Helper.capitalizeWords(startName))
-                .snippet("Start")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
             val lastPoint = path[path.size - 1]
             endMarkerOptions.position(lastPoint)
-                .title(Helper.capitalizeWords(endName))
-                .snippet("Destination")
+
             Unit
         }
     }
