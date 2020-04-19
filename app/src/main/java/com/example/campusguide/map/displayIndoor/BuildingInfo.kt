@@ -32,7 +32,7 @@ class BuildingInfo constructor(private val buildingName: String, private val map
         return buildingImageCoordinates
     }
     fun getFloorPlans(): HashMap<Int, Floor>? {
-        if(floorPlans == null) {
+        if (floorPlans == null) {
             setupFloorPlansFromBuildingIndex()
         }
         return floorPlans
