@@ -6,7 +6,8 @@ import com.example.campusguide.map.infoWindow.MarkerTag
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 
-class CustomInfoWindow(private val context: Context,
+class CustomInfoWindow(
+    private val context: Context,
     private val map: GoogleMapAdapter
 ) : GoogleMap.InfoWindowAdapter {
 

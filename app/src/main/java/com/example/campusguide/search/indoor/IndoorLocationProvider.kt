@@ -20,7 +20,7 @@ class IndoorLocationProvider constructor(
         if (isIndoor) {
             val locationInfo = id.split("_")
             if (locationInfo.size != 3) {
-                throw IdFormatException("$id " +  Constants.INDOOR_IDENTIFIER_BAD_FORMAT)
+                throw IdFormatException("$id " + Constants.INDOOR_IDENTIFIER_BAD_FORMAT)
             }
             val buildingCode = locationInfo[1]
             val roomCode = locationInfo[2]

@@ -18,7 +18,8 @@ object FloorPlans {
     fun setUpChangeFloor(
         map: GoogleMapAdapter,
         buildingIndexSingleton: BuildingIndexSingleton,
-        directionsFlow: DirectionsFlow, activity: Activity
+        directionsFlow: DirectionsFlow,
+        activity: Activity
     ) {
         changeFloor = ChangeFloor(map, buildingIndexSingleton, directionsFlow, activity)
         changeFloor.changeFloorListener = changeFloorListener
