@@ -58,15 +58,19 @@ class IndoorSegment constructor(
     }
 
     override suspend fun toListOfCoordinates(): List<LatLng> {
-        return if (endRoomCode != null)
-            pathfinding.findRoom(startRoomCode, endRoomCode!!)[0]
+        return if (endRoomCode != null) {
+            val result = mutableListOf<LatLng>()
+            result.addAll(pathfinding.findRoom(startRoomCode, endRoomCode!!)[0])
+            result.addAll(next?.toListOfCoordinates() ?: emptyList())
+            return result
+        }
         else
             emptyList()
     }
 
     override fun getDuration(): Int {
         // TODO: Estimate duration of indoor path segments
-        return 0
+        return next?.getDuration() ?: 0
     }
 
     override fun getSteps(): List<GoogleDirectionsAPIStep> {
