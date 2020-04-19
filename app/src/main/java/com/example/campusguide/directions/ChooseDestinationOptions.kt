@@ -16,6 +16,7 @@ import com.example.campusguide.calendar.FindEventLocation
 import com.example.campusguide.location.Location
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.SearchLocationProvider
+import com.example.campusguide.utils.DisplayMessageErrorListener
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
@@ -40,14 +41,22 @@ class ChooseDestinationOptions(private val provider: SearchLocationProvider, pri
     }
 
     private fun useNextEvent() {
-        dismiss()
-        val act = activity as MapsActivity
-        val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
-        val calendar = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
+        try {
+            dismiss()
+            val act = activity as MapsActivity
+            val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
+            val calendar = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
 
-        val nextLocation = Events(act, calendar).getNextEventLocation()
-        GlobalScope.launch {
-            FindEventLocation(act, locationSelectedListener).getLocationOfEvent(nextLocation)
+            val nextLocation = Events(act, calendar).getNextEventLocation()
+            GlobalScope.launch {
+                FindEventLocation(act, locationSelectedListener).getLocationOfEvent(nextLocation)
+            }
+        }
+        catch (e: IndexOutOfBoundsException) {
+            activity?.let { DisplayMessageErrorListener(it).onError(
+                "You are not logged in or you do not have a calendar set.\n" +
+                    "\nPlease login and choose a calendar in the drawer menu.")
+            }
         }
     }
 
