@@ -63,8 +63,7 @@ class IndoorSegment constructor(
             result.addAll(pathfinding.findRoom(startRoomCode, endRoomCode!!)[0])
             result.addAll(next?.toListOfCoordinates() ?: emptyList())
             return result
-        }
-        else
+        } else
             emptyList()
     }
 
