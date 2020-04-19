@@ -4,24 +4,24 @@ import android.widget.TextView
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
 import com.google.android.gms.maps.model.LatLng
-import org.junit.Test
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Before
+import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class SwitchCampusTest {
 
-    private lateinit var mockMap : Map
-    private lateinit var mockCampusName : TextView
+    private lateinit var mockMap: Map
+    private lateinit var mockCampusName: TextView
 
     @Before
     fun createMocks() {
         mockMap = mock()
         mockCampusName = mock()
     }
-
 
     @Test
     fun testSwitchCampusLoyola() {
@@ -37,7 +37,6 @@ class SwitchCampusTest {
 
         verify(mockMap).animateCamera(expectedLatLng, Constants.ZOOM_STREET_LVL)
         verify(mockCampusName).text = Constants.LOYOLA_CAMPUS
-
     }
 
     @Test
@@ -54,5 +53,4 @@ class SwitchCampusTest {
         verify(mockMap).animateCamera(expectedLatLng, Constants.ZOOM_STREET_LVL)
         verify(mockCampusName).text = Constants.SGW_CAMPUS
     }
-
 }

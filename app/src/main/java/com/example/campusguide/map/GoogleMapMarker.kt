@@ -14,5 +14,4 @@ class GoogleMapMarker(private val marker: com.google.android.gms.maps.model.Mark
     override fun setTag(info: InfoWindowData) {
         marker.tag = info
     }
-
 }

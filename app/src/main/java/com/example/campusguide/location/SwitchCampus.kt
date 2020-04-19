@@ -4,17 +4,16 @@ import android.widget.CompoundButton
 import android.widget.TextView
 import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
-import com.google.android.gms.maps.model.LatLng
 
-class SwitchCampus constructor(private val map: Map, private val campusName: TextView)
-    : CompoundButton.OnCheckedChangeListener {
+class SwitchCampus constructor(private val map: Map, private val campusName: TextView) :
+    CompoundButton.OnCheckedChangeListener {
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
         switchCampus(isChecked)
     }
 
     private fun switchCampus(isAtDowntownCampus: Boolean) {
-        if(isAtDowntownCampus){
+        if (isAtDowntownCampus) {
             map.animateCamera(Constants.LOY_COORDINATES,
                 Constants.ZOOM_STREET_LVL
             )

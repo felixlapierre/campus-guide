@@ -1,18 +1,18 @@
 package com.example.campusguide.directions.indoor
 
 import com.example.campusguide.search.indoor.Node
-import com.google.android.gms.maps.model.LatLng
 import java.lang.RuntimeException
-import java.util.*
+import java.util.ArrayDeque
+import java.util.Queue
 import kotlin.math.sqrt
 
 abstract class IndoorPathfinding constructor(private val graph: Graph) {
-    lateinit var openSet: Queue<String>
-    val nodeData: MutableMap<String, NodeData> = mutableMapOf()
+    private lateinit var openSet: Queue<String>
+    private val nodeData: MutableMap<String, NodeData> = mutableMapOf()
 
     // Priority queue requires api version 24 for some reason
-    open fun findRoom(start: String, target: String): List<List<LatLng>> {
-        if(graph.get(start) == null) {
+    open fun findRoom(start: String): List<List<Node>> {
+        if (graph.get(start) == null) {
             throw NonexistentLocationException("Location $start was not found in the graph")
         }
 
@@ -22,18 +22,22 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         openSet = open
         open.add(start)
         nodeData.clear()
-        graph.forEach {code ->
+        graph.forEach { code ->
             nodeData[code] = NodeData()
         }
         nodeData[start]!!.cheapest = 0.0
 
-        while(!isComplete() && open.isNotEmpty()) {
-            iterate(target)
+        while (!isComplete() && open.isNotEmpty()) {
+            iterate()
         }
 
-        return getResults().map {
+        val results = getResults().map {
             reconstructPath(it)
         }
+
+        return results.sortedWith(Comparator { l1, l2 ->
+            l1.size - l2.size
+        })
     }
 
     abstract fun isComplete(): Boolean
@@ -41,20 +45,10 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     abstract fun visit(node: Node)
     abstract fun getResults(): List<String>
 
-    //TODO: Reinstate priority queue mechanism
-//    fun calculatePriority(s1: String, s2: String, target: String): Int {
-//        val node1 = graph.get(s1)
-//        val node2 = graph.get(s2)
-//        val targetNode = graph.get(target)
-//
-//        val comparison = approximateDistance(node1, targetNode) - approximateDistance(node2, targetNode)
-//        if(comparison < 0) return -1
-//        else if(comparison > 0) return 1
-//        else return 0
-//    }
+    // TODO: Reinstate priority queue mechanism
 
     private fun approximateDistance(node1: Node?, node2: Node?): Double {
-        if(node1 == null || node2 == null)
+        if (node1 == null || node2 == null)
             return Double.MAX_VALUE
         val deltaX = node2.x - node1.x
         val deltaY = node2.y - node1.y
@@ -63,7 +57,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         return sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ)
     }
 
-    private fun iterate(target: String) {
+    private fun iterate() {
         val curr = openSet.remove()!!
         val currNode = graph.get(curr)!!
         val currData = nodeData[curr]!!
@@ -73,38 +67,30 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)
-            if(canVisit(neighbor) && length < neighborData.cheapest) {
+            if (canVisit(neighbor) && length < neighborData.cheapest) {
                 visit(neighbor)
                 neighborData.cameFrom = curr
                 neighborData.cheapest = length
-                neighborData.estimated = neighborData.cheapest + approximateDistance(neighbor, graph.get(target))
-                if(!openSet.contains(it)) {
+                if (!openSet.contains(it)) {
                     openSet.add(it)
                 }
             }
         }
-
     }
 
-    private fun reconstructPath(end: String): List<LatLng> {
-        var current = end;
-        val totalPath: MutableList<LatLng> = mutableListOf(getCoordinatesOfNode(end))
-        while(nodeData[current]!!.cameFrom != null) {
+    private fun reconstructPath(end: String): List<Node> {
+        var current = end
+        val totalPath: MutableList<Node> = mutableListOf(graph.get(end)!!)
+        while (nodeData[current]!!.cameFrom != null) {
             current = nodeData[current]!!.cameFrom!!
-            totalPath.add(0, getCoordinatesOfNode(current))
+            totalPath.add(0, graph.get(current)!!)
         }
         return totalPath
     }
 
-    private fun getCoordinatesOfNode(code: String): LatLng {
-        val node = graph.get(code) ?: throw NonexistentLocationException("Could not find room: $code")
-        return LatLng(node!!.y, node!!.x)
-    }
-
     data class NodeData(
         var cameFrom: String? = null,
-        var cheapest: Double = Double.MAX_VALUE,
-        var estimated: Double = Double.MAX_VALUE
+        var cheapest: Double = Double.MAX_VALUE
     )
 }
 

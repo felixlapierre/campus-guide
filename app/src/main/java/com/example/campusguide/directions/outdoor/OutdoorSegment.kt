@@ -1,15 +1,16 @@
 package com.example.campusguide.directions.outdoor
 
-import com.example.campusguide.directions.indoor.IndoorSegment
+import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
+import com.example.campusguide.directions.indoor.IndoorSegment
 import com.google.android.gms.maps.model.LatLng
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 class OutdoorSegment(private val start: String, private val args: SegmentArgs) : Segment {
     private val route = OutdoorRoute(args.outdoorDirections)
@@ -19,7 +20,7 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun setNext(next: IndoorSegment) {
         routingTask?.cancel()
         routingTask = GlobalScope.async {
-            route.set(start, next.getBuilding().address, args.travelMode)
+            route.set(start, next.getBuilding().address, args.travelMode, args.transitPreference)
         }
         val nextSegment = IndoorSegment(next.getBuilding().code, next.getBuilding().nodes[0].code, args)
         nextSegment.setNext(next)
@@ -29,7 +30,7 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     override fun setNext(next: OutdoorSegment) {
         routingTask?.cancel()
         routingTask = GlobalScope.async {
-            route.set(start, next.start, args.travelMode)
+            route.set(start, next.start, args.travelMode, args.transitPreference)
         }
         this.next = next
     }
@@ -38,8 +39,8 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
         segment.setNext(this)
     }
 
-    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>>{ cont ->
-        if(next == null) {
+    override suspend fun toListOfCoordinates() = suspendCoroutine<List<LatLng>> { cont ->
+        if (next == null) {
             cont.resume(emptyList())
         }
         GlobalScope.launch {
@@ -53,6 +54,14 @@ class OutdoorSegment(private val start: String, private val args: SegmentArgs) :
     }
 
     override fun getDuration(): Int {
-        return route.duration
+        return route.getDuration()
+    }
+
+    override fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return route.getSteps()
+    }
+
+    override fun getFare(): String {
+        return route.getFare()
     }
 }
