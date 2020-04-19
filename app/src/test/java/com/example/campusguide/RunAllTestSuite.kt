@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import com.example.campusguide.directions.AccessiblePathfindingTest
 import com.example.campusguide.directions.CallbackDirectionsConfirmTest
 import com.example.campusguide.directions.DirectionsTest
 import com.example.campusguide.directions.EmptyDirectionsGuardTest
@@ -42,7 +43,8 @@ import org.junit.runners.Suite
     HelperTest::class,
     PolygonUtilsTest::class,
     BuildingClickListenerTest::class,
-    LocationTest::class
+    LocationTest::class,
+    AccessiblePathfindingTest::class
 )
 
 class RunAllTestSuite
