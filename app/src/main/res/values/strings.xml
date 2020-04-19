@@ -14,4 +14,25 @@
     <string name="go_here">GO HERE</string>
     <string name="login_to_an_account">Login to an account</string>
     <string name="choose_your_calendar">Choose your calendar</string>
+    <string name="steps_and_more">Steps and More</string>
+    <string name="start">Start</string>
+    <string name="km">(- km)</string>
+    <string name="min">- min</string>
+    <string name="dash">-</string>
+    <string name="cafes">CAFÉS</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="shopping">Shopping</string>
+    <string name="pharmacies">Pharmacies</string>
+    <string name="sgw_campus_name">SGW Campus</string>
+    <string name="step_instruction_address">via Blvd Maisonneuve 0 and Rue Guy</string>
+    <string name="steps">Steps</string>
+    <string name="_4_min">4 min</string>
+    <string name="_350_m">(350 m)</string>
+    <string name="show_map">Show Map</string>
+    <string name="location">Location</string>
+    <string name="start_location">Start Location</string>
+    <string name="end_location">End Location</string>
+    <string name="result_line_2">Result line 2</string>
+    <string name="result_line_1">Result line 1</string>
+    <string name="some_text">Some text</string>
 </resources>

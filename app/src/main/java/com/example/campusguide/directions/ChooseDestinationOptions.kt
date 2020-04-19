@@ -24,7 +24,10 @@ import io.objectbox.kotlin.boxFor
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-class ChooseDestinationOptions(private val provider: SearchLocationProvider, private val locationSelectedListener: (location: Location) -> Unit) : DialogFragment() {
+class ChooseDestinationOptions(
+    private val provider: SearchLocationProvider,
+    private val locationSelectedListener: (location: Location) -> Unit
+) : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
