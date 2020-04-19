@@ -2,45 +2,44 @@ package com.example.campusguide.directions
 
 import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
-import java.time.Duration
 
-open class RoutePreviewData : Serializable{
-    private var steps : List<GoogleDirectionsAPIStep> = emptyList()
-    private var path : List<LatLng> = emptyList()
-    private var start : String = ""
-    private var end : String = ""
-    private  var distance : String = ""
+open class RoutePreviewData : Serializable {
+    private var steps: List<GoogleDirectionsAPIStep> = emptyList()
+    private var path: List<LatLng> = emptyList()
+    private var start: String = ""
+    private var end: String = ""
+    private var distance: String = ""
     private var duration: Int = 0
 
-    fun setDuration(d : Int){
+    fun setDuration(d: Int) {
         duration = d
     }
 
-    fun getDuration() : Int{
+    fun getDuration(): Int {
         return duration
     }
 
-    fun setDistance(s:String){
+    fun setDistance(s: String) {
         distance = s
     }
 
-    fun getDistance() : String{
+    fun getDistance(): String {
         return distance
     }
 
-    fun setStart(s:String){
+    fun setStart(s: String) {
         start = s
     }
 
-    fun getStart() : String{
+    fun getStart(): String {
         return start
     }
 
-    fun setEnd(s:String){
+    fun setEnd(s: String) {
         end = s
     }
 
-    fun getEnd() : String{
+    fun getEnd(): String {
         return end
     }
 
@@ -48,7 +47,7 @@ open class RoutePreviewData : Serializable{
         steps = set
     }
 
-    fun getSteps() : List<GoogleDirectionsAPIStep>{
+    fun getSteps(): List<GoogleDirectionsAPIStep> {
         return steps
     }
 
@@ -56,7 +55,7 @@ open class RoutePreviewData : Serializable{
         path = pathPolyline
     }
 
-    fun getPath() : List<LatLng> {
+    fun getPath(): List<LatLng> {
         return path
     }
 }

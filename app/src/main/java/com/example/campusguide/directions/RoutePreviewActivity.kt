@@ -16,12 +16,12 @@ import org.jsoup.Jsoup
 class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
     private lateinit var pathPolyline: RoutePreviewData
-    private lateinit var steps : List<GoogleDirectionsAPIStep>
-    private lateinit var stepPath : List<LatLng>
-    private var currentStepPath : MutableList<LatLng> = mutableListOf()
-    private lateinit var previousStepButton : Button
-    private lateinit var nextStepButton : Button
-    private var i : Int = 0
+    private lateinit var steps: List<GoogleDirectionsAPIStep>
+    private lateinit var stepPath: List<LatLng>
+    private var currentStepPath: MutableList<LatLng> = mutableListOf()
+    private lateinit var previousStepButton: Button
+    private lateinit var nextStepButton: Button
+    private var i: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +44,6 @@ class RoutePreviewActivity : AppCompatActivity() {
         nextStepButton = findViewById(R.id.nextStep)
         var stepInstruction = findViewById<TextView>(R.id.stepInstruction)
 
-
         stepInstruction.text = parseHTMLString(steps[0].htmlInstruction)
         previousStepButton.isEnabled = false
         stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_turn_right, 0, 0, 0)
@@ -53,7 +52,7 @@ class RoutePreviewActivity : AppCompatActivity() {
             val path = PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
             setPathOnMapAsync(path)
             setCurrentStep(0)
-            focusCameraOnCurrentStep(PathPolyline("","", currentStepPath), 0)
+            focusCameraOnCurrentStep(PathPolyline("", "", currentStepPath), 0)
         }
 
         previousStepButton.setOnClickListener {
@@ -70,31 +69,31 @@ class RoutePreviewActivity : AppCompatActivity() {
         return true
     }
 
-    private fun previousStep(textView: TextView){
+    private fun previousStep(textView: TextView) {
         i--
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
         focusCameraOnCurrentStep(
-            PathPolyline("","", currentStepPath),
+            PathPolyline("", "", currentStepPath),
             i
         )
-        if(i==0)
+        if (i == 0)
             previousStepButton.isEnabled = false
         else
             nextStepButton.isEnabled = true
     }
 
-    private fun nextStep(textView: TextView){
+    private fun nextStep(textView: TextView) {
         i++
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
         focusCameraOnCurrentStep(
-            PathPolyline("","", currentStepPath),
+            PathPolyline("", "", currentStepPath),
             i
         )
-        if(i == steps.size-1){
+        if (i == steps.size - 1) {
             nextStepButton.isEnabled = false
         } else {
             previousStepButton.isEnabled = true
@@ -110,7 +109,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun focusCameraOnCurrentStep(path: PathPolyline, step : Int){
+    private fun focusCameraOnCurrentStep(path: PathPolyline, step: Int) {
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
@@ -119,23 +118,23 @@ class RoutePreviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun parseHTMLString(string: String) : String{
+    private fun parseHTMLString(string: String): String {
         return Jsoup.parse(string).text()
     }
 
-    private fun setCurrentStep(i : Int){
+    private fun setCurrentStep(i: Int) {
         currentStepPath.clear()
         var startLatLng = LatLng(steps[i].startLocation.lat.toDouble(),
             steps[i].startLocation.lng.toDouble())
-        var endLatLng =  LatLng(steps[i].endLocation.lat.toDouble(),
+        var endLatLng = LatLng(steps[i].endLocation.lat.toDouble(),
             steps[i].endLocation.lng.toDouble())
         currentStepPath.add(startLatLng)
         currentStepPath.add(endLatLng)
     }
 
-    private fun setIcon(instruction: TextView, step : Int){
-        val drawable : Int =
-            when (steps[step].maneuver){
+    private fun setIcon(instruction: TextView, step: Int) {
+        val drawable: Int =
+            when (steps[step].maneuver) {
                 "turn-right" -> R.drawable.ic_turn_right
                 "turn-left" -> R.drawable.ic_turn_left
                 "ramp-right" -> R.drawable.ic_turn_right

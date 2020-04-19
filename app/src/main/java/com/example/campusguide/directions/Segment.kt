@@ -13,7 +13,7 @@ interface Segment {
     fun appendTo(segment: Segment)
     suspend fun toListOfCoordinates(): List<LatLng>
     fun getDuration(): Int
-    fun getDistance() : String
+    fun getDistance(): String
     fun getSteps(): List<GoogleDirectionsAPIStep>
     fun getFare(): String
 }

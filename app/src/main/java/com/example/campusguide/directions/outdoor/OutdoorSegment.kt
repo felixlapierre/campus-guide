@@ -1,9 +1,9 @@
 package com.example.campusguide.directions.outdoor
 
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
-import com.example.campusguide.directions.indoor.IndoorSegment
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
+import com.example.campusguide.directions.indoor.IndoorSegment
 import com.google.android.gms.maps.model.LatLng
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine

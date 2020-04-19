@@ -5,8 +5,8 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.AdapterView
+import android.widget.Button
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
@@ -28,8 +28,8 @@ import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
-import com.google.gson.Gson
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -105,12 +105,11 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 }
             }
             runOnUiThread {
-                findViewById<TextView>(R.id.route_duration).text = "${currentPath.getDuration()/60} min"
+                findViewById<TextView>(R.id.route_duration).text = "${currentPath.getDuration() / 60} min"
                 findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
                 findViewById<Button>(R.id.startButton).isEnabled = true
                 findViewById<Button>(R.id.steps).isEnabled = true
             }
-
         }
 
         currentPath = mainPaths.getValue("driving")
@@ -124,7 +123,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             routePreviewData.setStart(startName)
             routePreviewData.setEnd(endName)
             routePreviewData.setDistance(currentPath.getDistance())
-            routePreviewData.setDuration(currentPath.getDuration()/60)
+            routePreviewData.setDuration(currentPath.getDuration() / 60)
             val studentDataObjectAsAString = Gson().toJson(routePreviewData)
             val stepIntent = Intent(this, StepsActivity::class.java)
             stepIntent.putExtra("Steps", studentDataObjectAsAString)
@@ -172,7 +171,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                         initializeListView()
                     }
             }
-            route_duration.text = "${currentPath.getDuration()/60} min"
+            route_duration.text = "${currentPath.getDuration() / 60} min"
         }
     }
 
@@ -187,7 +186,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         findViewById<RadioButton>(radioButtonId).apply {
             text = "${adapter.getItem(position).duration / 60} min"
         }
-        route_duration.text = "${currentPath.getDuration()/60} min"
+        route_duration.text = "${currentPath.getDuration() / 60} min"
         route_distance.text = "(${currentPath.getDistance()})"
     }
 

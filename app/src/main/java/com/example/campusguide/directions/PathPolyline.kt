@@ -42,7 +42,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         endName,
         GlobalScope.async {
             segment.toListOfCoordinates()
-        }){
+        }) {
         this.segment = segment
     }
 
@@ -92,7 +92,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
             .snippet("Destination")
 
         routePreviewData.setPath(path)
-        if(this::segment.isInitialized)
+        if (this::segment.isInitialized)
             routePreviewData.setSteps(segment.getSteps())
     }
 
@@ -119,19 +119,19 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         return segment.getSteps()
     }
 
-    fun getDuration() : Int {
+    fun getDuration(): Int {
         return segment.getDuration()
     }
 
-    fun getDistance() : String{
+    fun getDistance(): String {
         return segment.getDistance()
     }
 
-    fun getFare() : String {
+    fun getFare(): String {
         return segment.getFare()
     }
 
-    fun getRoutePreviewData() : RoutePreviewData{
+    fun getRoutePreviewData(): RoutePreviewData {
         return routePreviewData
     }
 }

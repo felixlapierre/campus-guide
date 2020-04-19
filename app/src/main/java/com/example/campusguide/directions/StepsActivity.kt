@@ -15,10 +15,10 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_steps.*
 import org.jsoup.Jsoup
 
-class StepsActivity : AppCompatActivity(){
+class StepsActivity : AppCompatActivity() {
     private lateinit var path: RoutePreviewData
     private lateinit var gson: Gson
-    private var steps : List<GoogleDirectionsAPIStep> = emptyList()
+    private var steps: List<GoogleDirectionsAPIStep> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -56,9 +56,9 @@ class StepsActivity : AppCompatActivity(){
         return true
     }
 
-    private class DirectionStepsAdapter(context: Context, steps: List<GoogleDirectionsAPIStep>) : BaseAdapter(){
-        private val mContext : Context
-        private val direction : List<GoogleDirectionsAPIStep>
+    private class DirectionStepsAdapter(context: Context, steps: List<GoogleDirectionsAPIStep>) : BaseAdapter() {
+        private val mContext: Context
+        private val direction: List<GoogleDirectionsAPIStep>
 
         init {
             mContext = context
@@ -88,9 +88,9 @@ class StepsActivity : AppCompatActivity(){
             return direction.size
         }
 
-        private fun setIcon(textView: TextView, position: Int){
-            val drawable : Int =
-                when (direction[position].maneuver){
+        private fun setIcon(textView: TextView, position: Int) {
+            val drawable: Int =
+                when (direction[position].maneuver) {
                     "turn-right" -> R.drawable.ic_turn_right
                     "turn-left" -> R.drawable.ic_turn_left
                     "ramp-right" -> R.drawable.ic_turn_right

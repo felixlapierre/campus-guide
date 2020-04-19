@@ -14,7 +14,7 @@ class OutdoorRoute constructor(private val directions: OutdoorDirections) {
     suspend fun set(start: String, end: String, travelMode: String, transitPreference: String?) {
         val response = directions.getDirections(start, end, travelMode, transitPreference)
 
-        if(response != null) {
+        if (response != null) {
            line = PolylineEncoding.decode(response.routes[0].overviewPolyline.points).map {
                LatLng(it.lat, it.lng)
            }
