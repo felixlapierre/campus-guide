@@ -5,7 +5,7 @@ import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.google.android.gms.maps.model.LatLng
 
 /**
- * Represents a segment of a route.
+ * Represents a segment of a path.
  */
 interface Segment {
     fun setNext(next: IndoorSegment)

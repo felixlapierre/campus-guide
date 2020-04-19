@@ -92,6 +92,17 @@
             android:paddingStart="10dp"
             android:onClick="onRadioButtonClicked"
             android:contentDescription="transitRadioButton"/>
+        <RadioButton
+            android:id="@+id/radio_shuttle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@drawable/ic_directions_transit"
+            android:layout_gravity="center_vertical"
+            android:text="Shuttle"
+            android:paddingStart="10dp"
+            android:onClick="onRadioButtonClicked"
+            android:contentDescription="shuttleRadioButton"/>
     </RadioGroup>
     <fragment
         android:id="@+id/directions_activity_map"

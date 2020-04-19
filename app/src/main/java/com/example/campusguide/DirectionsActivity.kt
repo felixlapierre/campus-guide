@@ -8,12 +8,9 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
-import com.example.campusguide.directions.PathPolyline
-import com.example.campusguide.directions.Segment
-import com.example.campusguide.directions.SegmentArgs
-import com.example.campusguide.directions.indoor.IndoorSegment
+import com.example.campusguide.directions.LocationMetadata
+import com.example.campusguide.directions.Route
 import com.example.campusguide.directions.outdoor.OutdoorDirections
-import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
@@ -25,12 +22,12 @@ import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
-    private lateinit var start: String
-    private lateinit var end: String
-    private lateinit var startName: String
-    private lateinit var endName: String
-    private lateinit var currentPath: PathPolyline
-    private lateinit var paths: Map<String, PathPolyline>
+    private lateinit var start: LocationMetadata
+    private lateinit var end: LocationMetadata
+    private lateinit var currentRoute: Route
+    private lateinit var paths: Map<String, Route>
+    private lateinit var errorListener: DisplayMessageErrorListener
+    private lateinit var buildingIndexSingleton: BuildingIndexSingleton
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -40,34 +37,60 @@ class DirectionsActivity : AppCompatActivity() {
             Color.parseColor(Constants.PRIMARY_COLOR_DARK) // enabled
         )
     )
+    private val giveMeAnOutdoorDirections =  {
+            val directions = OutdoorDirections(
+                ApiKeyRequestDecorator(
+                    this,
+                    VolleyRequestDispatcher(
+                        this,
+                        errorListener
+                    )
+                ),
+                KlaxonDirectionsAPIResponseParser(),
+                errorListener
+            )
+            directions
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_directions)
 
+        this.errorListener= DisplayMessageErrorListener(this)
+        this.buildingIndexSingleton = BuildingIndexSingleton.getInstance(assets)
+
         map = GoogleMapAdapter()
         val initializer = GoogleMapInitializer(this, map, "directions_activity_map")
 
         // Extract origin and destination from the intent
-        start = intent.getStringExtra("OriginEncoded")!!
-        end = intent.getStringExtra("DestinationEncoded")!!
-        startName = intent.getStringExtra("OriginName")!!
-        endName = intent.getStringExtra("DestinationName")!!
+        start = LocationMetadata(
+            encoded = intent.getStringExtra("OriginEncoded")!!,
+            name = intent.getStringExtra("OriginName")!!
+        )
+        end = LocationMetadata(
+            encoded = intent.getStringExtra("DestinationEncoded")!!,
+            name = intent.getStringExtra("DestinationName")!!
+        )
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
-            text = startName
+            text = start.name
         }
 
         findViewById<TextView>(R.id.destination).apply {
-            text = endName
+            text = start.name
         }
 
         // Hash map containing (travelMode, path) pairs
         paths = mapOf(
-            "driving" to createPath(startName, endName, "driving"),
-            "walking" to createPath(startName, endName, "walking"),
-            "transit" to createPath(startName, endName, "transit")
+            "driving" to Route(start, end, "driving",
+                buildingIndexSingleton, giveMeAnOutdoorDirections),
+            "walking" to Route(start, end, "walking",
+                buildingIndexSingleton, giveMeAnOutdoorDirections),
+            "transit" to Route(start, end, "transit",
+                buildingIndexSingleton, giveMeAnOutdoorDirections),
+            "shuttle" to Route(start, end, "shuttle",
+                buildingIndexSingleton, giveMeAnOutdoorDirections)
         )
 
         // Display travel times
@@ -78,17 +101,17 @@ class DirectionsActivity : AppCompatActivity() {
                     val radioButtonId = "radio_$travelMode"
                     val id = resources.getIdentifier(radioButtonId, "id", packageName)
                     findViewById<RadioButton>(id).apply {
-                        text = "${path.segment.getDuration() / 60} min"
+                        text = "${path.getDuration() / 60} min"
                         buttonTintList = colorStateList
                     }
                 }
             }
         }
 
-        currentPath = paths.getValue("driving")
+        currentRoute = paths.getValue("driving")
 
         initializer.setOnMapReadyListener {
-            setPathOnMapAsync(currentPath)
+            setRouteOnMapAsync(currentRoute)
         }
     }
 
@@ -110,70 +133,44 @@ class DirectionsActivity : AppCompatActivity() {
                 R.id.radio_driving ->
                     if (checked) {
                         removePreviousPath()
-                        currentPath = paths.getValue("driving")
-                        setPathOnMapAsync(currentPath)
+                        currentRoute = paths.getValue("driving")
+                        setRouteOnMapAsync(currentRoute)
                     }
                 R.id.radio_walking ->
                     if (checked) {
                         removePreviousPath()
-                        currentPath = paths.getValue("walking")
-                        setPathOnMapAsync(currentPath)
+                        currentRoute = paths.getValue("walking")
+                        setRouteOnMapAsync(currentRoute)
                     }
                 R.id.radio_transit ->
                     if (checked) {
                         removePreviousPath()
-                        currentPath = paths.getValue("transit")
-                        setPathOnMapAsync(currentPath)
+                        currentRoute = paths.getValue("transit")
+                        setRouteOnMapAsync(currentRoute)
+                    }
+                R.id.radio_shuttle ->
+                    if (checked) {
+                        removePreviousPath()
+                        currentRoute = paths.getValue("shuttle")
+                        setRouteOnMapAsync(currentRoute)
                     }
             }
         }
     }
 
-    private fun isIndoorLocation(encodedLocation: String): Boolean {
-        return encodedLocation.startsWith(Constants.INDOOR_LOCATION_IDENTIFIER)
-    }
-
-    private fun createSegment(location: String, args: SegmentArgs): Segment {
-        return if (isIndoorLocation(location))
-            IndoorSegment(location, args)
-        else OutdoorSegment(location, args)
-    }
-
-    private fun setPathOnMapAsync(path: PathPolyline) {
+    private fun setRouteOnMapAsync(route: Route) {
         GlobalScope.launch {
-            path.waitUntilCreated()
+            route.waitUntilCreated()
             runOnUiThread {
-                map.addPath(path)
+               val  pathPolylines = route.getPathPolylines()
+               pathPolylines.forEach { map.addPath(it) }
             }
         }
     }
 
-    private fun createPath(startName: String, endName: String, travelMode: String): PathPolyline {
-        val errorListener = DisplayMessageErrorListener(this)
-        val directions = OutdoorDirections(
-            ApiKeyRequestDecorator(
-                this,
-                VolleyRequestDispatcher(
-                    this,
-                    errorListener
-                )
-            ),
-            KlaxonDirectionsAPIResponseParser(),
-            errorListener
-        )
-        val segmentArgs =
-            SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions)
-
-        val firstSegment = createSegment(start, segmentArgs)
-        val secondSegment = createSegment(end, segmentArgs)
-        secondSegment.appendTo(firstSegment)
-
-        return PathPolyline(startName, endName, firstSegment)
-    }
-
     private fun removePreviousPath() {
-        if (::currentPath.isInitialized) {
-            currentPath.removeFromMap()
+        if (::currentRoute.isInitialized) {
+            currentRoute.removeFromMap()
         }
     }
 }
