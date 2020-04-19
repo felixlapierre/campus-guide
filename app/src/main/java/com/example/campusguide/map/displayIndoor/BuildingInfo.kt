@@ -46,7 +46,7 @@ class BuildingInfo constructor(private val buildingName: String, private val map
         return LatLng(0.0, 0.0)
     }
     private fun setFloors(): IntArray? {
-        if (buildingName == Constants.HALL) return intArrayOf(4, 5, 6, 7, 8)
+        if (buildingName == Constants.HALL) return intArrayOf(1, 2, 4, 5, 6, 7, 8)
         if (buildingName == Constants.LIBRARY) return intArrayOf(2, 3, 4, 5)
 
         return null
@@ -74,6 +74,7 @@ class BuildingInfo constructor(private val buildingName: String, private val map
         return null
     }
 
+
     private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float, buildings: List<Building>): HashMap<Int, Floor> {
         val buildingFloors = hashMapOf<Int, Floor>()
         val building = buildings!!.first { it.code?.equals(buildingCode, true) }
@@ -97,9 +98,9 @@ class BuildingInfo constructor(private val buildingName: String, private val map
     }
 
     /**
-     * Finds the ameneities on a building's floor and return a list of map markers
+     * Finds the amenities on a building's floor and return a list of map markers
      * @param building The building in which to find the rooms
-     * @param floorNumber The floornumber on which we want to find amenitites
+     * @param floorNumber The floornumber on which we want to find amenities
      * @param map The map to which the markers are added
      * @return A list of map markers
      */
