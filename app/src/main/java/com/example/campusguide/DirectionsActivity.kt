@@ -185,9 +185,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         // Change the transit travel time depending on which optional route was selected
         val radioButtonId = resources.getIdentifier("radio_transit", "id", packageName)
         findViewById<RadioButton>(radioButtonId).apply {
-            val travelTime = "${adapter.getItem(position).duration / 60} min"
-            text = travelTime
+            text = "${adapter.getItem(position).duration / 60} min"
         }
+        route_duration.text = "${currentPath.getDuration()/60} min"
+        route_distance.text = "(${currentPath.getDistance()})"
     }
 
     private fun isIndoorLocation(encodedLocation: String): Boolean {
@@ -242,12 +243,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         if (!mapFragment.isVisible) {
             this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
+            route_layout.visibility = View.VISIBLE
         }
     }
 
     private fun hideMap() {
         val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
+        route_layout.visibility = View.GONE
     }
 
     private fun initializeListView() {
@@ -271,9 +274,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun onTravelModeClicked(travelMode: String, paths: Map<String, PathPolyline>) {
-        showMap()
         removePreviousPath()
         currentPath = paths.getValue(travelMode)
         setPathOnMapAsync(currentPath)
+        showMap()
     }
 }

@@ -135,6 +135,11 @@
         tools:context=".DirectionsActivity" />
 
     <LinearLayout
+        android:id="@+id/route_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal">
@@ -191,5 +196,6 @@
             android:drawablePadding="5dp"
             android:background="#FFFFFF"
             android:enabled="false"></Button>
+    </LinearLayout>
     </LinearLayout>
 </LinearLayout>
