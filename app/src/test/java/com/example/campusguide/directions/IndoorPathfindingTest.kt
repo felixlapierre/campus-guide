@@ -3,6 +3,7 @@ package com.example.campusguide.directions
 import com.example.campusguide.directions.indoor.FindRoomPathfinding
 import com.example.campusguide.directions.indoor.Graph
 import com.example.campusguide.directions.indoor.NonexistentLocationException
+import com.example.campusguide.directions.indoor.PathNotFoundException
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.Node
 import com.example.campusguide.search.indoor.Room
@@ -32,7 +33,7 @@ class IndoorPathfindingTest {
             Node("nodeB", "1_nodeB", -73.2, 43.2, mutableListOf("1_nodeC", "102.00")),
             Node("nodeC", "1_nodeC", -73.3, 43.3, mutableListOf("103.00"))
         )
-        val building = Building("someName", "someCode", "someAddress", "someServices", "1.0", "2.0", rooms, nodes)
+        val building = Building("someName", "someCode", "someAddress", "someDepartments", "someServices", "1.0", "2.0", rooms, nodes)
         graph = Graph(building)
     }
 
@@ -41,14 +42,14 @@ class IndoorPathfindingTest {
         val pathfinder = FindRoomPathfinding(graph)
         val paths = pathfinder.findRoom("1_nodeA", "103.00")
         Assert.assertEquals(paths.size, 1)
-        val path = paths[0]
-        Assert.assertEquals(path.size, 4)
+        val path = paths[0][0]
+        Assert.assertEquals(path.points.size, 4)
 
         val expectedPath = arrayOf("1_nodeA", "1_nodeB", "1_nodeC", "103.00").map {
                 val node = graph.get(it)!!
                 LatLng(node.y, node.x)
             }
-        for ((index, element) in path.withIndex()) {
+        for ((index, element) in path.points.withIndex()) {
             assert(element == expectedPath[index])
         }
     }
@@ -56,21 +57,21 @@ class IndoorPathfindingTest {
     @Test
     fun findAdjacent() {
         val pathfinder = FindRoomPathfinding(graph)
-        val paths = pathfinder.findRoom("1_nodeB", "102.00")
+        val paths = pathfinder.findRoom("1_nodeB", "102.00")[0]
         Assert.assertEquals(paths.size, 1)
         val path = paths[0]
-        Assert.assertEquals(path.size, 2)
+        Assert.assertEquals(path.points.size, 2)
 
         val expectedPath = arrayOf("1_nodeB", "102.00").map {
             val node = graph.get(it)!!
             LatLng(node.y, node.x)
         }
-        for ((index, element) in path.withIndex()) {
+        for ((index, element) in path.points.withIndex()) {
             assert(element == expectedPath[index])
         }
     }
 
-    @Test(expected = NonexistentLocationException::class)
+    @Test(expected = PathNotFoundException::class)
     fun testTargetNonexistent() {
         val pathfinder = FindRoomPathfinding(graph)
         pathfinder.findRoom("1_nodeC", "nonexistent")
