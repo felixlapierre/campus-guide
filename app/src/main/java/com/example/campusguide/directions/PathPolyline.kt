@@ -5,6 +5,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.map.IMarker
 import com.example.campusguide.map.Map
 import com.example.campusguide.utils.Helper
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
@@ -18,7 +19,7 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class PathPolyline private constructor(val startName: String, val endName: String, private val deferred: Deferred<List<LatLng>>) {
+class PathPolyline private constructor(val startName: String, val endName: String, private val deferred: Deferred<List<Path>>) {
     class PolylineStyle {
         private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX)
         private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX)
@@ -26,10 +27,10 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         val pathColor = Color.parseColor(Constants.AZURE_COLOR)
     }
 
-    private lateinit var path: List<LatLng>
+    private lateinit var paths: List<Path>
+    private val polylineOptions: MutableList<PolylineOptions>
+    private var polylines: MutableList<Polyline>
     private var routePreviewData: RoutePreviewData = RoutePreviewData()
-    private var polylineOptions: PolylineOptions
-    private var polyline: Polyline? = null
 
     private var startMarkerOptions: MarkerOptions
     private var startMarker: IMarker? = null
@@ -41,72 +42,97 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         startName,
         endName,
         GlobalScope.async {
-            segment.toListOfCoordinates()
+            segment.toPath()
         }) {
         this.segment = segment
     }
 
-    constructor(startName: String, endName: String, line: List<LatLng>) : this(
+    constructor(startName: String, endName: String, line: List<Path>) : this(
         startName,
         endName,
         CompletableDeferred(line)
     )
 
     init {
-        polylineOptions = PolylineOptions()
+        polylineOptions = mutableListOf()
+        polylines = mutableListOf()
         startMarkerOptions = MarkerOptions()
         endMarkerOptions = MarkerOptions()
     }
 
-    fun addToMap(map: Map) {
-        polyline = map.addPolyline(polylineOptions)
+    fun addToMap(map: Map, floor: Int) {
+        for (i in paths.indices) {
+            val path = paths[i]
+            val opts = polylineOptions[i]
+            if (path.shouldDisplay(floor)) {
+                opts.zIndex(5F)
+            } else {
+                opts.zIndex(1F)
+            }
+        }
+        polylineOptions.forEach { line ->
+            polylines.add(map.addPolyline(line)!!)
+        }
         startMarker = map.addMarker(startMarkerOptions)
         endMarker = map.addMarker(endMarkerOptions)
     }
 
     fun removeFromMap() {
-        polyline?.remove()
+        polylines.forEach {
+            it.remove()
+        }
+        polylines = mutableListOf()
         startMarker?.remove()
         endMarker?.remove()
     }
 
     suspend fun waitUntilCreated() {
-        path = deferred.await()
-
+        paths = deferred.await()
         val style = PolylineStyle()
 
-        polylineOptions = PolylineOptions()
-        polylineOptions.addAll(path)
-            .color(style.pathColor)
-            .pattern(style.patternPolygonAlpha)
+        val firstPoint = paths[0].points[0]
+        val lastPath = paths[paths.size - 1]
+        val lastPoint = lastPath.points[lastPath.points.size - 1]
 
-        val firstPoint = path[0]
-        startMarkerOptions = MarkerOptions()
+        var endOfLastPath: LatLng? = null
+        paths.forEach { path ->
+            val opts = PolylineOptions()
+            if (endOfLastPath != null)
+                opts.add(endOfLastPath)
+            opts.addAll(path.points)
+                .color(style.pathColor)
+                .pattern(style.patternPolygonAlpha)
+            polylineOptions.add(opts)
+            endOfLastPath = path.points[path.points.size - 1]
+        }
+
         startMarkerOptions.position(firstPoint)
             .title(Helper.capitalizeWords(startName))
             .snippet("Start")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
-        val lastPoint = path[path.size - 1]
-        endMarkerOptions = MarkerOptions()
-        endMarkerOptions.position(lastPoint).title(Helper.capitalizeWords(endName))
+        endMarkerOptions.position(lastPoint)
+            .title(Helper.capitalizeWords(endName))
             .snippet("Destination")
 
-        routePreviewData.setPath(path)
+        routePreviewData.setPath(paths)
         if (this::segment.isInitialized)
             routePreviewData.setSteps(segment.getSteps())
     }
 
     fun getPathBounds(): LatLngBounds {
-        var north: Double = path[0].latitude
-        var south: Double = path[0].latitude
-        var east: Double = path[0].longitude
-        var west: Double = path[0].longitude
+        var north: Double = paths[0].points[0].latitude
+        var south: Double = paths[0].points[0].latitude
+        var east: Double = paths[0].points[0].longitude
+        var west: Double = paths[0].points[0].longitude
 
-        path.forEach { point ->
-            north = Math.max(north, point.latitude)
-            south = Math.min(south, point.latitude)
-            east = Math.max(east, point.longitude)
-            west = Math.min(west, point.longitude)
+        paths.forEach { path ->
+            path.points.forEach { point ->
+                north = Math.max(north, point.latitude)
+                south = Math.min(south, point.latitude)
+                east = Math.max(east, point.longitude)
+                west = Math.min(west, point.longitude)
+            }
         }
 
         val southwest = LatLng(south, west)

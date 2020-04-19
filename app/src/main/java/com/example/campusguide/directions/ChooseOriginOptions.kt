@@ -21,11 +21,13 @@ import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.search.indoor.IndoorLocationProvider
 import com.example.campusguide.search.outdoor.PlacesApiSearchLocationProvider
+import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.permissions.PermissionsSubject
 import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import java.lang.IndexOutOfBoundsException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
@@ -98,13 +100,22 @@ class ChooseOriginOptions(
     }
 
     private fun useLastEventLocation() {
-        val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
-        val mycal = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
+        try {
+            val calendarBox: Box<Calendar> = ObjectBox.boxStore.boxFor()
+            val myCal = Pair(calendarBox.all[0].id, calendarBox.all[0].name)
 
-        var lastLocation = Events(activity as MapsActivity, mycal).getLastEventLocation()
+            var lastLocation = Events(activity as MapsActivity, myCal).getLastEventLocation()
 
-        GlobalScope.launch {
-            FindEventLocation(activity as FragmentActivity, locationSelectedListener).getLocationOfEvent(lastLocation)
+            GlobalScope.launch {
+                FindEventLocation(
+                    activity as FragmentActivity,
+                    locationSelectedListener
+                ).getLocationOfEvent(lastLocation)
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            activity?.let { DisplayMessageErrorListener(it).onError(
+                Constants.NO_CALENDAR_LOGIN_EXCEPTION_MSG)
+            }
         }
     }
 }

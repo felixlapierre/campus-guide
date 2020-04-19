@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.R
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -17,8 +18,8 @@ class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
     private lateinit var pathPolyline: RoutePreviewData
     private lateinit var steps: List<GoogleDirectionsAPIStep>
-    private lateinit var stepPath: List<LatLng>
-    private var currentStepPath: MutableList<LatLng> = mutableListOf()
+    private lateinit var stepPath: List<Path>
+    private var currentStepPath: MutableList<Path> = mutableListOf()
     private lateinit var previousStepButton: Button
     private lateinit var nextStepButton: Button
     private var i: Int = 0
@@ -104,7 +105,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
-                map.addPath(path)
+                map.addPath(path, FloorPlans.getCurrentFloor())
             }
         }
     }
@@ -128,8 +129,8 @@ class RoutePreviewActivity : AppCompatActivity() {
             steps[i].startLocation.lng.toDouble())
         var endLatLng = LatLng(steps[i].endLocation.lat.toDouble(),
             steps[i].endLocation.lng.toDouble())
-        currentStepPath.add(startLatLng)
-        currentStepPath.add(endLatLng)
+        currentStepPath.add(Path(mutableListOf(startLatLng)))
+        currentStepPath.add(Path(mutableListOf(endLatLng)))
     }
 
     private fun setIcon(instruction: TextView, step: Int) {

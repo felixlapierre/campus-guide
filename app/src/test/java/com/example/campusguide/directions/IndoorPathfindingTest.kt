@@ -42,14 +42,14 @@ class IndoorPathfindingTest {
         val pathfinder = FindRoomPathfinding(graph)
         val paths = pathfinder.findRoom("1_nodeA", "103.00")
         Assert.assertEquals(paths.size, 1)
-        val path = paths[0]
-        Assert.assertEquals(path.size, 4)
+        val path = paths[0][0]
+        Assert.assertEquals(path.points.size, 4)
 
         val expectedPath = arrayOf("1_nodeA", "1_nodeB", "1_nodeC", "103.00").map {
                 val node = graph.get(it)!!
                 LatLng(node.y, node.x)
             }
-        for ((index, element) in path.withIndex()) {
+        for ((index, element) in path.points.withIndex()) {
             assert(element == expectedPath[index])
         }
     }
@@ -57,16 +57,16 @@ class IndoorPathfindingTest {
     @Test
     fun findAdjacent() {
         val pathfinder = FindRoomPathfinding(graph)
-        val paths = pathfinder.findRoom("1_nodeB", "102.00")
+        val paths = pathfinder.findRoom("1_nodeB", "102.00")[0]
         Assert.assertEquals(paths.size, 1)
         val path = paths[0]
-        Assert.assertEquals(path.size, 2)
+        Assert.assertEquals(path.points.size, 2)
 
         val expectedPath = arrayOf("1_nodeB", "102.00").map {
             val node = graph.get(it)!!
             LatLng(node.y, node.x)
         }
-        for ((index, element) in path.withIndex()) {
+        for ((index, element) in path.points.withIndex()) {
             assert(element == expectedPath[index])
         }
     }
