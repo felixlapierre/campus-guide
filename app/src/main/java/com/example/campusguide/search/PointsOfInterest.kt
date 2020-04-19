@@ -71,10 +71,6 @@ class PointsOfInterest(
             dismiss();
             searchPOINearCurrentLocation("Pharmacy");
         }
-        view.findViewById<Button>(R.id.grocerystore)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Grocery store");
-        }
         return view
     }
 

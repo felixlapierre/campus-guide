@@ -39,13 +39,4 @@
         android:text="Pharmacies"
         android:textColor="#F0F0F0" />
 
-    <Button
-        android:id="@+id/grocerystore"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginVertical="10dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:text="Grocery Stores"
-        android:textColor="#F0F0F0" />
-
 </LinearLayout>
