@@ -46,7 +46,7 @@ class DirectionsTest {
                     responseParser,
                     errorListener
                 )
-            val response = directions.getDirections(start, end, travelMode)
+            val response = directions.getDirections(start, end, travelMode, null)
 
             assert(response == null)
             verify(errorListener).onError(Constants.DIRECTIONS_API_NULL_RESPONSE)
@@ -77,7 +77,7 @@ class DirectionsTest {
                     errorListener
                 )
 
-            val response = directions.getDirections(start, end, travelMode)
+            val response = directions.getDirections(start, end, travelMode, null)
 
             assert(response == googleApiResponse)
             verify(errorListener, never()).onError(any())

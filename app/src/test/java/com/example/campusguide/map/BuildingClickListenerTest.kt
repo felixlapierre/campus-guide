@@ -37,6 +37,7 @@ class BuildingClickListenerTest {
                 "Hall",
                 "address",
                 "Code",
+                "departments",
                 "services",
                 "",
                 "",
