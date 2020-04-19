@@ -204,7 +204,7 @@
       "code": "2-near-tech",
       "x": 0.191,
       "y": 0.193,
-      "edges": ["2-tech-mens", "211.00", "2-tech-ne"]
+      "edges": ["2-tech-mens", "211.00", "2-tech-ne", "204.00"]
     },
     {
       "type": "bathroom",
@@ -464,7 +464,7 @@
       "x": 0.375,
       "y": 0.852,
       "edges": ["331.00", "3-stairs-SSW"]
-    },
+    },\f
     {
       "type": "stairs",
       "code": "3-stairs-SSW",
