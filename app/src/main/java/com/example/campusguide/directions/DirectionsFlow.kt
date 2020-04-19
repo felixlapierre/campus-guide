@@ -28,6 +28,7 @@ open class DirectionsFlow constructor(private val activity: AppCompatActivity, p
                 putExtra("DestinationEncoded", finalDestination.encodeForDirections())
             }
             activity.startActivity(intent)
+            println("After start activity")
         }
     }
 

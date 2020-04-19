@@ -4,6 +4,7 @@ import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.map.displayIndoor.OnZoomListener
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.BuildingHighlights
@@ -20,7 +21,8 @@ class GoogleMapInitializer constructor(
     private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null,
     private val infoWindowAdapter: GoogleMap.InfoWindowAdapter? = null,
     private val directionsFlow: DirectionsFlow? = null,
-    private val buildingIndexSingleton: BuildingIndexSingleton? = null
+    private val buildingIndexSingleton: BuildingIndexSingleton? = null,
+    private val floorPlans: FloorPlans
 ) : OnMapReadyCallback {
     private var onMapReadyListener: (() -> Unit)? = null
     private var googleMap: GoogleMap? = null
@@ -54,7 +56,7 @@ class GoogleMapInitializer constructor(
             )
 
             if (buildingIndexSingleton != null) {
-                OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity)
+                OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity, floorPlans)
             }
 
             BuildingHighlights(map, activity).addBuildingHighlights()

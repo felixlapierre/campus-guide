@@ -25,6 +25,7 @@ import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.displayIndoor.ChangeFloor
+import com.example.campusguide.map.displayIndoor.Floor
 import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
@@ -46,6 +47,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     private lateinit var mainPaths: Map<String, PathPolyline>
     private lateinit var extraPaths: Map<String, PathPolyline>
     private var currentFloor: Int = 0
+    private val floorPlans = FloorPlans()
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -71,10 +73,12 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             null,
             null,
             null,
-            BuildingIndexSingleton.getInstance(assets)
+            BuildingIndexSingleton.getInstance(assets),
+            floorPlans
         )
         setFloorPlanButtons()
-        FloorPlans.changeFloorListener = { floor ->
+
+        floorPlans.changeFloorListener = { floor ->
             onFloorChange(floor)
         }
 
@@ -335,10 +339,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         setPathOnMapAsync(currentPath)
     }
 
-    fun setFloorPlanButtons() {
+    private fun setFloorPlanButtons() {
         ChangeFloor.upButtonId = R.id.upOneFloor
         ChangeFloor.downButtonId = R.id.downOneFloor
-        FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
-        FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
+        floorPlans.floorUpButton = findViewById(R.id.upOneFloor)
+        floorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
 }

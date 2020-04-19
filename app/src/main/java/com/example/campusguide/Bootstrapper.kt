@@ -8,6 +8,7 @@ import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.location.SwitchCampus
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.map.infoWindow.BuildingClickListener
 import com.example.campusguide.search.CustomSearch
 import com.example.campusguide.search.PointsOfInterest
@@ -25,6 +26,8 @@ import database.ObjectBox
  */
 class Bootstrapper constructor(activity: MapsActivity) {
     init {
+        //Floor Plans
+        val floorPlans = FloorPlans()
         // Local Database
         ObjectBox.init(activity.applicationContext)
 
@@ -45,7 +48,16 @@ class Bootstrapper constructor(activity: MapsActivity) {
             directions
         )
         val CustomInfoWindow = CustomInfoWindow(activity, map)
-        GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener, CustomInfoWindow, directions, BuildingIndexSingleton(activity.assets))
+        GoogleMapInitializer(
+            activity,
+            map,
+            "maps_activity_map",
+            buildingClickListener,
+            CustomInfoWindow,
+            directions,
+            BuildingIndexSingleton(activity.assets),
+            floorPlans
+        )
 
         // Center on Location
         val centerLocation = CenterLocationListener(
@@ -57,13 +69,13 @@ class Bootstrapper constructor(activity: MapsActivity) {
 
         // Search using chain of responsibility
         val searchLocationProvider = IndoorLocationProvider(
-                BuildingIndexSingleton.getInstance(activity.assets),
-                AmenitiesLocationProvider(
-                    PlacesApiSearchLocationProvider(activity),
-                    permissions,
-                    activity,
-                    locationProvider
-                )
+            BuildingIndexSingleton.getInstance(activity.assets),
+            AmenitiesLocationProvider(
+                PlacesApiSearchLocationProvider(activity),
+                permissions,
+                activity,
+                locationProvider
+            )
         )
         val search =
             CustomSearch(
@@ -85,10 +97,11 @@ class Bootstrapper constructor(activity: MapsActivity) {
         searchNearby.locationListener = PopupSearchLocationListener(
             activity,
             DirectionsFlow(activity, permissions, locationProvider),
-            map)
+            map
+        )
 
         // Show Floor Plan
-        activity.setFloorPlanButtons()
+        activity.setFloorPlanButtons(floorPlans)
 
         // Switch Campus
         val switchCampus = SwitchCampus(
