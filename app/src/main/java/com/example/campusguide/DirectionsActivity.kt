@@ -82,7 +82,7 @@ class DirectionsActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.destination).apply {
-            text = start.name
+            text = end.name
         }
 
         // Hash map containing (travelMode, path) pairs
