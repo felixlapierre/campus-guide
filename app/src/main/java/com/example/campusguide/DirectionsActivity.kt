@@ -63,7 +63,16 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         setContentView(R.layout.activity_directions)
 
         map = GoogleMapAdapter()
-        val initializer = GoogleMapInitializer(this, map, "directions_activity_map")
+        // TODO: Refactor GoogleMapInitializer so it has less nullable constructor properties
+        val initializer = GoogleMapInitializer(
+            this,
+            map,
+            "directions_activity_map",
+            null,
+            null,
+            null,
+            BuildingIndexSingleton.getInstance(assets)
+        )
         setFloorPlanButtons()
         FloorPlans.changeFloorListener = { floor ->
             onFloorChange(floor)
@@ -94,8 +103,18 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         // Hash map containing (title, path) pairs for the optional transit paths
         extraPaths = mapOf(
             Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
-            Constants.TITLE_LESS_WALKING to createPath(startName, endName, "transit", "less_walking"),
-            Constants.TITLE_FEWER_TRANSFERS to createPath(startName, endName, "transit", "fewer_transfers")
+            Constants.TITLE_LESS_WALKING to createPath(
+                startName,
+                endName,
+                "transit",
+                "less_walking"
+            ),
+            Constants.TITLE_FEWER_TRANSFERS to createPath(
+                startName,
+                endName,
+                "transit",
+                "fewer_transfers"
+            )
         )
 
         // Display travel times
@@ -112,7 +131,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 }
             }
             runOnUiThread {
-                findViewById<TextView>(R.id.route_duration).text = "${currentPath.getDuration() / 60} min"
+                findViewById<TextView>(R.id.route_duration).text =
+                    "${currentPath.getDuration() / 60} min"
                 findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
                 findViewById<Button>(R.id.startButton).isEnabled = true
                 findViewById<Button>(R.id.steps).isEnabled = true
@@ -144,7 +164,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             routePreviewData.setEnd(endName)
             val studentDataObjectAsAString = Gson().toJson(routePreviewData)
             val routePreview = Intent(this, RoutePreviewActivity::class.java)
-                routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
+            routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
             this.startActivity(routePreview)
         }
 
@@ -227,7 +247,12 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
     }
 
-    private fun createPath(startName: String, endName: String, travelMode: String, transitPreference: String?): PathPolyline {
+    private fun createPath(
+        startName: String,
+        endName: String,
+        travelMode: String,
+        transitPreference: String?
+    ): PathPolyline {
         val errorListener = DisplayMessageErrorListener(this)
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
@@ -241,7 +266,12 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             errorListener
         )
         val segmentArgs =
-                SegmentArgs(travelMode, BuildingIndexSingleton.getInstance(assets), directions, transitPreference)
+            SegmentArgs(
+                travelMode,
+                BuildingIndexSingleton.getInstance(assets),
+                directions,
+                transitPreference
+            )
 
         val firstSegment = createSegment(start, segmentArgs)
         val secondSegment = createSegment(end, segmentArgs)
@@ -257,7 +287,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun showMap() {
-        val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
+        val mapFragment =
+            this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         if (!mapFragment.isVisible) {
             this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
             route_layout.visibility = View.VISIBLE
@@ -266,7 +297,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun hideMap() {
-        val mapFragment = this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
+        val mapFragment =
+            this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
         route_layout.visibility = View.GONE
         frame_layout.visibility = View.GONE
