@@ -22,6 +22,7 @@ class IndoorSearchResultProviderTest {
             "fakeBuilding",
             "BD",
             "fakeAddress",
+            "departments",
             "fakeServices",
             "1.0",
             "1.0",
