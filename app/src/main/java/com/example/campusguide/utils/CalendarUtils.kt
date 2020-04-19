@@ -13,7 +13,7 @@ class CalendarUtils constructor(private val activity: MapsActivity) {
 
     fun setCalendarMenuItemName(calendarName: String) {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
-        navView.menu.findItem(R.id.calendar).title = Constants.CALENDAR_SET + "$calendarName"
+        navView.menu.findItem(R.id.calendar).title = "${Constants.CALENDAR_SET} $calendarName"
     }
 
     fun getCalendarNameFromDB(): String {

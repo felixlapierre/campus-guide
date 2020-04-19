@@ -108,9 +108,9 @@ class Login constructor(
     }
 
     private fun updateUI() {
-        Toast.makeText(activity, Constants.LOGGED_INTO_TOAST + "$userEmail", Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, "${Constants.LOGGED_INTO_TOAST} $userEmail", Toast.LENGTH_LONG).show()
         // Change menu item title for Login to include logged in email
-        getNavView().menu.findItem(R.id.login_button).title = Constants.LOGOUT_OF + "$userEmail"
+        getNavView().menu.findItem(R.id.login_button).title = "${Constants.LOGOUT_OF} $userEmail"
         // Enable view for Calendar menu item
         getNavView().menu.findItem(R.id.calendar).isVisible = true
         // Set Calendar menu item title to pre-selected Calendar if found in DB

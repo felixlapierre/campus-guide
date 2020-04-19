@@ -41,7 +41,7 @@ class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
 
     override fun getResults(): List<String> {
         if (!complete) {
-            throw PathNotFoundException(Constants.NO_PATH_TO_ROOM + "$target")
+            throw PathNotFoundException("${Constants.NO_PATH_TO_ROOM} $target")
         }
         return listOf(target)
     }

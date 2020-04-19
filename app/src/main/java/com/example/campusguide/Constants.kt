@@ -94,16 +94,16 @@ object Constants {
 
     // Login menu item titles
     const val LOGIN_TO_ACCOUNT = "Login to an account"
-    const val LOGOUT_OF = "Logout of "
+    const val LOGOUT_OF = "Logout of"
 
     // Toast message
-    const val LOGGED_INTO_TOAST = "Logged into "
+    const val LOGGED_INTO_TOAST = "Logged into"
     const val LOGGED_OUT_TOAST = "Logged out"
-    const val CALENDAR_SET_TOAST = "Calendar set to: "
+    const val CALENDAR_SET_TOAST = "Calendar set to:"
 
     // Calendar menu item titles
     const val CHOOSE_CALENDAR = "Choose your calendar"
-    const val CALENDAR_SET = "Calendar: "
+    const val CALENDAR_SET = "Calendar:"
 
     // Throwable exception message for activity null and request denied
     const val ACTIVITY_NULL_MSG = "Activity cannot be null."
@@ -122,7 +122,7 @@ object Constants {
         "Could not get a response from the Google Directions API."
     const val NO_PATH_TO_ROOM = "Could not find a path to room: "
     const val LOCATION_NOT_FOUND_GRAPH = "location was not found in the graph."
-    const val LOCATION_NOT_FOUND_ROOM = "Could not find room: "
+    const val LOCATION_NOT_FOUND_ROOM = "Could not find room:"
     const val INDOOR_SEGMENT_NOT_FOUND_BUILDING = "not found. Cannot create IndoorSegment."
 
     // Throwable exception messages for IndoorLocationFinder

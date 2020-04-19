@@ -14,7 +14,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
     // Priority queue requires api version 24 for some reason
     open fun findRoom(start: String): List<List<Node>> {
         if (graph.get(start) == null) {
-            throw NonexistentLocationException("$start " + Constants.LOCATION_NOT_FOUND_GRAPH)
+            throw NonexistentLocationException("$start ${Constants.LOCATION_NOT_FOUND_GRAPH}")
         }
 
         // TODO: Determine a way to use a priority queue here instead
@@ -64,7 +64,7 @@ abstract class IndoorPathfinding constructor(private val graph: Graph) {
         val currData = nodeData[curr]!!
         currNode.edges.forEach {
             val neighbor = graph.get(it)
-                ?: throw NonexistentLocationException(Constants.LOCATION_NOT_FOUND_ROOM + "$it")
+                ?: throw NonexistentLocationException("${Constants.LOCATION_NOT_FOUND_ROOM} $it")
             val neighborData = nodeData[it]!!
 
             val length = currData.cheapest + approximateDistance(currNode, neighbor)

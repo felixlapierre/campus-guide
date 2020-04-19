@@ -20,7 +20,7 @@ class IndoorLocationProvider constructor(
         if (isIndoor) {
             val locationInfo = id.split("_")
             if (locationInfo.size != 3) {
-                throw IdFormatException("$id " + Constants.INDOOR_IDENTIFIER_BAD_FORMAT)
+                throw IdFormatException("$id ${Constants.INDOOR_IDENTIFIER_BAD_FORMAT}")
             }
             val buildingCode = locationInfo[1]
             val roomCode = locationInfo[2]
@@ -43,10 +43,10 @@ class IndoorLocationProvider constructor(
             ?: throw IndexNotLoadedException(Constants.INDOOR_INDEX_NOT_LOADED)
 
         val targetBuilding = buildings?.find { building -> building.code == buildingCode }
-            ?: throw BuildingNotFoundException("$buildingCode " + Constants.BUILDING_CODE_NOT_FOUND)
+            ?: throw BuildingNotFoundException("$buildingCode ${Constants.BUILDING_CODE_NOT_FOUND}")
 
         val targetRoom = targetBuilding.rooms.find { room -> room.code == roomCode }
-            ?: throw RoomNotFoundException("$roomCode " + Constants.ROOM_CODE_NOT_FOUND)
+            ?: throw RoomNotFoundException("$roomCode ${Constants.ROOM_CODE_NOT_FOUND}")
 
         return IndoorLocation(
             targetRoom.name,

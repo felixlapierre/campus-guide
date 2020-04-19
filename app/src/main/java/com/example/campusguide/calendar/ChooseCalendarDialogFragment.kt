@@ -65,7 +65,7 @@ class ChooseCalendarDialogFragment constructor(
             val selectedText = radioButton.text.toString()
             // Return selected calendar
             calendar.setSelectedCalendar(selectedText)
-            Toast.makeText(activity, Constants.CALENDAR_SET_TOAST + "$selectedText", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "${Constants.CALENDAR_SET_TOAST} $selectedText", Toast.LENGTH_LONG).show()
             // Change menu item title for Calendar to include selected calendar
             calendarUtils.setCalendarMenuItemName(selectedText)
         }
