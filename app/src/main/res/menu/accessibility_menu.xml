@@ -2,5 +2,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/access_popup"
-        android:title="Change Indoor Accessibility"/>
+        android:title="@string/choose_indoor_accessibility"/>
 </menu>

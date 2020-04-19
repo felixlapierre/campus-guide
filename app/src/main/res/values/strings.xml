@@ -12,4 +12,10 @@
     <string name="campus_map">Campus Map</string>
     <string name="poi">Near Me</string>
     <string name="go_here">GO HERE</string>
+    <string name="start_location">Start Location</string>
+    <string name="end_location">End Location</string>
+    <string name="choose_indoor_accessibility">Choose indoor accessibility</string>
+    <string name="cant_use_escalators">Can\'t use escalators</string>
+    <string name="cant_use_elevators">Can\'t use elevators</string>
+    <string name="cant_use_stairs">Can\'t use stairs</string>
 </resources>

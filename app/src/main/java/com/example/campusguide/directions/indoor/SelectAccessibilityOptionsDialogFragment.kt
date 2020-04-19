@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.CheckBox
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.Accessibility
+import com.example.campusguide.Constants
 import com.example.campusguide.DirectionsActivity
 import com.example.campusguide.R
 
@@ -26,14 +27,14 @@ class SelectAccessibilityOptionsDialogFragment(
 
         // set title of dialog box
         val builder: AlertDialog.Builder = AlertDialog.Builder(directionsActivity)
-            .setTitle("Select one or more options")
+            .setTitle(Constants.SELECT_ONE_MORE_OPTIONS)
 
         builder.setView(view)
         builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        builder.setPositiveButton("Confirm") { _, _ ->
+        builder.setPositiveButton(Constants.CONFIRM_CHOICE) { _, _ ->
             handleOKSelected()
-        }.setNegativeButton("Cancel", null)
+        }.setNegativeButton(Constants.CANCEL_CHOICE, null)
 
         return builder.create()
     }

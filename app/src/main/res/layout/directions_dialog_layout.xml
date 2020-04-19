@@ -16,7 +16,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
-        android:hint="Start Location"
+        android:hint="@string/start_location"
         android:inputType="text"
         android:visibility="visible"
         android:contentDescription="startLocationTextInput"/>
@@ -30,7 +30,7 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="sans-serif"
-        android:hint="End Location"
+        android:hint="@string/end_location"
         android:inputType="text"
         android:visibility="visible"
         android:contentDescription="endLocationTextInput"/>

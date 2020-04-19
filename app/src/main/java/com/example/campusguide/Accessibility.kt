@@ -26,24 +26,24 @@ object Accessibility {
 
     // private methods that change pathfinding
     private fun forbidEscalators() {
-        forbiddenRooms.add("escalators")
+        forbiddenRooms.add(Constants.ESCALATORS)
     }
 
     private fun forbidElevators() {
-        forbiddenRooms.add("elevators")
+        forbiddenRooms.add(Constants.ELEVATORS)
     }
 
     private fun forbidStairs() {
-        forbiddenRooms.add("stairs")
+        forbiddenRooms.add(Constants.STAIRS)
     }
 
     private fun allowEscalators() {
-        forbiddenRooms.remove("escalators")
+        forbiddenRooms.remove(Constants.ESCALATORS)
     }
     private fun allowElevators() {
-        forbiddenRooms.remove("elevators")
+        forbiddenRooms.remove(Constants.ELEVATORS)
     }
     private fun allowStairs() {
-        forbiddenRooms.remove("stairs")
+        forbiddenRooms.remove(Constants.STAIRS)
     }
 }
