@@ -116,8 +116,8 @@ class RoutePreviewActivity : AppCompatActivity() {
     }
 
     private fun setCurrentStep(i: Int) {
-        currentStepPath = LatLng(steps[i].endLocation.lat.toDouble(),
-            steps[i].endLocation.lng.toDouble())
+        currentStepPath = LatLng(steps[i].startLocation.lat.toDouble(),
+            steps[i].startLocation.lng.toDouble())
         focusCameraOnCurrentStep()
     }
 
