@@ -19,7 +19,7 @@
         android:id="@+id/route_preview_activity_map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="644dp"
+        android:layout_height="match_parent"
         tools:context=".RoutePreviewActivity">
 
         <Button
@@ -29,8 +29,7 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="72dp"
-            android:layout_marginBottom="50dp"
-            android:scaleY="-1"/>
+            android:layout_marginBottom="50dp"/>
 
         <Button
             android:id="@+id/nextStep"
@@ -39,8 +38,7 @@
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/ic_next_step"
-            android:scaleY="-1"/>
+            android:background="@drawable/ic_next_step"/>
     </fragment>
 
 </LinearLayout>

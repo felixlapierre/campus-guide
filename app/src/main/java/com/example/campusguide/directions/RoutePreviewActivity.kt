@@ -74,6 +74,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         i--
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
+        setCurrentStep(i)
         focusCameraOnCurrentStep(
             PathPolyline("","", currentStepPath),
             i
