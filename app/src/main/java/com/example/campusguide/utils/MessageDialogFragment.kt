@@ -12,7 +12,7 @@ class MessageDialogFragment constructor(private val message: String) : DialogFra
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(message)
-            builder.setPositiveButton(Constants.CONFIRM_CHOICE) { _, _ -> }
+            builder.setPositiveButton(Constants.OK_CHOICE) { _, _ -> }
             builder.create()
         } ?: throw IllegalStateException(Constants.ACTIVITY_NULL_MSG)
     }

@@ -45,9 +45,6 @@ object Constants {
     const val SHOPPING_MALL_POI = "Shopping mall"
     const val PHARMACY_POI = "Pharmacy"
 
-    // Node types
-    const val BATHROOM_NODE = "bathroom"
-
     // Search bounds
     const val SEARCH_BOTTOM_BOUND = 45.351240
     const val SEARCH_LEFT_BOUND = -74.031124
@@ -55,6 +52,7 @@ object Constants {
     const val SEARCH_RIGHT_BOUND = -73.417826
 
     // Dialog choices
+    const val OK_CHOICE = "OK"
     const val GO_CHOICE = "Go"
     const val CONFIRM_CHOICE = "CONFIRM"
     const val CANCEL_CHOICE = "Cancel"

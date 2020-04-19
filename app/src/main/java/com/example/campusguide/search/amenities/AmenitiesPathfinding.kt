@@ -17,7 +17,7 @@ class AmenitiesPathfinding(graph: Graph, private val filter: String) : IndoorPat
     }
 
     override fun visit(node: Node) {
-        if (node.type == Constants.BATHROOM_NODE) {
+        if (node.type == "bathroom") {
             listOfBathrooms.add(node.code)
         }
     }
