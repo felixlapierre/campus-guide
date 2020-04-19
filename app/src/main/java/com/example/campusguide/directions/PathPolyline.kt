@@ -108,12 +108,12 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
 
         startMarkerOptions.position(firstPoint)
             .title(Helper.capitalizeWords(startName))
-            .snippet("Start")
+            .snippet(Constants.START)
             .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
         endMarkerOptions.position(lastPoint)
             .title(Helper.capitalizeWords(endName))
-            .snippet("Destination")
+            .snippet(Constants.DESTINATION)
 
         routePreviewData.setPath(paths)
         if (this::segment.isInitialized)

@@ -8,6 +8,11 @@ import com.example.campusguide.MapsActivity
 import java.util.Date
 import kotlin.collections.ArrayList
 
+/**
+ * Class for handling events.
+ * Queries into the Calendar Provider database stored locally phone.
+ * Extracts events corresponding to calendar set.
+ */
 class Events constructor(
     val activity: MapsActivity,
     private var selectedCalendar: Pair<Long, String>
