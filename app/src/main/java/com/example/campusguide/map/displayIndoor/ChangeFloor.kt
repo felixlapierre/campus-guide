@@ -7,7 +7,7 @@ import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow, private val activity: Activity) : View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""

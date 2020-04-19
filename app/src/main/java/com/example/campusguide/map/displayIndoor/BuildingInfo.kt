@@ -15,14 +15,19 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow, private val activity: Activity) {
+class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
     private var floorPlans: HashMap<Int, Floor>? = null
     val startFloor: Int? = floors?.get(0)
 
     init {
-        buildingIndexSingleton.onLoaded = { buildings ->
+        var buildings = buildingIndexSingleton.getBuildings()
+        if (buildings == null) {
+            buildingIndexSingleton.onLoaded = { it ->
+                floorPlans = setUpFloorPlans(map, it)
+            }
+        } else {
             floorPlans = setUpFloorPlans(map, buildings)
         }
     }
@@ -90,6 +95,8 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
      * @return A list of map markers
      */
     private fun getFloorAmenities(building: Building, floorNumber: Int, map: GoogleMapAdapter): List<Marker> {
+        if (directionsFlow == null)
+            return emptyList()
         var amenities: MutableList<Marker> = mutableListOf()
         for (room in building.rooms) {
             val imageDescription =

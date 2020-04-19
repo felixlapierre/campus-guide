@@ -53,7 +53,7 @@ class GoogleMapInitializer constructor(
                 )
             )
 
-            if (directionsFlow != null && buildingIndexSingleton != null) {
+            if (buildingIndexSingleton != null) {
                 OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity)
             }
 

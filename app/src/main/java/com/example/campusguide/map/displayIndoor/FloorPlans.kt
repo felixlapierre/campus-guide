@@ -15,7 +15,7 @@ object FloorPlans {
 
     var changeFloorListener: ((Int) -> Unit)? = null
 
-    fun setUpChangeFloor(map: GoogleMapAdapter, buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow, activity: Activity) {
+    fun setUpChangeFloor(map: GoogleMapAdapter, buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow?, activity: Activity) {
         changeFloor = ChangeFloor(map, buildingIndexSingleton, directionsFlow, activity)
         changeFloor.changeFloorListener = changeFloorListener
     }
