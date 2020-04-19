@@ -1,6 +1,7 @@
 package com.example.campusguide
 
 import com.example.campusguide.directions.DirectionsFlow
+import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.PointsOfInterest
 import com.example.campusguide.utils.permissions.Permissions
