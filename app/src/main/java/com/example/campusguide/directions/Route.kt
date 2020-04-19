@@ -3,8 +3,8 @@ package com.example.campusguide.directions
 import android.widget.RadioButton
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.directions.outdoor.OutdoorDirections
-import com.example.campusguide.map.Map
 import com.example.campusguide.map.IMarker
+import com.example.campusguide.map.Map
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.Helper
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator

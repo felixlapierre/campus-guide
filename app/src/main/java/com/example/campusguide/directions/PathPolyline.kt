@@ -2,8 +2,8 @@ package com.example.campusguide.directions
 
 import android.graphics.Color
 import com.example.campusguide.Constants
-import com.example.campusguide.map.Map
 import com.example.campusguide.map.IMarker
+import com.example.campusguide.map.Map
 import com.example.campusguide.utils.Helper
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap

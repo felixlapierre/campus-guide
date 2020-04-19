@@ -3,8 +3,8 @@ package com.example.campusguide.map.infoWindow
 import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
-import com.example.campusguide.map.Map
 import com.example.campusguide.map.IMarker
+import com.example.campusguide.map.Map
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndex
 import com.example.campusguide.utils.PolygonUtils
