@@ -88,7 +88,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
         var amenities: MutableList<Marker> = mutableListOf()
         for (room in building.rooms) {
             val imageDescription =
-                BitmapDescriptorFactory.fromBitmap(Helper.textAsBitmap(room.code, 32f, Color.BLACK))
+                BitmapDescriptorFactory.fromBitmap(Helper.textAsBitmap(room.code, 40f, Color.BLACK))
             if (room.code.toDouble().toInt() in (floorNumber * 100)..((floorNumber + 1) * 100)) {
                 val marker = map.adapted.addMarker(
                     MarkerOptions()
