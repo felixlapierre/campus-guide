@@ -63,7 +63,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         setContentView(R.layout.activity_directions)
 
         map = GoogleMapAdapter()
-        //TODO: Refactor GoogleMapInitializer so it has less nullable constructor properties
+        // TODO: Refactor GoogleMapInitializer so it has less nullable constructor properties
         val initializer = GoogleMapInitializer(
             this,
             map,

@@ -23,7 +23,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
 
     init {
         var buildings = buildingIndexSingleton.getBuildings()
-        if(buildings == null) {
+        if (buildings == null) {
             buildingIndexSingleton.onLoaded = { it ->
                 floorPlans = setUpFloorPlans(map, it)
             }
@@ -95,7 +95,7 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
      * @return A list of map markers
      */
     private fun getFloorAmenities(building: Building, floorNumber: Int, map: GoogleMapAdapter): List<Marker> {
-        if(directionsFlow == null)
+        if (directionsFlow == null)
             return emptyList()
         var amenities: MutableList<Marker> = mutableListOf()
         for (room in building.rooms) {
