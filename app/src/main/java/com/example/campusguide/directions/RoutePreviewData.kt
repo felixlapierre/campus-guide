@@ -1,6 +1,5 @@
 package com.example.campusguide.directions
 
-import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 open class RoutePreviewData : Serializable {
