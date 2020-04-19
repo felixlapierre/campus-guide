@@ -16,7 +16,7 @@ class IndoorTag(
     override fun onInfoWindowClick(): GoogleMap.OnInfoWindowClickListener {
         return GoogleMap.OnInfoWindowClickListener {
             val location = Location(room.code, room.lat.toDouble(), room.lon.toDouble())
-            directionsFlow.startFlow(location)
+            directionsFlow.startFlow( destination = location)
         }
     }
 
