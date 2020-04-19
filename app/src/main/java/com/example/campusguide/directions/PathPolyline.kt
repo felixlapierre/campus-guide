@@ -5,6 +5,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.Helper
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.Dash
 import com.google.android.gms.maps.model.Gap
 import com.google.android.gms.maps.model.LatLng
@@ -85,6 +86,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         startMarkerOptions.position(firstPoint)
             .title(Helper.capitalizeWords(startName))
             .snippet("Start")
+            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
 
         val lastPoint = path[path.size - 1]
         endMarkerOptions = MarkerOptions()
