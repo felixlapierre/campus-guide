@@ -18,7 +18,7 @@ class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var pathPolyline: RoutePreviewData
     private lateinit var steps: List<GoogleDirectionsAPIStep>
     private lateinit var stepPath: List<LatLng>
-    private var currentStepPath: MutableList<LatLng> = mutableListOf()
+    private lateinit var currentStepPath: LatLng
     private lateinit var previousStepButton: Button
     private lateinit var nextStepButton: Button
     private var i: Int = 0
@@ -52,7 +52,6 @@ class RoutePreviewActivity : AppCompatActivity() {
             val path = PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
             setPathOnMapAsync(path)
             setCurrentStep(0)
-            focusCameraOnCurrentStep(PathPolyline("", "", currentStepPath), 0)
         }
 
         previousStepButton.setOnClickListener {
@@ -74,11 +73,6 @@ class RoutePreviewActivity : AppCompatActivity() {
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
-        focusCameraOnCurrentStep(
-            PathPolyline("", "", currentStepPath),
-            i
-        )
-
         if (i == 0) {
             previousStepButton.isEnabled = false
             textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
@@ -92,10 +86,6 @@ class RoutePreviewActivity : AppCompatActivity() {
         textView.text = parseHTMLString(steps[i].htmlInstruction)
         setIcon(textView, i)
         setCurrentStep(i)
-        focusCameraOnCurrentStep(
-            PathPolyline("", "", currentStepPath),
-            i
-        )
         if (i == steps.size - 1) {
             nextStepButton.isEnabled = false
             textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_place, 0, 0, 0)
@@ -113,11 +103,10 @@ class RoutePreviewActivity : AppCompatActivity() {
         }
     }
 
-    private fun focusCameraOnCurrentStep(path: PathPolyline, step: Int) {
+    private fun focusCameraOnCurrentStep() {
         GlobalScope.launch {
-            path.waitUntilCreated()
             runOnUiThread {
-                map.moveCamera(path.getPathBounds())
+                map.animateCamera(currentStepPath, 30f)
             }
         }
     }
@@ -127,13 +116,9 @@ class RoutePreviewActivity : AppCompatActivity() {
     }
 
     private fun setCurrentStep(i: Int) {
-        currentStepPath.clear()
-        var startLatLng = LatLng(steps[i].startLocation.lat.toDouble(),
-            steps[i].startLocation.lng.toDouble())
-        var endLatLng = LatLng(steps[i].endLocation.lat.toDouble(),
+        currentStepPath = LatLng(steps[i].endLocation.lat.toDouble(),
             steps[i].endLocation.lng.toDouble())
-        currentStepPath.add(startLatLng)
-        currentStepPath.add(endLatLng)
+        focusCameraOnCurrentStep()
     }
 
     private fun setIcon(instruction: TextView, step: Int) {
