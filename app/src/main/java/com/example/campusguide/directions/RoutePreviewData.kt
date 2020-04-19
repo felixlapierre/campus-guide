@@ -5,8 +5,8 @@ import java.io.Serializable
 import java.time.Duration
 
 open class RoutePreviewData : Serializable{
-    private lateinit var steps : List<GoogleDirectionsAPIStep>
-    private lateinit var path : List<LatLng>
+    private var steps : List<GoogleDirectionsAPIStep> = emptyList()
+    private var path : List<LatLng> = emptyList()
     private var start : String = ""
     private var end : String = ""
     private  var distance : String = ""

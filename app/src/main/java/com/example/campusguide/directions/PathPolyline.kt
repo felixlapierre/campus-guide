@@ -1,5 +1,7 @@
 package com.example.campusguide.directions
 
+import android.graphics.Color
+import com.example.campusguide.Constants
 import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.utils.Helper
@@ -18,16 +20,14 @@ import kotlinx.coroutines.async
 
 class PathPolyline private constructor(val startName: String, val endName: String, private val deferred: Deferred<List<LatLng>>) {
     class PolylineStyle {
-        private val patternDashLengthPx = 20.0f
-        private val patternGapLengthPx = 20.0f
-        private val patternDash: PatternItem = Dash(patternDashLengthPx)
-        private val patternGap: PatternItem = Gap(patternGapLengthPx)
+        private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX)
+        private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX)
         val patternPolygonAlpha = listOf(patternGap, patternDash)
-        val colorBlueArgb = 0xff0000ff
+        val pathColor = Color.parseColor(Constants.AZURE_COLOR)
     }
 
     private lateinit var path: List<LatLng>
-    private var stepsPath: RoutePreviewData = RoutePreviewData()
+    private var routePreviewData: RoutePreviewData = RoutePreviewData()
     private var polylineOptions: PolylineOptions
     private var polyline: Polyline? = null
 
@@ -77,7 +77,7 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
 
         polylineOptions = PolylineOptions()
         polylineOptions.addAll(path)
-            .color(style.colorBlueArgb.toInt())
+            .color(style.pathColor)
             .pattern(style.patternPolygonAlpha)
 
         val firstPoint = path[0]
@@ -91,9 +91,9 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         endMarkerOptions.position(lastPoint).title(Helper.capitalizeWords(endName))
             .snippet("Destination")
 
-        stepsPath.setPath(path)
+        routePreviewData.setPath(path)
         if(this::segment.isInitialized)
-            stepsPath.setSteps(segment.getSteps())
+            routePreviewData.setSteps(segment.getSteps())
     }
 
     fun getPathBounds(): LatLngBounds {
@@ -115,8 +115,8 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         return LatLngBounds(southwest, northeast)
     }
 
-    fun getSteps(): RoutePreviewData {
-        return stepsPath
+    fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return routePreviewData.getSteps()
     }
 
     fun getDuration() : Int {
@@ -125,5 +125,13 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
 
     fun getDistance() : String{
         return segment.getDistance()
+    }
+
+    fun getFare() : String {
+        return segment.getFare()
+    }
+
+    fun getRoutePreviewData() : RoutePreviewData{
+        return routePreviewData
     }
 }

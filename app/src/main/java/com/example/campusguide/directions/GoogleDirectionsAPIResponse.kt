@@ -51,9 +51,16 @@ data class GoogleDirectionsAPIRoute(
     val warnings: List<Any>,
 
     @Json(name = "waypoint_order")
-    var waypointOrder: List<Int>
+    var waypointOrder: List<Int>,
+
+    @Json(name = "fare")
+    val fare: GoogleDirectionsAPIFare = GoogleDirectionsAPIFare()
 )
 
+data class GoogleDirectionsAPIFare(
+    @Json(name = "text")
+    val text: String = ""
+)
 data class GoogleDirectionsAPIBounds(
 
     @Json(name = "northeast")
@@ -117,7 +124,34 @@ data class GoogleDirectionsAPIStep(
     val startLocation: GoogleDirectionsAPILocation,
 
     @Json(name = "travel_mode")
-    val travelMode: String
+    val travelMode: String,
+
+    @Json(name = "transit_details")
+    val transitDetails: GoogleDirectionsAPITransitDetails = GoogleDirectionsAPITransitDetails()
+)
+
+data class GoogleDirectionsAPITransitDetails(
+
+    @Json(name = "line")
+    val line: GoogleDirectionsAPITransitLine = GoogleDirectionsAPITransitLine()
+)
+
+data class GoogleDirectionsAPITransitLine(
+
+    @Json(name = "short_name")
+    val shortName: String = "",
+
+    @Json(name = "color")
+    val color: String = "",
+
+    @Json(name = "vehicle")
+    val vehicle: GoogleDirectionsAPIVehicle = GoogleDirectionsAPIVehicle()
+)
+
+data class GoogleDirectionsAPIVehicle(
+
+    @Json(name = "name")
+    val name: String = ""
 )
 
 data class GoogleDirectionsAPILocation(

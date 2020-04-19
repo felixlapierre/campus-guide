@@ -15,4 +15,5 @@ interface Segment {
     fun getDuration(): Int
     fun getDistance() : String
     fun getSteps(): List<GoogleDirectionsAPIStep>
+    fun getFare(): String
 }

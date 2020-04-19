@@ -3,60 +3,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/activity_directions_layout">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingEnd="20dp"
+        android:background="@color/colorPrimary">
         <ImageButton
             android:id="@+id/backspace"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:src="@drawable/ic_keyboard_backspace"
+            android:tint="@android:color/white"
             android:onClick="finishActivity"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
             android:background="?android:selectableItemBackgroundBorderless"/>
-        <ImageView
-            android:id="@+id/place_origin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_place"/>
-        <TextView
-            android:id="@+id/origin"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="18sp"
-            android:text="Origin"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:paddingEnd="20dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/rounded_container">
+            <ImageView
+                android:id="@+id/place_origin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:tint="@color/colorAzure"
+                android:src="@drawable/ic_place"/>
+            <TextView
+                android:id="@+id/origin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:textColor="@color/colorDarkGrey"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/place_destination"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="58dp"
+        android:orientation="horizontal"
+        android:paddingStart="50dp"
+        android:paddingEnd="21dp"
+        android:background="@color/colorPrimary">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
             android:paddingEnd="10dp"
-            android:src="@drawable/ic_place"/>
-        <TextView
-            android:id="@+id/destination"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="18sp"
-            android:text="Destination"/>
+            android:layout_margin="3dp"
+            android:background="@drawable/rounded_container">
+            <ImageView
+                android:id="@+id/place_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="8dp"
+                android:paddingEnd="10dp"
+                android:tint="@color/colorRed"
+                android:src="@drawable/ic_place"/>
+            <TextView
+                android:id="@+id/destination"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:textSize="14sp"
+                android:textColor="@color/colorDarkGrey"/>
+        </LinearLayout>
     </LinearLayout>
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_marginStart="25dp"
-        android:checkedButton="@id/radio_driving">
+        android:checkedButton="@id/radio_driving"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center"
+        android:gravity="center">
         <RadioButton
             android:id="@+id/radio_driving"
             android:layout_width="0dp"
@@ -65,7 +90,11 @@
             android:button="@drawable/ic_directions_car"
             android:layout_gravity="center_vertical"
             android:text="-"
-            android:paddingStart="10dp"
+            android:buttonTint="@color/colorPrimaryDark"
+            android:textColor="@drawable/travel_mode_button_color"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:layout_marginStart="25dp"
             android:onClick="onRadioButtonClicked"
             android:contentDescription="drivingRadioButton"/>
         <RadioButton
@@ -76,7 +105,10 @@
             android:button="@drawable/ic_directions_walk"
             android:layout_gravity="center_vertical"
             android:text="-"
-            android:paddingStart="10dp"
+            android:buttonTint="@color/colorPrimaryDark"
+            android:textColor="@drawable/travel_mode_button_color"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:onClick="onRadioButtonClicked"
             android:contentDescription="walkingRadioButton"/>
         <RadioButton
@@ -87,7 +119,10 @@
             android:button="@drawable/ic_directions_transit"
             android:layout_gravity="center_vertical"
             android:text="-"
-            android:paddingStart="10dp"
+            android:buttonTint="@color/colorPrimaryDark"
+            android:textColor="@drawable/travel_mode_button_color"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:onClick="onRadioButtonClicked"
             android:contentDescription="transitRadioButton"/>
     </RadioGroup>

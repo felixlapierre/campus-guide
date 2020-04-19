@@ -37,7 +37,6 @@ class IndoorSearchResultProvider constructor(
                 }
             }
         }
-
         return results
     }
 

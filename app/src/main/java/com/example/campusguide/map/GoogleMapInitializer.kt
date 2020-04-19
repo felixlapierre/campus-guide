@@ -2,6 +2,7 @@ package com.example.campusguide.map
 
 import androidx.fragment.app.FragmentActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.map.displayIndoor.OnZoomListener
 import com.example.campusguide.utils.BuildingHighlights
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -29,6 +30,9 @@ class GoogleMapInitializer constructor(
             googleMap = map
             wrapper.adapted = map
             map.uiSettings.isMyLocationButtonEnabled = false
+            map.uiSettings.isIndoorLevelPickerEnabled = false
+            map.isIndoorEnabled = false
+            map.isBuildingsEnabled = false
 
             // Center the map on SGW Campus
             map.animateCamera(
@@ -37,6 +41,9 @@ class GoogleMapInitializer constructor(
                     Constants.ZOOM_STREET_LVL
                 )
             )
+
+            OnZoomListener(wrapper)
+
             BuildingHighlights(map, activity).addBuildingHighlights()
 
             if (onPolygonClickListener != null) {
