@@ -51,11 +51,9 @@ class ChooseDestinationOptions(private val provider: SearchLocationProvider, pri
             GlobalScope.launch {
                 FindEventLocation(act, locationSelectedListener).getLocationOfEvent(nextLocation)
             }
-        }
-        catch (e: IndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             activity?.let { DisplayMessageErrorListener(it).onError(
-                "You are not logged in or you do not have a calendar set.\n" +
-                    "\nPlease login and choose a calendar in the drawer menu.")
+                Constants.NO_CALENDAR_LOGIN_EXCEPTION_MSG)
             }
         }
     }

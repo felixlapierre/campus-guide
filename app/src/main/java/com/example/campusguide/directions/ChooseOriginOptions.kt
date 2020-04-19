@@ -27,9 +27,9 @@ import database.ObjectBox
 import database.entity.Calendar
 import io.objectbox.Box
 import io.objectbox.kotlin.boxFor
+import java.lang.IndexOutOfBoundsException
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.IndexOutOfBoundsException
 
 class ChooseOriginOptions(
     private val permission: PermissionsSubject,
@@ -112,11 +112,9 @@ class ChooseOriginOptions(
                     locationSelectedListener
                 ).getLocationOfEvent(lastLocation)
             }
-        }
-        catch (e: IndexOutOfBoundsException) {
+        } catch (e: IndexOutOfBoundsException) {
             activity?.let { DisplayMessageErrorListener(it).onError(
-                "You are not logged in or you do not have a calendar set.\n" +
-                    "\nPlease login and choose a calendar in the drawer menu.")
+                Constants.NO_CALENDAR_LOGIN_EXCEPTION_MSG)
             }
         }
     }
