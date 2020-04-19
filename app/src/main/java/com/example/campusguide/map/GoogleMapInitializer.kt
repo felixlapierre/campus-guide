@@ -42,9 +42,8 @@ class GoogleMapInitializer constructor(
             map.isIndoorEnabled = false
             map.isBuildingsEnabled = false
 
-
             map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(activity, R.raw.style_json ))
+                MapStyleOptions.loadRawResourceStyle(activity, R.raw.style_json))
 
             // Center the map on SGW Campus
             map.animateCamera(
