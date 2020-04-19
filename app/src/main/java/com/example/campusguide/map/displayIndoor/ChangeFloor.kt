@@ -2,18 +2,12 @@ package com.example.campusguide.map.displayIndoor
 
 import android.app.Activity
 import android.view.View
-import com.example.campusguide.Constants
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import kotlin.collections.HashMap
 
-class ChangeFloor constructor(
-    private val map: GoogleMapAdapter,
-    private val buildingIndexSingleton: BuildingIndexSingleton,
-    private val directionsFlow: DirectionsFlow,
-    private val activity: Activity
-) : View.OnClickListener {
+class ChangeFloor constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) : View.OnClickListener {
 
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
@@ -27,10 +21,8 @@ class ChangeFloor constructor(
 
     private fun buildBuildings(map: GoogleMapAdapter): HashMap<String, BuildingInfo> {
         val build = HashMap<String, BuildingInfo>()
-        build[Constants.HALL] = BuildingInfo(
-            Constants.HALL, map, buildingIndexSingleton, directionsFlow, activity)
-        build[Constants.LIBRARY] = BuildingInfo(
-            Constants.LIBRARY, map, buildingIndexSingleton, directionsFlow, activity)
+        build["hall"] = BuildingInfo("hall", map, buildingIndexSingleton, directionsFlow, activity)
+        build["library"] = BuildingInfo("library", map, buildingIndexSingleton, directionsFlow, activity)
         return build
     }
 

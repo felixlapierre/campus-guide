@@ -9,7 +9,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
-class OnZoomListener constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow, private val activity: Activity) : GoogleMap.OnCameraMoveListener {
+class OnZoomListener constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow?, private val activity: Activity) : GoogleMap.OnCameraMoveListener {
 
     init {
         map.setCameraMoveListener(this)
