@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
@@ -12,7 +13,7 @@ class IndoorSegment constructor(
     private val args: SegmentArgs
 ) :
     Segment {
-    private val pathfinding: IndoorPathfinding
+    private val pathfinding: FindRoomPathfinding
     private var endRoomCode: String? = null
     private var next: Segment? = null
     private val building: Building = args.buildingIndex.findBuildingByCode(buildingCode)
@@ -57,14 +58,30 @@ class IndoorSegment constructor(
     }
 
     override suspend fun toListOfCoordinates(): List<LatLng> {
-        return if (endRoomCode != null)
-            pathfinding.findRoom(startRoomCode, endRoomCode!!)[0]
-        else
+        return if (endRoomCode != null) {
+            val result = mutableListOf<LatLng>()
+            result.addAll(pathfinding.findRoom(startRoomCode, endRoomCode!!)[0])
+            result.addAll(next?.toListOfCoordinates() ?: emptyList())
+            return result
+        } else
             emptyList()
     }
 
     override fun getDuration(): Int {
         // TODO: Estimate duration of indoor path segments
-        return 0
+        return next?.getDuration() ?: 0
+    }
+
+    override fun getDistance(): String {
+        // TODO: Estimate distance of indoor path segments
+        return ""
+    }
+
+    override fun getSteps(): List<GoogleDirectionsAPIStep> {
+        return emptyList()
+    }
+
+    override fun getFare(): String {
+        return ""
     }
 }

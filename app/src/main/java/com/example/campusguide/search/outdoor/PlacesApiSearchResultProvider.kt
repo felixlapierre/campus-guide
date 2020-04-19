@@ -3,12 +3,14 @@ package com.example.campusguide.search.outdoor
 import android.app.Activity
 import com.example.campusguide.Constants
 import com.example.campusguide.R
+import com.example.campusguide.location.Location
 import com.example.campusguide.search.SearchResult
 import com.example.campusguide.search.SearchResultProvider
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.AutocompleteSessionToken
 import com.google.android.libraries.places.api.model.RectangularBounds
+import com.google.android.libraries.places.api.model.TypeFilter
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest
 import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse
 import com.google.android.libraries.places.api.net.PlacesClient
@@ -72,5 +74,31 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
         }
 
         return results
+    }
+
+    suspend fun searchNearbyPlaces(
+        pointOfInterest: String,
+        currentLocation: Location
+    ) = suspendCoroutine<FindAutocompletePredictionsResponse> { cont ->
+
+        val searchBounds = RectangularBounds.newInstance(
+            LatLng(currentLocation.lat - 0.01, currentLocation.lon - 0.01),
+            LatLng(currentLocation.lat + 0.01, currentLocation.lon + 0.01)
+        )
+
+        val request = FindAutocompletePredictionsRequest.builder()
+            .setQuery(pointOfInterest)
+            .setTypeFilter(TypeFilter.ESTABLISHMENT)
+            .setLocationRestriction(searchBounds)
+            .build()
+
+        placesClient.findAutocompletePredictions(request).addOnSuccessListener { response ->
+
+            cont.resume(getPlaces(response))
+        }
+    }
+
+    private fun getPlaces(response: FindAutocompletePredictionsResponse): FindAutocompletePredictionsResponse {
+            return(response)
     }
 }

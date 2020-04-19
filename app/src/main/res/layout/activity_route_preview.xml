@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/stepInstruction"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:text="via Blvd Maisonneuve 0 and Rue Guy"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/ic_place"
+            android:drawablePadding="10dp"></TextView>
+
+    <fragment
+        android:id="@+id/route_preview_activity_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".RoutePreviewActivity">
+
+        <Button
+            android:id="@+id/previousStep"
+            android:background="@drawable/ic_previous_step"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="72dp"
+            android:layout_marginBottom="10dp"/>
+
+        <Button
+            android:id="@+id/nextStep"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_next_step"/>
+    </fragment>
+
+</LinearLayout>

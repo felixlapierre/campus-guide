@@ -1,7 +1,10 @@
 package com.example.campusguide
 
 import com.example.campusguide.directions.DirectionsFlow
+import com.example.campusguide.location.FusedLocationProvider
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.search.PointsOfInterest
+import com.example.campusguide.utils.permissions.Permissions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BottomNavigation constructor (
@@ -25,8 +28,7 @@ class BottomNavigation constructor (
                     centerCameraSGW()
                 }
                 R.id.poi -> {
-                    // TODO: Switch to POI list view as part of UC-47
-                    // points of interest view
+                    choosePOI()
                 }
             }
             return@setOnNavigationItemSelectedListener true
@@ -39,5 +41,14 @@ class BottomNavigation constructor (
 
     private fun startNavigation() {
         directions.startFlow()
+    }
+
+    private fun choosePOI() {
+        activity.permissions = Permissions(activity)
+
+        val locationProvider = FusedLocationProvider(activity)
+
+        val pointsOfInterest = PointsOfInterest(activity, locationProvider, map, directions)
+        pointsOfInterest.show(activity.supportFragmentManager, "pointsOfInterest")
     }
 }

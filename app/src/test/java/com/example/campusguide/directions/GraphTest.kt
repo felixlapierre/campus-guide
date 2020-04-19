@@ -19,6 +19,7 @@ class GraphTest {
             "someBuilding",
             "BD",
             "someAddress",
+            "someDepartments",
             "someServices",
             "1.0",
             "2.0",
