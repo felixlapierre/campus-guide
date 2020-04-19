@@ -25,7 +25,6 @@ import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.displayIndoor.ChangeFloor
-import com.example.campusguide.map.displayIndoor.Floor
 import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener

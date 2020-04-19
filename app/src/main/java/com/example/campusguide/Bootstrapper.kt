@@ -26,7 +26,7 @@ import database.ObjectBox
  */
 class Bootstrapper constructor(activity: MapsActivity) {
     init {
-        //Floor Plans
+        // Floor Plans
         val floorPlans = FloorPlans()
         // Local Database
         ObjectBox.init(activity.applicationContext)
