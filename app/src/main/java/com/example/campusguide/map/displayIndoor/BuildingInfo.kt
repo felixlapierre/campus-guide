@@ -1,9 +1,10 @@
 package com.example.campusguide.map.displayIndoor
 
-
+import android.graphics.Color
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.Building
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
+import com.example.campusguide.utils.Helper
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
@@ -80,13 +81,21 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
      * @param map The map to which the markers are added
      * @return A list of map markers
      */
-    private fun getFloorAmenities(building: Building, floorNumber: Int, map: GoogleMapAdapter): List<Marker>{
+    private fun getFloorAmenities(building: Building, floorNumber: Int, map: GoogleMapAdapter): List<Marker> {
         var amenities: MutableList<Marker> = mutableListOf()
-        for (room in building.rooms){
-            if(room.code.toDouble().toInt() in (floorNumber*100)..((floorNumber+1)*100)){
-                amenities.add(map.adapted.addMarker(
-                    MarkerOptions().position(LatLng(room.lat.toDouble(), room.lon.toDouble())).visible(false)
-                ))
+        for (room in building.rooms) {
+            val imageDescription =
+                BitmapDescriptorFactory.fromBitmap(Helper.textAsBitmap(room.code, 32f, Color.BLACK))
+            if (room.code.toDouble().toInt() in (floorNumber * 100)..((floorNumber + 1) * 100)) {
+                amenities.add(
+                    map.adapted.addMarker(
+                        MarkerOptions()
+                            .position(LatLng(room.lat.toDouble(), room.lon.toDouble()))
+                            .title(room.name)
+                            .icon(imageDescription)
+                            .visible(false)
+                    )
+                )
             }
         }
         return amenities

@@ -13,7 +13,8 @@ class GoogleMapInitializer constructor(
     private val activity: FragmentActivity,
     private val wrapper: GoogleMapAdapter,
     private val mapId: String,
-    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null
+    private val onPolygonClickListener: GoogleMap.OnPolygonClickListener? = null,
+    private val infoWindowAdapter: GoogleMap.InfoWindowAdapter? = null
 ) : OnMapReadyCallback {
     private var onMapReadyListener: (() -> Unit)? = null
     private var googleMap: GoogleMap? = null
@@ -48,6 +49,9 @@ class GoogleMapInitializer constructor(
 
             if (onPolygonClickListener != null) {
                 map.setOnPolygonClickListener(onPolygonClickListener)
+            }
+            if(infoWindowAdapter != null) {
+                map.setInfoWindowAdapter(infoWindowAdapter)
             }
             map.setContentDescription("$mapId ready")
 

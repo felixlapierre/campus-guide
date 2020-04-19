@@ -2,10 +2,10 @@ package com.example.campusguide.search
 
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
+import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
-import com.example.campusguide.map.infoWindow.InfoWindowData
-import com.example.campusguide.search.travelWindow.TravelWindow
+import com.example.campusguide.map.infoWindow.PopupSearchLocationTag
 import com.example.campusguide.search.travelWindow.TravelWindowClickListener
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -20,24 +20,22 @@ class PopupSearchLocationListener constructor(
     override fun onLocation(location: SearchLocation?) {
         if (location == null) return
         activity.runOnUiThread {
-            val travelWindow = TravelWindow(activity)
-            map.setInfoWindowAdapter(travelWindow)
             map.setOnInfoWindowClickListener(TravelWindowClickListener(directions, location))
-
-            val infoWindowData = InfoWindowData()
-            infoWindowData.fullName = location.name
-            infoWindowData.address = location.secondaryText
 
             marker?.remove()
 
             val latLng = LatLng(location.lat, location.lon)
             val markerOptions = MarkerOptions()
-            markerOptions.position(latLng)
+                .position(latLng)
+                .title(location.name)
 
-            map.setInfoWindowAdapter(travelWindow)
-
+            val popupSearchTag = PopupSearchLocationTag(
+                R.layout.confirm_window,
+                location,
+                directions
+            )
             marker = map.addMarker(markerOptions)
-            marker?.setTag(infoWindowData)
+            marker?.setTag(popupSearchTag)
             marker?.showInfoWindow()
             map.animateCamera(latLng, Constants.ZOOM_STREET_LVL)
         }
