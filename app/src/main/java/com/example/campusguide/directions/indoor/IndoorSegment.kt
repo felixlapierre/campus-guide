@@ -2,11 +2,11 @@ package com.example.campusguide.directions.indoor
 
 import com.example.campusguide.Accessibility
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
+import com.example.campusguide.directions.Path
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.search.indoor.Building
-import com.google.android.gms.maps.model.LatLng
 
 class IndoorSegment constructor(
     private val buildingCode: String,
@@ -58,11 +58,11 @@ class IndoorSegment constructor(
         return building
     }
 
-    override suspend fun toListOfCoordinates(): List<LatLng> {
+    override suspend fun toPath(): List<Path> {
         return if (endRoomCode != null) {
-            val result = mutableListOf<LatLng>()
+            val result = mutableListOf<Path>()
             result.addAll(pathfinding.findRoom(startRoomCode, endRoomCode!!)[0])
-            result.addAll(next?.toListOfCoordinates() ?: emptyList())
+            result.addAll(next?.toPath() ?: emptyList())
             return result
         } else
             emptyList()

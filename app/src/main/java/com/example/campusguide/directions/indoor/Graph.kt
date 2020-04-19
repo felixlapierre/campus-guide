@@ -13,13 +13,13 @@ class Graph constructor(building: Building) {
     init {
         // Add all rooms to the map
         building.rooms.forEach { room ->
-            val floor = room.code[0].toInt()
+            val floor = room.code.substring(0, 1).toInt()
             map[room.code] = Node("Room", room.code, room.lon.toDouble(), room.lat.toDouble(), mutableListOf(), floor)
         }
 
         // Add all nodes to the map
         building.nodes.forEach { node ->
-            val floor = node.code[0].toInt()
+            val floor = node.code.substring(0, 1).toInt()
             node.floor = floor
             if (node.x < 1 && node.y < 1) {
                 val latlng = toLatLng(node.x, node.y)

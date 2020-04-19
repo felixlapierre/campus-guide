@@ -10,6 +10,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
     private val buildings = buildBuildings(map)
     private var currentBuilding: String = ""
     private var currentFloor = -1
+    var changeFloorListener: ((Int) -> Unit)? = null
 
     companion object ButtonInfo {
         var upButtonId = -1
@@ -31,6 +32,7 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         currentBuilding = buildingName
         currentFloor = buildings[buildingName]?.startFloor!!
         currentFloorIsVisible(true)
+        changeFloorListener?.invoke(currentFloor)
     }
 
     fun unsetBuilding() {
@@ -40,15 +42,10 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
     }
 
     override fun onClick(v: View?) {
-
-        val buildingImageLatLng = buildings[currentBuilding]?.getBuildingImageCoordinates()
-
         var updatedFloor: Int = updateFloor(v?.id)
+        changeFloorListener?.invoke(updatedFloor)
 
         buildings[currentBuilding]?.getFloorPlans()?.let { changeVisibleFloor(it, updatedFloor) }
-        if (buildingImageLatLng != null) {
-            map.animateCamera(buildingImageLatLng, map.adapted.cameraPosition.zoom)
-        }
     }
 
     private fun currentFloorIsVisible(isVisible: Boolean) {
@@ -92,5 +89,10 @@ class ChangeFloor constructor(private val map: GoogleMapAdapter) : View.OnClickL
         floorPlans?.get(updatedFloor)?.isVisible = true
 
         currentFloor = updatedFloor
+        changeFloorListener?.invoke(currentFloor)
+    }
+
+    fun getCurrentFloor(): Int {
+        return currentFloor
     }
 }

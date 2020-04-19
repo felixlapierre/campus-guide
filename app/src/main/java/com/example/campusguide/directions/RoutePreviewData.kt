@@ -1,11 +1,10 @@
 package com.example.campusguide.directions
 
-import com.google.android.gms.maps.model.LatLng
 import java.io.Serializable
 
 open class RoutePreviewData : Serializable {
     private var steps: List<GoogleDirectionsAPIStep> = emptyList()
-    private var path: List<LatLng> = emptyList()
+    private var path: List<Path> = emptyList()
     private var start: String = ""
     private var end: String = ""
     private var distance: String = ""
@@ -51,11 +50,11 @@ open class RoutePreviewData : Serializable {
         return steps
     }
 
-    fun setPath(pathPolyline: List<LatLng>) {
+    fun setPath(pathPolyline: List<Path>) {
         path = pathPolyline
     }
 
-    fun getPath(): List<LatLng> {
+    fun getPath(): List<Path> {
         return path
     }
 }
