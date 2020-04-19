@@ -141,7 +141,7 @@ class RoutePreviewActivity : AppCompatActivity() {
                 "ramp-right" -> R.drawable.ic_turn_right
                 "ramp-left" -> R.drawable.ic_turn_left
                 else -> R.drawable.ic_straight
-        }
+            }
         instruction.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
     }
 }

@@ -292,6 +292,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         if (!mapFragment.isVisible) {
             this.supportFragmentManager.beginTransaction().show(mapFragment).commit()
             route_layout.visibility = View.VISIBLE
+            frame_layout.visibility = View.VISIBLE
         }
     }
 
@@ -300,6 +301,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             this.supportFragmentManager.findFragmentById(R.id.directions_activity_map) as SupportMapFragment
         this.supportFragmentManager.beginTransaction().hide(mapFragment).commit()
         route_layout.visibility = View.GONE
+        frame_layout.visibility = View.GONE
     }
 
     private fun initializeListView() {
