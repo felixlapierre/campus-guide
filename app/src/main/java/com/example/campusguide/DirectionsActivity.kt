@@ -20,6 +20,8 @@ import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
+import com.example.campusguide.map.displayIndoor.ChangeFloor
+import com.example.campusguide.map.displayIndoor.FloorPlans
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.example.campusguide.utils.DisplayMessageErrorListener
 import com.example.campusguide.utils.request.ApiKeyRequestDecorator
@@ -38,6 +40,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     private lateinit var currentPath: PathPolyline
     private lateinit var mainPaths: Map<String, PathPolyline>
     private lateinit var extraPaths: Map<String, PathPolyline>
+    private var currentFloor: Int = 0
     private val colorStateList: ColorStateList = ColorStateList(
         arrayOf(
             intArrayOf(-android.R.attr.state_checked),
@@ -56,6 +59,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         map = GoogleMapAdapter()
         val initializer = GoogleMapInitializer(this, map, "directions_activity_map")
+        setFloorPlanButtons()
+        FloorPlans.changeFloorListener = { floor ->
+            onFloorChange(floor)
+        }
 
         // Extract origin and destination from the intent
         start = intent.getStringExtra("OriginEncoded")!!
@@ -170,7 +177,8 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
-                map.addPath(path)
+                removePreviousPath()
+                map.addPath(path, currentFloor)
             }
         }
     }
@@ -241,5 +249,17 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         removePreviousPath()
         currentPath = paths.getValue(travelMode)
         setPathOnMapAsync(currentPath)
+    }
+
+    private fun onFloorChange(floor: Int) {
+        currentFloor = floor
+        setPathOnMapAsync(currentPath)
+    }
+
+    fun setFloorPlanButtons() {
+        ChangeFloor.upButtonId = R.id.upOneFloor
+        ChangeFloor.downButtonId = R.id.downOneFloor
+        FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
+        FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
 }

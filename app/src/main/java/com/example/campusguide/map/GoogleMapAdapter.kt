@@ -65,9 +65,9 @@ class GoogleMapAdapter : Map {
         adapted.setOnInfoWindowCloseListener(infoWindowCloseListener)
     }
 
-    override fun addPath(path: PathPolyline) {
+    override fun addPath(path: PathPolyline, floor: Int) {
         path.removeFromMap()
-        path.addToMap(this)
+        path.addToMap(this, floor)
         moveCamera(path.getPathBounds())
     }
 

@@ -10,8 +10,11 @@ object FloorPlans {
     lateinit var floorUpButton: FloatingActionButton
     lateinit var floorDownButton: FloatingActionButton
 
+    var changeFloorListener: ((Int) -> Unit)? = null
+
     fun setUpChangeFloor(map: GoogleMapAdapter) {
         changeFloor = ChangeFloor(map)
+        changeFloor.changeFloorListener = changeFloorListener
     }
 
     fun show(buildingName: String) {

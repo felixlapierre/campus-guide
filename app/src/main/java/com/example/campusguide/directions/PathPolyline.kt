@@ -26,7 +26,7 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         val pathColor = Color.parseColor(Constants.AZURE_COLOR)
     }
 
-    private lateinit var path: List<Path>
+    private lateinit var paths: List<Path>
     private val polylineOptions: MutableList<PolylineOptions>
     private var polylines: MutableList<Polyline>
 
@@ -45,13 +45,13 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         endMarkerOptions = MarkerOptions()
 
         deferred = GlobalScope.async {
-            path = segment.toPath()
-            val firstPoint = path[0].points[0]
-            val lastPath = path[path.size - 1]
+            paths = segment.toPath()
+            val firstPoint = paths[0].points[0]
+            val lastPath = paths[paths.size - 1]
             val lastPoint = lastPath.points[lastPath.points.size - 1]
 
             var endOfLastPath: LatLng? = null
-            path.forEach {path ->
+            paths.forEach {path ->
                 val opts = PolylineOptions()
                 if(endOfLastPath != null)
                     opts.add(endOfLastPath)
@@ -74,7 +74,16 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
         }
     }
 
-    fun addToMap(map: Map) {
+    fun addToMap(map: Map, floor: Int) {
+        for(i in paths.indices) {
+            val path = paths[i]
+            val opts = polylineOptions[i]
+            if(path.shouldDisplay(floor)) {
+                opts.zIndex(5F)
+            } else {
+                opts.zIndex(1F)
+            }
+        }
         polylineOptions.forEach { line ->
             polylines.add(map.addPolyline(line)!!)
         }
@@ -96,12 +105,12 @@ class PathPolyline constructor(startName: String, endName: String, val segment: 
     }
 
     fun getPathBounds(): LatLngBounds {
-        var north: Double = path[0].points[0].latitude
-        var south: Double = path[0].points[0].latitude
-        var east: Double = path[0].points[0].longitude
-        var west: Double = path[0].points[0].longitude
+        var north: Double = paths[0].points[0].latitude
+        var south: Double = paths[0].points[0].latitude
+        var east: Double = paths[0].points[0].longitude
+        var west: Double = paths[0].points[0].longitude
 
-        path.forEach {path ->
+        paths.forEach {path ->
             path.points.forEach {point ->
                 north = Math.max(north, point.latitude)
                 south = Math.min(south, point.latitude)

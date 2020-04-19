@@ -9,7 +9,7 @@ class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
 
     fun findRoom(start: String, target: String): List<List<IndoorPath>> {
         this.target = target
-        return super.findRoom(start).map {
+        val list = super.findRoom(start).map {
             val list=  mutableListOf<IndoorPath>()
             it.forEach { node ->
                 val point = LatLng(node.y, node.x)
@@ -22,6 +22,7 @@ class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
             }
             list
         }
+        return list
     }
 
     override fun isComplete(): Boolean {
