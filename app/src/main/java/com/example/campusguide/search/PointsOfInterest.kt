@@ -56,20 +56,20 @@ class PointsOfInterest(
         val view = inflater.inflate(R.layout.points_of_interest_options, container, false)
 
         view.findViewById<Button>(R.id.cafe)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Cafe");
+            dismiss()
+            searchPOINearCurrentLocation("Cafe")
         }
         view.findViewById<Button>(R.id.restaurant)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Restaurant");
+            dismiss()
+            searchPOINearCurrentLocation("Restaurant")
         }
         view.findViewById<Button>(R.id.shopping)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Shopping mall");
+            dismiss()
+            searchPOINearCurrentLocation("Shopping mall")
         }
         view.findViewById<Button>(R.id.pharmacy)?.setOnClickListener {
-            dismiss();
-            searchPOINearCurrentLocation("Pharmacy");
+            dismiss()
+            searchPOINearCurrentLocation("Pharmacy")
         }
         return view
     }
@@ -95,7 +95,7 @@ class PointsOfInterest(
         displayNearbyLocations(places)
     }
 
-    private fun displayNearbyLocations(places : FindAutocompletePredictionsResponse) {
+    private fun displayNearbyLocations(places: FindAutocompletePredictionsResponse) {
         for (place in places.autocompletePredictions) {
 
             val placeID = place.placeId
@@ -112,7 +112,7 @@ class PointsOfInterest(
                         placeResponse.latLng!!.latitude,
                         placeResponse.latLng!!.longitude,
                         placeResponse.id!!,
-                        placeResponse.address?:""
+                        placeResponse.address ?: ""
                     )
 
                     var popupSearchLocationListener = PopupSearchLocationListener(

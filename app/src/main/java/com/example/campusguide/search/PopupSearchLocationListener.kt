@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.Constants
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
-import com.example.campusguide.map.Map
 import com.example.campusguide.map.Marker
 import com.example.campusguide.map.infoWindow.InfoWindowData
 import com.example.campusguide.search.travelWindow.TravelWindow
@@ -21,13 +20,12 @@ class PopupSearchLocationListener constructor(
     private var marker: com.example.campusguide.map.Marker? = null
 
     companion object {
-        private var allMarkers : ArrayList<Marker?> = ArrayList()
+        private var allMarkers: ArrayList<Marker?> = ArrayList()
 
         fun clearAllMarkers() {
             allMarkers.forEach {
                 it?.remove()
             }
-
         }
     }
 

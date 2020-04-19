@@ -86,7 +86,6 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
             LatLng(currentLocation.lat + 0.01, currentLocation.lon + 0.01)
         )
 
-
         val request = FindAutocompletePredictionsRequest.builder()
             .setQuery(pointOfInterest)
             .setTypeFilter(TypeFilter.ESTABLISHMENT)
@@ -102,5 +101,4 @@ class PlacesApiSearchResultProvider constructor(activity: Activity, private val 
     private fun getPlaces(response: FindAutocompletePredictionsResponse): FindAutocompletePredictionsResponse {
             return(response)
     }
-
 }

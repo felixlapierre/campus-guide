@@ -80,7 +80,7 @@ class Bootstrapper constructor(activity: MapsActivity) {
         activity.setOnSearchClickedListener(search)
         activity.addActivityResultListener(search)
 
-        //searchNearby
+        // searchNearby
         val searchNearby = PointsOfInterest(activity, locationProvider, map, directions)
         searchNearby.locationListener = PopupSearchLocationListener(
             activity,

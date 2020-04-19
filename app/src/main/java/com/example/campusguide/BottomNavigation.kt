@@ -28,7 +28,7 @@ class BottomNavigation constructor (
                     centerCameraSGW()
                 }
                 R.id.poi -> {
-                    choosePOI();
+                    choosePOI()
                 }
             }
             return@setOnNavigationItemSelectedListener true
