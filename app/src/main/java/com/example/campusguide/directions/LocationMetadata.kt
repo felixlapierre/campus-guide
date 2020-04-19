@@ -9,8 +9,8 @@ class LocationMetadata constructor(
     public fun getLatLng():LatLng {
         val latlngStrList = encoded.split(""",\s*""".toRegex())
         return LatLng(
-            latlngStrList[1].toDouble(),
-            latlngStrList[0].toDouble()
+            latlngStrList[0].toDouble(),
+            latlngStrList[1].toDouble()
         )
     }
 

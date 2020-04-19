@@ -116,14 +116,6 @@ class DirectionsActivity : AppCompatActivity() {
 
         initializer.setOnMapReadyListener {
             setRouteOnMapAsync(currentRoute)
-            map.addPolyline(PolylineOptions()
-                .add(LOYOLA_CAMPUS_BOUNDS().southwest)
-                .add(LOYOLA_CAMPUS_BOUNDS().northeast)
-            )
-            map.addPolyline(PolylineOptions()
-                .add(DOWNTOWN_CAMPUS_BOUNDS().southwest)
-                .add(DOWNTOWN_CAMPUS_BOUNDS().northeast)
-            )
         }
     }
 
