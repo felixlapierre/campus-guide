@@ -32,6 +32,7 @@ open class DirectionsFlow constructor(
                 putExtra("DestinationEncoded", finalDestination.encodeForDirections())
             }
             activity.startActivity(intent)
+            println("After start activity")
         }
     }
 
