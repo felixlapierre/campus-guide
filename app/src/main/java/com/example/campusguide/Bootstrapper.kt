@@ -45,7 +45,15 @@ class Bootstrapper constructor(activity: MapsActivity) {
             directions
         )
         val CustomInfoWindow = CustomInfoWindow(activity, map)
-        GoogleMapInitializer(activity, map, "maps_activity_map", buildingClickListener, CustomInfoWindow, directions, BuildingIndexSingleton(activity.assets))
+        GoogleMapInitializer(
+            activity,
+            map,
+            "maps_activity_map",
+            buildingClickListener,
+            CustomInfoWindow,
+            directions,
+            BuildingIndexSingleton(activity.assets)
+        )
 
         // Center on Location
         val centerLocation = CenterLocationListener(

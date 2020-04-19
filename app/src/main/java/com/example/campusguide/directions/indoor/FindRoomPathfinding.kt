@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.Constants
 import com.example.campusguide.search.indoor.Node
 import com.google.android.gms.maps.model.LatLng
 
@@ -40,7 +41,7 @@ class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
 
     override fun getResults(): List<String> {
         if (!complete) {
-            throw PathNotFoundException("Could not find a path to room $target")
+            throw PathNotFoundException(Constants.NO_PATH_TO_ROOM + "$target")
         }
         return listOf(target)
     }

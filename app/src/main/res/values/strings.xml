@@ -12,4 +12,6 @@
     <string name="campus_map">Campus Map</string>
     <string name="poi">Near Me</string>
     <string name="go_here">GO HERE</string>
+    <string name="login_to_an_account">Login to an account</string>
+    <string name="choose_your_calendar">Choose your calendar</string>
 </resources>

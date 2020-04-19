@@ -1,5 +1,6 @@
 package com.example.campusguide.search.amenities
 
+import com.example.campusguide.Constants
 import com.example.campusguide.directions.indoor.Graph
 import com.example.campusguide.directions.indoor.IndoorPathfinding
 import com.example.campusguide.search.indoor.Node
@@ -16,7 +17,7 @@ class AmenitiesPathfinding(graph: Graph, private val filter: String) : IndoorPat
     }
 
     override fun visit(node: Node) {
-        if (node.type == "bathroom") {
+        if (node.type == Constants.BATHROOM_NODE) {
             listOfBathrooms.add(node.code)
         }
     }

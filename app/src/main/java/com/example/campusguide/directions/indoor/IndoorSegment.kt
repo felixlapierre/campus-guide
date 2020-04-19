@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.Constants
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.Path
 import com.example.campusguide.directions.Segment
@@ -17,7 +18,7 @@ class IndoorSegment constructor(
     private var endRoomCode: String? = null
     private var next: Segment? = null
     private val building: Building = args.buildingIndex.findBuildingByCode(buildingCode)
-        ?: throw RuntimeException("Cannot create IndoorSegment: building $buildingCode not found.")
+        ?: throw RuntimeException("$buildingCode " + Constants.INDOOR_SEGMENT_NOT_FOUND_BUILDING)
 
     constructor(startEncoded: String, args: SegmentArgs) : this(
         startEncoded.split("_")[1],
