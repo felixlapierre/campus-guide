@@ -1,6 +1,8 @@
 package com.example.campusguide.map.displayIndoor
 
+import android.app.Activity
 import com.example.campusguide.Constants
+import com.example.campusguide.MapsActivity
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.search.indoor.BuildingIndexSingleton
@@ -8,11 +10,11 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 
-class OnZoomListener constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow) : GoogleMap.OnCameraMoveListener {
+class OnZoomListener constructor(private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow, private val activity: Activity) : GoogleMap.OnCameraMoveListener {
 
     init {
         map.setCameraMoveListener(this)
-        FloorPlans.setUpChangeFloor(map, buildingIndexSingleton, directionsFlow)
+        FloorPlans.setUpChangeFloor(map, buildingIndexSingleton, directionsFlow, activity)
     }
     private val buildingBounds: Array <LatLngBounds> = getBuildingBounds()
 

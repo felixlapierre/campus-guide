@@ -1,6 +1,8 @@
 package com.example.campusguide.map.displayIndoor
 
+import android.app.Activity
 import android.graphics.Color
+import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
@@ -14,12 +16,17 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow) {
+class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow, private val activity: Activity) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
-    private val floorPlans: HashMap<Int, Floor>? = setUpFloorPlans(map)
+    private var floorPlans: HashMap<Int, Floor>? = null
     val startFloor: Int? = floors?.get(0)
 
+    init{
+        buildingIndexSingleton.onLoaded = { buildings ->
+            floorPlans = setUpFloorPlans(map, buildings)
+        }
+    }
     fun getFloors(): IntArray? {
         return floors
     }
@@ -42,38 +49,37 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
 
         return null
     }
-    private fun setUpFloorPlans(map: GoogleMapAdapter): HashMap<Int, Floor>? {
+    private fun setUpFloorPlans(map: GoogleMapAdapter, buildings: List<Building>): HashMap<Int, Floor>? {
 
         if (floors != null) {
             if (buildingName == "hall") {
-                return createGroundOverlays("h", map, 68F, 63F, 124F)
+                return createGroundOverlays("h", map, 68F, 63F, 124F, buildings)
             } else if (buildingName == "library") {
-                return createGroundOverlays("lb", map, 82F, 82F, -56F)
+                return createGroundOverlays("lb", map, 82F, 82F, -56F, buildings)
             }
         }
         return null
     }
 
-    private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float): HashMap<Int, Floor> {
+    private fun createGroundOverlays(buildingCode: String, map: GoogleMapAdapter, length: Float, width: Float, bearing: Float, buildings: List<Building>): HashMap<Int, Floor> {
         val buildingFloors = hashMapOf<Int, Floor>()
-        val buildings = buildingIndexSingleton.getBuildings()
-        val building =  buildings!!.first{ it.code?.equals(buildingCode, true)}
-
+        val building = buildings!!.first{ it.code?.equals(buildingCode, true)}
         if (floors != null) {
             for (floor in floors) {
-
-                val overlay = map.adapted.addGroundOverlay(
-                    GroundOverlayOptions()
-                        .image(BitmapDescriptorFactory.fromAsset("${buildingCode}_floor$floor.png"))
-                        .position(buildingImageCoordinates, length, width).bearing(bearing)
-                        .visible(false)
-                        .zIndex(3F)
-                )
-                val amenities = getFloorAmenities(building, floor, map)
-                buildingFloors[floor] = Floor(overlay, amenities)
+                activity.runOnUiThread {
+                    val overlay = map.adapted.addGroundOverlay(
+                        GroundOverlayOptions()
+                            .image(BitmapDescriptorFactory.fromAsset("${buildingCode}_floor$floor.png"))
+                            .position(buildingImageCoordinates, length, width).bearing(bearing)
+                            .visible(false)
+                            .zIndex(3F)
+                    )
+                    val amenities = getFloorAmenities(building, floor, map)
+                    buildingFloors[floor] = Floor(overlay, amenities)
+                }
             }
-
         }
+
         return buildingFloors
     }
 

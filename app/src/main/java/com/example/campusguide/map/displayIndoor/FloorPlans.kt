@@ -1,5 +1,6 @@
 package com.example.campusguide.map.displayIndoor
 
+import android.app.Activity
 import android.content.res.AssetManager
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
@@ -13,8 +14,8 @@ object FloorPlans {
     lateinit var floorUpButton: FloatingActionButton
     lateinit var floorDownButton: FloatingActionButton
 
-    fun setUpChangeFloor(map: GoogleMapAdapter, buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow) {
-        changeFloor = ChangeFloor(map, buildingIndexSingleton, directionsFlow)
+    fun setUpChangeFloor(map: GoogleMapAdapter, buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow, activity: Activity) {
+        changeFloor = ChangeFloor(map, buildingIndexSingleton, directionsFlow, activity)
     }
 
     fun show(buildingName: String) {

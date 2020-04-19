@@ -36,7 +36,7 @@ class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
     var onLoaded: ((List<Building>) -> Unit)? = null
 
     init {
-        //GlobalScope.launch {
+        GlobalScope.launch {
             val path = "index"
             val index: MutableList<Building> = mutableListOf()
             assets.list(path)?.forEach { it ->
@@ -47,7 +47,7 @@ class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
             }
             onLoaded?.invoke(index)
             buildings = index
-        //}
+        }
     }
 
     /**

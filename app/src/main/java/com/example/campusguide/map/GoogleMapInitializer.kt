@@ -48,7 +48,7 @@ class GoogleMapInitializer constructor(
             )
 
             if(directionsFlow != null && buildingIndexSingleton != null){
-                OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow)
+                OnZoomListener(wrapper, buildingIndexSingleton, directionsFlow, activity)
             }
 
             BuildingHighlights(map, activity).addBuildingHighlights()
