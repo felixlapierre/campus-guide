@@ -18,7 +18,7 @@ import com.example.campusguide.R
  */
 class SelectAccessibilityOptionsDialogFragment(
     private val directionsActivity: DirectionsActivity
-): DialogFragment() {
+) : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
@@ -44,9 +44,9 @@ class SelectAccessibilityOptionsDialogFragment(
         handleStairs()
     }
 
-    private fun boxIsChecked(box: CheckBox?): Boolean{
-        if(box != null){
-            if(box.isChecked){
+    private fun boxIsChecked(box: CheckBox?): Boolean {
+        if (box != null) {
+            if (box.isChecked) {
                 return true
             }
         }
@@ -59,31 +59,30 @@ class SelectAccessibilityOptionsDialogFragment(
      * 1. Check if checkbox is selected
      * 2. If so - use Accessibility object to add node type to forbiddenRooms list
      */
-    private fun handleEscalator(){
+    private fun handleEscalator() {
         val escalatorCheckBox =
             view?.findViewById<CheckBox>(R.id.escalators_checkbox)
-        if(boxIsChecked(escalatorCheckBox))
+        if (boxIsChecked(escalatorCheckBox))
             Accessibility.setEscalators(false)
         else
             Accessibility.setEscalators(true)
     }
 
-    private fun handleElevator(){
+    private fun handleElevator() {
         val elevatorCheckBox =
             view?.findViewById<CheckBox>(R.id.elevators_checkbox)
-        if(boxIsChecked(elevatorCheckBox))
+        if (boxIsChecked(elevatorCheckBox))
             Accessibility.setElevators(false)
         else
             Accessibility.setElevators(true)
     }
 
-    private fun handleStairs(){
+    private fun handleStairs() {
         val stairsCheckBox =
             view?.findViewById<CheckBox>(R.id.stairs_checkbox)
-        if(boxIsChecked(stairsCheckBox))
+        if (boxIsChecked(stairsCheckBox))
             Accessibility.setStairs(false)
         else
             Accessibility.setStairs(true)
     }
-
 }

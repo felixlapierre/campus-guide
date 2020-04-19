@@ -1,6 +1,5 @@
 package com.example.campusguide
 
-
 /**
  * Class handles accessibility requests such as adjustments
  * to directions and/or colors of the application.
@@ -38,13 +37,13 @@ object Accessibility {
         forbiddenRooms.add("stairs")
     }
 
-    private fun allowEscalators(){
+    private fun allowEscalators() {
         forbiddenRooms.remove("escalators")
     }
-    private fun allowElevators(){
+    private fun allowElevators() {
         forbiddenRooms.remove("elevators")
     }
-    private fun allowStairs(){
+    private fun allowStairs() {
         forbiddenRooms.remove("stairs")
     }
 }

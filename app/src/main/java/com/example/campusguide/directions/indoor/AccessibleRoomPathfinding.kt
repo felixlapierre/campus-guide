@@ -5,13 +5,11 @@ import com.example.campusguide.search.indoor.Node
 class AccessibleRoomPathfinding(
     graph: Graph,
     private val forbiddenNodeTypes: List<String>
-): FindRoomPathfinding(graph) {
+) : FindRoomPathfinding(graph) {
 
     override fun canVisit(node: Node): Boolean {
         return forbiddenNodeTypes.all { forbiddenType ->
             forbiddenType != node.type
         }
     }
-
-
 }

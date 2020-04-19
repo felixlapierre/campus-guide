@@ -5,9 +5,9 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageButton
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
@@ -123,7 +123,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
         // Set Listener for accessibility popup
         setAccessPopup()
-        
+
         steps.setOnClickListener {
             val routePreviewData = currentPath.getRoutePreviewData()
             routePreviewData.setStart(startName)
@@ -200,11 +200,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
     }
 
-    private fun handleAccessibilitySelect(){
+    private fun handleAccessibilitySelect() {
         val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this)
         selectAccessibility.show(this.supportFragmentManager, "accessibilityOptions")
     }
-    
 
     /**
      * Callback method to be invoked when an item in this AdapterView has
