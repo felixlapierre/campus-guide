@@ -119,8 +119,13 @@ class Route constructor (
                         .title("Shuttle Departure Location")
                         // Will be true until the project is due
                         // No further maintenance will be required :)
-                        .snippet("No shuttle due to COVID-19"),
-                    endMarkerOptions = MarkerOptions().alpha(0f)
+                        .snippet("Note: No shuttle due to COVID-19"),
+                    endMarkerOptions = MarkerOptions().icon(
+                        BitmapDescriptorFactory.fromResource(R.drawable.ic_shuttle_departure))
+                        .title("Shuttle Drop-off Location")
+                        // Will be true until the project is due
+                        // No further maintenance will be required :)
+                        .snippet("Note: No shuttle due to COVID-19")
                 )
             }
             ShuttlePath.FROM_SHUTTLE -> {
