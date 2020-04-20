@@ -8,10 +8,12 @@ import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.LocationMetadata
 import com.example.campusguide.directions.PathPolyline
@@ -23,6 +25,7 @@ import com.example.campusguide.directions.StepsActivity
 import com.example.campusguide.directions.TransitRoute
 import com.example.campusguide.directions.TransitRouteAdapter
 import com.example.campusguide.directions.indoor.IndoorSegment
+import com.example.campusguide.directions.indoor.SelectAccessibilityOptionsDialogFragment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
@@ -126,6 +129,66 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             text = end.name
         }
 
+        createAllPaths()
+
+        // Display travel times
+        GlobalScope.launch {
+            for ((travelMode, path) in mainPaths) {
+                path.waitUntilCreated()
+                runOnUiThread {
+                    val radioButtonId = "radio_$travelMode"
+                    val id = resources.getIdentifier(radioButtonId, "id", packageName)
+                    findViewById<RadioButton>(id).apply {
+                        text = "${path.getDuration() / 60} min"
+                        buttonTintList = colorStateList
+                    }
+                }
+            }
+            runOnUiThread {
+                findViewById<TextView>(R.id.route_duration).text =
+                    "${currentPath.getDuration() / 60} min"
+                findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
+                findViewById<Button>(R.id.startButton).isEnabled = true
+                findViewById<Button>(R.id.steps).isEnabled = true
+            }
+        }
+
+        currentPath = mainPaths.getValue("driving")
+
+        initializer.setOnMapReadyListener {
+            setPathsOnMapAsync(currentPath.getPathPolylines())
+            centerMapOnPath(currentPath)
+        }
+
+        // Set Listener for accessibility popup
+        setAccessPopup()
+
+        steps.setOnClickListener {
+            val routePreviewData = currentPath.getRoutePreviewDataRisky()
+            routePreviewData.setStart(start.name)
+            routePreviewData.setEnd(end.name)
+            routePreviewData.setDistance(currentPath.getDistance())
+            routePreviewData.setDuration(currentPath.getDuration() / 60)
+            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
+            val stepIntent = Intent(this, StepsActivity::class.java)
+            stepIntent.putExtra("Steps", studentDataObjectAsAString)
+            this.startActivity(stepIntent)
+        }
+
+        startButton.setOnClickListener {
+            val routePreviewData = currentPath.getRoutePreviewDataRisky()
+            routePreviewData.setStart(start.name)
+            routePreviewData.setEnd(start.name)
+            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
+            val routePreview = Intent(this, RoutePreviewActivity::class.java)
+            routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
+            this.startActivity(routePreview)
+        }
+
+        adapter = TransitRouteAdapter(this)
+    }
+
+    private fun createAllPaths() {
         // Hash map containing (travelMode, path) pairs for the three main paths
         mainPaths = mapOf(
             Constants.TRAVEL_MODE_DRIVING to Route(start, end, "driving", null,
@@ -158,59 +221,6 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             )
         )
-
-        // Display travel times
-        GlobalScope.launch {
-            for ((travelMode, path) in mainPaths) {
-                path.waitUntilCreated()
-                runOnUiThread {
-                    val radioButtonId = "radio_$travelMode"
-                    val id = resources.getIdentifier(radioButtonId, "id", packageName)
-                    findViewById<RadioButton>(id).apply {
-                        text = "${path.getDuration() / 60} min"
-                        buttonTintList = colorStateList
-                    }
-                }
-            }
-            runOnUiThread {
-                findViewById<TextView>(R.id.route_duration).text =
-                    "${currentPath.getDuration() / 60} min"
-                findViewById<TextView>(R.id.route_distance).text = "(${currentPath.getDistance()})"
-                findViewById<Button>(R.id.startButton).isEnabled = true
-                findViewById<Button>(R.id.steps).isEnabled = true
-            }
-        }
-
-        currentPath = mainPaths.getValue("driving")
-
-        initializer.setOnMapReadyListener {
-            setPathsOnMapAsync(currentPath.getPathPolylines())
-            centerMapOnPath(currentPath)
-        }
-
-        steps.setOnClickListener {
-            val routePreviewData = currentPath.getRoutePreviewDataRisky()
-            routePreviewData.setStart(start.name)
-            routePreviewData.setEnd(end.name)
-            routePreviewData.setDistance(currentPath.getDistance())
-            routePreviewData.setDuration(currentPath.getDuration() / 60)
-            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
-            val stepIntent = Intent(this, StepsActivity::class.java)
-            stepIntent.putExtra("Steps", studentDataObjectAsAString)
-            this.startActivity(stepIntent)
-        }
-
-        startButton.setOnClickListener {
-            val routePreviewData = currentPath.getRoutePreviewDataRisky()
-            routePreviewData.setStart(start.name)
-            routePreviewData.setEnd(start.name)
-            val studentDataObjectAsAString = Gson().toJson(routePreviewData)
-            val routePreview = Intent(this, RoutePreviewActivity::class.java)
-            routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
-            this.startActivity(routePreview)
-        }
-
-        adapter = TransitRouteAdapter(this)
     }
 
     /**
@@ -249,6 +259,37 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
             route_duration.text = "${currentPath.getDuration() / 60} min"
         }
+    }
+
+    /**
+     * Called when the accessibility menu is clicked.
+     */
+    private fun setAccessPopup() {
+        val button = findViewById<ImageButton>(R.id.accessibility_directions_popup)
+        button.setOnClickListener {
+            val popup: PopupMenu = PopupMenu(this, button)
+            popup.menuInflater.inflate(R.menu.accessibility_menu, popup.menu)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.access_popup ->
+                        handleAccessibilitySelect()
+                }
+                true
+            })
+            popup.show()
+        }
+    }
+
+    private fun handleAccessibilitySelect() {
+        val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this) {
+            createAllPaths()
+            removePreviousPath()
+            currentPath = mainPaths[Constants.TRAVEL_MODE_WALKING] ?: error("ERROR ")
+            setPathsOnMapAsync(currentPath.getPathPolylines())
+            centerMapOnPath(currentPath)
+            showMap()
+        }
+        selectAccessibility.show(this.supportFragmentManager, "accessibilityOptions")
     }
 
     /**

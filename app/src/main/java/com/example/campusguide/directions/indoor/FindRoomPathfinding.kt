@@ -4,7 +4,7 @@ import com.example.campusguide.Constants
 import com.example.campusguide.search.indoor.Node
 import com.google.android.gms.maps.model.LatLng
 
-class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
+open class FindRoomPathfinding(graph: Graph) : IndoorPathfinding(graph) {
     lateinit var target: String
     private var complete = false
 
