@@ -10,10 +10,10 @@
             android:id="@+id/stepInstruction"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:text="via Blvd Maisonneuve 0 and Rue Guy"
+            android:text="@string/step_instruction_address"
             android:gravity="center_vertical"
             android:drawableLeft="@drawable/ic_place"
-            android:drawablePadding="10dp"></TextView>
+            android:drawablePadding="10dp"/>
 
     <fragment
         android:id="@+id/route_preview_activity_map"

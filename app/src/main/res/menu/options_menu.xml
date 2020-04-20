@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
         <item
             android:id="@+id/login_button"
-            android:title="Login to an Account"/>
+            android:title="@string/login_to_an_account"/>
         <item
             android:id="@+id/calendar"
-            android:title="Choose your Calendar"
+            android:title="@string/choose_your_calendar"
             android:visible="false"/>
 </menu>

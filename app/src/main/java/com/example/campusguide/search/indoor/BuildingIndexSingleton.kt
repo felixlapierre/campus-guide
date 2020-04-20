@@ -13,10 +13,11 @@ import kotlinx.coroutines.launch
  * used.
  */
 class BuildingIndexSingleton constructor(assets: AssetManager) : BuildingIndex {
+
     /**
-     * Companion object that performs the singleton logic, ensuring
-     * the instance is unique and can be retrieved statically.
-     */
+    * Companion object that performs the singleton logic, ensuring
+    * the instance is unique and can be retrieved statically.
+    */
     companion object {
         @Volatile
         private var INSTANCE: BuildingIndexSingleton? = null

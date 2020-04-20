@@ -8,6 +8,7 @@ import com.example.campusguide.R
 import com.example.campusguide.map.GoogleMapAdapter
 import com.example.campusguide.map.GoogleMapInitializer
 import com.example.campusguide.map.displayIndoor.FloorPlans
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.google.android.gms.maps.model.LatLng
 import com.google.gson.Gson
 import kotlinx.coroutines.GlobalScope
@@ -23,6 +24,7 @@ class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var previousStepButton: Button
     private lateinit var nextStepButton: Button
     private var i: Int = 0
+    private val floorPlans = FloorPlans()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,16 @@ class RoutePreviewActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         map = GoogleMapAdapter()
-        val initializer = GoogleMapInitializer(this, map, "route_preview_activity_map")
+        val initializer = GoogleMapInitializer(
+            this,
+            map,
+            "route_preview_activity_map",
+            null,
+            null,
+            null,
+            BuildingIndexSingleton.getInstance(assets),
+            floorPlans
+        )
 
         val string = intent.getSerializableExtra("RoutePreview")!! as String
         pathPolyline = Gson().fromJson(
@@ -50,7 +61,8 @@ class RoutePreviewActivity : AppCompatActivity() {
         stepInstruction.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_turn_right, 0, 0, 0)
 
         initializer.setOnMapReadyListener {
-            val path = PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
+            val path =
+                PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
             setPathOnMapAsync(path)
             setCurrentStep(0)
             focusCameraOnCurrentStep(PathPolyline("", "", currentStepPath), 0)
@@ -105,7 +117,7 @@ class RoutePreviewActivity : AppCompatActivity() {
         GlobalScope.launch {
             path.waitUntilCreated()
             runOnUiThread {
-                map.addPath(path, FloorPlans.getCurrentFloor())
+                map.addPath(path, floorPlans.getCurrentFloor())
             }
         }
     }
@@ -125,10 +137,14 @@ class RoutePreviewActivity : AppCompatActivity() {
 
     private fun setCurrentStep(i: Int) {
         currentStepPath.clear()
-        var startLatLng = LatLng(steps[i].startLocation.lat.toDouble(),
-            steps[i].startLocation.lng.toDouble())
-        var endLatLng = LatLng(steps[i].endLocation.lat.toDouble(),
-            steps[i].endLocation.lng.toDouble())
+        var startLatLng = LatLng(
+            steps[i].startLocation.lat.toDouble(),
+            steps[i].startLocation.lng.toDouble()
+        )
+        var endLatLng = LatLng(
+            steps[i].endLocation.lat.toDouble(),
+            steps[i].endLocation.lng.toDouble()
+        )
         currentStepPath.add(Path(mutableListOf(startLatLng)))
         currentStepPath.add(Path(mutableListOf(endLatLng)))
     }
@@ -141,7 +157,7 @@ class RoutePreviewActivity : AppCompatActivity() {
                 "ramp-right" -> R.drawable.ic_turn_right
                 "ramp-left" -> R.drawable.ic_turn_left
                 else -> R.drawable.ic_straight
-        }
+            }
         instruction.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)
     }
 }

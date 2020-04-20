@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.Constants
 import java.lang.IllegalStateException
 
 class MessageDialogFragment constructor(private val message: String) : DialogFragment() {
@@ -11,8 +12,8 @@ class MessageDialogFragment constructor(private val message: String) : DialogFra
         return activity?.let {
             val builder = AlertDialog.Builder(it)
             builder.setMessage(message)
-            builder.setPositiveButton("Ok") { _, _ -> }
+            builder.setPositiveButton(Constants.OK_CHOICE) { _, _ -> }
             builder.create()
-        } ?: throw IllegalStateException("Activity cannot be null")
+        } ?: throw IllegalStateException(Constants.ACTIVITY_NULL_MSG)
     }
 }

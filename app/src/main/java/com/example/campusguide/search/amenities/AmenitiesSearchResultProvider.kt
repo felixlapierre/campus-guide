@@ -10,6 +10,8 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
      * returns a list of results, either all the bathrooms if the user begins typing bathroom,
      * or one result if user searches for a specific type of bathroom (ex men's, women's, gender neutral)
      */
+    private val findBathroomNearMe: String = "Find a bathroom near me"
+
     override suspend fun search(query: String): List<SearchResult> {
         if (query.isEmpty()) {
             return emptyList()
@@ -32,7 +34,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
     private fun addMensBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
-                "Men's Bathroom", "Find a bathroom near me", "amenities_bath_wom"
+                "Men's Bathroom", findBathroomNearMe, "amenities_bath_wom"
             )
         )
         return results
@@ -41,7 +43,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
     private fun addWomensBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
-                "Women's Bathroom", "Find a bathroom near me", "amenities_bath_mens"
+                "Women's Bathroom", findBathroomNearMe, "amenities_bath_mens"
             )
         )
         return results
@@ -50,7 +52,7 @@ class AmenitiesSearchResultProvider : SearchResultProvider {
     private fun addGenderNeutralBathroom(results: MutableList<SearchResult>): MutableList<SearchResult> {
         results.add(
             SearchResult(
-                "Gender Neutral Bathroom", "Find a bathroom near me", "amenities_bath_all"
+                "Gender Neutral Bathroom", findBathroomNearMe, "amenities_bath_all"
             )
         )
         return results

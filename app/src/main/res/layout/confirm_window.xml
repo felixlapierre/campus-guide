@@ -10,14 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Location"/>
+        android:text="@string/location"/>
 
     <TextView
         android:id="@+id/secondaryText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Location"/>
+        android:text="@string/location"/>
 
     <Button
         android:id="@+id/goHere"

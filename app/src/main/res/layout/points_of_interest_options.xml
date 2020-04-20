@@ -9,7 +9,7 @@
         android:layout_height="60dp"
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="CAFÉs"
+        android:text="@string/cafes"
         android:textColor="#F0F0F0" />
 
     <Button
@@ -18,7 +18,7 @@
         android:layout_height="60dp"
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Restaurant"
+        android:text="@string/restaurant"
         android:textColor="#F0F0F0" />
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_height="60dp"
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Shopping"
+        android:text="@string/shopping"
         android:textColor="#F0F0F0" />
 
     <Button
@@ -36,7 +36,7 @@
         android:layout_height="60dp"
         android:layout_marginVertical="10dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="Pharmacies"
+        android:text="@string/pharmacies"
         android:textColor="#F0F0F0" />
 
 </LinearLayout>

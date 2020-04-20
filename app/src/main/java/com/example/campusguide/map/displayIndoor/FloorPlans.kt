@@ -1,19 +1,22 @@
 package com.example.campusguide.map.displayIndoor
 
+import android.app.Activity
+import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
+import com.example.campusguide.search.indoor.BuildingIndexSingleton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-object FloorPlans {
+class FloorPlans {
     private var isHidden = true
     private var currentBuilding = ""
     private lateinit var changeFloor: ChangeFloor
-    lateinit var floorUpButton: FloatingActionButton
-    lateinit var floorDownButton: FloatingActionButton
+    var floorUpButton: FloatingActionButton? = null
+    var floorDownButton: FloatingActionButton? = null
 
     var changeFloorListener: ((Int) -> Unit)? = null
 
-    fun setUpChangeFloor(map: GoogleMapAdapter) {
-        changeFloor = ChangeFloor(map)
+    fun setUpChangeFloor(map: GoogleMapAdapter, buildingIndexSingleton: BuildingIndexSingleton, directionsFlow: DirectionsFlow?, activity: Activity) {
+        changeFloor = ChangeFloor(map, buildingIndexSingleton, directionsFlow, activity)
         changeFloor.changeFloorListener = changeFloorListener
     }
 
@@ -31,12 +34,11 @@ object FloorPlans {
     }
 
     private fun displayButtons() {
+        floorUpButton?.show()
+        floorUpButton?.setOnClickListener(changeFloor)
 
-        floorUpButton.show()
-        floorUpButton.setOnClickListener(changeFloor)
-
-        floorDownButton.show()
-        floorDownButton.setOnClickListener(changeFloor)
+        floorDownButton?.show()
+        floorDownButton?.setOnClickListener(changeFloor)
     }
 
     fun hide() {
@@ -49,8 +51,8 @@ object FloorPlans {
     }
 
     private fun hideButtons() {
-        floorUpButton.hide()
-        floorDownButton.hide()
+        floorUpButton?.hide()
+        floorDownButton?.hide()
     }
 
     fun getCurrentFloor(): Int {
