@@ -12,6 +12,12 @@
     <string name="campus_map">Campus Map</string>
     <string name="poi">Near Me</string>
     <string name="go_here">GO HERE</string>
+    <string name="start_location">Start Location</string>
+    <string name="end_location">End Location</string>
+    <string name="choose_indoor_accessibility">Choose indoor accessibility</string>
+    <string name="cant_use_escalators">Can\'t use escalators</string>
+    <string name="cant_use_elevators">Can\'t use elevators</string>
+    <string name="cant_use_stairs">Can\'t use stairs</string>
     <string name="login_to_an_account">Login to an account</string>
     <string name="choose_your_calendar">Choose your calendar</string>
     <string name="steps_and_more">Steps and More</string>
@@ -30,8 +36,6 @@
     <string name="_350_m">(350 m)</string>
     <string name="show_map">Show Map</string>
     <string name="location">Location</string>
-    <string name="start_location">Start Location</string>
-    <string name="end_location">End Location</string>
     <string name="result_line_2">Result line 2</string>
     <string name="result_line_1">Result line 1</string>
     <string name="some_text">Some text</string>

@@ -1,5 +1,6 @@
 package com.example.campusguide.directions.indoor
 
+import com.example.campusguide.Accessibility
 import com.example.campusguide.Constants
 import com.example.campusguide.directions.GoogleDirectionsAPIStep
 import com.example.campusguide.directions.Path
@@ -26,7 +27,7 @@ class IndoorSegment constructor(
         args
     )
     init {
-        pathfinding = FindRoomPathfinding(Graph(building))
+        pathfinding = AccessibleRoomPathfinding(Graph(building), Accessibility.forbiddenRooms)
     }
 
     override fun setNext(next: IndoorSegment) {

@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
 import com.example.campusguide.directions.PathPolyline
 import com.example.campusguide.directions.RoutePreviewActivity
@@ -20,6 +22,7 @@ import com.example.campusguide.directions.StepsActivity
 import com.example.campusguide.directions.TransitRoute
 import com.example.campusguide.directions.TransitRouteAdapter
 import com.example.campusguide.directions.indoor.IndoorSegment
+import com.example.campusguide.directions.indoor.SelectAccessibilityOptionsDialogFragment
 import com.example.campusguide.directions.outdoor.OutdoorDirections
 import com.example.campusguide.directions.outdoor.OutdoorSegment
 import com.example.campusguide.map.GoogleMapAdapter
@@ -96,29 +99,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             text = endName
         }
 
-        // Hash map containing (travelMode, path) pairs for the three main paths
-        mainPaths = mapOf(
-            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
-            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
-            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
-        )
-
-        // Hash map containing (title, path) pairs for the optional transit paths
-        extraPaths = mapOf(
-            Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
-            Constants.TITLE_LESS_WALKING to createPath(
-                startName,
-                endName,
-                "transit",
-                "less_walking"
-            ),
-            Constants.TITLE_FEWER_TRANSFERS to createPath(
-                startName,
-                endName,
-                "transit",
-                "fewer_transfers"
-            )
-        )
+        createAllPaths()
 
         // Display travel times
         GlobalScope.launch {
@@ -149,6 +130,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             centerMapOnPath(currentPath)
         }
 
+        // Set Listener for accessibility popup
+        setAccessPopup()
+
         steps.setOnClickListener {
             val routePreviewData = currentPath.getRoutePreviewData()
             routePreviewData.setStart(startName)
@@ -172,6 +156,32 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
         adapter = TransitRouteAdapter(this)
+    }
+
+    private fun createAllPaths() {
+        // Hash map containing (travelMode, path) pairs for the three main paths
+        mainPaths = mapOf(
+            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
+            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
+            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
+        )
+
+        // Hash map containing (title, path) pairs for the optional transit paths
+        extraPaths = mapOf(
+            Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
+            Constants.TITLE_LESS_WALKING to createPath(
+                startName,
+                endName,
+                "transit",
+                "less_walking"
+            ),
+            Constants.TITLE_FEWER_TRANSFERS to createPath(
+                startName,
+                endName,
+                "transit",
+                "fewer_transfers"
+            )
+        )
     }
 
     /**
@@ -204,6 +214,37 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
             route_duration.text = "${currentPath.getDuration() / 60} min"
         }
+    }
+
+    /**
+     * Called when the accessibility menu is clicked.
+     */
+    private fun setAccessPopup() {
+        val button = findViewById<ImageButton>(R.id.accessibility_directions_popup)
+        button.setOnClickListener {
+            val popup: PopupMenu = PopupMenu(this, button)
+            popup.menuInflater.inflate(R.menu.accessibility_menu, popup.menu)
+            popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    R.id.access_popup ->
+                        handleAccessibilitySelect()
+                }
+                true
+            })
+            popup.show()
+        }
+    }
+
+    private fun handleAccessibilitySelect() {
+        val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this) {
+            createAllPaths()
+            removePreviousPath()
+            currentPath = mainPaths[Constants.TRAVEL_MODE_WALKING] ?: error("ERROR ")
+            setPathOnMapAsync(currentPath)
+            centerMapOnPath(currentPath)
+            showMap()
+        }
+        selectAccessibility.show(this.supportFragmentManager, "accessibilityOptions")
     }
 
     /**

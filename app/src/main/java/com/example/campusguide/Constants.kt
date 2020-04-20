@@ -92,6 +92,12 @@ object Constants {
     const val TITLE_LESS_WALKING = "LESS WALKING"
     const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"
 
+    const val ESCALATORS = "escalators"
+    const val ELEVATORS = "elevators"
+    const val STAIRS = "stairs"
+
+    const val SELECT_ONE_MORE_OPTIONS = "Select one or more options"
+
     // Login menu item titles
     const val LOGIN_TO_ACCOUNT = "Login to an account"
     const val LOGOUT_OF = "Logout of"
