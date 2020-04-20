@@ -7,15 +7,15 @@ class Floor(
     val overlay: GroundOverlay,
     val amenities: List<Marker>
 ) {
-    public fun displayFloor() {
+    fun displayFloor() {
         setVisible(true)
     }
 
-    public fun hideFloor() {
+    fun hideFloor() {
         setVisible(false)
     }
 
-    public fun setVisible(isVisible: Boolean) {
+    fun setVisible(isVisible: Boolean) {
         overlay.isVisible = isVisible
         for (marker in amenities) {
             marker.isVisible = isVisible

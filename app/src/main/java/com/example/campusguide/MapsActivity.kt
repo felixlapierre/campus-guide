@@ -55,11 +55,11 @@ class MapsActivity : AppCompatActivity() {
         currentLocationButton.setOnClickListener(listener)
     }
 
-    fun setFloorPlanButtons() {
+    fun setFloorPlanButtons(floorPlans: FloorPlans) {
         ChangeFloor.upButtonId = R.id.upOneFloor
         ChangeFloor.downButtonId = R.id.downOneFloor
-        FloorPlans.floorUpButton = findViewById(R.id.upOneFloor)
-        FloorPlans.floorDownButton = findViewById(R.id.downOneFloor)
+        floorPlans.floorUpButton = findViewById(R.id.upOneFloor)
+        floorPlans.floorDownButton = findViewById(R.id.downOneFloor)
     }
 
     fun addActivityResultListener(listener: ActivityResultListener) {

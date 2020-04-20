@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
@@ -57,19 +58,19 @@ class PointsOfInterest(
 
         view.findViewById<Button>(R.id.cafe)?.setOnClickListener {
             dismiss()
-            searchPOINearCurrentLocation("Cafe")
+            searchPOINearCurrentLocation(Constants.CAFE_POI)
         }
         view.findViewById<Button>(R.id.restaurant)?.setOnClickListener {
             dismiss()
-            searchPOINearCurrentLocation("Restaurant")
+            searchPOINearCurrentLocation(Constants.RESTAURANT_POI)
         }
         view.findViewById<Button>(R.id.shopping)?.setOnClickListener {
             dismiss()
-            searchPOINearCurrentLocation("Shopping mall")
+            searchPOINearCurrentLocation(Constants.SHOPPING_MALL_POI)
         }
         view.findViewById<Button>(R.id.pharmacy)?.setOnClickListener {
             dismiss()
-            searchPOINearCurrentLocation("Pharmacy")
+            searchPOINearCurrentLocation(Constants.PHARMACY_POI)
         }
         return view
     }

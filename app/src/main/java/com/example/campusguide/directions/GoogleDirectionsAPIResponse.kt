@@ -61,6 +61,7 @@ data class GoogleDirectionsAPIFare(
     @Json(name = "text")
     val text: String = ""
 )
+
 data class GoogleDirectionsAPIBounds(
 
     @Json(name = "northeast")

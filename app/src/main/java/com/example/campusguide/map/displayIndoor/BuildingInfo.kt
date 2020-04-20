@@ -2,6 +2,7 @@ package com.example.campusguide.map.displayIndoor
 
 import android.app.Activity
 import android.graphics.Color
+import com.example.campusguide.Constants
 import com.example.campusguide.R
 import com.example.campusguide.directions.DirectionsFlow
 import com.example.campusguide.map.GoogleMapAdapter
@@ -14,14 +15,44 @@ import com.google.android.gms.maps.model.GroundOverlayOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlin.math.floor
 
-class BuildingInfo constructor(private val buildingName: String, map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) {
+class BuildingInfo constructor(private val buildingName: String, private val map: GoogleMapAdapter, private val buildingIndexSingleton: BuildingIndexSingleton, private val directionsFlow: DirectionsFlow?, private val activity: Activity) {
     private val floors: IntArray? = setFloors()
     private val buildingImageCoordinates: LatLng = setBuildingImageCoordinates()
     private var floorPlans: HashMap<Int, Floor>? = null
     val startFloor: Int? = floors?.get(0)
 
     init {
+        setupFloorPlansFromBuildingIndex()
+    }
+    fun getFloors(): IntArray? {
+        return floors
+    }
+    fun getBuildingImageCoordinates(): LatLng {
+        return buildingImageCoordinates
+    }
+    fun getFloorPlans(): HashMap<Int, Floor>? {
+        if (floorPlans == null) {
+            setupFloorPlansFromBuildingIndex()
+        }
+        return floorPlans
+    }
+
+    private fun setBuildingImageCoordinates(): LatLng {
+        if (buildingName == Constants.HALL) return LatLng(45.4972695, -73.57894175)
+        if (buildingName == Constants.LIBRARY) return LatLng(45.496753, -73.577904)
+
+        return LatLng(0.0, 0.0)
+    }
+    private fun setFloors(): IntArray? {
+        if (buildingName == Constants.HALL) return intArrayOf(4, 5, 6, 7, 8)
+        if (buildingName == Constants.LIBRARY) return intArrayOf(2, 3, 4, 5)
+
+        return null
+    }
+
+    private fun setupFloorPlansFromBuildingIndex() {
         var buildings = buildingIndexSingleton.getBuildings()
         if (buildings == null) {
             buildingIndexSingleton.onLoaded = { it ->
@@ -31,35 +62,13 @@ class BuildingInfo constructor(private val buildingName: String, map: GoogleMapA
             floorPlans = setUpFloorPlans(map, buildings)
         }
     }
-    fun getFloors(): IntArray? {
-        return floors
-    }
-    fun getBuildingImageCoordinates(): LatLng {
-        return buildingImageCoordinates
-    }
-    fun getFloorPlans(): HashMap<Int, Floor>? {
-        return floorPlans
-    }
-
-    private fun setBuildingImageCoordinates(): LatLng {
-        if (buildingName == "hall") return LatLng(45.4972695, -73.57894175)
-        if (buildingName == "library") return LatLng(45.496753, -73.577904)
-
-        return LatLng(0.0, 0.0)
-    }
-    private fun setFloors(): IntArray? {
-        if (buildingName == "hall") return intArrayOf(4, 5, 6, 7, 8)
-        if (buildingName == "library") return intArrayOf(2, 3, 4, 5)
-
-        return null
-    }
     private fun setUpFloorPlans(map: GoogleMapAdapter, buildings: List<Building>): HashMap<Int, Floor>? {
 
         if (floors != null) {
-            if (buildingName == "hall") {
-                return createGroundOverlays("h", map, 68F, 63F, 124F, buildings)
-            } else if (buildingName == "library") {
-                return createGroundOverlays("lb", map, 82F, 82F, -56F, buildings)
+            if (buildingName == Constants.HALL) {
+                return createGroundOverlays(Constants.HALL_CODE, map, 68F, 63F, 124F, buildings)
+            } else if (buildingName == Constants.LIBRARY) {
+                return createGroundOverlays(Constants.LIBRARY_CODE, map, 82F, 82F, -56F, buildings)
             }
         }
         return null

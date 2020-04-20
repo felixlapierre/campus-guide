@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.example.campusguide.utils.CalendarUtils
@@ -17,7 +18,6 @@ import com.example.campusguide.utils.CalendarUtils
  * An Android fragment that contains a dialog window prompting the user to
  * select the calendar they would like to use for event location parsing.
  */
-
 class ChooseCalendarDialogFragment constructor(
     private val activity: MapsActivity,
     private val calendar: Calendar,
@@ -32,7 +32,7 @@ class ChooseCalendarDialogFragment constructor(
 
         // Set title of dialog box
         val builder: AlertDialog.Builder = AlertDialog.Builder(this.activity)
-            .setTitle("Choose your calendar")
+            .setTitle(Constants.CHOOSE_CALENDAR)
 
         builder.setView(view)
         builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -41,9 +41,9 @@ class ChooseCalendarDialogFragment constructor(
 
         fillRadioGroup(radioGroup)
 
-        builder.setPositiveButton("OK") { _, _ ->
+        builder.setPositiveButton(Constants.CONFIRM_CHOICE) { _, _ ->
             handleOkSelected(radioGroup)
-        }.setNegativeButton("Cancel", null)
+        }.setNegativeButton(Constants.CANCEL_CHOICE, null)
 
         return builder.create()
     }
@@ -65,7 +65,7 @@ class ChooseCalendarDialogFragment constructor(
             val selectedText = radioButton.text.toString()
             // Return selected calendar
             calendar.setSelectedCalendar(selectedText)
-            Toast.makeText(activity, "Calendar set to: $selectedText", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "${Constants.CALENDAR_SET_TOAST} $selectedText", Toast.LENGTH_LONG).show()
             // Change menu item title for Calendar to include selected calendar
             calendarUtils.setCalendarMenuItemName(selectedText)
         }

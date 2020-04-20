@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.database.Cursor
 import android.net.Uri
 import android.provider.CalendarContract
+import com.example.campusguide.Constants
 import com.example.campusguide.MapsActivity
 import com.example.campusguide.R
 import com.google.android.material.navigation.NavigationView
@@ -17,7 +18,6 @@ import kotlin.collections.ArrayList
  * Class for handling the user's calendars.
  * Performs all queries and saves information related to calendars and events.
  */
-
 class Calendar constructor(val activity: MapsActivity, userEmail: String) {
 
     private val CALENDAR_VALUES_TO_QUERY: Array<String> = arrayOf(
@@ -91,7 +91,7 @@ class Calendar constructor(val activity: MapsActivity, userEmail: String) {
 
     fun unsetCalendar() {
         val navView = activity.findViewById<NavigationView>(R.id.nav_view)
-        navView.menu.findItem(R.id.calendar).title = "Calendar"
+        navView.menu.findItem(R.id.calendar).title = Constants.CHOOSE_CALENDAR
         val calendar: Box<database.entity.Calendar> = ObjectBox.boxStore.boxFor()
         calendar.removeAll()
     }
