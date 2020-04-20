@@ -74,7 +74,7 @@ object Constants {
     const val PATTERN_GAP_LENGTH_PX = 20.0F
 
     // Map marker snippets
-    const val LOCATION_MARKER_TITLE = "You are here"
+    const val LOCATION_MARKER_TITLE = "You are here."
     const val START = "Start"
     const val DESTINATION = "Destination"
 
