@@ -1,5 +1,6 @@
 package com.example.campusguide
 
+import androidx.test.annotation.UiThreadTest
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.filters.SdkSuppress
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
@@ -10,6 +11,7 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
+import com.google.android.material.internal.ContextUtils.getActivity
 import database.ObjectBox
 import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.not
@@ -38,12 +40,11 @@ class DirectionsSystemTest {
 
     @Test
     fun getDirectionsToConcordiaFromCurrentLocation() {
-
         // Wait until the map of MapsActivity is loaded
         device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
         // Click the Navigate button
-        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
+        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("directions"))
         if (navigateButton.exists() && navigateButton.isEnabled) {
             navigateButton.click()
         }
@@ -106,12 +107,15 @@ class DirectionsSystemTest {
 
     @Test
     fun getDirectionsToConcordiaFromMcgill() {
-
         // Wait until the map of MapsActivity is loaded
-        device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
+        device.wait(
+            Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)),
+            TIMEOUT
+        )
 
         // Click the Navigate button
-        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
+        val navigateButton: UiObject =
+            device.findObject(UiSelector().descriptionContains("directions"))
         if (navigateButton.exists() && navigateButton.isEnabled) {
             navigateButton.click()
         }
@@ -120,7 +124,8 @@ class DirectionsSystemTest {
         device.wait(Until.hasObject(By.desc("chooseDestinationOptionsLayout")), TIMEOUT)
 
         // Click on the Search For Location button
-        val searchForLocationButton: UiObject = device.findObject(UiSelector().descriptionContains("searchForLocationButton"))
+        val searchForLocationButton: UiObject =
+            device.findObject(UiSelector().descriptionContains("searchForLocationButton"))
         if (searchForLocationButton.exists() && searchForLocationButton.isEnabled) {
             searchForLocationButton.click()
         }
@@ -131,11 +136,14 @@ class DirectionsSystemTest {
         // Search for Concordia University
         // Note: For some reason, the regular setText() method doesn't work on a SearchView
         // So I had to resort to legacySetText()
-        val searchTextField: UiObject = device.findObject(UiSelector().descriptionContains("searchView"))
+        val searchTextField: UiObject =
+            device.findObject(UiSelector().description("searchView"))
         searchTextField.legacySetText("Concordia University")
 
         // Select the first option
-        var firstResult: UiObject = device.findObject(UiSelector().className("android.widget.TextView").text("Concordia University"))
+        var firstResult: UiObject = device.findObject(
+            UiSelector().className("android.widget.TextView").text("Concordia University")
+        )
         if (firstResult.exists() && firstResult.isEnabled) {
             firstResult.click()
         }
@@ -155,27 +163,34 @@ class DirectionsSystemTest {
         searchTextField.legacySetText("McGill University")
 
         // Select the first option
-        firstResult = device.findObject(UiSelector().className("android.widget.TextView").text("McGill University"))
+        firstResult = device.findObject(
+            UiSelector().className("android.widget.TextView").text("McGill University")
+        )
         if (firstResult.exists() && firstResult.isEnabled) {
             firstResult.click()
         }
 
         // Wait until the map of DirectionsActivity is loaded
-        device.wait(Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
+        device.wait(
+            Until.hasObject(By.desc(Constants.DIRECTIONS_ACTIVITY_CONTENT_DESCRIPTION)),
+            TIMEOUT
+        )
 
         // Pick a random travel mode
         // val travelMode = travelModes.random()
         val travelMode = "walking"
 
         // Click on the travel mode button
-        val travelModeButton: UiObject = device.findObject(UiSelector().descriptionContains(travelMode))
+        val travelModeButton: UiObject =
+            device.findObject(UiSelector().descriptionContains(travelMode))
         if (travelModeButton.exists() && travelModeButton.isEnabled) {
             travelModeButton.click()
         }
 
         // Wait until route is displayed
         val markerStart: UiObject = device.findObject(UiSelector().descriptionContains("Start"))
-        val markerEnd: UiObject = device.findObject(UiSelector().descriptionContains("Destination"))
+        val markerEnd: UiObject =
+            device.findObject(UiSelector().descriptionContains("Destination"))
         device.wait(Until.hasObject(By.desc("Start")), TIMEOUT)
 
         assertThat(markerStart.contentDescription, containsString("Start"))

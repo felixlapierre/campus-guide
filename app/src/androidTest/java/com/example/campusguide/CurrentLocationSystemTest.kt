@@ -50,7 +50,7 @@ class CurrentLocationSystemTest {
 
         val marker: UiObject = device.findObject(UiSelector().descriptionContains("You are here."))
         // Note: The content-description field of Google Maps markers has the following format: {markerTitle.markerSnippet}
-        assertEquals("You are here.. ", marker.contentDescription)
+        assertEquals("You are here. ", marker.contentDescription)
     }
 
     @After
