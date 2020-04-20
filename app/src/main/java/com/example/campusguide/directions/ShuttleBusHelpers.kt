@@ -1,7 +1,7 @@
 package com.example.campusguide.directions
 
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import java.util.Calendar
 
 fun ShuttleBusStopSGW(): LocationMetadata {
@@ -37,7 +37,7 @@ enum class Campus {
 
 fun getShuttleBusGoogleAPIStepRisky(pathPolyline: PathPolyline): GoogleDirectionsAPIStep {
 
-    return GoogleDirectionsAPIStep (
+    return GoogleDirectionsAPIStep(
         distance = GoogleDirectionsAPITextValuePair(pathPolyline.getDistance(), 0),
         duration = GoogleDirectionsAPITextValuePair("0", pathPolyline.getDuration()),
         endLocation = GoogleDirectionsAPILocation(
@@ -60,7 +60,7 @@ suspend fun getShuttleBusGoogleAPIStep(pathPolyline: PathPolyline): GoogleDirect
 
     pathPolyline.waitUntilCreated()
 
-    return GoogleDirectionsAPIStep (
+    return GoogleDirectionsAPIStep(
         distance = GoogleDirectionsAPITextValuePair("0", 0),
         duration = GoogleDirectionsAPITextValuePair("0", 0),
         endLocation = GoogleDirectionsAPILocation(
@@ -87,7 +87,7 @@ public fun shouldBeShuttleRoute(start: LocationMetadata, end: LocationMetadata):
     // return checkCurrTimeValid() && checkLocationsValid(startCampus, endCampus)
 }
 
-fun campusFromLatLng (location: LatLng): Campus {
+fun campusFromLatLng(location: LatLng): Campus {
     return when {
         DOWNTOWN_CAMPUS_BOUNDS().contains(location) -> {
             Campus.DOWNTOWN
@@ -101,7 +101,6 @@ fun campusFromLatLng (location: LatLng): Campus {
     }
 }
 
-
 private fun checkCurrTimeValid(calendar: Calendar = Calendar.getInstance()): Boolean {
     val day = calendar.get(Calendar.DAY_OF_WEEK)
     val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -111,7 +110,7 @@ private fun checkCurrTimeValid(calendar: Calendar = Calendar.getInstance()): Boo
     if (day == 1 || day == 7)
         return false
     // Fridays
-    if(day == 6) {
+    if (day == 6) {
         if (hour < 7 || (hour == 7 && minute < 40))
             return false
         if (hour > 20 || (hour == 19 && minute < 50))
@@ -125,7 +124,6 @@ private fun checkCurrTimeValid(calendar: Calendar = Calendar.getInstance()): Boo
             return false
     }
     return true
-
 }
 private fun checkLocationsValid(startCampus: Campus, endCampus: Campus): Boolean {
     return startCampus != Campus.OFF_CAMPUS &&

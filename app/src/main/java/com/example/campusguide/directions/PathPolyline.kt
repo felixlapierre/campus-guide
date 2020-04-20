@@ -22,8 +22,8 @@ import kotlinx.coroutines.async
 class PolylineStyle constructor(
     private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX),
     private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX),
-    val pathColor:Int = Color.parseColor(Constants.AZURE_COLOR)
-){
+    val pathColor: Int = Color.parseColor(Constants.AZURE_COLOR)
+) {
     val patternPolygonAlpha = listOf(patternGap, patternDash)
 }
 
@@ -47,10 +47,14 @@ class PathPolyline constructor(
 
     private var created: Boolean = false
 
-    constructor(startName: String, endName: String, segment: Segment,
+    constructor(
+        startName: String,
+        endName: String,
+        segment: Segment,
         style: PolylineStyle = PolylineStyle(),
         startMarkerOptions: MarkerOptions? = null,
-        endMarkerOptions: MarkerOptions? = null) : this(
+        endMarkerOptions: MarkerOptions? = null
+    ) : this(
         startName,
         endName,
         GlobalScope.async {

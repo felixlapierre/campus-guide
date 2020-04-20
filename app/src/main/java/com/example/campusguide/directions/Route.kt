@@ -22,7 +22,7 @@ class Route constructor (
     private var pathPolylines: MutableList<PathPolyline>? = mutableListOf()
 
     init {
-        when(travelMode) {
+        when (travelMode) {
             "shuttle" -> {
                 if (shouldBeShuttleRoute(start, end)) {
                     pathPolylines = mutableListOf()
@@ -39,7 +39,7 @@ class Route constructor (
     }
 
     public fun removeFromMap() {
-        pathPolylines!!.forEach{
+        pathPolylines!!.forEach {
             it.removeFromMap()
         }
     }
@@ -66,7 +66,7 @@ class Route constructor (
     }
 
     private fun createShuttlePathPolylineList(start: LocationMetadata, end: LocationMetadata) {
-        when (campusFromLatLng(start.getLatLng())){
+        when (campusFromLatLng(start.getLatLng())) {
             Campus.DOWNTOWN -> {
                 pathPolylines!!.add(
                     createPathPolyline(start, ShuttleBusStopSGW(), "walking", null, ShuttlePath.TO_SHUTTLE))
@@ -93,7 +93,10 @@ class Route constructor (
         NOT_SHUTTLE
     }
 
-    private fun createPathPolyline(start: LocationMetadata, end: LocationMetadata, travelMode: String,
+    private fun createPathPolyline(
+        start: LocationMetadata,
+        end: LocationMetadata,
+        travelMode: String,
         transitPreference: String?,
         shuttlePath: ShuttlePath = ShuttlePath.NOT_SHUTTLE
     ): PathPolyline {
@@ -106,7 +109,7 @@ class Route constructor (
         val secondSegment = createSegment(end.encoded, segmentArgs)
         secondSegment.appendTo(firstSegment)
 
-        when(shuttlePath) {
+        when (shuttlePath) {
             ShuttlePath.TO_SHUTTLE -> {
                 return PathPolyline(start.name, end.name, firstSegment,
                     endMarkerOptions = MarkerOptions().alpha(0.0f))
@@ -152,8 +155,8 @@ class Route constructor (
             pathPolylines!!.forEach {
                 totalDistance += "${it.getDistance()} + "
             }
-            totalDistance.subSequence(0, totalDistance.length-3)
-        }else{
+            totalDistance.subSequence(0, totalDistance.length - 3)
+        } else {
             totalDistance = pathPolylines!!.first().getDistance()
         }
         return totalDistance
@@ -220,4 +223,3 @@ class Route constructor (
         return pathPolylines!!.first().getFare()
     }
 }
-
