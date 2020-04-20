@@ -358,39 +358,6 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     }
 
-    // private fun createPath(
-    //     startName: String,
-    //     endName: String,
-    //     travelMode: String,
-    //     transitPreference: String?
-    // ): PathPolyline {
-    //     val errorListener = DisplayMessageErrorListener(this)
-    //     val directions = OutdoorDirections(
-    //         ApiKeyRequestDecorator(
-    //             this,
-    //             VolleyRequestDispatcher(
-    //                 this,
-    //                 errorListener
-    //             )
-    //         ),
-    //         KlaxonDirectionsAPIResponseParser(),
-    //         errorListener
-    //     )
-    //     val segmentArgs =
-    //         SegmentArgs(
-    //             travelMode,
-    //             BuildingIndexSingleton.getInstance(assets),
-    //             directions,
-    //             transitPreference
-    //         )
-    //
-    //     val firstSegment = createSegment(start, segmentArgs)
-    //     val secondSegment = createSegment(end, segmentArgs)
-    //     secondSegment.appendTo(firstSegment)
-    //
-    //     return PathPolyline(startName, endName, firstSegment)
-    // }
-
     private fun removePreviousPath() {
         if (::currentPath.isInitialized) {
             currentPath.removeFromMap()

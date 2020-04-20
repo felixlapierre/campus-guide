@@ -83,6 +83,7 @@ public fun shouldBeShuttleRoute(start: LocationMetadata, end: LocationMetadata):
     val startCampus = campusFromLatLng(start.getLatLng())
     val endCampus = campusFromLatLng(end.getLatLng())
     return checkLocationsValid(startCampus, endCampus)
+    // TODO: Test and integrate checkCurrTimeValid()
     // return checkCurrTimeValid() && checkLocationsValid(startCampus, endCampus)
 }
 
@@ -105,7 +106,6 @@ private fun checkCurrTimeValid(calendar: Calendar = Calendar.getInstance()): Boo
     val day = calendar.get(Calendar.DAY_OF_WEEK)
     val hour = calendar.get(Calendar.HOUR_OF_DAY)
     val minute = calendar.get(Calendar.MINUTE)
-    // println("DAY/TIME : $day / $hour:$minute")
     // Time aware 'enough' for feature completion for W2020 semester
     // Weekends
     if (day == 1 || day == 7)
