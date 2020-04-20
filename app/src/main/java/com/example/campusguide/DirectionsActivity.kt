@@ -38,6 +38,7 @@ import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private lateinit var map: GoogleMapAdapter
@@ -301,12 +302,19 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun centerMapOnPath(path: Route) {
-        GlobalScope.launch {
-            path.waitUntilCreated()
-            runOnUiThread {
-                map.moveCamera(path.getRouteBounds())
+
+            GlobalScope.launch {
+                path.waitUntilCreated()
+                runOnUiThread {
+                    try {
+                        map.moveCamera(path.getRouteBounds())
+                    } catch (err: Exception) {
+
+                    }
+                }
             }
-        }
+
+
     }
 
     // private fun createPath(
