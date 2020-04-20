@@ -147,10 +147,10 @@ class Route constructor (
             pathPolylines!!.forEach {
                 totalDistance += "${it.getDistance()} + "
             }
+            totalDistance.subSequence(0, totalDistance.length-3)
         }else{
             totalDistance = pathPolylines!!.first().getDistance()
         }
-        totalDistance.subSequence(0, totalDistance.length-3)
         return totalDistance
     }
 
