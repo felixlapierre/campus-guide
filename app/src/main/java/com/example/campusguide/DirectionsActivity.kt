@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -38,10 +37,10 @@ import com.example.campusguide.utils.request.ApiKeyRequestDecorator
 import com.example.campusguide.utils.request.VolleyRequestDispatcher
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.gson.Gson
+import java.lang.Exception
 import kotlinx.android.synthetic.main.activity_directions.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private lateinit var map: GoogleMapAdapter
@@ -68,7 +67,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     private lateinit var listView: ListView
     private lateinit var adapter: TransitRouteAdapter
 
-    private val giveMeAnOutdoorDirections =  {
+    private val giveMeAnOutdoorDirections = {
         val directions = OutdoorDirections(
             ApiKeyRequestDecorator(
                 this,
@@ -87,7 +86,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_directions)
 
-        this.errorListener= DisplayMessageErrorListener(this)
+        this.errorListener = DisplayMessageErrorListener(this)
         this.buildingIndexSingleton = BuildingIndexSingleton.getInstance(assets)
 
         map = GoogleMapAdapter()
@@ -192,19 +191,19 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         // Hash map containing (travelMode, path) pairs for the three main paths
         mainPaths = mapOf(
             Constants.TRAVEL_MODE_DRIVING to Route(start, end, "driving", null,
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             ),
             Constants.TRAVEL_MODE_WALKING to Route(start, end, "walking", null,
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             ),
             Constants.TRAVEL_MODE_TRANSIT to Route(start, end, "transit", null,
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             ),
             Constants.TRAVEL_MODE_SHUTTLE to Route(start, end, "shuttle", null,
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             )
         )
@@ -213,11 +212,11 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         extraPaths = mapOf(
             Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
             Constants.TITLE_LESS_WALKING to Route(start, end, "transit", "less_walking",
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             ),
             Constants.TITLE_FEWER_TRANSFERS to Route(start, end, "transit", "fewer_transfers",
-                buildingIndexSingleton=buildingIndexSingleton,
+                buildingIndexSingleton = buildingIndexSingleton,
                 giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             )
         )
@@ -350,12 +349,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     try {
                         map.moveCamera(path.getRouteBounds())
                     } catch (err: Exception) {
-
                     }
                 }
             }
-
-
     }
 
     // private fun createPath(

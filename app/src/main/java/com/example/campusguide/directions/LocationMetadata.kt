@@ -9,7 +9,7 @@ class LocationMetadata constructor(
     public val encoded: String,
     private val buildingIndexSingleton: BuildingIndexSingleton? = null
 ) {
-    public fun getLatLng():LatLng {
+    public fun getLatLng(): LatLng {
         // If encoded value is Lat, Lng
         return if (encoded.matches("""\d+.\d+,\s*-?\d+.\d+""".toRegex())) {
             val latlngStrList = encoded.split(""",\s*""".toRegex())
@@ -25,7 +25,5 @@ class LocationMetadata constructor(
             val lng = building.lon.toDouble()
             LatLng(lat, lng)
         }
-
     }
-
 }
