@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import android.widget.CheckBox
 import androidx.fragment.app.DialogFragment
 import com.example.campusguide.Accessibility
@@ -18,9 +19,10 @@ import com.example.campusguide.R
  * indoor pathfinding.
  */
 class SelectAccessibilityOptionsDialogFragment(
-    private val directionsActivity: DirectionsActivity
+    private val directionsActivity: DirectionsActivity,
+    private val callback: () -> Unit
 ) : DialogFragment() {
-
+    private lateinit var myView: View
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val inflater = requireActivity().layoutInflater
         val view = inflater.inflate(R.layout.accessibility_select_in_directions, null)
@@ -30,6 +32,7 @@ class SelectAccessibilityOptionsDialogFragment(
             .setTitle(Constants.SELECT_ONE_MORE_OPTIONS)
 
         builder.setView(view)
+        myView = view
         builder.create().window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         builder.setPositiveButton(Constants.CONFIRM_CHOICE) { _, _ ->
@@ -43,6 +46,7 @@ class SelectAccessibilityOptionsDialogFragment(
         handleEscalator()
         handleElevator()
         handleStairs()
+        callback.invoke()
     }
 
     private fun boxIsChecked(box: CheckBox?): Boolean {
@@ -62,7 +66,7 @@ class SelectAccessibilityOptionsDialogFragment(
      */
     private fun handleEscalator() {
         val escalatorCheckBox =
-            view?.findViewById<CheckBox>(R.id.escalators_checkbox)
+            myView.findViewById<CheckBox>(R.id.escalators_checkbox)
         if (boxIsChecked(escalatorCheckBox))
             Accessibility.setEscalators(false)
         else
@@ -71,7 +75,7 @@ class SelectAccessibilityOptionsDialogFragment(
 
     private fun handleElevator() {
         val elevatorCheckBox =
-            view?.findViewById<CheckBox>(R.id.elevators_checkbox)
+            myView.findViewById<CheckBox>(R.id.elevators_checkbox)
         if (boxIsChecked(elevatorCheckBox))
             Accessibility.setElevators(false)
         else
@@ -80,7 +84,7 @@ class SelectAccessibilityOptionsDialogFragment(
 
     private fun handleStairs() {
         val stairsCheckBox =
-            view?.findViewById<CheckBox>(R.id.stairs_checkbox)
+            myView.findViewById<CheckBox>(R.id.stairs_checkbox)
         if (boxIsChecked(stairsCheckBox))
             Accessibility.setStairs(false)
         else

@@ -87,19 +87,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             text = endName
         }
 
-        // Hash map containing (travelMode, path) pairs for the three main paths
-        mainPaths = mapOf(
-            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
-            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
-            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
-        )
-
-        // Hash map containing (title, path) pairs for the optional transit paths
-        extraPaths = mapOf(
-            Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
-            Constants.TITLE_LESS_WALKING to createPath(startName, endName, "transit", "less_walking"),
-            Constants.TITLE_FEWER_TRANSFERS to createPath(startName, endName, "transit", "fewer_transfers")
-        )
+        createAllPaths()
 
         // Display travel times
         GlobalScope.launch {
@@ -157,6 +145,22 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         adapter = TransitRouteAdapter(this)
     }
 
+    private fun createAllPaths() {
+        // Hash map containing (travelMode, path) pairs for the three main paths
+        mainPaths = mapOf(
+            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
+            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
+            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
+        )
+
+        // Hash map containing (title, path) pairs for the optional transit paths
+        extraPaths = mapOf(
+            Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
+            Constants.TITLE_LESS_WALKING to createPath(startName, endName, "transit", "less_walking"),
+            Constants.TITLE_FEWER_TRANSFERS to createPath(startName, endName, "transit", "fewer_transfers")
+        )
+    }
+
     /**
      * Called when the Back button is clicked.
      */
@@ -209,7 +213,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
 
     private fun handleAccessibilitySelect() {
-        val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this)
+        val selectAccessibility = SelectAccessibilityOptionsDialogFragment(this) {
+            createAllPaths()
+            removePreviousPath()
+            currentPath = mainPaths[Constants.TRAVEL_MODE_WALKING] ?: error("ERROR ")
+            setPathOnMapAsync(currentPath)
+            centerMapOnPath(currentPath)
+            showMap()
+        }
         selectAccessibility.show(this.supportFragmentManager, "accessibilityOptions")
     }
 
