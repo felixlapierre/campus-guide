@@ -19,31 +19,51 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 
-class PathPolyline private constructor(val startName: String, val endName: String, private val deferred: Deferred<List<Path>>) {
-    class PolylineStyle {
-        private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX)
-        private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX)
-        val patternPolygonAlpha = listOf(patternGap, patternDash)
-        val pathColor = Color.parseColor(Constants.AZURE_COLOR)
-    }
+class PolylineStyle constructor(
+    private val patternDash: PatternItem = Dash(Constants.PATTERN_DASH_LENGTH_PX),
+    private val patternGap: PatternItem = Gap(Constants.PATTERN_GAP_LENGTH_PX),
+    val pathColor: Int = Color.parseColor(Constants.AZURE_COLOR)
+) {
+    val patternPolygonAlpha = listOf(patternGap, patternDash)
+}
+
+class PathPolyline constructor(
+    private val startName: String,
+    private val endName: String,
+    private val deferred: Deferred<List<Path>>,
+    private var startMarkerOptions: MarkerOptions? = null,
+    private var endMarkerOptions: MarkerOptions? = null,
+    private var style: PolylineStyle = PolylineStyle()
+) {
 
     private lateinit var paths: List<Path>
     private val polylineOptions: MutableList<PolylineOptions>
     private var polylines: MutableList<Polyline>
     private var routePreviewData: RoutePreviewData = RoutePreviewData()
 
-    private var startMarkerOptions: MarkerOptions
     private var startMarker: IMarker? = null
-    private var endMarkerOptions: MarkerOptions
     private var endMarker: IMarker? = null
     private lateinit var segment: Segment
 
-    constructor(startName: String, endName: String, segment: Segment) : this(
+    private var created: Boolean = false
+
+    constructor(
+        startName: String,
+        endName: String,
+        segment: Segment,
+        style: PolylineStyle = PolylineStyle(),
+        startMarkerOptions: MarkerOptions? = null,
+        endMarkerOptions: MarkerOptions? = null
+    ) : this(
         startName,
         endName,
         GlobalScope.async {
             segment.toPath()
-        }) {
+        },
+        startMarkerOptions,
+        endMarkerOptions,
+        style
+    ) {
         this.segment = segment
     }
 
@@ -54,10 +74,17 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     )
 
     init {
+        if (startMarkerOptions == null)
+            startMarkerOptions = MarkerOptions()
+                .title(Helper.capitalizeWords(startName))
+                .snippet(Constants.START)
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        if (endMarkerOptions == null)
+            endMarkerOptions = MarkerOptions()
+                .title(Helper.capitalizeWords(endName))
+                .snippet(Constants.DESTINATION)
         polylineOptions = mutableListOf()
         polylines = mutableListOf()
-        startMarkerOptions = MarkerOptions()
-        endMarkerOptions = MarkerOptions()
     }
 
     fun addToMap(map: Map, floor: Int) {
@@ -73,8 +100,8 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         polylineOptions.forEach { line ->
             polylines.add(map.addPolyline(line)!!)
         }
-        startMarker = map.addMarker(startMarkerOptions)
-        endMarker = map.addMarker(endMarkerOptions)
+        startMarker = map.addMarker(startMarkerOptions!!)
+        endMarker = map.addMarker(endMarkerOptions!!)
     }
 
     fun removeFromMap() {
@@ -87,8 +114,11 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
     }
 
     suspend fun waitUntilCreated() {
+        if (created)
+            return
+
         paths = deferred.await()
-        val style = PolylineStyle()
+        val style = style
 
         val firstPoint = paths[0].points[0]
         val lastPath = paths[paths.size - 1]
@@ -106,14 +136,8 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
             endOfLastPath = path.points[path.points.size - 1]
         }
 
-        startMarkerOptions.position(firstPoint)
-            .title(Helper.capitalizeWords(startName))
-            .snippet(Constants.START)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
-
-        endMarkerOptions.position(lastPoint)
-            .title(Helper.capitalizeWords(endName))
-            .snippet(Constants.DESTINATION)
+        startMarkerOptions!!.position(firstPoint)
+        endMarkerOptions!!.position(lastPoint)
 
         routePreviewData.setPath(paths)
         if (this::segment.isInitialized)
@@ -141,6 +165,14 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
         return LatLngBounds(southwest, northeast)
     }
 
+    suspend fun getPaths(): List<Path> {
+        waitUntilCreated()
+        return this.paths
+    }
+    fun getPathsRisky(): List<Path> {
+        return this.paths
+    }
+
     fun getSteps(): List<GoogleDirectionsAPIStep> {
         return segment.getSteps()
     }
@@ -155,6 +187,13 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
 
     fun getFare(): String {
         return segment.getFare()
+    }
+
+    fun getStartLocationRisky(): LatLng {
+        return this.paths.first().points.first()
+    }
+    fun getEndLocationRisky(): LatLng {
+        return this.paths.last().points.last()
     }
 
     fun getRoutePreviewData(): RoutePreviewData {

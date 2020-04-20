@@ -143,6 +143,21 @@
             android:paddingEnd="5dp"
             android:text="@string/dash"
             android:textColor="@drawable/travel_mode_button_color" />
+
+        <RadioButton
+            android:id="@+id/radio_shuttle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:button="@drawable/ic_directions_bus"
+            android:buttonTint="@color/colorPrimaryDark"
+            android:contentDescription="transitRadioButton"
+            android:onClick="onRadioButtonClicked"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/dash"
+            android:textColor="@drawable/travel_mode_button_color" />
     </RadioGroup>
 
     <FrameLayout
