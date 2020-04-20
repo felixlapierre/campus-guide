@@ -46,8 +46,8 @@ class BuildingInfo constructor(private val buildingName: String, private val map
         return LatLng(0.0, 0.0)
     }
     private fun setFloors(): IntArray? {
-        if (buildingName == Constants.HALL) return intArrayOf(1, 2, 4, 5, 6, 7, 8)
-        if (buildingName == Constants.LIBRARY) return intArrayOf(2, 3, 4, 5)
+        if (buildingName == Constants.HALL) return intArrayOf(1, 2, 3, 4, 5, 6, 7, 8)
+        if (buildingName == Constants.LIBRARY) return intArrayOf(1, 2, 3, 4, 5)
 
         return null
     }
