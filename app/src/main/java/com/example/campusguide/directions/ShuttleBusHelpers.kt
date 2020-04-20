@@ -43,7 +43,7 @@ fun getShuttleBusGoogleAPIStepRisky(pathPolyline: PathPolyline): GoogleDirection
         endLocation = GoogleDirectionsAPILocation(
             pathPolyline.getEndLocationRisky().latitude.toFloat(),
             pathPolyline.getEndLocationRisky().longitude.toFloat()),
-        htmlInstruction = "Get on the <b>Concordia Shuttle Bus</b>.",
+        htmlInstruction = "Ride the <b>Concordia Shuttle Bus</b> to the other campus.",
         maneuver = "shuttle",
         polyline = GoogleDirectionsAPIPolyline(""),
         startLocation = GoogleDirectionsAPILocation(
