@@ -97,7 +97,6 @@ class ChangeFloor constructor(
         floorPlans?.get(updatedFloor)?.displayFloor()
 
         currentFloor = updatedFloor
-        changeFloorListener?.invoke(currentFloor)
     }
 
     fun getCurrentFloor(): Int {

@@ -6,9 +6,9 @@ import com.google.maps.model.LatLng
 
 class Graph constructor(building: Building) {
     private val map: MutableMap<String, Node> = mutableMapOf()
-    private val lbtopleft: LatLng = LatLng(45.496682, -73.578693)
-    private val lbtopright: LatLng = LatLng(45.497308, -73.578065)
-    private val lbbotleft: LatLng = LatLng(45.496270, -73.577757)
+    private val lbtopleft: LatLng = LatLng(45.496668, -73.578610)
+    private val lbtopright: LatLng = LatLng(45.497262, -73.578055)
+    private val lbbotleft: LatLng = LatLng(45.496274, -73.577741)
 
     init {
         // Add all rooms to the map
