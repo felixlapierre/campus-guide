@@ -88,6 +88,7 @@ object Constants {
     const val TRAVEL_MODE_DRIVING = "driving"
     const val TRAVEL_MODE_WALKING = "walking"
     const val TRAVEL_MODE_TRANSIT = "transit"
+    const val TRAVEL_MODE_SHUTTLE = "shuttle"
     const val TITLE_RECOMMENDED_ROUTE = "RECOMMENDED_ROUTE"
     const val TITLE_LESS_WALKING = "LESS WALKING"
     const val TITLE_FEWER_TRANSFERS = "FEWER TRANSFERS"

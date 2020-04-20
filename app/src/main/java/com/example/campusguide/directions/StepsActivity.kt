@@ -95,6 +95,7 @@ class StepsActivity : AppCompatActivity() {
                     "turn-left" -> R.drawable.ic_turn_left
                     "ramp-right" -> R.drawable.ic_turn_right
                     "ramp-left" -> R.drawable.ic_turn_left
+                    "shuttle" -> R.drawable.ic_directions_bus
                     else -> R.drawable.ic_straight
                 }
             textView.setCompoundDrawablesWithIntrinsicBounds(drawable, 0, 0, 0)

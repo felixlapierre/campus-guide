@@ -17,7 +17,7 @@ import org.jsoup.Jsoup
 
 class RoutePreviewActivity : AppCompatActivity() {
     private lateinit var map: GoogleMapAdapter
-    private lateinit var pathPolyline: RoutePreviewData
+    private lateinit var routePreviewData: RoutePreviewData
     private lateinit var steps: List<GoogleDirectionsAPIStep>
     private lateinit var stepPath: List<Path>
     private var currentStepPath: MutableList<Path> = mutableListOf()
@@ -45,12 +45,12 @@ class RoutePreviewActivity : AppCompatActivity() {
         )
 
         val string = intent.getSerializableExtra("RoutePreview")!! as String
-        pathPolyline = Gson().fromJson(
+        routePreviewData = Gson().fromJson(
             string,
             RoutePreviewData::class.java
         )
-        steps = pathPolyline.getSteps()
-        stepPath = pathPolyline.getPath()
+        steps = routePreviewData.getSteps()
+        stepPath = routePreviewData.getPath()
 
         previousStepButton = findViewById(R.id.previousStep)
         nextStepButton = findViewById(R.id.nextStep)
@@ -62,7 +62,7 @@ class RoutePreviewActivity : AppCompatActivity() {
 
         initializer.setOnMapReadyListener {
             val path =
-                PathPolyline(pathPolyline.getStart(), pathPolyline.getEnd(), pathPolyline.getPath())
+                PathPolyline(routePreviewData.getStart(), routePreviewData.getEnd(), routePreviewData.getPath())
             setPathOnMapAsync(path)
             setCurrentStep(0)
             focusCameraOnCurrentStep(PathPolyline("", "", currentStepPath), 0)

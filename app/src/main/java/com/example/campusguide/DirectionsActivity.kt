@@ -12,7 +12,9 @@ import android.widget.RadioButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.campusguide.directions.KlaxonDirectionsAPIResponseParser
+import com.example.campusguide.directions.LocationMetadata
 import com.example.campusguide.directions.PathPolyline
+import com.example.campusguide.directions.Route
 import com.example.campusguide.directions.RoutePreviewActivity
 import com.example.campusguide.directions.Segment
 import com.example.campusguide.directions.SegmentArgs
@@ -38,13 +40,11 @@ import kotlinx.coroutines.launch
 
 class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
     private lateinit var map: GoogleMapAdapter
-    private lateinit var start: String
-    private lateinit var end: String
-    private lateinit var startName: String
-    private lateinit var endName: String
-    private lateinit var currentPath: PathPolyline
-    private lateinit var mainPaths: Map<String, PathPolyline>
-    private lateinit var extraPaths: Map<String, PathPolyline>
+    private lateinit var start: LocationMetadata
+    private lateinit var end: LocationMetadata
+    private lateinit var currentPath: Route
+    private lateinit var mainPaths: Map<String, Route>
+    private lateinit var extraPaths: Map<String, Route>
     private var currentFloor: Int = 0
     private val floorPlans = FloorPlans()
     private val colorStateList: ColorStateList = ColorStateList(
@@ -56,12 +56,34 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             Color.WHITE // enabled
         )
     )
+
+    private lateinit var errorListener: DisplayMessageErrorListener
+    private lateinit var buildingIndexSingleton: BuildingIndexSingleton
+
     private lateinit var listView: ListView
     private lateinit var adapter: TransitRouteAdapter
+
+    private val giveMeAnOutdoorDirections =  {
+        val directions = OutdoorDirections(
+            ApiKeyRequestDecorator(
+                this,
+                VolleyRequestDispatcher(
+                    this,
+                    errorListener
+                )
+            ),
+            KlaxonDirectionsAPIResponseParser(),
+            errorListener
+        )
+        directions
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_directions)
+
+        this.errorListener= DisplayMessageErrorListener(this)
+        this.buildingIndexSingleton = BuildingIndexSingleton.getInstance(assets)
 
         map = GoogleMapAdapter()
         // TODO: Refactor GoogleMapInitializer so it has less nullable constructor properties
@@ -82,41 +104,56 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
         // Extract origin and destination from the intent
-        start = intent.getStringExtra("OriginEncoded")!!
-        end = intent.getStringExtra("DestinationEncoded")!!
-        startName = intent.getStringExtra("OriginName")!!
-        endName = intent.getStringExtra("DestinationName")!!
+        start = LocationMetadata(
+            encoded = intent.getStringExtra("OriginEncoded")!!,
+            name = intent.getStringExtra("OriginName")!!,
+            buildingIndexSingleton = buildingIndexSingleton
+        )
+        end = LocationMetadata(
+            encoded = intent.getStringExtra("DestinationEncoded")!!,
+            name = intent.getStringExtra("DestinationName")!!,
+            buildingIndexSingleton = buildingIndexSingleton
+        )
 
         // Set the text field of the TextViews
         findViewById<TextView>(R.id.origin).apply {
-            text = startName
+            text = start.name
         }
 
         findViewById<TextView>(R.id.destination).apply {
-            text = endName
+            text = end.name
         }
 
         // Hash map containing (travelMode, path) pairs for the three main paths
         mainPaths = mapOf(
-            Constants.TRAVEL_MODE_DRIVING to createPath(startName, endName, "driving", null),
-            Constants.TRAVEL_MODE_WALKING to createPath(startName, endName, "walking", null),
-            Constants.TRAVEL_MODE_TRANSIT to createPath(startName, endName, "transit", null)
+            Constants.TRAVEL_MODE_DRIVING to Route(start, end, "driving", null,
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
+            ),
+            Constants.TRAVEL_MODE_WALKING to Route(start, end, "walking", null,
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
+            ),
+            Constants.TRAVEL_MODE_TRANSIT to Route(start, end, "transit", null,
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
+            ),
+            Constants.TRAVEL_MODE_SHUTTLE to Route(start, end, "shuttle", null,
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
+            )
         )
 
         // Hash map containing (title, path) pairs for the optional transit paths
         extraPaths = mapOf(
             Constants.TITLE_RECOMMENDED_ROUTE to mainPaths.getValue("transit"),
-            Constants.TITLE_LESS_WALKING to createPath(
-                startName,
-                endName,
-                "transit",
-                "less_walking"
+            Constants.TITLE_LESS_WALKING to Route(start, end, "transit", "less_walking",
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             ),
-            Constants.TITLE_FEWER_TRANSFERS to createPath(
-                startName,
-                endName,
-                "transit",
-                "fewer_transfers"
+            Constants.TITLE_FEWER_TRANSFERS to Route(start, end, "transit", "fewer_transfers",
+                buildingIndexSingleton=buildingIndexSingleton,
+                giveMeAnOutdoorDirections = giveMeAnOutdoorDirections
             )
         )
 
@@ -145,14 +182,14 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         currentPath = mainPaths.getValue("driving")
 
         initializer.setOnMapReadyListener {
-            setPathOnMapAsync(currentPath)
+            setPathsOnMapAsync(currentPath.getPathPolylines())
             centerMapOnPath(currentPath)
         }
 
         steps.setOnClickListener {
-            val routePreviewData = currentPath.getRoutePreviewData()
-            routePreviewData.setStart(startName)
-            routePreviewData.setEnd(endName)
+            val routePreviewData = currentPath.getRoutePreviewDataRisky()
+            routePreviewData.setStart(start.name)
+            routePreviewData.setEnd(end.name)
             routePreviewData.setDistance(currentPath.getDistance())
             routePreviewData.setDuration(currentPath.getDuration() / 60)
             val studentDataObjectAsAString = Gson().toJson(routePreviewData)
@@ -162,9 +199,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
 
         startButton.setOnClickListener {
-            val routePreviewData = currentPath.getRoutePreviewData()
-            routePreviewData.setStart(startName)
-            routePreviewData.setEnd(endName)
+            val routePreviewData = currentPath.getRoutePreviewDataRisky()
+            routePreviewData.setStart(start.name)
+            routePreviewData.setEnd(start.name)
             val studentDataObjectAsAString = Gson().toJson(routePreviewData)
             val routePreview = Intent(this, RoutePreviewActivity::class.java)
             routePreview.putExtra("RoutePreview", studentDataObjectAsAString)
@@ -200,6 +237,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                     if (checked) {
                         hideMap()
                         initializeListView()
+                    }
+                R.id.radio_shuttle ->
+                    if (checked) {
+                        onTravelModeClicked(Constants.TRAVEL_MODE_SHUTTLE, mainPaths)
                     }
             }
             route_duration.text = "${currentPath.getDuration() / 60} min"
@@ -240,48 +281,63 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             }
         }
     }
-
-    private fun centerMapOnPath(path: PathPolyline) {
+    private fun setPathsOnMapAsync(paths: List<PathPolyline>?) {
+        if (paths.isNullOrEmpty()) {
+            errorListener.onError("No route available")
+            return
+        }
         GlobalScope.launch {
-            path.waitUntilCreated()
-            runOnUiThread {
-                map.moveCamera(path.getPathBounds())
+            paths.forEach {
+                it.waitUntilCreated()
+                runOnUiThread {
+                    removePreviousPath()
+                    map.addPath(it, currentFloor)
+                }
             }
         }
     }
 
-    private fun createPath(
-        startName: String,
-        endName: String,
-        travelMode: String,
-        transitPreference: String?
-    ): PathPolyline {
-        val errorListener = DisplayMessageErrorListener(this)
-        val directions = OutdoorDirections(
-            ApiKeyRequestDecorator(
-                this,
-                VolleyRequestDispatcher(
-                    this,
-                    errorListener
-                )
-            ),
-            KlaxonDirectionsAPIResponseParser(),
-            errorListener
-        )
-        val segmentArgs =
-            SegmentArgs(
-                travelMode,
-                BuildingIndexSingleton.getInstance(assets),
-                directions,
-                transitPreference
-            )
-
-        val firstSegment = createSegment(start, segmentArgs)
-        val secondSegment = createSegment(end, segmentArgs)
-        secondSegment.appendTo(firstSegment)
-
-        return PathPolyline(startName, endName, firstSegment)
+    private fun centerMapOnPath(path: Route) {
+        GlobalScope.launch {
+            path.waitUntilCreated()
+            runOnUiThread {
+                map.moveCamera(path.getRouteBounds())
+            }
+        }
     }
+
+    // private fun createPath(
+    //     startName: String,
+    //     endName: String,
+    //     travelMode: String,
+    //     transitPreference: String?
+    // ): PathPolyline {
+    //     val errorListener = DisplayMessageErrorListener(this)
+    //     val directions = OutdoorDirections(
+    //         ApiKeyRequestDecorator(
+    //             this,
+    //             VolleyRequestDispatcher(
+    //                 this,
+    //                 errorListener
+    //             )
+    //         ),
+    //         KlaxonDirectionsAPIResponseParser(),
+    //         errorListener
+    //     )
+    //     val segmentArgs =
+    //         SegmentArgs(
+    //             travelMode,
+    //             BuildingIndexSingleton.getInstance(assets),
+    //             directions,
+    //             transitPreference
+    //         )
+    //
+    //     val firstSegment = createSegment(start, segmentArgs)
+    //     val secondSegment = createSegment(end, segmentArgs)
+    //     secondSegment.appendTo(firstSegment)
+    //
+    //     return PathPolyline(startName, endName, firstSegment)
+    // }
 
     private fun removePreviousPath() {
         if (::currentPath.isInitialized) {
@@ -327,17 +383,17 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         }
     }
 
-    private fun onTravelModeClicked(travelMode: String, paths: Map<String, PathPolyline>) {
+    private fun onTravelModeClicked(travelMode: String, paths: Map<String, Route>) {
         removePreviousPath()
         currentPath = paths.getValue(travelMode)
-        setPathOnMapAsync(currentPath)
+        setPathsOnMapAsync(currentPath.getPathPolylines())
         centerMapOnPath(currentPath)
         showMap()
     }
 
     private fun onFloorChange(floor: Int) {
         currentFloor = floor
-        setPathOnMapAsync(currentPath)
+        setPathsOnMapAsync(currentPath.getPathPolylines())
     }
 
     private fun setFloorPlanButtons() {
