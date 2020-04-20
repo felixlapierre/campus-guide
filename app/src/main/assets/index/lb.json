@@ -260,7 +260,7 @@
       "code": "2-near-elevators",
       "x": 0.375,
       "y": 0.578,
-      "edges": ["2-entryway"]
+      "edges": ["2-entryway", "3-near-elevators"]
     },
     {
       "type": "basic",
