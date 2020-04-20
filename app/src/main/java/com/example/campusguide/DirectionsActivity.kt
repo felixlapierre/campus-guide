@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
@@ -236,7 +237,9 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
                 R.id.radio_transit ->
                     if (checked) {
                         hideMap()
-                        initializeListView()
+                        GlobalScope.launch {
+                                initializeListView()
+                        }
                     }
                 R.id.radio_shuttle ->
                     if (checked) {
@@ -287,10 +290,10 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
             return
         }
         GlobalScope.launch {
+            runOnUiThread { removePreviousPath() }
             paths.forEach {
                 it.waitUntilCreated()
                 runOnUiThread {
-                    removePreviousPath()
                     map.addPath(it, currentFloor)
                 }
             }
@@ -363,13 +366,16 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
         frame_layout.visibility = View.GONE
     }
 
-    private fun initializeListView() {
+    private suspend fun initializeListView() {
         if (!::listView.isInitialized) {
             listView = ListView(this)
-            activity_directions_layout.addView(listView)
+            runOnUiThread {
+                activity_directions_layout.addView(listView)
+            }
             listView.adapter = adapter
             listView.onItemClickListener = this
             for ((title, path) in extraPaths) {
+                path.waitUntilCreated()
                 adapter.add(
                     TransitRoute(
                         title,
