@@ -133,6 +133,9 @@ class Route constructor (
                     startMarkerOptions = MarkerOptions().alpha(0.0f))
             }
             else -> {
+                if (travelMode == Constants.TRAVEL_MODE_DRIVING)
+                    return PathPolyline(start.name, end.name, firstSegment,
+                        style = PolylineStyle(patternGap = Gap(0f)))
                 return PathPolyline(start.name, end.name, firstSegment)
             }
         }

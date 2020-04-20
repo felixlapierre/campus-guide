@@ -114,7 +114,7 @@ class PathPolyline constructor(
             return
 
         paths = deferred.await()
-        val style = PolylineStyle()
+        val style = style
 
         val firstPoint = paths[0].points[0]
         val lastPath = paths[paths.size - 1]
