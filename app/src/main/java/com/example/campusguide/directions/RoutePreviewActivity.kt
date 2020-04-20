@@ -115,7 +115,7 @@ class RoutePreviewActivity : AppCompatActivity() {
 
     private fun setPathOnMapAsync(path: PathPolyline) {
         GlobalScope.launch {
-            path.waitUntilCreated()
+            path.createPath()
             runOnUiThread {
                 map.addPath(path, floorPlans.getCurrentFloor())
             }
@@ -124,7 +124,7 @@ class RoutePreviewActivity : AppCompatActivity() {
 
     private fun focusCameraOnCurrentStep(path: PathPolyline, step: Int) {
         GlobalScope.launch {
-            path.waitUntilCreated()
+            path.createPath()
             runOnUiThread {
                 map.moveCamera(path.getPathBounds())
             }

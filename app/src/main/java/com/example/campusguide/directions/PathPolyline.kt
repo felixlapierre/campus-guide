@@ -88,6 +88,10 @@ class PathPolyline private constructor(val startName: String, val endName: Strin
 
     suspend fun waitUntilCreated() {
         paths = deferred.await()
+    }
+
+    suspend fun createPath() {
+        paths = deferred.await()
         val style = PolylineStyle()
 
         val firstPoint = paths[0].points[0]

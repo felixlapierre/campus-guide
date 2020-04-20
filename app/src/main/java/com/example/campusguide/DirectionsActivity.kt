@@ -233,7 +233,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
 
     private fun setPathOnMapAsync(path: PathPolyline) {
         GlobalScope.launch {
-            path.waitUntilCreated()
+            path.createPath()
             runOnUiThread {
                 removePreviousPath()
                 map.addPath(path, currentFloor)
