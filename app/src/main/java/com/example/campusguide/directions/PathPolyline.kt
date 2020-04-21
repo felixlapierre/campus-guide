@@ -143,7 +143,6 @@ class PathPolyline constructor(
             startMarkerOptions!!.position(firstPoint)
             endMarkerOptions!!.position(lastPoint)
 
-
             routePreviewData.setPath(paths)
             if (this::segment.isInitialized)
                 routePreviewData.setSteps(segment.getSteps())
