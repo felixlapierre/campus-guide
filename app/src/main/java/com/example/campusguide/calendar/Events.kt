@@ -63,7 +63,10 @@ class Events constructor(
             }
         }
 
-        val sortedList = unsortedEvents.sortedWith(compareBy { it.second.toLowerCase() })
+
+        val sortedList = unsortedEvents.filter {
+            it.second != null
+        }.sortedWith(compareBy { it.second.toLowerCase() })
 
         for (pair in sortedList) {
             todaysEvents.add(pair)
