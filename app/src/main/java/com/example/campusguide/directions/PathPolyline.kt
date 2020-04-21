@@ -117,31 +117,38 @@ class PathPolyline constructor(
         if (created)
             return
 
-        paths = deferred.await()
-        val style = style
+        val currPaths = deferred.await()
 
-        val firstPoint = paths[0].points[0]
-        val lastPath = paths[paths.size - 1]
-        val lastPoint = lastPath.points[lastPath.points.size - 1]
+        synchronized(this) {
+            if (created)
+                return
+            paths = currPaths
+            val style = style
 
-        var endOfLastPath: LatLng? = null
-        paths.forEach { path ->
-            val opts = PolylineOptions()
-            if (endOfLastPath != null)
-                opts.add(endOfLastPath)
-            opts.addAll(path.points)
-                .color(style.pathColor)
-                .pattern(style.patternPolygonAlpha)
-            polylineOptions.add(opts)
-            endOfLastPath = path.points[path.points.size - 1]
+            val firstPoint = paths[0].points[0]
+            val lastPath = paths[paths.size - 1]
+            val lastPoint = lastPath.points[lastPath.points.size - 1]
+
+            var endOfLastPath: LatLng? = null
+            paths.forEach { path ->
+                val opts = PolylineOptions()
+                if (endOfLastPath != null)
+                    opts.add(endOfLastPath)
+                opts.addAll(path.points)
+                    .color(style.pathColor)
+                    .pattern(style.patternPolygonAlpha)
+                polylineOptions.add(opts)
+                endOfLastPath = path.points[path.points.size - 1]
+            }
+            startMarkerOptions!!.position(firstPoint)
+            endMarkerOptions!!.position(lastPoint)
+
+            routePreviewData.setPath(paths)
+            if (this::segment.isInitialized)
+                routePreviewData.setSteps(segment.getSteps())
+
+            created = true
         }
-
-        startMarkerOptions!!.position(firstPoint)
-        endMarkerOptions!!.position(lastPoint)
-
-        routePreviewData.setPath(paths)
-        if (this::segment.isInitialized)
-            routePreviewData.setSteps(segment.getSteps())
     }
 
     fun getPathBounds(): LatLngBounds {
@@ -169,6 +176,7 @@ class PathPolyline constructor(
         waitUntilCreated()
         return this.paths
     }
+
     fun getPathsRisky(): List<Path> {
         return this.paths
     }
@@ -192,6 +200,7 @@ class PathPolyline constructor(
     fun getStartLocationRisky(): LatLng {
         return this.paths.first().points.first()
     }
+
     fun getEndLocationRisky(): LatLng {
         return this.paths.last().points.last()
     }
