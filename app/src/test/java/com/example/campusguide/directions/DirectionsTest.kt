@@ -49,7 +49,7 @@ class DirectionsTest {
             val response = directions.getDirections(start, end, travelMode, null)
 
             assert(response == null)
-            verify(errorListener).onError(Constants.DIRECTIONS_API_NULL_RESPONSE)
+            verify(errorListener).onError(Constants.DIRECTIONS_API_NULL_RESPONSE_MSG)
         }
     }
 

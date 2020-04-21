@@ -39,7 +39,7 @@ class OutdoorDirections constructor(
         val responseObj = responseParser.parse(response)
 
         if (responseObj == null) {
-            errorListener.onError(Constants.DIRECTIONS_API_NULL_RESPONSE)
+            errorListener.onError(Constants.DIRECTIONS_API_NULL_RESPONSE_MSG)
         }
 
         return responseObj

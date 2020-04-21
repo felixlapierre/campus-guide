@@ -327,7 +327,7 @@ class DirectionsActivity : AppCompatActivity(), AdapterView.OnItemClickListener 
     }
     private fun setPathsOnMapAsync(paths: List<PathPolyline>?) {
         if (paths.isNullOrEmpty()) {
-            errorListener.onError("No route available")
+            errorListener.onError(Constants.NO_ROUTE_SHUTTLE_MSG)
             return
         }
         GlobalScope.launch {

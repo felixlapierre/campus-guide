@@ -40,9 +40,9 @@ object Constants {
     const val AMENITIES_GENDER_NEUTRAL_BATHROOM = "gender neutral bathroom"
 
     // POI types
-    const val CAFE_POI = "Cafe"
+    const val CAFE_POI = "Café"
     const val RESTAURANT_POI = "Restaurant"
-    const val SHOPPING_MALL_POI = "Shopping mall"
+    const val SHOPPING_MALL_POI = "Shopping Mall"
     const val PHARMACY_POI = "Pharmacy"
 
     // Search bounds
@@ -125,18 +125,19 @@ object Constants {
     const val NO_EVENT_LOCATION_FOUND_MSG = "Could not find the event location."
 
     // Throwable exception messages for pathfinding
-    const val DIRECTIONS_API_NULL_RESPONSE =
+    const val DIRECTIONS_API_NULL_RESPONSE_MSG =
         "Could not get a response from the Google Directions API."
-    const val NO_PATH_TO_ROOM = "Could not find a path to room:"
-    const val LOCATION_NOT_FOUND_GRAPH = "location was not found in the graph."
-    const val LOCATION_NOT_FOUND_ROOM = "Could not find room:"
-    const val INDOOR_SEGMENT_NOT_FOUND_BUILDING = "not found. Cannot create IndoorSegment."
+    const val NO_PATH_TO_ROOM_MSG = "Could not find a path to room:"
+    const val LOCATION_NOT_FOUND_GRAPH_MSG = "location was not found in the graph."
+    const val LOCATION_NOT_FOUND_ROOM_MSG = "Could not find room:"
+    const val INDOOR_SEGMENT_NOT_FOUND_BUILDING_MSG = "not found. Cannot create IndoorSegment."
+    const val NO_ROUTE_SHUTTLE_MSG = "No route available."
 
     // Throwable exception messages for IndoorLocationFinder
-    const val INDOOR_IDENTIFIER_BAD_FORMAT =
+    const val INDOOR_IDENTIFIER_BAD_FORMAT_MSG =
         "ID is an indoor identifier that does not have the format indoor_buildingcode_roomcode."
-    const val INDOOR_INDEX_NOT_LOADED = "Building index is not loaded yet."
-    const val BUILDING_CODE_NOT_FOUND =
+    const val INDOOR_INDEX_NOT_LOADED_MSG = "Building index is not loaded yet."
+    const val BUILDING_CODE_NOT_FOUND_MSG =
         "building code does not correspond to a building in the index."
-    const val ROOM_CODE_NOT_FOUND = "room code was not found in the index."
+    const val ROOM_CODE_NOT_FOUND_MSG = "room code was not found in the index."
 }
