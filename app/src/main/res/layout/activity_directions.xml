@@ -23,7 +23,7 @@
             android:tint="@android:color/white" />
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_margin="5dp"
             android:background="@drawable/rounded_container"
@@ -64,7 +64,7 @@
         android:paddingEnd="21dp">
 
         <LinearLayout
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_margin="3dp"
             android:background="@drawable/rounded_container"
@@ -109,7 +109,7 @@
             android:buttonTint="@color/colorPrimaryDark"
             android:contentDescription="drivingRadioButton"
             android:onClick="onRadioButtonClicked"
-            android:paddingStart="5dp"
+            android:paddingStart="3dp"
             android:paddingEnd="5dp"
             android:text="@string/dash"
             android:textColor="@drawable/travel_mode_button_color" />
