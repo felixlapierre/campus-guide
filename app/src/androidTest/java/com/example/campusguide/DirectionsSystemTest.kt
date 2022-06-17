@@ -42,10 +42,10 @@ class DirectionsSystemTest {
         // Wait until the map of MapsActivity is loaded
         device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
-        // Click the Navigate button
-        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
-        if (navigateButton.exists() && navigateButton.isEnabled) {
-            navigateButton.click()
+        // Click the Directions option
+        val directionsOption: UiObject = device.findObject(UiSelector().textContains("Directions"))
+        if (directionsOption.exists() && directionsOption.isEnabled) {
+            directionsOption.click()
         }
 
         // Wait until the ChooseDestinationOptions dialog appears
@@ -99,8 +99,8 @@ class DirectionsSystemTest {
         val markerEnd: UiObject = device.findObject(UiSelector().descriptionContains("Destination"))
         device.wait(Until.hasObject(By.desc("Start")), TIMEOUT)
 
-        assertThat(markerStart.contentDescription, containsString("Start"))
-        assertThat(markerEnd.contentDescription, containsString("Destination"))
+        assertThat(markerStart.contentDescription, containsString("Current Location"))
+        assertThat(markerEnd.contentDescription, containsString("Concordia University"))
         assertThat(travelModeButton.text, not("-"))
     }
 
@@ -110,10 +110,10 @@ class DirectionsSystemTest {
         // Wait until the map of MapsActivity is loaded
         device.wait(Until.hasObject(By.desc(Constants.MAPS_ACTIVITY_CONTENT_DESCRIPTION)), TIMEOUT)
 
-        // Click the Navigate button
-        val navigateButton: UiObject = device.findObject(UiSelector().descriptionContains("navigateButton"))
-        if (navigateButton.exists() && navigateButton.isEnabled) {
-            navigateButton.click()
+        // Click the Directions option
+        val directionsOption: UiObject = device.findObject(UiSelector().textContains("Directions"))
+        if (directionsOption.exists() && directionsOption.isEnabled) {
+            directionsOption.click()
         }
 
         // Wait until the ChooseDestinationOptions dialog appears
@@ -178,8 +178,8 @@ class DirectionsSystemTest {
         val markerEnd: UiObject = device.findObject(UiSelector().descriptionContains("Destination"))
         device.wait(Until.hasObject(By.desc("Start")), TIMEOUT)
 
-        assertThat(markerStart.contentDescription, containsString("Start"))
-        assertThat(markerEnd.contentDescription, containsString("Destination"))
+        assertThat(markerStart.contentDescription, containsString("McGill University"))
+        assertThat(markerEnd.contentDescription, containsString("Concordia University"))
         assertThat(travelModeButton.text, not("-"))
     }
 
